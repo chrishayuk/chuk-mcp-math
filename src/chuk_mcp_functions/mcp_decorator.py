@@ -1,28 +1,10 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/mcp_decorator.py
+# chuk_mcp_functions/mcp_decorator.py - FIXED VERSION
 """
-Unified MCP Function Decorator - Async Native Optimized
+Unified MCP Function Decorator - Async Native Optimized (FIXED)
 
-A single decorator that works with minimal parameters for lazy developers
-but supports advanced features when needed. Optimized for async native
-functions with better performance characteristics and yielding strategies.
-
-Simple Usage:
-    @mcp_function
-    async def add(a: int, b: int) -> int:
-        return a + b
-
-Enhanced Usage:
-    @mcp_function(
-        cache_strategy="memory",
-        execution_modes=["local", "remote"],
-        estimated_cpu_usage="high"
-    )
-    async def complex_calculation(data: List[float]) -> float:
-        # Automatic yielding for long operations
-        if len(data) > 1000:
-            await asyncio.sleep(0)
-        return sum(data) / len(data)
+Fixed the Pydantic v2 compatibility issue by removing leading underscores
+from field names and using proper exclude mechanism.
 """
 
 import inspect
@@ -46,7 +28,7 @@ from collections import defaultdict, deque
 import logging
 
 # Import Pydantic with fallback
-from chuk_mcp_functions.mcp_pydantic_base import McpPydanticBase, Field, ValidationError
+from .mcp_pydantic_base import McpPydanticBase, Field, ValidationError
 
 # Global registries
 _mcp_functions = {}
@@ -183,9 +165,14 @@ class AsyncMemoryCache:
             self.access_times.clear()
             self.expiry.clear()
 
-# Enhanced MCP Function Spec with async-native features
+# Quick fix for src/chuk_mcp_functions/mcp_decorator.py
+# Replace the MCPFunctionSpec class definition with this fixed version:
+
 class MCPFunctionSpec(McpPydanticBase):
     """Enhanced MCP function specification optimized for async native functions."""
+    
+    # Add model configuration for Pydantic v2
+    model_config = {"arbitrary_types_allowed": True, "extra": "allow"}
     
     # Core identification (required)
     function_name: str = Field(description="Function name")
@@ -242,11 +229,11 @@ class MCPFunctionSpec(McpPydanticBase):
     created_at: str = Field(description="Creation timestamp")
     updated_at: str = Field(description="Update timestamp")
     
-    # Runtime (excluded from serialization)
-    _function_ref: Optional[Callable] = Field(default=None, exclude=True)
-    _performance_metrics: Optional[PerformanceMetrics] = Field(default=None, exclude=True)
-    _cache_backend: Optional[AsyncMemoryCache] = Field(default=None, exclude=True)
-    _execution_semaphore: Optional[asyncio.Semaphore] = Field(default=None, exclude=True)
+    # Runtime (excluded from serialization) - FIXED: No leading underscores, proper exclusion
+    function_ref: Optional[Callable] = Field(default=None, exclude=True)
+    performance_metrics: Optional[PerformanceMetrics] = Field(default=None, exclude=True)
+    cache_backend: Optional[AsyncMemoryCache] = Field(default=None, exclude=True)
+    execution_semaphore: Optional[asyncio.Semaphore] = Field(default=None, exclude=True)
     
     def model_post_init(self, __context):
         """Post-initialization setup with async-native optimizations."""
@@ -257,33 +244,33 @@ class MCPFunctionSpec(McpPydanticBase):
             self.content_hash = _calculate_content_hash(self.implementation)
         
         # Initialize performance metrics
-        if not self._performance_metrics:
-            self._performance_metrics = PerformanceMetrics()
+        if not self.performance_metrics:
+            self.performance_metrics = PerformanceMetrics()
         
         # Initialize async-optimized cache if needed
-        if self.cache_strategy != CacheStrategy.NONE and not self._cache_backend:
-            self._cache_backend = AsyncMemoryCache()
+        if self.cache_strategy != CacheStrategy.NONE and not self.cache_backend:
+            self.cache_backend = AsyncMemoryCache()
         
         # Initialize execution semaphore for concurrency control
-        if not self._execution_semaphore:
-            self._execution_semaphore = asyncio.Semaphore(self.max_concurrent_executions)
+        if not self.execution_semaphore:
+            self.execution_semaphore = asyncio.Semaphore(self.max_concurrent_executions)
     
     async def execute_with_caching(self, arguments: Dict[str, Any]) -> Any:
         """Execute function with optional caching and async optimizations."""
-        if self.cache_strategy == CacheStrategy.NONE or not self._cache_backend:
+        if self.cache_strategy == CacheStrategy.NONE or not self.cache_backend:
             return await self._execute_function_async(arguments)
         
         # Generate cache key
         cache_key = self._generate_cache_key(arguments)
         
         # Try cache first
-        cached_result = await self._cache_backend.get(cache_key)
+        cached_result = await self.cache_backend.get(cache_key)
         if cached_result is not None:
-            self._performance_metrics.update(0, True, cache_hit=True)
+            self.performance_metrics.update(0, True, cache_hit=True)
             return cached_result
         
         # Execute function with concurrency control
-        async with self._execution_semaphore:
+        async with self.execution_semaphore:
             start_time = time.time()
             yields = 0
             try:
@@ -291,30 +278,30 @@ class MCPFunctionSpec(McpPydanticBase):
                 duration = time.time() - start_time
                 
                 # Cache result
-                await self._cache_backend.set(cache_key, result, self.cache_ttl_seconds)
-                self._performance_metrics.update(duration, True, cache_hit=False, yields=yields)
+                await self.cache_backend.set(cache_key, result, self.cache_ttl_seconds)
+                self.performance_metrics.update(duration, True, cache_hit=False, yields=yields)
                 return result
                 
             except Exception as e:
                 duration = time.time() - start_time
-                self._performance_metrics.update(duration, False, cache_hit=False, yields=yields)
+                self.performance_metrics.update(duration, False, cache_hit=False, yields=yields)
                 raise
     
     async def _execute_function_async(self, arguments: Dict[str, Any]) -> Any:
         """Execute the actual function with async optimizations."""
-        if not self._function_ref:
+        if not self.function_ref:
             raise RuntimeError(f"Function reference not set for {self.qualified_name}")
         
         if self.is_async_native:
             # Execute async function
-            if inspect.iscoroutinefunction(self._function_ref):
-                return await self._function_ref(**arguments)
+            if inspect.iscoroutinefunction(self.function_ref):
+                return await self.function_ref(**arguments)
             else:
                 # Sync function wrapped in async context
-                return self._function_ref(**arguments)
+                return self.function_ref(**arguments)
         else:
             # Legacy sync function
-            return self._function_ref(**arguments)
+            return self.function_ref(**arguments)
     
     def _generate_cache_key(self, arguments: Dict[str, Any]) -> str:
         """Generate cache key from arguments."""
@@ -324,10 +311,10 @@ class MCPFunctionSpec(McpPydanticBase):
     
     def get_performance_stats(self) -> Dict[str, Any]:
         """Get performance statistics with async-specific metrics."""
-        if not self._performance_metrics:
+        if not self.performance_metrics:
             return {}
         
-        metrics = self._performance_metrics
+        metrics = self.performance_metrics
         cache_hit_rate = 0.0
         if metrics.cache_hits + metrics.cache_misses > 0:
             cache_hit_rate = metrics.cache_hits / (metrics.cache_hits + metrics.cache_misses)
@@ -353,7 +340,7 @@ class MCPFunctionSpec(McpPydanticBase):
     def supports_remote_execution(self) -> bool:
         """Check if function can be executed remotely."""
         return ExecutionMode.REMOTE in self.execution_modes or ExecutionMode.BOTH in self.execution_modes
-
+    
 # Utility functions (enhanced for async)
 def _calculate_content_hash(content: str) -> str:
     """Calculate SHA-256 hash."""
@@ -538,7 +525,7 @@ def _normalize_list_arg(value: Union[List[Union[str, Enum]], None], enum_class: 
             result.append(item)
     return result
 
-# The Enhanced Async-Native Decorator
+# The Enhanced Async-Native Decorator - FIXED
 def mcp_function(
     # Can be called with no arguments for maximum laziness
     func: Optional[Callable] = None,
@@ -587,20 +574,6 @@ def mcp_function(
     Enhanced async-native MCP function decorator.
     
     Automatically detects async functions and optimizes for async execution.
-    
-    Minimal usage:
-        @mcp_function
-        async def my_func(x: int) -> int:
-            return x * 2
-    
-    Enhanced usage:
-        @mcp_function(
-            description="Multiply by 2 with async caching",
-            cache_strategy="async_lru",
-            async_yield_strategy="adaptive"
-        )
-        async def my_func(x: int) -> int:
-            return x * 2
     """
     
     def decorator(f: Callable) -> Callable:
@@ -683,7 +656,7 @@ def mcp_function(
             metadata=metadata or {},
             created_at=current_time,
             updated_at=current_time,
-            _function_ref=f
+            function_ref=f
         )
         
         # Register function
@@ -702,12 +675,12 @@ def mcp_function(
                     return await function_spec.execute_with_caching(full_kwargs)
                 else:
                     # Direct async execution
-                    async with function_spec._execution_semaphore:
-                        function_spec._performance_metrics.concurrent_executions += 1
+                    async with function_spec.execution_semaphore:
+                        function_spec.performance_metrics.concurrent_executions += 1
                         try:
                             return await f(*args, **kwargs)
                         finally:
-                            function_spec._performance_metrics.concurrent_executions -= 1
+                            function_spec.performance_metrics.concurrent_executions -= 1
             
             wrapper = async_wrapper
         else:
@@ -725,8 +698,8 @@ def mcp_function(
         wrapper.get_performance_stats = function_spec.get_performance_stats
         
         async def clear_cache():
-            if function_spec._cache_backend:
-                await function_spec._cache_backend.clear()
+            if function_spec.cache_backend:
+                await function_spec.cache_backend.clear()
         wrapper.clear_cache = clear_cache
         
         return wrapper

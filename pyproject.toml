@@ -1,7 +1,7 @@
 [project]
 name = "chuk-mcp-functions"
 version = "0.1.0"
-description = "Add your description here"
+description = "Comprehensive MCP function library for AI models"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
@@ -12,9 +12,103 @@ pydantic = [
     "pydantic>=2.11.1",
 ]
 
+# Development and testing dependencies
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+    "hypothesis>=6.70.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["chuk_mcp_functions*"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# Pytest configuration
+[tool.pytest.ini_options]
+# Fix the asyncio warnings
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+# Add src to Python path for testing
+pythonpath = [
+    "src"
+]
+
+# Test discovery
+testpaths = ["tests", "diagnostics"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+# Markers
+markers = [
+    "asyncio: marks tests as async",
+    "unit: unit tests",
+    "integration: integration tests", 
+    "performance: performance tests",
+    "property: property-based tests",
+    "slow: slow-running tests"
+]
+
+# Filter warnings
+filterwarnings = [
+    "ignore::pytest_asyncio.plugin.PytestDeprecationWarning",
+    "ignore::DeprecationWarning:pytest_asyncio.*"
+]
+
+# Test output options
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--strict-config"
+]
+
+# Coverage configuration (optional)
+[tool.coverage.run]
+source = ["src/chuk_mcp_functions"]
+omit = [
+    "tests/*",
+    "diagnostics/*",
+    "*/test_*",
+    "*/__pycache__/*"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:"
+]
+
+# Black code formatting
+[tool.black]
+line-length = 100
+target-version = ['py311']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
