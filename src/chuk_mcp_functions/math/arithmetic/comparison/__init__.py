@@ -9,7 +9,7 @@ Essential for decision making, sorting, and tolerance-based comparisons.
 Submodules:
 - relational: equal, not_equal, less_than, greater_than, in_range, between
 - extrema: minimum, maximum, clamp, sort_numbers, rank_numbers, min_list, max_list
-- tolerance: approximately_equal, close_to_zero, is_finite, is_nan, is_infinite, is_close
+- tolerance: approximately_equal, close_to_zero, is_finite, is_nan, is_infinite, is_close, is_normal
 
 All functions are async native for optimal performance in async environments.
 """
