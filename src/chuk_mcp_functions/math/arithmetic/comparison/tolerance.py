@@ -7,10 +7,12 @@ Comparison functions that handle floating-point precision issues and tolerance c
 
 Functions:
 - approximately_equal, close_to_zero
-- is_finite, is_nan, is_infinite
+- is_finite, is_nan, is_infinite, is_normal
+- is_close
 """
 
 import math
+import sys  # Added missing import
 import asyncio
 from typing import Union
 from chuk_mcp_functions.mcp_decorator import mcp_function
@@ -199,7 +201,7 @@ async def is_normal(x: Number) -> bool:
     # Check if it's a float first
     try:
         f = float(x)
-        # Python 3.2+ has math.isfinite, use manual check for robustness
+        # Use math.isfinite and check for zero and subnormal numbers
         return f != 0 and math.isfinite(f) and not (abs(f) < sys.float_info.min)
     except (ValueError, OverflowError):
         return False
@@ -269,7 +271,6 @@ __all__ = [
 
 if __name__ == "__main__":
     import asyncio
-    import sys
     
     async def test_tolerance_operations():
         """Test all tolerance-based comparison operations."""
