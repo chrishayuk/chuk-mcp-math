@@ -1,0 +1,20 @@
+[project]
+name = "chuk-mcp-functions"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+# Pydantic validation support (recommended for production)
+pydantic = [
+    "pydantic>=2.11.1",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["chuk_mcp_functions*"]
