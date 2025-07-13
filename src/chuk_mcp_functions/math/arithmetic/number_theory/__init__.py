@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # chuk_mcp_functions/math/arithmetic/number_theory/__init__.py
 """
-Number Theory Operations Module - Updated Structure
+Number Theory Operations Module - Enhanced with New Modules
 
 Functions for working with integer properties, prime numbers, divisibility, and special numbers.
 Essential for cryptography, algorithms, and mathematical analysis.
@@ -13,6 +13,11 @@ Submodules:
 - special_primes: Mersenne, Fermat, Sophie Germain, twin primes, Wilson's theorem, pseudoprimes
 - combinatorial_numbers: Catalan, Bell, Stirling numbers, Narayana numbers
 - arithmetic_functions: Euler totient, Möbius function, omega functions, perfect numbers
+- iterative_sequences: Collatz, Kaprekar, happy numbers, narcissistic, look-and-say, Recamán, Keith
+- mathematical_constants: Pi, e, golden ratio, Euler gamma, continued fractions, high precision
+- digital_operations: digit sums, palindromes, Harshad numbers, base conversions, automorphic numbers
+- partitions: integer partitions, Goldbach conjecture, sum of squares, Waring's problem, additive bases
+- egyptian_fractions: Egyptian fractions, unit fractions, harmonic series, Sylvester sequence
 
 All functions are async native for optimal performance in async environments.
 """
@@ -24,6 +29,13 @@ from . import basic_sequences
 from . import special_primes
 from . import combinatorial_numbers
 from . import arithmetic_functions
+
+# Import new modules
+from . import iterative_sequences
+from . import mathematical_constants
+from . import digital_operations
+from . import partitions
+from . import egyptian_fractions
 
 # Core prime operations (most commonly used)
 from .primes import (
@@ -59,7 +71,7 @@ from .combinatorial_numbers import (
     stirling_second_row, narayana_triangle_row
 )
 
-# Arithmetic functions (now implemented)
+# Arithmetic functions
 from .arithmetic_functions import (
     euler_totient, mobius_function, little_omega, big_omega,
     jordan_totient, divisor_power_sum, von_mangoldt_function,
@@ -67,11 +79,58 @@ from .arithmetic_functions import (
     is_abundant_number, is_deficient_number
 )
 
+# Iterative sequences (NEW)
+from .iterative_sequences import (
+    collatz_sequence, collatz_stopping_time, collatz_max_value,
+    kaprekar_sequence, kaprekar_constant, is_happy_number, happy_numbers,
+    is_narcissistic_number, narcissistic_numbers, look_and_say_sequence,
+    recaman_sequence, is_keith_number, keith_numbers,
+    digital_sum_sequence, digital_product_sequence
+)
+
+# Mathematical constants (NEW)
+from .mathematical_constants import (
+    compute_pi_leibniz, compute_pi_nilakantha, compute_pi_machin, compute_pi_chudnovsky,
+    compute_e_series, compute_e_limit, compute_golden_ratio_fibonacci,
+    compute_golden_ratio_continued_fraction, compute_euler_gamma_harmonic,
+    continued_fraction_pi, continued_fraction_e, continued_fraction_golden_ratio,
+    pi_digits, e_digits, approximation_error, convergence_comparison
+)
+
+# Digital operations (NEW)
+from .digital_operations import (
+    digit_sum, digital_root, digit_product, persistent_digital_root,
+    digit_reversal, digit_sort, is_palindromic_number, palindromic_numbers,
+    next_palindrome, is_harshad_number, harshad_numbers,
+    number_to_base, base_to_number, digit_count, digit_frequency,
+    is_repdigit, is_automorphic_number, automorphic_numbers
+)
+
+# Partitions and additive number theory (NEW)
+from .partitions import (
+    partition_count, generate_partitions, partitions_into_k_parts,
+    distinct_partitions, restricted_partitions, goldbach_conjecture_check,
+    goldbach_pairs, weak_goldbach_check, sum_of_two_squares,
+    sum_of_four_squares, waring_representation, min_waring_number,
+    is_additive_basis, generate_sidon_set
+)
+
+# Egyptian fractions (NEW)
+from .egyptian_fractions import (
+    egyptian_fraction_decomposition, fibonacci_greedy_egyptian,
+    unit_fraction_sum, is_unit_fraction, harmonic_number,
+    harmonic_number_fraction, harmonic_partial_sum, harmonic_mean,
+    sylvester_sequence, sylvester_expansion_of_one,
+    egyptian_fraction_properties, two_unit_fraction_representations,
+    is_proper_fraction, improper_to_egyptian, shortest_egyptian_fraction
+)
+
 # Export all number theory functions for convenient access
 __all__ = [
     # Submodules
     'primes', 'divisibility', 'basic_sequences', 'special_primes', 
-    'combinatorial_numbers', 'arithmetic_functions',
+    'combinatorial_numbers', 'arithmetic_functions', 'iterative_sequences',
+    'mathematical_constants', 'digital_operations', 'partitions', 'egyptian_fractions',
     
     # Core prime operations
     'is_prime', 'next_prime', 'nth_prime', 'prime_factors',
@@ -101,13 +160,49 @@ __all__ = [
     'euler_totient', 'mobius_function', 'little_omega', 'big_omega',
     'jordan_totient', 'divisor_power_sum', 'von_mangoldt_function',
     'liouville_function', 'carmichael_lambda', 'is_perfect_number',
-    'is_abundant_number', 'is_deficient_number'
+    'is_abundant_number', 'is_deficient_number',
+    
+    # Iterative sequences (NEW)
+    'collatz_sequence', 'collatz_stopping_time', 'collatz_max_value',
+    'kaprekar_sequence', 'kaprekar_constant', 'is_happy_number', 'happy_numbers',
+    'is_narcissistic_number', 'narcissistic_numbers', 'look_and_say_sequence',
+    'recaman_sequence', 'is_keith_number', 'keith_numbers',
+    'digital_sum_sequence', 'digital_product_sequence',
+    
+    # Mathematical constants (NEW)
+    'compute_pi_leibniz', 'compute_pi_nilakantha', 'compute_pi_machin', 'compute_pi_chudnovsky',
+    'compute_e_series', 'compute_e_limit', 'compute_golden_ratio_fibonacci',
+    'compute_golden_ratio_continued_fraction', 'compute_euler_gamma_harmonic',
+    'continued_fraction_pi', 'continued_fraction_e', 'continued_fraction_golden_ratio',
+    'pi_digits', 'e_digits', 'approximation_error', 'convergence_comparison',
+    
+    # Digital operations (NEW)
+    'digit_sum', 'digital_root', 'digit_product', 'persistent_digital_root',
+    'digit_reversal', 'digit_sort', 'is_palindromic_number', 'palindromic_numbers',
+    'next_palindrome', 'is_harshad_number', 'harshad_numbers',
+    'number_to_base', 'base_to_number', 'digit_count', 'digit_frequency',
+    'is_repdigit', 'is_automorphic_number', 'automorphic_numbers',
+    
+    # Partitions and additive number theory (NEW)
+    'partition_count', 'generate_partitions', 'partitions_into_k_parts',
+    'distinct_partitions', 'restricted_partitions', 'goldbach_conjecture_check',
+    'goldbach_pairs', 'weak_goldbach_check', 'sum_of_two_squares',
+    'sum_of_four_squares', 'waring_representation', 'min_waring_number',
+    'is_additive_basis', 'generate_sidon_set',
+    
+    # Egyptian fractions (NEW)
+    'egyptian_fraction_decomposition', 'fibonacci_greedy_egyptian',
+    'unit_fraction_sum', 'is_unit_fraction', 'harmonic_number',
+    'harmonic_number_fraction', 'harmonic_partial_sum', 'harmonic_mean',
+    'sylvester_sequence', 'sylvester_expansion_of_one',
+    'egyptian_fraction_properties', 'two_unit_fraction_representations',
+    'is_proper_fraction', 'improper_to_egyptian', 'shortest_egyptian_fraction'
 ]
 
 async def test_number_theory_functions():
-    """Test core number theory functions."""
-    print("🔢 Number Theory Functions Test")
-    print("=" * 35)
+    """Test core number theory functions including new modules."""
+    print("🔢 Enhanced Number Theory Functions Test")
+    print("=" * 45)
     
     # Test prime operations
     print("Prime Operations:")
@@ -178,7 +273,94 @@ async def test_number_theory_functions():
     print(f"  is_abundant_number(12) = {await is_abundant_number(12)}")
     print(f"  carmichael_lambda(12) = {await carmichael_lambda(12)}")
     
-    print("\n✅ All number theory functions working!")
+    # Test NEW iterative sequences
+    print("\nIterative Sequences (NEW):")
+    print(f"  collatz_sequence(7) = {await collatz_sequence(7)}")
+    print(f"  collatz_stopping_time(7) = {await collatz_stopping_time(7)}")
+    print(f"  is_happy_number(7) = {await is_happy_number(7)}")
+    print(f"  is_narcissistic_number(153) = {await is_narcissistic_number(153)}")
+    print(f"  is_keith_number(14) = {await is_keith_number(14)}")
+    print(f"  recaman_sequence(10) = {await recaman_sequence(10)}")
+    
+    # Test NEW mathematical constants
+    print("\nMathematical Constants (NEW):")
+    print(f"  compute_pi_leibniz(1000) ≈ {await compute_pi_leibniz(1000):.6f}")
+    print(f"  compute_pi_machin(20) ≈ {await compute_pi_machin(20):.10f}")
+    print(f"  compute_e_series(15) ≈ {await compute_e_series(15):.8f}")
+    print(f"  compute_golden_ratio_fibonacci(20) ≈ {await compute_golden_ratio_fibonacci(20):.10f}")
+    print(f"  continued_fraction_pi(10) = {await continued_fraction_pi(10)}")
+    
+    # Test NEW digital operations
+    print("\nDigital Operations (NEW):")
+    print(f"  digit_sum(12345) = {await digit_sum(12345)}")
+    print(f"  digital_root(12345) = {await digital_root(12345)}")
+    print(f"  is_palindromic_number(12321) = {await is_palindromic_number(12321)}")
+    print(f"  is_harshad_number(12) = {await is_harshad_number(12)}")
+    print(f"  digit_reversal(12345) = {await digit_reversal(12345)}")
+    print(f"  is_automorphic_number(25) = {await is_automorphic_number(25)}")
+    
+    # Test NEW partitions
+    print("\nPartitions and Additive Number Theory (NEW):")
+    print(f"  partition_count(4) = {await partition_count(4)}")
+    print(f"  goldbach_conjecture_check(10) = {await goldbach_conjecture_check(10)}")
+    print(f"  sum_of_two_squares(13) = {await sum_of_two_squares(13)}")
+    print(f"  distinct_partitions(6) = {await distinct_partitions(6)}")
+    
+    # Test NEW Egyptian fractions
+    print("\nEgyptian Fractions (NEW):")
+    print(f"  egyptian_fraction_decomposition(2, 3) = {await egyptian_fraction_decomposition(2, 3)}")
+    print(f"  harmonic_number(4) = {await harmonic_number(4):.6f}")
+    print(f"  sylvester_sequence(5) = {await sylvester_sequence(5)}")
+    print(f"  unit_fraction_sum([2, 3, 6]) = {await unit_fraction_sum([2, 3, 6])}")
+    
+    print("\n✅ All enhanced number theory functions working!")
+
+async def demo_new_functionality():
+    """Demonstrate the new functionality added to the module."""
+    print("\n🎯 New Functionality Showcase")
+    print("=" * 35)
+    
+    # Collatz conjecture exploration
+    print("Collatz Conjecture Exploration:")
+    for n in [3, 7, 12, 27]:
+        stopping_time = await collatz_stopping_time(n)
+        max_value = await collatz_max_value(n)
+        print(f"  Collatz({n}): {stopping_time} steps, max value {max_value}")
+    
+    # Pi approximation comparison
+    print("\nPi Approximation Comparison:")
+    methods = [
+        ("Leibniz", lambda: compute_pi_leibniz(1000)),
+        ("Nilakantha", lambda: compute_pi_nilakantha(100)),
+        ("Machin", lambda: compute_pi_machin(20))
+    ]
+    for name, method in methods:
+        pi_approx = await method()
+        error = abs(3.141592653589793 - pi_approx)
+        print(f"  {name}: {pi_approx:.10f} (error: {error:.2e})")
+    
+    # Digital number properties
+    print("\nDigital Number Properties:")
+    test_numbers = [153, 371, 407, 1634]  # Narcissistic numbers
+    for num in test_numbers:
+        is_narcissistic = await is_narcissistic_number(num)
+        digit_sum_val = await digit_sum(num)
+        digital_root_val = await digital_root(num)
+        print(f"  {num}: narcissistic={is_narcissistic}, digit_sum={digit_sum_val}, digital_root={digital_root_val}")
+    
+    # Partition exploration
+    print("\nInteger Partition Properties:")
+    for n in [4, 5, 6, 7]:
+        total_partitions = await partition_count(n)
+        distinct_parts = await distinct_partitions(n)
+        print(f"  n={n}: {total_partitions} total partitions, {distinct_parts} with distinct parts")
+    
+    # Egyptian fraction examples
+    print("\nEgyptian Fraction Examples:")
+    test_fractions = [(2, 3), (3, 4), (5, 6), (7, 12)]
+    for num, den in test_fractions:
+        egyptian = await egyptian_fraction_decomposition(num, den)
+        print(f"  {num}/{den} = " + " + ".join(f"1/{d}" for d in egyptian))
 
 async def demo_cryptographic_functions():
     """Demonstrate cryptographic applications of number theory functions."""
@@ -284,6 +466,7 @@ if __name__ == "__main__":
     
     async def main():
         await test_number_theory_functions()
+        await demo_new_functionality()
         await demo_cryptographic_functions()
         await demo_combinatorial_applications()
         await demo_arithmetic_function_applications()
