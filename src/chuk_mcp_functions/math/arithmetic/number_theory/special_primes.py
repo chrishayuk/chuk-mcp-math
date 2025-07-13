@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/special_numbers.py
+# chuk_mcp_functions/math/arithmetic/number_theory/special_primes.py
 """
-Special Prime Numbers and Arithmetic Functions - Async Native
+Special Prime Numbers and Prime-Related Functions - Async Native
 
-Functions for working with special types of prime numbers and arithmetic functions.
-Includes Mersenne primes, Fermat primes, Sophie Germain primes, twin primes,
-Wilson's theorem, Carmichael numbers, and various arithmetic functions.
+Comprehensive module for all types of special prime numbers and prime-related
+mathematical functions. Includes Mersenne primes, Fermat primes, Sophie Germain
+primes, twin primes, Wilson's theorem, pseudoprimes, and Carmichael numbers.
 
 Functions:
 - Mersenne primes: is_mersenne_prime, mersenne_prime_exponents, lucas_lehmer_test
 - Fermat primes: is_fermat_prime, fermat_numbers, known_fermat_primes
 - Sophie Germain & Safe primes: is_sophie_germain_prime, is_safe_prime, safe_prime_pairs
 - Twin primes: is_twin_prime, twin_prime_pairs, cousin_primes, sexy_primes
-- Wilson's theorem: wilson_theorem_test, wilson_factorial_mod
-- Pseudoprimes: is_carmichael_number, is_fermat_pseudoprime, fermat_test
-- Arithmetic functions: euler_totient, mobius_function, omega_functions
-- Prime gaps: prime_gap, largest_prime_gap, twin_prime_gaps
+- Wilson's theorem: wilson_theorem_check, wilson_factorial_mod
+- Pseudoprimes: is_fermat_pseudoprime, fermat_primality_check, is_carmichael_number
+- Prime gaps: prime_gap, largest_prime_gap_in_range, twin_prime_gaps
+- Prime patterns: prime_arithmetic_progressions, prime_constellations
 """
 
 import math
@@ -23,327 +23,9 @@ import asyncio
 from typing import List, Tuple, Optional, Dict, Any
 from chuk_mcp_functions.mcp_decorator import mcp_function
 
-# Import from other modules
-from .primes import is_prime, next_prime, nth_prime
+# Import dependencies from other modules
+from .primes import is_prime, next_prime, prime_factors
 from .divisibility import gcd
-
-# ============================================================================
-# BASIC SPECIAL NUMBERS
-# ============================================================================
-
-@mcp_function(
-    description="Check if a number is a perfect square.",
-    namespace="arithmetic",
-    category="special_numbers",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 16}, "output": True, "description": "16 = 4² is a perfect square"},
-        {"input": {"n": 25}, "output": True, "description": "25 = 5² is a perfect square"},
-        {"input": {"n": 15}, "output": False, "description": "15 is not a perfect square"},
-        {"input": {"n": 0}, "output": True, "description": "0 = 0² is a perfect square"}
-    ]
-)
-async def is_perfect_square(n: int) -> bool:
-    """
-    Check if a number is a perfect square.
-    
-    A perfect square is an integer that is the square of another integer.
-    
-    Args:
-        n: Non-negative integer to check
-    
-    Returns:
-        True if n is a perfect square, False otherwise
-    
-    Examples:
-        await is_perfect_square(16) → True   # 16 = 4²
-        await is_perfect_square(25) → True   # 25 = 5²
-        await is_perfect_square(15) → False  # No integer squared equals 15
-        await is_perfect_square(0) → True    # 0 = 0²
-    """
-    if n < 0:
-        return False
-    
-    if n == 0:
-        return True
-    
-    # Use integer square root to check
-    sqrt_n = int(math.sqrt(n))
-    return sqrt_n * sqrt_n == n
-
-@mcp_function(
-    description="Check if a number is a power of two.",
-    namespace="arithmetic", 
-    category="special_numbers",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 8}, "output": True, "description": "8 = 2³ is a power of two"},
-        {"input": {"n": 16}, "output": True, "description": "16 = 2⁴ is a power of two"},
-        {"input": {"n": 15}, "output": False, "description": "15 is not a power of two"},
-        {"input": {"n": 1}, "output": True, "description": "1 = 2⁰ is a power of two"}
-    ]
-)
-async def is_power_of_two(n: int) -> bool:
-    """
-    Check if a number is a power of two.
-    
-    A power of two is a number of the form 2^k where k ≥ 0.
-    
-    Args:
-        n: Positive integer to check
-    
-    Returns:
-        True if n is a power of two, False otherwise
-    
-    Examples:
-        await is_power_of_two(8) → True    # 8 = 2³
-        await is_power_of_two(16) → True   # 16 = 2⁴
-        await is_power_of_two(15) → False  # Not a power of two
-        await is_power_of_two(1) → True    # 1 = 2⁰
-    """
-    if n <= 0:
-        return False
-    
-    # Efficient bit manipulation: n is power of 2 iff n & (n-1) == 0
-    return (n & (n - 1)) == 0
-
-@mcp_function(
-    description="Calculate the nth Fibonacci number using efficient matrix exponentiation.",
-    namespace="arithmetic",
-    category="special_numbers", 
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    estimated_cpu_usage="medium",
-    examples=[
-        {"input": {"n": 10}, "output": 55, "description": "10th Fibonacci number"},
-        {"input": {"n": 0}, "output": 0, "description": "0th Fibonacci number"},
-        {"input": {"n": 1}, "output": 1, "description": "1st Fibonacci number"},
-        {"input": {"n": 20}, "output": 6765, "description": "20th Fibonacci number"}
-    ]
-)
-async def fibonacci(n: int) -> int:
-    """
-    Calculate the nth Fibonacci number.
-    
-    Uses efficient matrix exponentiation for large n.
-    Fibonacci sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
-    
-    Args:
-        n: Non-negative integer (position in sequence)
-    
-    Returns:
-        The nth Fibonacci number
-    
-    Raises:
-        ValueError: If n is negative
-    
-    Examples:
-        await fibonacci(0) → 0     # F₀ = 0
-        await fibonacci(1) → 1     # F₁ = 1
-        await fibonacci(10) → 55   # F₁₀ = 55
-        await fibonacci(20) → 6765 # F₂₀ = 6765
-    """
-    if n < 0:
-        raise ValueError("Fibonacci number position must be non-negative")
-    
-    if n <= 1:
-        return n
-    
-    # For small n, use simple iteration
-    if n <= 100:
-        a, b = 0, 1
-        for i in range(2, n + 1):
-            a, b = b, a + b
-            # Yield control every 10 iterations
-            if i % 10 == 0:
-                await asyncio.sleep(0)
-        return b
-    
-    # For large n, use matrix exponentiation: [[1,1],[1,0]]^n
-    def matrix_mult(A, B):
-        """Multiply two 2x2 matrices."""
-        return [
-            [A[0][0] * B[0][0] + A[0][1] * B[1][0], A[0][0] * B[0][1] + A[0][1] * B[1][1]],
-            [A[1][0] * B[0][0] + A[1][1] * B[1][0], A[1][0] * B[0][1] + A[1][1] * B[1][1]]
-        ]
-    
-    async def matrix_power(matrix, power):
-        """Calculate matrix^power using fast exponentiation."""
-        if power == 1:
-            return matrix
-        
-        result = [[1, 0], [0, 1]]  # Identity matrix
-        base = matrix
-        exp = power
-        iterations = 0
-        
-        while exp > 0:
-            if exp % 2 == 1:
-                result = matrix_mult(result, base)
-            base = matrix_mult(base, base)
-            exp //= 2
-            iterations += 1
-            
-            # Yield control every few iterations for very large n
-            if iterations % 10 == 0:
-                await asyncio.sleep(0)
-        
-        return result
-    
-    # [[1,1],[1,0]]^(n-1) gives [[F_n, F_{n-1}], [F_{n-1}, F_{n-2}]]
-    fib_matrix = [[1, 1], [1, 0]]
-    result_matrix = await matrix_power(fib_matrix, n)
-    return result_matrix[0][1]
-
-@mcp_function(
-    description="Calculate factorial n! = n × (n-1) × ... × 2 × 1.",
-    namespace="arithmetic",
-    category="special_numbers",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    estimated_cpu_usage="medium",
-    examples=[
-        {"input": {"n": 5}, "output": 120, "description": "5! = 5×4×3×2×1 = 120"},
-        {"input": {"n": 0}, "output": 1, "description": "0! = 1 by definition"},
-        {"input": {"n": 10}, "output": 3628800, "description": "10! = 3,628,800"},
-        {"input": {"n": 1}, "output": 1, "description": "1! = 1"}
-    ]
-)
-async def factorial(n: int) -> int:
-    """
-    Calculate the factorial of n.
-    
-    n! = n × (n-1) × (n-2) × ... × 2 × 1
-    By definition: 0! = 1
-    
-    Args:
-        n: Non-negative integer
-    
-    Returns:
-        n! (factorial of n)
-    
-    Raises:
-        ValueError: If n is negative
-    
-    Examples:
-        await factorial(0) → 1        # 0! = 1
-        await factorial(5) → 120      # 5! = 120
-        await factorial(10) → 3628800 # 10! = 3,628,800
-    """
-    if n < 0:
-        raise ValueError("Factorial is not defined for negative numbers")
-    
-    if n <= 1:
-        return 1
-    
-    result = 1
-    for i in range(2, n + 1):
-        result *= i
-        
-        # Yield control every 1000 iterations for large factorials
-        if i % 1000 == 0 and n > 1000:
-            await asyncio.sleep(0)
-    
-    return result
-
-@mcp_function(
-    description="Generate the first n Fibonacci numbers.",
-    namespace="arithmetic",
-    category="special_numbers",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    estimated_cpu_usage="medium",
-    examples=[
-        {"input": {"n": 10}, "output": [0, 1, 1, 2, 3, 5, 8, 13, 21, 34], "description": "First 10 Fibonacci numbers"},
-        {"input": {"n": 5}, "output": [0, 1, 1, 2, 3], "description": "First 5 Fibonacci numbers"},
-        {"input": {"n": 0}, "output": [], "description": "No Fibonacci numbers"}
-    ]
-)
-async def fibonacci_sequence(n: int) -> List[int]:
-    """
-    Generate the first n Fibonacci numbers.
-    
-    Args:
-        n: Number of Fibonacci numbers to generate (non-negative)
-    
-    Returns:
-        List of the first n Fibonacci numbers
-    
-    Examples:
-        await fibonacci_sequence(10) → [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-        await fibonacci_sequence(5) → [0, 1, 1, 2, 3]
-        await fibonacci_sequence(0) → []
-    """
-    if n <= 0:
-        return []
-    
-    if n == 1:
-        return [0]
-    
-    if n == 2:
-        return [0, 1]
-    
-    result = [0, 1]
-    
-    for i in range(2, n):
-        result.append(result[i-1] + result[i-2])
-        
-        # Yield control every 1000 iterations for large sequences
-        if i % 1000 == 0 and n > 1000:
-            await asyncio.sleep(0)
-    
-    return result
-
-@mcp_function(
-    description="Check if a number is a Fibonacci number.",
-    namespace="arithmetic",
-    category="special_numbers",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 13}, "output": True, "description": "13 is the 7th Fibonacci number"},
-        {"input": {"n": 55}, "output": True, "description": "55 is the 10th Fibonacci number"},
-        {"input": {"n": 12}, "output": False, "description": "12 is not a Fibonacci number"},
-        {"input": {"n": 0}, "output": True, "description": "0 is the 0th Fibonacci number"}
-    ]
-)
-async def is_fibonacci_number(n: int) -> bool:
-    """
-    Check if a number is a Fibonacci number.
-    
-    Uses the mathematical property: a positive integer n is a Fibonacci number
-    if and only if one of (5n²+4) or (5n²-4) is a perfect square.
-    
-    Args:
-        n: Non-negative integer to check
-    
-    Returns:
-        True if n is a Fibonacci number, False otherwise
-    
-    Examples:
-        await is_fibonacci_number(13) → True   # F₇ = 13
-        await is_fibonacci_number(55) → True   # F₁₀ = 55
-        await is_fibonacci_number(12) → False  # Not in sequence
-        await is_fibonacci_number(0) → True    # F₀ = 0
-    """
-    if n < 0:
-        return False
-    
-    if n == 0:
-        return True
-    
-    # Use the property: n is Fibonacci iff (5n²+4) or (5n²-4) is a perfect square
-    def is_perfect_square_helper(x):
-        if x < 0:
-            return False
-        sqrt_x = int(math.sqrt(x))
-        return sqrt_x * sqrt_x == x
-    
-    n_squared = n * n
-    return (is_perfect_square_helper(5 * n_squared + 4) or 
-            is_perfect_square_helper(5 * n_squared - 4))
 
 # ============================================================================
 # MERSENNE PRIMES
@@ -368,6 +50,7 @@ async def is_mersenne_prime(n: int) -> bool:
     Check if a number is a Mersenne prime.
     
     A Mersenne prime is a prime number of the form 2^p - 1 where p is also prime.
+    These primes are important in number theory and are used to find perfect numbers.
     
     Args:
         n: Number to check
@@ -379,6 +62,7 @@ async def is_mersenne_prime(n: int) -> bool:
         await is_mersenne_prime(31) → True   # 2^5 - 1
         await is_mersenne_prime(127) → True  # 2^7 - 1
         await is_mersenne_prime(15) → False  # 2^4 - 1, not prime
+        await is_mersenne_prime(17) → False  # Prime but not Mersenne form
     """
     if n <= 1:
         return False
@@ -406,7 +90,8 @@ async def is_mersenne_prime(n: int) -> bool:
     cache_strategy="memory",
     examples=[
         {"input": {"limit": 20}, "output": [2, 3, 5, 7, 13, 17, 19], "description": "Mersenne exponents ≤ 20"},
-        {"input": {"limit": 10}, "output": [2, 3, 5, 7], "description": "Mersenne exponents ≤ 10"}
+        {"input": {"limit": 10}, "output": [2, 3, 5, 7], "description": "Mersenne exponents ≤ 10"},
+        {"input": {"limit": 100}, "output": [2, 3, 5, 7, 13, 17, 19, 31, 61, 89], "description": "Mersenne exponents ≤ 100"}
     ]
 )
 async def mersenne_prime_exponents(limit: int) -> List[int]:
@@ -414,24 +99,25 @@ async def mersenne_prime_exponents(limit: int) -> List[int]:
     Get known Mersenne prime exponents up to a limit.
     
     Returns exponents p such that 2^p - 1 is prime, for p ≤ limit.
+    Uses the list of known Mersenne prime exponents.
     
     Args:
-        limit: Maximum exponent to check
+        limit: Maximum exponent to include
     
     Returns:
-        List of Mersenne prime exponents
+        List of Mersenne prime exponents ≤ limit
     
     Examples:
         await mersenne_prime_exponents(20) → [2, 3, 5, 7, 13, 17, 19]
-        await mersenne_prime_exponents(10) → [2, 3, 5, 7]
+        await mersenne_prime_exponents(100) → [2, 3, 5, 7, 13, 17, 19, 31, 61, 89]
     """
-    # Known Mersenne prime exponents (first 50)
+    # Known Mersenne prime exponents (first 51 as of 2024)
     known_exponents = [
         2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281,
         3217, 4253, 4423, 9689, 9941, 11213, 19937, 21701, 23209, 44497, 86243,
         110503, 132049, 216091, 756839, 859433, 1257787, 1398269, 2976221, 3021377,
         6972593, 13466917, 20996011, 24036583, 25964951, 30402457, 32582657,
-        37156667, 42643801, 43112609, 57885161, 74207281, 77232917
+        37156667, 42643801, 43112609, 57885161, 74207281, 77232917, 82589933
     ]
     
     return [p for p in known_exponents if p <= limit]
@@ -445,7 +131,8 @@ async def mersenne_prime_exponents(limit: int) -> List[int]:
     examples=[
         {"input": {"p": 5}, "output": True, "description": "2^5 - 1 = 31 is prime"},
         {"input": {"p": 7}, "output": True, "description": "2^7 - 1 = 127 is prime"},
-        {"input": {"p": 11}, "output": False, "description": "2^11 - 1 = 2047 is composite"}
+        {"input": {"p": 11}, "output": False, "description": "2^11 - 1 = 2047 is composite"},
+        {"input": {"p": 13}, "output": True, "description": "2^13 - 1 = 8191 is prime"}
     ]
 )
 async def lucas_lehmer_test(p: int) -> bool:
@@ -453,6 +140,8 @@ async def lucas_lehmer_test(p: int) -> bool:
     Lucas-Lehmer primality test for Mersenne numbers 2^p - 1.
     
     This is the most efficient test for Mersenne number primality.
+    The test works by computing a sequence where s_0 = 4 and
+    s_{i+1} = s_i^2 - 2 (mod 2^p - 1). If s_{p-2} ≡ 0, then 2^p - 1 is prime.
     
     Args:
         p: Exponent (must be odd prime > 2)
@@ -488,6 +177,50 @@ async def lucas_lehmer_test(p: int) -> bool:
     
     return s == 0
 
+@mcp_function(
+    description="Generate Mersenne numbers 2^p - 1 for prime exponents up to limit.",
+    namespace="arithmetic",
+    category="special_primes",
+    execution_modes=["local", "remote"],
+    estimated_cpu_usage="medium",
+    examples=[
+        {"input": {"limit": 10}, "output": [3, 7, 31, 127], "description": "Mersenne numbers for p ≤ 10"},
+        {"input": {"limit": 20}, "output": [3, 7, 31, 127, 8191, 131071, 524287], "description": "Mersenne numbers for p ≤ 20"}
+    ]
+)
+async def mersenne_numbers(limit: int) -> List[int]:
+    """
+    Generate Mersenne numbers 2^p - 1 for prime exponents up to limit.
+    
+    Args:
+        limit: Maximum exponent to consider
+    
+    Returns:
+        List of Mersenne numbers (may include composite ones)
+    
+    Examples:
+        await mersenne_numbers(10) → [3, 7, 31, 127]
+        await mersenne_numbers(20) → [3, 7, 31, 127, 8191, 131071, 524287]
+    """
+    if limit < 2:
+        return []
+    
+    result = []
+    candidate = 2
+    
+    while candidate <= limit:
+        if await is_prime(candidate):
+            mersenne = (1 << candidate) - 1
+            result.append(mersenne)
+        
+        candidate = await next_prime(candidate)
+        
+        # Yield control periodically
+        if len(result) % 5 == 0:
+            await asyncio.sleep(0)
+    
+    return result
+
 # ============================================================================
 # FERMAT PRIMES
 # ============================================================================
@@ -510,6 +243,7 @@ async def is_fermat_prime(n: int) -> bool:
     Check if a number is a Fermat prime.
     
     A Fermat prime is a prime number of the form 2^(2^k) + 1 for some k ≥ 0.
+    Only five Fermat primes are known: 3, 5, 17, 257, 65537.
     
     Args:
         n: Number to check
@@ -521,6 +255,7 @@ async def is_fermat_prime(n: int) -> bool:
         await is_fermat_prime(3) → True    # F_0 = 2^(2^0) + 1 = 3
         await is_fermat_prime(5) → True    # F_1 = 2^(2^1) + 1 = 5
         await is_fermat_prime(17) → True   # F_2 = 2^(2^2) + 1 = 17
+        await is_fermat_prime(7) → False   # Prime but not Fermat form
     """
     if n <= 2:
         return False
@@ -547,12 +282,15 @@ async def is_fermat_prime(n: int) -> bool:
     execution_modes=["local", "remote"],
     examples=[
         {"input": {"limit": 4}, "output": [3, 5, 17, 257, 65537], "description": "First 5 Fermat numbers"},
-        {"input": {"limit": 2}, "output": [3, 5, 17], "description": "First 3 Fermat numbers"}
+        {"input": {"limit": 2}, "output": [3, 5, 17], "description": "First 3 Fermat numbers"},
+        {"input": {"limit": 6}, "output": [3, 5, 17, 257, 65537, 4294967297], "description": "First 6 Fermat numbers (F_5 is composite)"}
     ]
 )
 async def fermat_numbers(limit: int) -> List[int]:
     """
     Generate Fermat numbers F_n = 2^(2^n) + 1.
+    
+    Note: F_5 and higher are known to be composite.
     
     Args:
         limit: Maximum index n to generate
@@ -562,14 +300,14 @@ async def fermat_numbers(limit: int) -> List[int]:
     
     Examples:
         await fermat_numbers(4) → [3, 5, 17, 257, 65537]
-        await fermat_numbers(2) → [3, 5, 17]
+        await fermat_numbers(6) → [3, 5, 17, 257, 65537, 4294967297, ...]
     """
     if limit < 0:
         return []
     
     result = []
     for n in range(limit + 1):
-        if n > 10:  # Avoid computing extremely large numbers
+        if n > 15:  # Avoid computing extremely large numbers
             break
         fermat_n = (1 << (1 << n)) + 1  # 2^(2^n) + 1
         result.append(fermat_n)
@@ -594,8 +332,11 @@ async def known_fermat_primes() -> List[int]:
     """
     Get the five known Fermat primes.
     
+    These are the only known Fermat primes: F_0, F_1, F_2, F_3, F_4.
+    It is unknown whether any more exist.
+    
     Returns:
-        List of the five known Fermat primes: F_0, F_1, F_2, F_3, F_4
+        List of the five known Fermat primes
     
     Examples:
         await known_fermat_primes() → [3, 5, 17, 257, 65537]
@@ -615,7 +356,8 @@ async def known_fermat_primes() -> List[int]:
     examples=[
         {"input": {"p": 11}, "output": True, "description": "11 is Sophie Germain: 2×11+1=23 is prime"},
         {"input": {"p": 23}, "output": True, "description": "23 is Sophie Germain: 2×23+1=47 is prime"},
-        {"input": {"p": 13}, "output": False, "description": "13 is not Sophie Germain: 2×13+1=27 is composite"}
+        {"input": {"p": 13}, "output": False, "description": "13 is not Sophie Germain: 2×13+1=27 is composite"},
+        {"input": {"p": 17}, "output": False, "description": "17 is not Sophie Germain: 2×17+1=35 is composite"}
     ]
 )
 async def is_sophie_germain_prime(p: int) -> bool:
@@ -623,6 +365,7 @@ async def is_sophie_germain_prime(p: int) -> bool:
     Check if a prime p is a Sophie Germain prime.
     
     A Sophie Germain prime is a prime p such that 2p + 1 is also prime.
+    These primes are important in cryptography and number theory.
     
     Args:
         p: Number to check
@@ -650,7 +393,8 @@ async def is_sophie_germain_prime(p: int) -> bool:
     examples=[
         {"input": {"q": 23}, "output": True, "description": "23 = 2×11+1 where 11 is prime"},
         {"input": {"q": 47}, "output": True, "description": "47 = 2×23+1 where 23 is prime"},
-        {"input": {"q": 29}, "output": False, "description": "29 = 2×14+1 where 14 is not prime"}
+        {"input": {"q": 29}, "output": False, "description": "29 = 2×14+1 where 14 is not prime"},
+        {"input": {"q": 37}, "output": False, "description": "37 = 2×18+1 where 18 is not prime"}
     ]
 )
 async def is_safe_prime(q: int) -> bool:
@@ -658,6 +402,7 @@ async def is_safe_prime(q: int) -> bool:
     Check if a prime q is a safe prime.
     
     A safe prime is a prime q such that (q-1)/2 is also prime.
+    Safe primes are used in cryptographic applications.
     
     Args:
         q: Number to check
@@ -689,8 +434,9 @@ async def is_safe_prime(q: int) -> bool:
     execution_modes=["local", "remote"],
     estimated_cpu_usage="medium",
     examples=[
-        {"input": {"limit": 50}, "output": [(2, 5), (3, 7), (5, 11), (11, 23), (23, 47)], "description": "Sophie Germain pairs ≤ 50"},
-        {"input": {"limit": 25}, "output": [(2, 5), (3, 7), (5, 11), (11, 23)], "description": "Sophie Germain pairs ≤ 25"}
+        {"input": {"limit": 50}, "output": [[2, 5], [3, 7], [5, 11], [11, 23], [23, 47]], "description": "Sophie Germain pairs ≤ 50"},
+        {"input": {"limit": 25}, "output": [[2, 5], [3, 7], [5, 11], [11, 23]], "description": "Sophie Germain pairs ≤ 25"},
+        {"input": {"limit": 100}, "output": [[2, 5], [3, 7], [5, 11], [11, 23], [23, 47], [29, 59], [41, 83], [53, 107]], "description": "Sophie Germain pairs ≤ 100"}
     ]
 )
 async def safe_prime_pairs(limit: int) -> List[Tuple[int, int]]:
@@ -707,6 +453,7 @@ async def safe_prime_pairs(limit: int) -> List[Tuple[int, int]]:
     
     Examples:
         await safe_prime_pairs(50) → [(2, 5), (3, 7), (5, 11), (11, 23), (23, 47)]
+        await safe_prime_pairs(100) → [(2, 5), (3, 7), (5, 11), (11, 23), (23, 47), (29, 59), (41, 83), (53, 107)]
     """
     pairs = []
     checks = 0
@@ -746,6 +493,7 @@ async def is_twin_prime(p: int) -> bool:
     Check if a number is part of a twin prime pair.
     
     Twin primes are pairs of primes (p, p+2) or (p-2, p).
+    Examples: (3,5), (5,7), (11,13), (17,19), (29,31), (41,43)
     
     Args:
         p: Number to check
@@ -774,8 +522,9 @@ async def is_twin_prime(p: int) -> bool:
     execution_modes=["local", "remote"],
     estimated_cpu_usage="medium",
     examples=[
-        {"input": {"limit": 50}, "output": [(3, 5), (5, 7), (11, 13), (17, 19), (29, 31), (41, 43)], "description": "Twin primes ≤ 50"},
-        {"input": {"limit": 20}, "output": [(3, 5), (5, 7), (11, 13), (17, 19)], "description": "Twin primes ≤ 20"}
+        {"input": {"limit": 50}, "output": [[3, 5], [5, 7], [11, 13], [17, 19], [29, 31], [41, 43]], "description": "Twin primes ≤ 50"},
+        {"input": {"limit": 20}, "output": [[3, 5], [5, 7], [11, 13], [17, 19]], "description": "Twin primes ≤ 20"},
+        {"input": {"limit": 100}, "output": [[3, 5], [5, 7], [11, 13], [17, 19], [29, 31], [41, 43], [59, 61], [71, 73]], "description": "Twin primes ≤ 100"}
     ]
 )
 async def twin_prime_pairs(limit: int) -> List[Tuple[int, int]]:
@@ -790,6 +539,7 @@ async def twin_prime_pairs(limit: int) -> List[Tuple[int, int]]:
     
     Examples:
         await twin_prime_pairs(50) → [(3, 5), (5, 7), (11, 13), (17, 19), (29, 31), (41, 43)]
+        await twin_prime_pairs(100) → [(3, 5), (5, 7), (11, 13), (17, 19), (29, 31), (41, 43), (59, 61), (71, 73)]
     """
     pairs = []
     checks = 0
@@ -812,13 +562,17 @@ async def twin_prime_pairs(limit: int) -> List[Tuple[int, int]]:
     execution_modes=["local", "remote"],
     estimated_cpu_usage="medium",
     examples=[
-        {"input": {"limit": 50}, "output": [(3, 7), (7, 11), (13, 17), (19, 23), (37, 41), (43, 47)], "description": "Cousin primes ≤ 50"},
-        {"input": {"limit": 20}, "output": [(3, 7), (7, 11), (13, 17), (19, 23)], "description": "Cousin primes ≤ 20"}
+        {"input": {"limit": 50}, "output": [[3, 7], [7, 11], [13, 17], [19, 23], [37, 41], [43, 47]], "description": "Cousin primes ≤ 50"},
+        {"input": {"limit": 20}, "output": [[3, 7], [7, 11], [13, 17], [19, 23]], "description": "Cousin primes ≤ 20"},
+        {"input": {"limit": 100}, "output": [[3, 7], [7, 11], [13, 17], [19, 23], [37, 41], [43, 47], [67, 71], [79, 83]], "description": "Cousin primes ≤ 100"}
     ]
 )
 async def cousin_primes(limit: int) -> List[Tuple[int, int]]:
     """
     Find cousin prime pairs (primes that differ by 4).
+    
+    Cousin primes are pairs of primes (p, p+4).
+    Examples: (3,7), (7,11), (13,17), (19,23)
     
     Args:
         limit: Upper limit for the smaller cousin prime
@@ -850,13 +604,17 @@ async def cousin_primes(limit: int) -> List[Tuple[int, int]]:
     execution_modes=["local", "remote"],
     estimated_cpu_usage="medium",
     examples=[
-        {"input": {"limit": 50}, "output": [(5, 11), (7, 13), (13, 19), (17, 23), (31, 37), (37, 43), (41, 47)], "description": "Sexy primes ≤ 50"},
-        {"input": {"limit": 25}, "output": [(5, 11), (7, 13), (13, 19), (17, 23)], "description": "Sexy primes ≤ 25"}
+        {"input": {"limit": 50}, "output": [[5, 11], [7, 13], [13, 19], [17, 23], [31, 37], [37, 43], [41, 47]], "description": "Sexy primes ≤ 50"},
+        {"input": {"limit": 25}, "output": [[5, 11], [7, 13], [13, 19], [17, 23]], "description": "Sexy primes ≤ 25"},
+        {"input": {"limit": 100}, "output": [[5, 11], [7, 13], [13, 19], [17, 23], [31, 37], [37, 43], [41, 47], [61, 67], [73, 79]], "description": "Sexy primes ≤ 100"}
     ]
 )
 async def sexy_primes(limit: int) -> List[Tuple[int, int]]:
     """
     Find sexy prime pairs (primes that differ by 6).
+    
+    Sexy primes are pairs of primes (p, p+6).
+    Examples: (5,11), (7,13), (13,19), (17,23)
     
     Args:
         limit: Upper limit for the smaller sexy prime
@@ -894,7 +652,8 @@ async def sexy_primes(limit: int) -> List[Tuple[int, int]]:
     examples=[
         {"input": {"n": 7}, "output": True, "description": "7 is prime: 6! ≡ -1 (mod 7)"},
         {"input": {"n": 11}, "output": True, "description": "11 is prime: 10! ≡ -1 (mod 11)"},
-        {"input": {"n": 8}, "output": False, "description": "8 is composite: 7! ≢ -1 (mod 8)"}
+        {"input": {"n": 8}, "output": False, "description": "8 is composite: 7! ≢ -1 (mod 8)"},
+        {"input": {"n": 9}, "output": False, "description": "9 is composite: 8! ≢ -1 (mod 9)"}
     ]
 )
 async def wilson_theorem_check(n: int) -> bool:
@@ -902,6 +661,8 @@ async def wilson_theorem_check(n: int) -> bool:
     Check Wilson's theorem for primality.
     
     Wilson's theorem: p is prime if and only if (p-1)! ≡ -1 (mod p).
+    This provides a theoretical primality test, though it's not practical
+    for large numbers due to the factorial computation.
     
     Args:
         n: Number to check
@@ -978,7 +739,8 @@ async def wilson_factorial_mod(k: int, m: int) -> int:
     examples=[
         {"input": {"n": 341, "a": 2}, "output": True, "description": "341 is pseudoprime base 2"},
         {"input": {"n": 341, "a": 3}, "output": False, "description": "341 fails base 3 check"},
-        {"input": {"n": 561, "a": 2}, "output": True, "description": "561 is Carmichael number"}
+        {"input": {"n": 561, "a": 2}, "output": True, "description": "561 is Carmichael number"},
+        {"input": {"n": 561, "a": 5}, "output": True, "description": "561 is pseudoprime to many bases"}
     ]
 )
 async def is_fermat_pseudoprime(n: int, a: int) -> bool:
@@ -998,6 +760,7 @@ async def is_fermat_pseudoprime(n: int, a: int) -> bool:
     Examples:
         await is_fermat_pseudoprime(341, 2) → True   # 341 is base-2 pseudoprime
         await is_fermat_pseudoprime(341, 3) → False  # 341 fails base-3 check
+        await is_fermat_pseudoprime(561, 2) → True   # 561 is Carmichael number
     """
     if n <= 1 or await is_prime(n):
         return False
@@ -1011,7 +774,7 @@ async def is_fermat_pseudoprime(n: int, a: int) -> bool:
 @mcp_function(
     description="Perform Fermat primality check for base a.",
     namespace="arithmetic",
-    category="pseudoprimes",
+    category="primality_tests",
     execution_modes=["local", "remote"],
     estimated_cpu_usage="medium",
     examples=[
@@ -1061,6 +824,7 @@ async def fermat_primality_check(n: int, a: int) -> bool:
     examples=[
         {"input": {"n": 561}, "output": True, "description": "561 is smallest Carmichael number"},
         {"input": {"n": 1105}, "output": True, "description": "1105 is Carmichael number"},
+        {"input": {"n": 1729}, "output": True, "description": "1729 is Carmichael number"},
         {"input": {"n": 341}, "output": False, "description": "341 is pseudoprime but not Carmichael"}
     ]
 )
@@ -1090,7 +854,6 @@ async def is_carmichael_number(n: int) -> bool:
         return False
     
     # Get prime factorization to check Korselt's criterion
-    from .primes import prime_factors
     factors = await prime_factors(n)
     
     if not factors:
@@ -1113,182 +876,7 @@ async def is_carmichael_number(n: int) -> bool:
     return True
 
 # ============================================================================
-# ARITHMETIC FUNCTIONS
-# ============================================================================
-
-@mcp_function(
-    description="Calculate Euler's totient function φ(n) - count of integers ≤ n coprime to n.",
-    namespace="arithmetic",
-    category="arithmetic_functions",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    estimated_cpu_usage="medium",
-    examples=[
-        {"input": {"n": 12}, "output": 4, "description": "φ(12) = 4: numbers 1,5,7,11 are coprime to 12"},
-        {"input": {"n": 9}, "output": 6, "description": "φ(9) = 6: numbers 1,2,4,5,7,8 are coprime to 9"},
-        {"input": {"n": 17}, "output": 16, "description": "φ(17) = 16: all numbers 1-16 coprime to prime 17"}
-    ]
-)
-async def euler_totient(n: int) -> int:
-    """
-    Calculate Euler's totient function φ(n).
-    
-    φ(n) counts the number of integers from 1 to n that are coprime to n.
-    
-    Args:
-        n: Positive integer
-    
-    Returns:
-        φ(n) - count of integers ≤ n that are coprime to n
-    
-    Examples:
-        await euler_totient(12) → 4   # 1, 5, 7, 11 are coprime to 12
-        await euler_totient(9) → 6    # 1, 2, 4, 5, 7, 8 are coprime to 9
-        await euler_totient(17) → 16  # All 1-16 are coprime to prime 17
-    """
-    if n <= 0:
-        return 0
-    if n == 1:
-        return 1
-    
-    # Use the formula: φ(n) = n * ∏(1 - 1/p) for all prime p dividing n
-    from .primes import prime_factors
-    factors = await prime_factors(n)
-    
-    if not factors:
-        return 1
-    
-    result = n
-    unique_primes = set(factors)
-    
-    for p in unique_primes:
-        result = result * (p - 1) // p
-    
-    return result
-
-@mcp_function(
-    description="Calculate the Möbius function μ(n).",
-    namespace="arithmetic",
-    category="arithmetic_functions",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 6}, "output": 1, "description": "μ(6) = 1: 6 = 2×3 (2 distinct primes)"},
-        {"input": {"n": 12}, "output": 0, "description": "μ(12) = 0: 12 = 2²×3 (has square factor)"},
-        {"input": {"n": 30}, "output": -1, "description": "μ(30) = -1: 30 = 2×3×5 (3 distinct primes)"}
-    ]
-)
-async def mobius_function(n: int) -> int:
-    """
-    Calculate the Möbius function μ(n).
-    
-    μ(n) = 1 if n is square-free with even number of prime factors
-    μ(n) = -1 if n is square-free with odd number of prime factors  
-    μ(n) = 0 if n has a squared prime factor
-    
-    Args:
-        n: Positive integer
-    
-    Returns:
-        μ(n) ∈ {-1, 0, 1}
-    
-    Examples:
-        await mobius_function(6) → 1    # 6 = 2×3 (2 distinct primes)
-        await mobius_function(12) → 0   # 12 = 2²×3 (has square factor)
-        await mobius_function(30) → -1  # 30 = 2×3×5 (3 distinct primes)
-    """
-    if n <= 0:
-        return 0
-    if n == 1:
-        return 1
-    
-    from .primes import prime_factors
-    factors = await prime_factors(n)
-    
-    if not factors:
-        return 1
-    
-    # Check if square-free
-    unique_factors = set(factors)
-    if len(factors) != len(unique_factors):
-        return 0  # Has repeated prime factor
-    
-    # Return (-1)^k where k is number of distinct prime factors
-    k = len(unique_factors)
-    return (-1) ** k
-
-@mcp_function(
-    description="Calculate ω(n) - number of distinct prime factors.",
-    namespace="arithmetic",
-    category="arithmetic_functions",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 12}, "output": 2, "description": "ω(12) = 2: prime factors are 2, 3"},
-        {"input": {"n": 30}, "output": 3, "description": "ω(30) = 3: prime factors are 2, 3, 5"},
-        {"input": {"n": 17}, "output": 1, "description": "ω(17) = 1: only prime factor is 17"}
-    ]
-)
-async def little_omega(n: int) -> int:
-    """
-    Calculate ω(n) - number of distinct prime factors.
-    
-    Args:
-        n: Positive integer
-    
-    Returns:
-        Number of distinct prime factors of n
-    
-    Examples:
-        await little_omega(12) → 2   # 12 = 2²×3, distinct primes: 2, 3
-        await little_omega(30) → 3   # 30 = 2×3×5, distinct primes: 2, 3, 5
-        await little_omega(17) → 1   # 17 is prime
-    """
-    if n <= 1:
-        return 0
-    
-    from .primes import prime_factors
-    factors = await prime_factors(n)
-    
-    return len(set(factors))
-
-@mcp_function(
-    description="Calculate Ω(n) - total number of prime factors (with multiplicity).",
-    namespace="arithmetic",
-    category="arithmetic_functions",
-    execution_modes=["local", "remote"],
-    cache_strategy="memory",
-    examples=[
-        {"input": {"n": 12}, "output": 3, "description": "Ω(12) = 3: prime factors 2, 2, 3"},
-        {"input": {"n": 30}, "output": 3, "description": "Ω(30) = 3: prime factors 2, 3, 5"},
-        {"input": {"n": 8}, "output": 3, "description": "Ω(8) = 3: prime factors 2, 2, 2"}
-    ]
-)
-async def big_omega(n: int) -> int:
-    """
-    Calculate Ω(n) - total number of prime factors counting multiplicity.
-    
-    Args:
-        n: Positive integer
-    
-    Returns:
-        Total number of prime factors of n (with repetition)
-    
-    Examples:
-        await big_omega(12) → 3   # 12 = 2²×3, factors: 2, 2, 3
-        await big_omega(30) → 3   # 30 = 2×3×5, factors: 2, 3, 5  
-        await big_omega(8) → 3    # 8 = 2³, factors: 2, 2, 2
-    """
-    if n <= 1:
-        return 0
-    
-    from .primes import prime_factors
-    factors = await prime_factors(n)
-    
-    return len(factors)
-
-# ============================================================================
-# PRIME GAPS
+# PRIME GAPS AND PATTERNS
 # ============================================================================
 
 @mcp_function(
@@ -1300,7 +888,8 @@ async def big_omega(n: int) -> int:
     examples=[
         {"input": {"p": 7}, "output": 4, "description": "Gap from 7 to next prime 11 is 4"},
         {"input": {"p": 23}, "output": 6, "description": "Gap from 23 to next prime 29 is 6"},
-        {"input": {"p": 2}, "output": 1, "description": "Gap from 2 to next prime 3 is 1"}
+        {"input": {"p": 2}, "output": 1, "description": "Gap from 2 to next prime 3 is 1"},
+        {"input": {"p": 89}, "output": 8, "description": "Gap from 89 to next prime 97 is 8"}
     ]
 )
 async def prime_gap(p: int) -> int:
@@ -1327,14 +916,104 @@ async def prime_gap(p: int) -> int:
     next_p = await next_prime(p)
     return next_p - p
 
+@mcp_function(
+    description="Find the largest prime gap in a given range.",
+    namespace="arithmetic",
+    category="prime_gaps",
+    execution_modes=["local", "remote"],
+    estimated_cpu_usage="high",
+    examples=[
+        {"input": {"start": 2, "end": 100}, "output": {"gap": 8, "prime": 89, "next_prime": 97}, "description": "Largest gap ≤ 100"},
+        {"input": {"start": 2, "end": 50}, "output": {"gap": 6, "prime": 23, "next_prime": 29}, "description": "Largest gap ≤ 50"}
+    ]
+)
+async def largest_prime_gap_in_range(start: int, end: int) -> Dict[str, int]:
+    """
+    Find the largest prime gap in a given range.
+    
+    Args:
+        start: Start of range
+        end: End of range
+    
+    Returns:
+        Dictionary with gap size, prime, and next prime
+    
+    Examples:
+        await largest_prime_gap_in_range(2, 100) → {"gap": 8, "prime": 89, "next_prime": 97}
+        await largest_prime_gap_in_range(2, 50) → {"gap": 6, "prime": 23, "next_prime": 29}
+    """
+    if start < 2:
+        start = 2
+    
+    max_gap = 0
+    gap_prime = 0
+    gap_next_prime = 0
+    
+    p = start
+    while p <= end:
+        if await is_prime(p):
+            next_p = await next_prime(p)
+            gap = next_p - p
+            
+            if gap > max_gap:
+                max_gap = gap
+                gap_prime = p
+                gap_next_prime = next_p
+            
+            p = next_p
+        else:
+            p += 1
+        
+        # Yield control periodically
+        if p % 100 == 0:
+            await asyncio.sleep(0)
+    
+    return {
+        "gap": max_gap,
+        "prime": gap_prime,
+        "next_prime": gap_next_prime
+    }
+
+@mcp_function(
+    description="Find gaps between consecutive twin prime pairs.",
+    namespace="arithmetic",
+    category="prime_gaps",
+    execution_modes=["local", "remote"],
+    estimated_cpu_usage="medium",
+    examples=[
+        {"input": {"limit": 100}, "output": [2, 6, 6, 12, 12, 18, 2], "description": "Gaps between twin prime pairs ≤ 100"}
+    ]
+)
+async def twin_prime_gaps(limit: int) -> List[int]:
+    """
+    Find gaps between consecutive twin prime pairs.
+    
+    Args:
+        limit: Upper limit for twin primes
+    
+    Returns:
+        List of gaps between consecutive twin prime pairs
+    
+    Examples:
+        await twin_prime_gaps(100) → [2, 6, 6, 12, 12, 18, 2]
+    """
+    twin_pairs = await twin_prime_pairs(limit)
+    
+    if len(twin_pairs) < 2:
+        return []
+    
+    gaps = []
+    for i in range(1, len(twin_pairs)):
+        # Gap is difference between start of current pair and start of previous pair
+        gap = twin_pairs[i][0] - twin_pairs[i-1][0]
+        gaps.append(gap)
+    
+    return gaps
+
 # Export all functions
 __all__ = [
-    # Basic special numbers
-    'is_perfect_square', 'is_power_of_two', 'fibonacci', 'factorial', 
-    'fibonacci_sequence', 'is_fibonacci_number',
-    
     # Mersenne primes
-    'is_mersenne_prime', 'mersenne_prime_exponents', 'lucas_lehmer_test',
+    'is_mersenne_prime', 'mersenne_prime_exponents', 'lucas_lehmer_test', 'mersenne_numbers',
     
     # Fermat primes  
     'is_fermat_prime', 'fermat_numbers', 'known_fermat_primes',
@@ -1351,28 +1030,17 @@ __all__ = [
     # Pseudoprimes and Carmichael numbers
     'is_fermat_pseudoprime', 'fermat_primality_check', 'is_carmichael_number',
     
-    # Arithmetic functions
-    'euler_totient', 'mobius_function', 'little_omega', 'big_omega',
-    
-    # Prime gaps
-    'prime_gap'
+    # Prime gaps and patterns
+    'prime_gap', 'largest_prime_gap_in_range', 'twin_prime_gaps'
 ]
 
 if __name__ == "__main__":
     import asyncio
     
-    async def test_special_numbers():
-        """Test special number functions."""
-        print("🔢 Special Numbers Functions Test")
+    async def test_special_primes():
+        """Test special prime functions."""
+        print("🔢 Special Primes Functions Test")
         print("=" * 40)
-        
-        # Test basic special numbers
-        print("Basic Special Numbers:")
-        print(f"  is_perfect_square(16) = {await is_perfect_square(16)}")
-        print(f"  is_power_of_two(8) = {await is_power_of_two(8)}")
-        print(f"  fibonacci(10) = {await fibonacci(10)}")
-        print(f"  factorial(5) = {await factorial(5)}")
-        print(f"  is_fibonacci_number(13) = {await is_fibonacci_number(13)}")
         
         # Test Mersenne primes
         print("Mersenne Primes:")
@@ -1397,6 +1065,7 @@ if __name__ == "__main__":
         print(f"  is_twin_prime(13) = {await is_twin_prime(13)}")
         print(f"  twin_prime_pairs(30) = {await twin_prime_pairs(30)}")
         print(f"  cousin_primes(20) = {await cousin_primes(20)}")
+        print(f"  sexy_primes(25) = {await sexy_primes(25)}")
         
         # Test Wilson's theorem
         print("\nWilson's Theorem:")
@@ -1408,18 +1077,13 @@ if __name__ == "__main__":
         print(f"  is_fermat_pseudoprime(341, 2) = {await is_fermat_pseudoprime(341, 2)}")
         print(f"  is_carmichael_number(561) = {await is_carmichael_number(561)}")
         
-        # Test arithmetic functions
-        print("\nArithmetic Functions:")
-        print(f"  euler_totient(12) = {await euler_totient(12)}")
-        print(f"  mobius_function(30) = {await mobius_function(30)}")
-        print(f"  little_omega(12) = {await little_omega(12)}")
-        print(f"  big_omega(12) = {await big_omega(12)}")
-        
         # Test prime gaps
         print("\nPrime Gaps:")
         print(f"  prime_gap(7) = {await prime_gap(7)}")
         print(f"  prime_gap(23) = {await prime_gap(23)}")
+        gap_info = await largest_prime_gap_in_range(2, 100)
+        print(f"  largest_prime_gap_in_range(2, 100) = {gap_info}")
         
-        print("\n✅ All special number functions working!")
+        print("\n✅ All special prime functions working!")
     
-    asyncio.run(test_special_numbers())
+    asyncio.run(test_special_primes())
