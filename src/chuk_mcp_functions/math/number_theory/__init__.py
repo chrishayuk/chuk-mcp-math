@@ -25,12 +25,14 @@ Submodules:
 - advanced_prime_patterns: cousin primes, sexy primes, prime constellations, distribution analysis, gap records
 - special_number_categories: amicable numbers, vampire numbers, Keith numbers, taxi numbers, digital properties
 - continued_fractions: CF expansions, convergents, periodic CFs, Pell equation solutions, approximation theory
+- farey_sequences: Farey sequences, Ford circles, mediants, Stern-Brocot tree, rational approximation
 
 All functions are async native for optimal performance in async environments.
-Total: 320+ mathematical functions across 17 specialized modules.
+Total: 340+ mathematical functions across 18 specialized modules.
 """
 
 # Import all number theory submodules (existing)
+import math
 from . import primes
 from . import divisibility
 from . import basic_sequences
@@ -51,6 +53,7 @@ from . import diophantine_equations
 from . import advanced_prime_patterns
 from . import special_number_categories
 from . import continued_fractions
+from . import farey_sequences
 
 # Core prime operations (most commonly used)
 from .primes import (
@@ -204,6 +207,16 @@ from .continued_fractions import (
     calendar_approximations, cf_convergence_analysis
 )
 
+# Farey sequences (NEW)
+from .farey_sequences import (
+    farey_sequence, farey_sequence_length, farey_neighbors,
+    mediant, stern_brocot_tree, farey_mediant_path,
+    ford_circles, ford_circle_properties, circle_tangency,
+    farey_sequence_properties, density_analysis, gap_analysis,
+    best_approximation_farey, farey_fraction_between,
+    farey_sum, calkin_wilf_tree, riemann_hypothesis_connection
+)
+
 # Export all number theory functions for convenient access
 __all__ = [
     # Submodules
@@ -212,6 +225,7 @@ __all__ = [
     'mathematical_constants', 'digital_operations', 'partitions', 'egyptian_fractions',
     'figurate_numbers', 'modular_arithmetic', 'recursive_sequences',
     'diophantine_equations', 'advanced_prime_patterns', 'special_number_categories', 'continued_fractions',
+    'farey_sequences',
     
     # Core prime operations
     'is_prime', 'next_prime', 'nth_prime', 'prime_factors',
@@ -326,7 +340,15 @@ __all__ = [
     'convergents_sequence', 'best_rational_approximation', 'convergent_properties',
     'sqrt_cf_expansion', 'periodic_continued_fractions', 'cf_solve_pell',
     'e_continued_fraction', 'golden_ratio_cf', 'pi_cf_algorithms',
-    'calendar_approximations', 'cf_convergence_analysis'
+    'calendar_approximations', 'cf_convergence_analysis',
+    
+    # Farey sequences (NEW)
+    'farey_sequence', 'farey_sequence_length', 'farey_neighbors',
+    'mediant', 'stern_brocot_tree', 'farey_mediant_path',
+    'ford_circles', 'ford_circle_properties', 'circle_tangency',
+    'farey_sequence_properties', 'density_analysis', 'gap_analysis',
+    'best_approximation_farey', 'farey_fraction_between',
+    'farey_sum', 'calkin_wilf_tree', 'riemann_hypothesis_connection'
 ]
 
 async def test_number_theory_functions():
@@ -372,6 +394,23 @@ async def test_number_theory_functions():
     print(f"  catalan_number(5) = {await catalan_number(5)}")
     print(f"  pentagonal_number(5) = {await pentagonal_number(5)}")
     print(f"  tetrahedral_number(4) = {await tetrahedral_number(4)}")
+    
+    # Test Farey sequences (NEW)
+    print("\nFarey Sequences (NEW):")
+    farey_seq = await farey_sequence(5)
+    print(f"  farey_sequence(5) = {farey_seq}")
+    
+    farey_len = await farey_sequence_length(5)
+    print(f"  farey_sequence_length(5) = {farey_len['length']}")
+    
+    mediant_result = await mediant(1, 3, 1, 2)
+    print(f"  mediant(1/3, 1/2) = {mediant_result}")
+    
+    ford_result = await ford_circles(4)
+    print(f"  ford_circles(4) = {ford_result['count']} circles")
+    
+    best_approx_farey = await best_approximation_farey(0.618, 10)
+    print(f"  best_approximation_farey(0.618, 10) = {best_approx_farey['best_approximation']}")
     
     # Test Diophantine equations
     print("\nDiophantine Equations (NEW):")
@@ -435,6 +474,12 @@ async def demo_comprehensive_functionality():
             perfect = (2**(exp-1)) * mersenne
             is_perfect = await is_perfect_number(perfect)
             print(f"    2^{exp}-1 = {mersenne} (prime) → Perfect: {perfect} ({is_perfect})")
+    
+    print("\n  Farey Sequences ↔ Continued Fractions:")
+    for target in [0.618, 0.414, 0.707]:  # φ-1, √2-1, √2/2
+        farey_approx = await best_approximation_farey(target, 20)
+        cf_approx = await best_rational_approximation(target, 20)
+        print(f"    {target}: Farey = {farey_approx['best_approximation']}, CF = {cf_approx['best_approximation']}")
     
     print("\n  Continued Fractions ↔ Pell Equations:")
     for n in [2, 3, 5]:
@@ -513,6 +558,18 @@ async def demo_educational_applications():
     base_2 = await number_to_base(n, 2)
     base_16 = await number_to_base(n, 16)
     print(f"    In binary: {base_2}, in hex: {base_16}")
+    
+    # Farey sequence analysis
+    print(f"\n  Farey Sequence Analysis for fractions with denominator ≤ 8:")
+    farey_8 = await farey_sequence(8)
+    print(f"    F_8 contains {len(farey_8)} fractions")
+    
+    # Find n as a fraction in Farey sequence
+    n_as_frac = f"{n}/1"
+    if [60, 1] in farey_8:
+        print(f"    {n}/1 appears in F_8")
+    else:
+        print(f"    {n}/1 too large for F_8")
 
 async def demo_research_applications():
     """Demonstrate research-level applications."""
@@ -526,6 +583,18 @@ async def demo_research_applications():
     for start, end in ranges:
         gaps = await prime_gaps_analysis(start, end)
         print(f"  Range [{start}, {end}]: avg gap = {gaps['avg_gap']}, max gap = {gaps['max_gap']}")
+    
+    print("\nFarey Sequence Research:")
+    
+    # Study Farey sequence density growth
+    density_data = await density_analysis(15)
+    print(f"  Farey densities F_1 to F_15: {density_data['densities']}")
+    print(f"  Asymptotic constant estimate: {density_data['estimated_constant']}")
+    print(f"  Theoretical constant (3/π²): {density_data['theoretical_constant']}")
+    
+    # Ford circles analysis
+    ford_props = await ford_circle_properties(10)
+    print(f"  Ford circles F_10: {ford_props['total_circles']} circles, all tangent: {ford_props['all_tangent']}")
     
     print("\nContinued Fraction Convergence:")
     

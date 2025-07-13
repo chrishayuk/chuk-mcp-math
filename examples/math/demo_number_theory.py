@@ -8,11 +8,12 @@ advanced cryptographic functions, and cutting-edge number theory research
 in an educational format.
 
 Features:
-- 320+ functions across 17 specialized modules
+- 340+ functions across 18 specialized modules
 - Diophantine equations and Pell solutions
 - Advanced prime patterns and distribution analysis
 - Special number categories (amicable, vampire, etc.)
 - Continued fractions and approximation theory
+- Farey sequences and Ford circles (NEW)
 - Cross-module mathematical relationships
 - Research-level demonstrations
 
@@ -414,6 +415,123 @@ async def demo_continued_fractions():
         error = approx['error']
         interpretation = approx['calendar_interpretation']
         print(f"    {fraction[0]}/{fraction[1]}: {interpretation} (error: {error:.6f} days)")
+
+async def demo_farey_sequences():
+    """Demonstrate Farey sequences and their geometric connections (NEW)."""
+    await print_header("Farey Sequences & Ford Circles (NEW)")
+    
+    await print_subheader("Basic Farey Sequence Operations")
+    
+    # Generate Farey sequences of different orders
+    farey_examples = [3, 5, 7]
+    for n in farey_examples:
+        farey_seq = await number_theory.farey_sequence(n)
+        print(f"  F_{n} = {farey_seq}")
+        
+        # Show length calculation
+        length_data = await number_theory.farey_sequence_length(n)
+        print(f"    Length: {length_data['length']} (formula: 1 + Σφ(k) = {length_data['formula_result']})")
+    
+    await print_subheader("Mediant Operations and Stern-Brocot Tree")
+    
+    # Mediant examples
+    mediant_examples = [
+        (1, 3, 1, 2),  # 1/3 and 1/2
+        (2, 5, 3, 7),  # 2/5 and 3/7
+        (0, 1, 1, 4)   # 0/1 and 1/4
+    ]
+    
+    for p1, q1, p2, q2 in mediant_examples:
+        mediant_result = await number_theory.mediant(p1, q1, p2, q2)
+        val1, val2 = p1/q1, p2/q2
+        mediant_val = mediant_result[0]/mediant_result[1]
+        print(f"  mediant({p1}/{q1}, {p2}/{q2}) = {mediant_result[0]}/{mediant_result[1]} = {mediant_val:.4f}")
+        print(f"    Between {val1:.4f} and {val2:.4f}: {val1 < mediant_val < val2}")
+    
+    # Stern-Brocot tree paths
+    sb_examples = [(3, 7), (5, 8), (2, 5)]
+    print("\n  Stern-Brocot tree paths:")
+    for p, q in sb_examples:
+        sb_result = await number_theory.stern_brocot_tree(p, q)
+        path = ''.join(sb_result['path'])
+        print(f"    Path to {p}/{q}: {path} (depth {sb_result['depth']})")
+    
+    await print_subheader("Ford Circles and Geometric Properties")
+    
+    # Ford circles for small Farey sequences
+    ford_examples = [4, 5]
+    for n in ford_examples:
+        circles_data = await number_theory.ford_circles(n)
+        print(f"  Ford circles for F_{n}: {circles_data['count']} circles")
+        
+        # Show a few circles
+        for i, circle in enumerate(circles_data['circles'][:4]):
+            frac = circle['fraction']
+            center = circle['center']
+            radius = circle['radius']
+            print(f"    {frac[0]}/{frac[1]}: center ({center[0]:.3f}, {center[1]:.3f}), radius {radius:.3f}")
+    
+    # Circle tangency analysis
+    print("\n  Ford circle tangency relationships:")
+    tangency_examples = [
+        (1, 3, 1, 2),  # Adjacent in F_3
+        (1, 4, 1, 3),  # Adjacent in F_4
+        (2, 5, 1, 2)   # Adjacent in F_5
+    ]
+    
+    for p1, q1, p2, q2 in tangency_examples:
+        tangency = await number_theory.circle_tangency(p1, q1, p2, q2)
+        print(f"    Circles for {p1}/{q1} and {p2}/{q2}: tangent = {tangency['are_tangent']}")
+        print(f"      Farey adjacent: {tangency['are_farey_adjacent']} (det = {tangency['determinant']})")
+    
+    await print_subheader("Farey Sequence Analysis and Density")
+    
+    # Analyze properties of larger Farey sequences
+    analysis_examples = [8, 10]
+    for n in analysis_examples:
+        props = await number_theory.farey_sequence_properties(n)
+        print(f"  F_{n} properties:")
+        print(f"    Length: {props['length']}, max gap: {props['max_gap']:.4f}")
+        print(f"    Avg gap: {props['avg_gap']:.4f}, unique denominators: {props['unique_denominators']}")
+        print(f"    Adjacent pairs: {props['adjacent_pairs']}")
+    
+    # Density growth analysis
+    print("\n  Farey sequence density growth:")
+    density_data = await number_theory.density_analysis(12)
+    densities = density_data['densities']
+    print(f"    |F_n| for n=1..12: {densities}")
+    print(f"    Asymptotic constant 3/π² ≈ {density_data['theoretical_constant']:.4f}")
+    print(f"    Estimated constant: {density_data['estimated_constant']:.4f}")
+    
+    await print_subheader("Applications and Approximations")
+    
+    # Best rational approximations using Farey sequences
+    approximation_targets = [
+        (math.pi - 3, "π - 3"),
+        (math.sqrt(2) - 1, "√2 - 1"),
+        ((1 + math.sqrt(5))/2 - 1, "φ - 1")
+    ]
+    
+    print("  Best Farey approximations:")
+    for value, name in approximation_targets:
+        if 0 <= value <= 1:
+            approx = await number_theory.best_approximation_farey(value, 20)
+            print(f"    {name} ≈ {value:.6f}")
+            print(f"      Best: {approx['best_approximation'][0]}/{approx['best_approximation'][1]} (error: {approx['error']:.6f})")
+    
+    # Finding fractions between given fractions
+    print("\n  Finding fractions between given fractions:")
+    between_examples = [
+        (1, 3, 1, 2),  # Between 1/3 and 1/2
+        (2, 7, 1, 3),  # Between 2/7 and 1/3
+        (3, 8, 2, 5)   # Between 3/8 and 2/5
+    ]
+    
+    for p1, q1, p2, q2 in between_examples:
+        between_result = await number_theory.farey_fraction_between(p1, q1, p2, q2)
+        between_frac = between_result['fraction_between']
+        print(f"    Between {p1}/{q1} and {p2}/{q2}: {between_frac[0]}/{between_frac[1]} (mediant)")
+        print(f"      Value: {between_result['value']:.6f}, adjacent: {between_result['fractions_are_adjacent']}")
 
 async def demo_mathematical_sequences():
     """Demonstrate various mathematical sequences and their properties."""
@@ -852,6 +970,54 @@ async def demo_cross_module_relationships():
             match = direct_sol == cf_sol
             print(f"      Methods agree: {match}")
     
+    await print_subheader("Farey Sequences ↔ Continued Fractions")
+    
+    # Compare approximation methods
+    print("  Rational approximation comparison:")
+    approximation_targets = [
+        (math.pi - 3, "π - 3"),
+        (math.sqrt(2) - 1, "√2 - 1"),
+        ((1 + math.sqrt(5))/2 - 1, "φ - 1")
+    ]
+    
+    for value, name in approximation_targets:
+        if 0 <= value <= 1:
+            try:
+                # Farey sequence method
+                farey_approx = await number_theory.best_approximation_farey(value, 20)
+                # Continued fraction method
+                cf_approx = await number_theory.best_rational_approximation(value, 20)
+                
+                print(f"    {name} ≈ {value:.6f}:")
+                print(f"      Farey: {farey_approx['best_approximation'][0]}/{farey_approx['best_approximation'][1]} (error: {farey_approx['error']:.6f})")
+                
+                # Handle different possible key names for continued fractions
+                if 'best_approximation' in cf_approx:
+                    cf_frac = cf_approx['best_approximation']
+                elif 'best_fraction' in cf_approx:
+                    cf_frac = cf_approx['best_fraction']
+                else:
+                    # Find the fraction key
+                    cf_frac = None
+                    for key in cf_approx.keys():
+                        if isinstance(cf_approx[key], list) and len(cf_approx[key]) == 2:
+                            cf_frac = cf_approx[key]
+                            break
+                
+                if cf_frac:
+                    print(f"      CF:    {cf_frac[0]}/{cf_frac[1]} (error: {cf_approx['error']:.6f})")
+                else:
+                    print(f"      CF:    {cf_approx}")
+                    
+            except Exception as e:
+                print(f"    {name} ≈ {value:.6f}: Error in approximation comparison - {e}")
+                # Fallback: just show Farey approximation
+                try:
+                    farey_approx = await number_theory.best_approximation_farey(value, 20)
+                    print(f"      Farey: {farey_approx['best_approximation'][0]}/{farey_approx['best_approximation'][1]} (error: {farey_approx['error']:.6f})")
+                except Exception as farey_error:
+                    print(f"      Farey approximation also failed: {farey_error}")
+    
     await print_subheader("Figurate Numbers ↔ Diophantine Equations")
     
     # Pythagorean triples and figurate number relationships
@@ -957,8 +1123,8 @@ async def main():
     print("=" * 70)
     print("Welcome to the chuk_mcp_functions enhanced number theory showcase!")
     print("This script demonstrates the extensive capabilities of our")
-    print("async-native number theory library with 320+ functions across")
-    print("17 specialized modules, including cutting-edge research areas.")
+    print("async-native number theory library with 340+ functions across")
+    print("18 specialized modules, including cutting-edge research areas.")
     
     # Record start time
     start_time = time.time()
@@ -970,6 +1136,7 @@ async def main():
         demo_diophantine_equations,           # NEW
         demo_special_number_categories,       # NEW
         demo_continued_fractions,             # NEW
+        demo_farey_sequences,                 # NEW
         demo_mathematical_sequences,
         demo_figurate_numbers,
         demo_advanced_prime_analysis,         # NEW
@@ -996,7 +1163,7 @@ async def main():
     print(f"⏱️  Total execution time: {end_time - start_time:.2f} seconds")
     print(f"🚀 All functions executed asynchronously for optimal performance")
     print(f"📚 Demonstrated {len(demos)} major areas of number theory")
-    print(f"🔢 Showcased 320+ functions across 17 specialized modules")
+    print(f"🔢 Showcased 340+ functions across 18 specialized modules")
     
     print(f"\n🎯 Key Features Showcased:")
     features = [
@@ -1005,6 +1172,7 @@ async def main():
         "Diophantine equations (linear, Pell's, Pythagorean triples)",
         "Special number categories (amicable, vampire, Keith, taxi numbers)",
         "Continued fractions and rational approximation theory",
+        "Farey sequences, Ford circles, and geometric number theory",
         "Mathematical sequences (Fibonacci, Lucas, Catalan, recursive)",
         "Figurate numbers (polygonal, centered, 3D geometric patterns)",
         "Prime distribution analysis and conjecture verification",
@@ -1028,12 +1196,14 @@ async def main():
     print(f"   • Competitive programming and mathematical olympiads")
     print(f"   • Professional mathematical software development")
     print(f"   • Research in analytic and algebraic number theory")
+    print(f"   • Geometric number theory and visualization applications")
     
     print(f"\n🌟 New Capabilities Added:")
     print(f"   • Diophantine equation solving (linear, Pell's, quadratic)")
     print(f"   • Advanced prime constellation analysis and verification")
     print(f"   • Comprehensive special number taxonomy and properties")
     print(f"   • Continued fraction theory and approximation algorithms")
+    print(f"   • Farey sequences, Ford circles, and geometric connections")
     print(f"   • Cross-module mathematical relationship exploration")
     print(f"   • Research-grade performance and scalability testing")
 
