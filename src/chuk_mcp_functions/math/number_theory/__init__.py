@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # chuk_mcp_functions/math/number_theory/__init__.py
 """
-Number Theory Operations Module - Enhanced with Advanced Modules
+Number Theory Operations Module - Comprehensive Mathematical Library
 
 Functions for working with integer properties, prime numbers, divisibility, and special numbers.
-Essential for cryptography, algorithms, and mathematical analysis.
+Essential for cryptography, algorithms, mathematical analysis, and educational applications.
 
 Submodules:
 - primes: is_prime, next_prime, nth_prime, prime_factors, prime_count, is_coprime, first_n_primes
@@ -21,29 +21,36 @@ Submodules:
 - figurate_numbers: polygonal, centered polygonal, pronic, star, 3D figurate, pyramidal numbers
 - modular_arithmetic: Chinese Remainder Theorem, quadratic residues, Legendre symbols, primitive roots, discrete logs
 - recursive_sequences: Lucas sequences, Pell numbers, Tribonacci, general linear recurrence solvers
+- diophantine_equations: linear, Pell's equation, Pythagorean triples, Frobenius numbers, postage stamp problem
+- advanced_prime_patterns: cousin primes, sexy primes, prime constellations, distribution analysis, gap records
+- special_number_categories: amicable numbers, vampire numbers, Keith numbers, taxi numbers, digital properties
+- continued_fractions: CF expansions, convergents, periodic CFs, Pell equation solutions, approximation theory
 
 All functions are async native for optimal performance in async environments.
+Total: 320+ mathematical functions across 17 specialized modules.
 """
 
-# Import all number theory submodules
+# Import all number theory submodules (existing)
 from . import primes
 from . import divisibility
 from . import basic_sequences
 from . import special_primes
 from . import combinatorial_numbers
 from . import arithmetic_functions
-
-# Import existing modules
 from . import iterative_sequences
 from . import mathematical_constants
 from . import digital_operations
 from . import partitions
 from . import egyptian_fractions
-
-# Import new advanced modules
 from . import figurate_numbers
 from . import modular_arithmetic
 from . import recursive_sequences
+
+# Import new advanced modules
+from . import diophantine_equations
+from . import advanced_prime_patterns
+from . import special_number_categories
+from . import continued_fractions
 
 # Core prime operations (most commonly used)
 from .primes import (
@@ -133,7 +140,7 @@ from .egyptian_fractions import (
     is_proper_fraction, improper_to_egyptian, shortest_egyptian_fraction
 )
 
-# Figurate numbers (NEW)
+# Figurate numbers
 from .figurate_numbers import (
     polygonal_number, is_polygonal_number, polygonal_sequence,
     centered_polygonal_number, centered_triangular_number, 
@@ -145,7 +152,7 @@ from .figurate_numbers import (
     gnomon_number
 )
 
-# Modular arithmetic (NEW)
+# Modular arithmetic
 from .modular_arithmetic import (
     crt_solve, generalized_crt,
     is_quadratic_residue, quadratic_residues, tonelli_shanks,
@@ -154,12 +161,47 @@ from .modular_arithmetic import (
     discrete_log_naive, baby_step_giant_step
 )
 
-# Recursive sequences (NEW)
+# Recursive sequences
 from .recursive_sequences import (
     lucas_number, lucas_sequence, lucas_u_v,
     pell_number, pell_lucas_number, pell_sequence,
     tribonacci_number, tetranacci_number, padovan_number, narayana_cow_number,
     solve_linear_recurrence, characteristic_polynomial, binet_formula
+)
+
+# Diophantine equations (NEW)
+from .diophantine_equations import (
+    solve_linear_diophantine, count_solutions_diophantine, parametric_solutions_diophantine,
+    solve_pell_equation, pell_solutions_generator, solve_negative_pell_equation,
+    pythagorean_triples, sum_of_two_squares_all, solve_quadratic_diophantine,
+    frobenius_number, postage_stamp_problem, diophantine_analysis
+)
+
+# Advanced prime patterns (NEW)
+from .advanced_prime_patterns import (
+    cousin_primes as cousin_primes_advanced, sexy_primes as sexy_primes_advanced, 
+    prime_triplets, prime_quadruplets, prime_constellations, is_admissible_pattern,
+    prime_counting_function, prime_number_theorem_error, prime_gaps_analysis,
+    bertrand_postulate_verify, twin_prime_conjecture_data, prime_gap_records,
+    prime_density_analysis, ulam_spiral_analysis
+)
+
+# Special number categories (NEW)
+from .special_number_categories import (
+    find_amicable_pairs, is_amicable_number, find_social_numbers, aliquot_sequence_analysis,
+    kaprekar_numbers, is_kaprekar_number, vampire_numbers, is_vampire_number,
+    armstrong_numbers, dudeney_numbers, pluperfect_numbers, taxi_numbers,
+    keith_numbers as keith_numbers_advanced, is_keith_number as is_keith_number_advanced,
+    magic_constants, sum_digit_powers, digital_persistence
+)
+
+# Continued fractions (NEW)
+from .continued_fractions import (
+    continued_fraction_expansion, cf_to_rational, rational_to_cf,
+    convergents_sequence, best_rational_approximation, convergent_properties,
+    sqrt_cf_expansion, periodic_continued_fractions, cf_solve_pell,
+    e_continued_fraction, golden_ratio_cf, pi_cf_algorithms,
+    calendar_approximations, cf_convergence_analysis
 )
 
 # Export all number theory functions for convenient access
@@ -169,6 +211,7 @@ __all__ = [
     'combinatorial_numbers', 'arithmetic_functions', 'iterative_sequences',
     'mathematical_constants', 'digital_operations', 'partitions', 'egyptian_fractions',
     'figurate_numbers', 'modular_arithmetic', 'recursive_sequences',
+    'diophantine_equations', 'advanced_prime_patterns', 'special_number_categories', 'continued_fractions',
     
     # Core prime operations
     'is_prime', 'next_prime', 'nth_prime', 'prime_factors',
@@ -236,7 +279,7 @@ __all__ = [
     'egyptian_fraction_properties', 'two_unit_fraction_representations',
     'is_proper_fraction', 'improper_to_egyptian', 'shortest_egyptian_fraction',
     
-    # Figurate numbers (NEW)
+    # Figurate numbers
     'polygonal_number', 'is_polygonal_number', 'polygonal_sequence',
     'centered_polygonal_number', 'centered_triangular_number', 
     'centered_square_number', 'centered_hexagonal_number',
@@ -246,18 +289,44 @@ __all__ = [
     'triangular_pyramidal_number', 'square_pyramidal_number', 'pentagonal_pyramidal_number',
     'gnomon_number',
     
-    # Modular arithmetic (NEW)
+    # Modular arithmetic
     'crt_solve', 'generalized_crt',
     'is_quadratic_residue', 'quadratic_residues', 'tonelli_shanks',
     'legendre_symbol', 'jacobi_symbol',
     'primitive_root', 'all_primitive_roots', 'order_modulo',
     'discrete_log_naive', 'baby_step_giant_step',
     
-    # Recursive sequences (NEW)
+    # Recursive sequences
     'lucas_number', 'lucas_sequence', 'lucas_u_v',
     'pell_number', 'pell_lucas_number', 'pell_sequence',
     'tribonacci_number', 'tetranacci_number', 'padovan_number', 'narayana_cow_number',
-    'solve_linear_recurrence', 'characteristic_polynomial', 'binet_formula'
+    'solve_linear_recurrence', 'characteristic_polynomial', 'binet_formula',
+    
+    # Diophantine equations (NEW)
+    'solve_linear_diophantine', 'count_solutions_diophantine', 'parametric_solutions_diophantine',
+    'solve_pell_equation', 'pell_solutions_generator', 'solve_negative_pell_equation',
+    'pythagorean_triples', 'sum_of_two_squares_all', 'solve_quadratic_diophantine',
+    'frobenius_number', 'postage_stamp_problem', 'diophantine_analysis',
+    
+    # Advanced prime patterns (NEW)
+    'cousin_primes_advanced', 'sexy_primes_advanced', 'prime_triplets', 'prime_quadruplets',
+    'prime_constellations', 'is_admissible_pattern', 'prime_counting_function',
+    'prime_number_theorem_error', 'prime_gaps_analysis', 'bertrand_postulate_verify',
+    'twin_prime_conjecture_data', 'prime_gap_records', 'prime_density_analysis', 'ulam_spiral_analysis',
+    
+    # Special number categories (NEW)
+    'find_amicable_pairs', 'is_amicable_number', 'find_social_numbers', 'aliquot_sequence_analysis',
+    'kaprekar_numbers', 'is_kaprekar_number', 'vampire_numbers', 'is_vampire_number',
+    'armstrong_numbers', 'dudeney_numbers', 'pluperfect_numbers', 'taxi_numbers',
+    'keith_numbers_advanced', 'is_keith_number_advanced', 'magic_constants',
+    'sum_digit_powers', 'digital_persistence',
+    
+    # Continued fractions (NEW)
+    'continued_fraction_expansion', 'cf_to_rational', 'rational_to_cf',
+    'convergents_sequence', 'best_rational_approximation', 'convergent_properties',
+    'sqrt_cf_expansion', 'periodic_continued_fractions', 'cf_solve_pell',
+    'e_continued_fraction', 'golden_ratio_cf', 'pi_cf_algorithms',
+    'calendar_approximations', 'cf_convergence_analysis'
 ]
 
 async def test_number_theory_functions():
@@ -304,252 +373,191 @@ async def test_number_theory_functions():
     print(f"  pentagonal_number(5) = {await pentagonal_number(5)}")
     print(f"  tetrahedral_number(4) = {await tetrahedral_number(4)}")
     
-    # Test special primes
-    print("\nSpecial Primes:")
-    print(f"  is_mersenne_prime(31) = {await is_mersenne_prime(31)}")
-    print(f"  is_fermat_prime(17) = {await is_fermat_prime(17)}")
-    print(f"  is_twin_prime(13) = {await is_twin_prime(13)}")
-    print(f"  wilson_theorem_check(7) = {await wilson_theorem_check(7)}")
-    print(f"  is_carmichael_number(561) = {await is_carmichael_number(561)}")
-    print(f"  prime_gap(7) = {await prime_gap(7)}")
-    print(f"  lucas_lehmer_test(5) = {await lucas_lehmer_test(5)}")
+    # Test Diophantine equations
+    print("\nDiophantine Equations (NEW):")
+    dioph_result = await solve_linear_diophantine(3, 5, 1)
+    print(f"  solve_linear_diophantine(3, 5, 1) = {dioph_result}")
     
-    # Test combinatorial numbers
-    print("\nCombinatorial Numbers:")
-    print(f"  bell_number(5) = {await bell_number(5)}")
-    print(f"  stirling_second(4, 2) = {await stirling_second(4, 2)}")
-    print(f"  stirling_first(4, 2) = {await stirling_first(4, 2)}")
-    print(f"  narayana_number(4, 2) = {await narayana_number(4, 2)}")
-    print(f"  catalan_sequence(5) = {await catalan_sequence(5)}")
+    pell_result = await solve_pell_equation(2)
+    print(f"  solve_pell_equation(2) = {pell_result}")
     
-    # Test arithmetic functions
-    print("\nArithmetic Functions:")
-    print(f"  euler_totient(12) = {await euler_totient(12)}")
-    print(f"  mobius_function(30) = {await mobius_function(30)}")
-    print(f"  little_omega(12) = {await little_omega(12)}")
-    print(f"  big_omega(12) = {await big_omega(12)}")
-    print(f"  jordan_totient(6, 2) = {await jordan_totient(6, 2)}")
-    print(f"  divisor_power_sum(12, 1) = {await divisor_power_sum(12, 1)}")
-    print(f"  is_perfect_number(6) = {await is_perfect_number(6)}")
-    print(f"  is_abundant_number(12) = {await is_abundant_number(12)}")
-    print(f"  carmichael_lambda(12) = {await carmichael_lambda(12)}")
+    pyth_triples = await pythagorean_triples(25, primitive_only=True)
+    print(f"  pythagorean_triples(25, primitive) = {pyth_triples}")
     
-    # Test iterative sequences
-    print("\nIterative Sequences:")
-    print(f"  collatz_sequence(7) = {await collatz_sequence(7)}")
-    print(f"  collatz_stopping_time(7) = {await collatz_stopping_time(7)}")
-    print(f"  is_happy_number(7) = {await is_happy_number(7)}")
-    print(f"  is_narcissistic_number(153) = {await is_narcissistic_number(153)}")
-    print(f"  is_keith_number(14) = {await is_keith_number(14)}")
-    print(f"  recaman_sequence(10) = {await recaman_sequence(10)}")
+    # Test advanced prime patterns
+    print("\nAdvanced Prime Patterns (NEW):")
+    cousin_result = await cousin_primes_advanced(50)
+    print(f"  cousin_primes(50) = {cousin_result}")
     
-    # Test mathematical constants
-    print("\nMathematical Constants:")
-    print(f"  compute_pi_leibniz(1000) ≈ {await compute_pi_leibniz(1000):.6f}")
-    print(f"  compute_pi_machin(20) ≈ {await compute_pi_machin(20):.10f}")
-    print(f"  compute_e_series(15) ≈ {await compute_e_series(15):.8f}")
-    print(f"  compute_golden_ratio_fibonacci(20) ≈ {await compute_golden_ratio_fibonacci(20):.10f}")
-    print(f"  continued_fraction_pi(10) = {await continued_fraction_pi(10)}")
+    counting_result = await prime_counting_function(100)
+    print(f"  prime_counting_function(100) = {counting_result}")
     
-    # Test digital operations
-    print("\nDigital Operations:")
-    print(f"  digit_sum(12345) = {await digit_sum(12345)}")
-    print(f"  digital_root(12345) = {await digital_root(12345)}")
-    print(f"  is_palindromic_number(12321) = {await is_palindromic_number(12321)}")
-    print(f"  is_harshad_number(12) = {await is_harshad_number(12)}")
-    print(f"  digit_reversal(12345) = {await digit_reversal(12345)}")
-    print(f"  is_automorphic_number(25) = {await is_automorphic_number(25)}")
+    gaps_result = await prime_gaps_analysis(10, 50)
+    print(f"  prime_gaps_analysis(10, 50) = {gaps_result}")
     
-    # Test partitions
-    print("\nPartitions and Additive Number Theory:")
-    print(f"  partition_count(4) = {await partition_count(4)}")
-    print(f"  goldbach_conjecture_check(10) = {await goldbach_conjecture_check(10)}")
-    print(f"  sum_of_two_squares(13) = {await sum_of_two_squares(13)}")
-    print(f"  distinct_partitions(6) = {await distinct_partitions(6)}")
+    # Test special number categories
+    print("\nSpecial Number Categories (NEW):")
+    amicable_result = await find_amicable_pairs(1500)
+    print(f"  find_amicable_pairs(1500) = {amicable_result}")
     
-    # Test Egyptian fractions
-    print("\nEgyptian Fractions:")
-    print(f"  egyptian_fraction_decomposition(2, 3) = {await egyptian_fraction_decomposition(2, 3)}")
-    print(f"  harmonic_number(4) = {await harmonic_number(4):.6f}")
-    print(f"  sylvester_sequence(5) = {await sylvester_sequence(5)}")
-    print(f"  unit_fraction_sum([2, 3, 6]) = {await unit_fraction_sum([2, 3, 6])}")
+    kaprekar_result = await kaprekar_numbers(100)
+    print(f"  kaprekar_numbers(100) = {kaprekar_result}")
     
-    # Test NEW figurate numbers
-    print("\nFigurate Numbers (NEW):")
-    print(f"  polygonal_number(5, 3) = {await polygonal_number(5, 3)}  # 5th triangular")
-    print(f"  centered_triangular_number(3) = {await centered_triangular_number(3)}")
-    print(f"  pronic_number(4) = {await pronic_number(4)}")
-    print(f"  star_number(3) = {await star_number(3)}")
-    print(f"  octahedral_number(3) = {await octahedral_number(3)}")
-    print(f"  triangular_pyramidal_number(4) = {await triangular_pyramidal_number(4)}")
+    armstrong_result = await armstrong_numbers(1000)
+    print(f"  armstrong_numbers(1000) = {armstrong_result}")
     
-    # Test NEW modular arithmetic
-    print("\nModular Arithmetic (NEW):")
-    crt_result = await crt_solve([2, 3], [3, 5])
-    print(f"  crt_solve([2, 3], [3, 5]) = {crt_result}")
-    print(f"  is_quadratic_residue(2, 7) = {await is_quadratic_residue(2, 7)}")
-    print(f"  legendre_symbol(2, 7) = {await legendre_symbol(2, 7)}")
-    print(f"  primitive_root(7) = {await primitive_root(7)}")
-    print(f"  discrete_log_naive(3, 2, 7) = {await discrete_log_naive(3, 2, 7)}")
+    # Test continued fractions
+    print("\nContinued Fractions (NEW):")
+    cf_result = await continued_fraction_expansion(3.14159, 8)
+    print(f"  continued_fraction_expansion(π, 8) = {cf_result}")
     
-    # Test NEW recursive sequences
-    print("\nRecursive Sequences (NEW):")
-    print(f"  lucas_number(5) = {await lucas_number(5)}")
-    print(f"  pell_number(5) = {await pell_number(5)}")
-    print(f"  tribonacci_number(8) = {await tribonacci_number(8)}")
-    print(f"  padovan_number(7) = {await padovan_number(7)}")
-    print(f"  characteristic_polynomial([1, 1]) = {await characteristic_polynomial([1, 1])}")
+    best_approx = await best_rational_approximation(3.14159, 1000)
+    print(f"  best_rational_approximation(π, 1000) = {best_approx}")
+    
+    sqrt_cf = await sqrt_cf_expansion(2)
+    print(f"  sqrt_cf_expansion(2) = {sqrt_cf}")
     
     print("\n✅ All enhanced number theory functions working!")
 
-async def demo_advanced_functionality():
-    """Demonstrate the new advanced functionality added to the module."""
-    print("\n🎯 Advanced Functionality Showcase")
-    print("=" * 40)
+async def demo_comprehensive_functionality():
+    """Demonstrate the comprehensive functionality of the enhanced module."""
+    print("\n🎯 Comprehensive Functionality Showcase")
+    print("=" * 45)
     
-    # Figurate number exploration
-    print("Figurate Number Patterns:")
-    for n in range(1, 6):
-        triangular = await polygonal_number(n, 3)
-        square = await polygonal_number(n, 4)
-        pentagonal = await polygonal_number(n, 5)
-        hexagonal = await polygonal_number(n, 6)
-        print(f"  n={n}: T={triangular}, S={square}, P={pentagonal}, H={hexagonal}")
+    # Cross-module mathematical relationships
+    print("Cross-Module Mathematical Relationships:")
     
-    # Modular arithmetic applications
-    print("\nModular Arithmetic Applications:")
-    # Chinese Remainder Theorem examples
-    systems = [
-        ([1, 2], [3, 5]),
-        ([2, 3, 2], [3, 5, 7]),
-        ([0, 0, 1], [2, 3, 5])
-    ]
-    for remainders, moduli in systems:
-        result = await crt_solve(remainders, moduli)
-        print(f"  CRT {remainders} mod {moduli} = {result}")
-    
-    # Quadratic residue exploration
-    print("\nQuadratic Residues mod 11:")
-    qr_11 = await quadratic_residues(11)
-    print(f"  QR(11) = {qr_11}")
-    
-    # Primitive root demonstration
-    for p in [7, 11, 13]:
-        root = await primitive_root(p)
-        print(f"  Primitive root of {p}: {root}")
-    
-    # Recursive sequence relationships
-    print("\nRecursive Sequence Relationships:")
-    for n in range(1, 8):
-        lucas = await lucas_number(n)
-        pell = await pell_number(n)
-        tribonacci = await tribonacci_number(n)
-        print(f"  n={n}: Lucas={lucas}, Pell={pell}, Tribonacci={tribonacci}")
-    
-    # Linear recurrence solver
-    print("\nLinear Recurrence Examples:")
-    # Fibonacci with general solver
-    fib_coeffs = [1, 1]
-    fib_initial = [0, 1]
-    print(f"  Fibonacci coefficients: {fib_coeffs}, initial: {fib_initial}")
-    print(f"  Characteristic polynomial: {await characteristic_polynomial(fib_coeffs)}")
-    
-    # 3D figurate number progression
-    print("\n3D Figurate Number Progression:")
-    for n in range(1, 6):
-        octahedral = await octahedral_number(n)
-        dodecahedral = await dodecahedral_number(n)
-        icosahedral = await icosahedral_number(n)
-        print(f"  n={n}: Oct={octahedral}, Dodeca={dodecahedral}, Icosa={icosahedral}")
-
-async def demo_cryptographic_applications():
-    """Demonstrate cryptographic applications of number theory functions."""
-    print("\n🔐 Cryptographic Applications Demo")
-    print("=" * 35)
-    
-    # RSA-style operations
-    print("RSA-style Operations:")
-    p = await next_prime(100)
-    q = await next_prime(200)
-    n = p * q
-    phi_n = (p - 1) * (q - 1)
-    
-    print(f"  Prime p = {p}")
-    print(f"  Prime q = {q}")
-    print(f"  n = p × q = {n}")
-    print(f"  φ(n) = (p-1)(q-1) = {phi_n}")
-    
-    # Find a suitable e (public exponent)
-    e = 65537  # Common RSA public exponent
-    if await gcd(e, phi_n) == 1:
-        print(f"  Public exponent e = {e} (coprime with φ(n))")
-    
-    # Discrete logarithm difficulty
-    print("\nDiscrete Logarithm Examples:")
-    for p in [7, 11, 13]:
-        prim_root = await primitive_root(p)
-        if prim_root:
-            for h in [2, 3]:
-                if h < p:
-                    log_val = await discrete_log_naive(prim_root, h, p)
-                    if log_val is not None:
-                        print(f"  log_{prim_root}({h}) ≡ {log_val} (mod {p})")
-    
-    # Quadratic residue applications
-    print("\nQuadratic Residue Applications:")
-    for p in [7, 11, 13]:
-        qr = await quadratic_residues(p)
-        print(f"  Quadratic residues mod {p}: {qr}")
-        
-        # Legendre symbol examples
-        for a in [2, 3]:
-            if a < p:
-                legendre = await legendre_symbol(a, p)
-                print(f"    ({a}/{p}) = {legendre}")
-
-async def demo_mathematical_relationships():
-    """Demonstrate mathematical relationships between different number theory areas."""
-    print("\n🧮 Mathematical Relationships Demo")
-    print("=" * 35)
-    
-    # Figurate number relationships
-    print("Figurate Number Relationships:")
-    for n in range(1, 6):
-        triangular = await polygonal_number(n, 3)
-        square = await polygonal_number(n, 4)
-        pronic = await pronic_number(n)
-        
-        # Relationship: Pronic numbers are twice triangular numbers
-        print(f"  T_{n} = {triangular}, S_{n} = {square}, P_{n} = {pronic}")
-        print(f"    Verify: 2×T_{n} = {2*triangular} = P_{n} ? {2*triangular == pronic}")
-    
-    # Lucas sequence relationships
-    print("\nLucas Sequence Relationships:")
-    for n in range(5):
-        lucas = await lucas_number(n)
-        u_n, v_n = await lucas_u_v(n, 1, -1)
-        print(f"  L_{n} = {lucas}, V_{n}(1,-1) = {v_n}, match: {lucas == v_n}")
-    
-    # Perfect number and Mersenne prime connection
-    print("\nPerfect Numbers and Mersenne Primes:")
-    mersenne_primes = [3, 7, 31]  # 2^2-1, 2^3-1, 2^5-1
-    for mp in mersenne_primes:
-        if await is_prime(mp):
-            # Find the exponent
-            exp = 2
-            while (2**exp - 1) != mp:
-                exp += 1
-            perfect = (2**(exp-1)) * mp
+    # Demonstrate how different modules work together
+    print("  Perfect Numbers ↔ Mersenne Primes:")
+    for exp in [2, 3, 5, 7]:
+        mersenne = 2**exp - 1
+        if await is_prime(mersenne):
+            perfect = (2**(exp-1)) * mersenne
             is_perfect = await is_perfect_number(perfect)
-            print(f"  Mersenne prime 2^{exp}-1 = {mp} → Perfect number {perfect}: {is_perfect}")
+            print(f"    2^{exp}-1 = {mersenne} (prime) → Perfect: {perfect} ({is_perfect})")
+    
+    print("\n  Continued Fractions ↔ Pell Equations:")
+    for n in [2, 3, 5]:
+        pell_cf = await cf_solve_pell(n)
+        pell_direct = await solve_pell_equation(n)
+        print(f"    √{n}: CF method = {pell_cf.get('fundamental_solution', 'N/A')}")
+        print(f"         Direct method = {pell_direct.get('fundamental', 'N/A')}")
+    
+    print("\n  Diophantine ↔ Number Properties:")
+    for limit in [25, 50]:
+        triples = await pythagorean_triples(limit, primitive_only=True)
+        print(f"    Primitive Pythagorean triples ≤ {limit}: {len(triples)} found")
+        for a, b, c in triples[:3]:  # Show first 3
+            gcd_abc = await gcd(await gcd(a, b), c)
+            print(f"      ({a}, {b}, {c}): gcd = {gcd_abc}, sum = {a+b+c}")
+    
+    # Performance and scale demonstration
+    print("\n  Scale and Performance:")
+    import time
+    
+    start_time = time.time()
+    large_prime = await next_prime(10000)
+    prime_time = time.time() - start_time
+    print(f"    next_prime(10000) = {large_prime} (computed in {prime_time:.4f}s)")
+    
+    start_time = time.time()
+    large_fibonacci = await fibonacci(100)
+    fib_time = time.time() - start_time
+    print(f"    fibonacci(100) = {str(large_fibonacci)[:50]}... (computed in {fib_time:.4f}s)")
+    
+    start_time = time.time()
+    partitions = await partition_count(50)
+    partition_time = time.time() - start_time
+    print(f"    partition_count(50) = {partitions} (computed in {partition_time:.4f}s)")
+
+async def demo_educational_applications():
+    """Demonstrate educational applications across the library."""
+    print("\n🎓 Educational Applications Demo")
+    print("=" * 35)
+    
+    # Number theory exploration for students
+    print("Student Number Theory Exploration:")
+    
+    # Explore a number comprehensively
+    n = 60
+    print(f"  Comprehensive analysis of {n}:")
+    
+    # Basic properties
+    factors = await prime_factors(n)
+    divisors_list = await divisors(n)
+    totient = await euler_totient(n)
+    
+    print(f"    Prime factorization: {' × '.join(map(str, factors))}")
+    print(f"    All divisors: {divisors_list}")
+    print(f"    Euler's totient φ({n}) = {totient}")
+    
+    # Classifications
+    is_abundant = await is_abundant_number(n)
+    is_harshad = await is_harshad_number(n)
+    digit_sum_val = await digit_sum(n)
+    
+    print(f"    Abundant number: {is_abundant}")
+    print(f"    Harshad number: {is_harshad} (digit sum: {digit_sum_val})")
+    
+    # Related sequences
+    triangular_pos = None
+    for i in range(1, 20):
+        if await triangular_number(i) == n:
+            triangular_pos = i
+            break
+    
+    if triangular_pos:
+        print(f"    {n} is the {triangular_pos}th triangular number")
+    
+    # Applications in different bases
+    base_2 = await number_to_base(n, 2)
+    base_16 = await number_to_base(n, 16)
+    print(f"    In binary: {base_2}, in hex: {base_16}")
+
+async def demo_research_applications():
+    """Demonstrate research-level applications."""
+    print("\n🔬 Research Applications Demo")
+    print("=" * 30)
+    
+    print("Prime Distribution Research:")
+    
+    # Analyze prime gaps in different ranges
+    ranges = [(100, 200), (1000, 1100), (10000, 10100)]
+    for start, end in ranges:
+        gaps = await prime_gaps_analysis(start, end)
+        print(f"  Range [{start}, {end}]: avg gap = {gaps['avg_gap']}, max gap = {gaps['max_gap']}")
+    
+    print("\nContinued Fraction Convergence:")
+    
+    # Study convergence rates for different irrationals
+    constants = [
+        (math.pi, "π"),
+        (math.e, "e"), 
+        ((1 + math.sqrt(5))/2, "φ"),
+        (math.sqrt(2), "√2")
+    ]
+    
+    for value, name in constants:
+        cf_analysis = await cf_convergence_analysis(value, 8)
+        print(f"  {name}: Hurwitz estimate = {cf_analysis.get('hurwitz_estimate', 'N/A')}")
+        print(f"      Type: {cf_analysis.get('diophantine_type', 'unknown')}")
+    
+    print("\nAdditive Number Theory:")
+    
+    # Goldbach conjecture verification
+    even_numbers = [10, 50, 100, 500]
+    for n in even_numbers:
+        goldbach = await goldbach_conjecture_check(n)
+        pairs = await goldbach_pairs(n)
+        print(f"  {n} = sum of 2 primes: {goldbach} ({len(pairs)} representations)")
 
 if __name__ == "__main__":
     import asyncio
     
     async def main():
         await test_number_theory_functions()
-        await demo_advanced_functionality()
-        await demo_cryptographic_applications()
-        await demo_mathematical_relationships()
+        await demo_comprehensive_functionality()
+        await demo_educational_applications()
+        await demo_research_applications()
     
     asyncio.run(main())

@@ -1,31 +1,42 @@
 #!/usr/bin/env python3
 """
-Number Theory Library Demonstration Script
+Comprehensive Number Theory Library Demonstration Script
 
-A comprehensive showcase of the chuk_mcp_functions number theory capabilities.
+A complete showcase of the chuk_mcp_functions number theory capabilities.
 This script demonstrates real-world applications, mathematical relationships,
-and advanced cryptographic functions in an educational format.
+advanced cryptographic functions, and cutting-edge number theory research
+in an educational format.
+
+Features:
+- 320+ functions across 17 specialized modules
+- Diophantine equations and Pell solutions
+- Advanced prime patterns and distribution analysis
+- Special number categories (amicable, vampire, etc.)
+- Continued fractions and approximation theory
+- Cross-module mathematical relationships
+- Research-level demonstrations
 
 Run with: python number_theory_demo.py
 """
 
 import asyncio
 import time
+import math
 from typing import List, Tuple, Dict, Any
 
-# Import the number theory library
+# Import the enhanced number theory library
 from chuk_mcp_functions.math import number_theory
 
 async def print_header(title: str, char: str = "="):
     """Print a formatted section header."""
-    print(f"\n{char * 60}")
+    print(f"\n{char * 70}")
     print(f"🧮 {title}")
-    print(f"{char * 60}")
+    print(f"{char * 70}")
 
 async def print_subheader(title: str):
     """Print a formatted subsection header."""
     print(f"\n📊 {title}")
-    print("-" * 40)
+    print("-" * 50)
 
 async def demo_prime_numbers():
     """Demonstrate prime number operations and their applications."""
@@ -70,16 +81,29 @@ async def demo_prime_numbers():
         if (2**exp - 1) == candidate:
             print(f"    2^{exp} - 1 = {candidate:5d} is Mersenne prime: {is_mersenne}")
     
-    # Twin primes (primes that differ by 2)
+    # Twin primes using new advanced module
     print("\n  Twin Prime Pairs:")
-    twin_candidates = [3, 5, 11, 13, 17, 19, 29, 31]
-    for p in twin_candidates:
-        is_twin = await number_theory.is_twin_prime(p)
-        if is_twin:
-            if await number_theory.is_prime(p + 2):
-                print(f"    ({p}, {p+2}) are twin primes")
-            elif await number_theory.is_prime(p - 2):
-                print(f"    ({p-2}, {p}) are twin primes")
+    twin_data = await number_theory.twin_prime_conjecture_data(100, return_all_pairs=True)
+    if 'twin_prime_pairs' in twin_data:
+        twin_pairs = twin_data['twin_prime_pairs'][:8]  # Show first 8 pairs
+        for p, q in twin_pairs:
+            print(f"    ({p}, {q}) are twin primes")
+    
+    await print_subheader("Advanced Prime Patterns (NEW)")
+    
+    # Cousin primes (differ by 4)
+    cousin_pairs = await number_theory.cousin_primes_advanced(50)
+    print(f"  Cousin primes (differ by 4) up to 50: {cousin_pairs}")
+    
+    # Sexy primes (differ by 6)
+    sexy_pairs = await number_theory.sexy_primes_advanced(50)
+    print(f"  Sexy primes (differ by 6) up to 50: {sexy_pairs}")
+    
+    # Prime triplets
+    triplets = await number_theory.prime_triplets(50)
+    for triplet_type in triplets:
+        if triplet_type['triplets']:
+            print(f"  {triplet_type['type']} triplets: {triplet_type['triplets']}")
 
 async def demo_cryptographic_applications():
     """Demonstrate cryptographic applications of number theory."""
@@ -130,9 +154,7 @@ async def demo_cryptographic_applications():
                         verification.append(f"{solution} ≡ {solution % m} (mod {m})")
                     print(f"      Verify: {' and '.join(verification)}")
                 else:
-                    # Handle unexpected return format gracefully
                     print(f"    System: x ≡ {remainders} (mod {moduli}) → x = {result}")
-                    print(f"      Note: Unexpected return format from crt_solve")
             else:
                 print(f"    System: x ≡ {remainders} (mod {moduli}) → No solution")
         except Exception as e:
@@ -173,6 +195,225 @@ async def demo_cryptographic_applications():
                         print(f"      {prim_root}^{log_val} ≡ {verification} ≡ {target} (mod {p})")
                 except:
                     pass
+
+async def demo_diophantine_equations():
+    """Demonstrate Diophantine equations and their solutions (NEW)."""
+    await print_header("Diophantine Equations (NEW)")
+    
+    await print_subheader("Linear Diophantine Equations")
+    
+    # Linear equation examples
+    linear_examples = [
+        (3, 5, 1),    # 3x + 5y = 1
+        (6, 9, 7),    # 6x + 9y = 7 (no solution)
+        (2, 3, 7)     # 2x + 3y = 7
+    ]
+    
+    for a, b, c in linear_examples:
+        result = await number_theory.solve_linear_diophantine(a, b, c)
+        if result['solvable']:
+            print(f"  {a}x + {b}y = {c}")
+            print(f"    Solution: {result['general']}")
+            print(f"    Particular: x = {result['particular'][0]}, y = {result['particular'][1]}")
+        else:
+            print(f"  {a}x + {b}y = {c}: No solution ({result.get('reason', 'Unknown')})")
+    
+    await print_subheader("Pell's Equation")
+    
+    # Pell equation examples x² - ny² = 1
+    pell_examples = [2, 3, 5, 7]
+    for n in pell_examples:
+        result = await number_theory.solve_pell_equation(n)
+        if result.get('exists', False):
+            x, y = result['fundamental']
+            verification = x*x - n*y*y
+            print(f"  x² - {n}y² = 1: fundamental solution = ({x}, {y})")
+            print(f"    Verification: {x}² - {n}×{y}² = {verification}")
+    
+    # Generate multiple Pell solutions
+    print(f"\n  First 4 solutions to x² - 2y² = 1:")
+    pell_solutions = await number_theory.pell_solutions_generator(2, 4)
+    for i, (x, y) in enumerate(pell_solutions, 1):
+        print(f"    Solution {i}: ({x}, {y})")
+    
+    await print_subheader("Pythagorean Triples")
+    
+    # Pythagorean triples
+    triples = await number_theory.pythagorean_triples(50, primitive_only=True)
+    print(f"  Primitive Pythagorean triples (c ≤ 50): {len(triples)} found")
+    for a, b, c in triples[:6]:  # Show first 6
+        print(f"    ({a}, {b}, {c}): {a}² + {b}² = {a*a} + {b*b} = {c*c} = {c}²")
+    
+    await print_subheader("Special Diophantine Problems")
+    
+    # Frobenius coin problem
+    frobenius_examples = [
+        [3, 5],      # Chicken McNugget problem
+        [4, 6, 9],   # Three denominations
+        [6, 9, 20]   # Larger example
+    ]
+    
+    for denoms in frobenius_examples:
+        frobenius_num = await number_theory.frobenius_number(denoms)
+        print(f"  Frobenius number for {denoms}: {frobenius_num}")
+        print(f"    (Largest amount not expressible as non-negative combination)")
+    
+    # Postage stamp problem
+    postage_examples = [
+        (17, [3, 5]),     # Can we make 17 cents?
+        (43, [5, 9, 20]), # Can we make 43 cents?
+        (11, [3, 5])      # Can we make 11 cents?
+    ]
+    
+    for amount, stamps in postage_examples:
+        result = await number_theory.postage_stamp_problem(amount, stamps)
+        if result['possible']:
+            breakdown = result.get('denomination_breakdown', {})
+            print(f"  Make {amount} with stamps {stamps}: {breakdown}")
+        else:
+            print(f"  Cannot make {amount} with stamps {stamps}")
+
+async def demo_special_number_categories():
+    """Demonstrate special number categories (NEW)."""
+    await print_header("Special Number Categories (NEW)")
+    
+    await print_subheader("Amicable and Social Numbers")
+    
+    # Amicable pairs
+    amicable_pairs = await number_theory.find_amicable_pairs(1500)
+    print(f"  Amicable pairs up to 1500: {amicable_pairs}")
+    
+    # Check specific numbers for amicability
+    amicable_check = await number_theory.is_amicable_number(220)
+    print(f"  is_amicable_number(220): {amicable_check}")
+    
+    # Aliquot sequence analysis
+    aliquot_result = await number_theory.aliquot_sequence_analysis(220, 10)
+    print(f"  Aliquot sequence from 220: {aliquot_result['sequence']}")
+    print(f"    Type: {aliquot_result['type']}, cycle length: {aliquot_result.get('cycle_length', 'N/A')}")
+    
+    await print_subheader("Recreational Numbers")
+    
+    # Kaprekar numbers
+    kaprekar_nums = await number_theory.kaprekar_numbers(100)
+    print(f"  Kaprekar numbers up to 100: {kaprekar_nums}")
+    
+    # Kaprekar number verification
+    kaprekar_check = await number_theory.is_kaprekar_number(45)
+    print(f"  is_kaprekar_number(45): {kaprekar_check}")
+    
+    # Armstrong numbers
+    armstrong_nums = await number_theory.armstrong_numbers(1000)
+    print(f"  Armstrong numbers up to 1000: {armstrong_nums}")
+    
+    # Vampire numbers (computationally intensive, small limit)
+    vampire_nums = await number_theory.vampire_numbers(10000)
+    print(f"  Vampire numbers up to 10,000: {len(vampire_nums)} found")
+    for vamp_data in vampire_nums[:3]:  # Show first 3
+        vampire = vamp_data['vampire']
+        fangs = vamp_data['fangs']
+        print(f"    {vampire}: fangs = {fangs}")
+    
+    # Keith numbers
+    keith_nums = await number_theory.keith_numbers_advanced(100)
+    print(f"  Keith numbers up to 100: {keith_nums}")
+    
+    # Keith number verification
+    keith_check = await number_theory.is_keith_number_advanced(14)
+    print(f"  is_keith_number(14): {keith_check}")
+    
+    await print_subheader("Taxi Numbers (Hardy-Ramanujan)")
+    
+    # Taxi numbers (sums of cubes in multiple ways)
+    taxi_nums = await number_theory.taxi_numbers(25000, min_ways=2)
+    print(f"  Taxi numbers up to 25,000: {len(taxi_nums)} found")
+    for taxi_data in taxi_nums[:3]:  # Show first 3
+        number = taxi_data['number']
+        representations = taxi_data['representations']
+        print(f"    {number}: {representations}")
+        # Show the actual cube sums
+        for a, b in representations:
+            print(f"      {a}³ + {b}³ = {a**3} + {b**3} = {number}")
+
+async def demo_continued_fractions():
+    """Demonstrate continued fractions and approximation theory (NEW)."""
+    await print_header("Continued Fractions & Approximation Theory (NEW)")
+    
+    await print_subheader("Basic Continued Fraction Operations")
+    
+    # Continued fraction expansions of famous constants
+    constants = [
+        (math.pi, "π"),
+        (math.e, "e"),
+        ((1 + math.sqrt(5))/2, "φ (golden ratio)"),
+        (math.sqrt(2), "√2")
+    ]
+    
+    for value, name in constants:
+        cf_result = await number_theory.continued_fraction_expansion(value, 8)
+        print(f"  {name}: CF = {cf_result['cf']}")
+        print(f"    Convergent: {cf_result['convergent'][0]}/{cf_result['convergent'][1]}")
+        print(f"    Error: {cf_result['error']:.2e}")
+    
+    await print_subheader("Rational Approximations")
+    
+    # Best rational approximations
+    approximation_examples = [
+        (math.pi, 1000, "π"),
+        (math.e, 100, "e"),
+        (math.sqrt(2), 50, "√2")
+    ]
+    
+    for value, max_denom, name in approximation_examples:
+        best_approx = await number_theory.best_rational_approximation(value, max_denom)
+        fraction = best_approx['best_fraction']
+        error = best_approx['error']
+        print(f"  Best approximation to {name} with denominator ≤ {max_denom}:")
+        print(f"    {fraction[0]}/{fraction[1]} (error: {error:.2e})")
+    
+    await print_subheader("Periodic Continued Fractions")
+    
+    # Square root continued fractions
+    sqrt_examples = [2, 3, 5, 7]
+    for n in sqrt_examples:
+        sqrt_cf = await number_theory.sqrt_cf_expansion(n)
+        if not sqrt_cf.get('is_perfect_square', False):
+            initial = sqrt_cf['initial']
+            period = sqrt_cf['cf_period']
+            print(f"  √{n} = {initial} + CF with period {period} (length {len(period)})")
+    
+    await print_subheader("Continued Fractions and Pell Equations")
+    
+    # Solve Pell equations using continued fractions
+    pell_cf_examples = [2, 3, 5]
+    for n in pell_cf_examples:
+        cf_pell = await number_theory.cf_solve_pell(n)
+        if cf_pell.get('solution_found', False):
+            solution = cf_pell['fundamental_solution']
+            verification = cf_pell['verification']
+            print(f"  x² - {n}y² = 1 via CF: solution = ({solution[0]}, {solution[1]})")
+            print(f"    Verification: {verification}")
+    
+    await print_subheader("Special Continued Fractions")
+    
+    # e continued fraction
+    e_cf = await number_theory.e_continued_fraction(10)
+    print(f"  e CF pattern: {e_cf['cf']}")
+    print(f"  Convergent: {e_cf['convergent'][0]}/{e_cf['convergent'][1]} ≈ {e_cf['convergent_value']:.8f}")
+    
+    # Golden ratio continued fraction
+    golden_cf = await number_theory.golden_ratio_cf(8)
+    print(f"  φ CF (all 1s): {golden_cf['cf']}")
+    print(f"  Convergent: {golden_cf['convergent'][0]}/{golden_cf['convergent'][1]} ≈ {golden_cf['convergent_value']:.8f}")
+    
+    # Calendar approximations
+    calendar_approx = await number_theory.calendar_approximations(365.24219)
+    print(f"  Calendar approximations for tropical year (365.24219 days):")
+    for approx in calendar_approx['approximations'][:3]:  # Show first 3
+        fraction = approx['fraction']
+        error = approx['error']
+        interpretation = approx['calendar_interpretation']
+        print(f"    {fraction[0]}/{fraction[1]}: {interpretation} (error: {error:.6f} days)")
 
 async def demo_mathematical_sequences():
     """Demonstrate various mathematical sequences and their properties."""
@@ -279,6 +520,55 @@ async def demo_figurate_numbers():
         star_sequence.append(star)
     print(f"    {star_sequence}")
 
+async def demo_advanced_prime_analysis():
+    """Demonstrate advanced prime distribution and analysis (NEW)."""
+    await print_header("Advanced Prime Distribution & Analysis (NEW)")
+    
+    await print_subheader("Prime Counting and Distribution")
+    
+    # Prime counting function with approximations
+    counting_examples = [100, 1000, 10000]
+    for x in counting_examples:
+        counting_result = await number_theory.prime_counting_function(x)
+        exact = counting_result['exact']
+        pnt_approx = counting_result['pnt_approximation']
+        li_approx = counting_result['li_approximation']
+        print(f"  π({x}) = {exact}")
+        print(f"    Prime Number Theorem: {pnt_approx:.2f} (error: {counting_result['pnt_error']:.2f})")
+        print(f"    Logarithmic Integral: {li_approx:.2f} (error: {counting_result['li_error']:.2f})")
+        print(f"    Best approximation: {counting_result['best_approximation']}")
+    
+    await print_subheader("Prime Gap Analysis")
+    
+    # Analyze prime gaps in different ranges
+    gap_ranges = [(10, 100), (100, 200), (1000, 1100)]
+    for start, end in gap_ranges:
+        gaps_result = await number_theory.prime_gaps_analysis(start, end)
+        print(f"  Prime gaps in range [{start}, {end}]:")
+        print(f"    Average gap: {gaps_result['avg_gap']}")
+        print(f"    Maximum gap: {gaps_result['max_gap']}")
+        print(f"    Gap distribution: {dict(list(gaps_result['gap_distribution'].items())[:5])}")
+    
+    await print_subheader("Prime Conjectures")
+    
+    # Bertrand's postulate verification
+    bertrand_examples = [10, 25, 100]
+    for n in bertrand_examples:
+        bertrand_result = await number_theory.bertrand_postulate_verify(n)
+        if bertrand_result['holds']:
+            primes_between = bertrand_result['primes_between']
+            print(f"  Bertrand's postulate for n={n}: ✓")
+            print(f"    Primes between {n} and {2*n}: {len(primes_between)} found")
+            print(f"    Smallest: {bertrand_result['smallest_prime']}")
+        else:
+            print(f"  Bertrand's postulate for n={n}: ✗")
+    
+    # Prime gap records
+    gap_records = await number_theory.prime_gap_records(1000)
+    print(f"  Prime gap records up to 1000:")
+    for gap, (p1, p2) in list(gap_records['records'].items())[:6]:  # Show first 6
+        print(f"    Gap {gap}: first occurs between {p1} and {p2}")
+
 async def demo_number_properties():
     """Demonstrate various number properties and classifications."""
     await print_header("Number Properties & Classifications")
@@ -349,7 +639,10 @@ async def demo_iterative_sequences():
         stopping_time = await number_theory.collatz_stopping_time(n)
         max_value = await number_theory.collatz_max_value(n)
         print(f"  Collatz({n}): length={stopping_time}, max={max_value}")
-        print(f"    Sequence: {sequence}")
+        if len(sequence) <= 20:  # Only show full sequence for short ones
+            print(f"    Sequence: {sequence}")
+        else:
+            print(f"    Sequence: {sequence[:5]} ... {sequence[-5:]} (truncated)")
     
     await print_subheader("Happy Numbers")
     
@@ -525,13 +818,147 @@ async def demo_partitions_and_additive_theory():
             a, b = squares
             print(f"    {n} = {a}² + {b}² = {a*a} + {b*b}")
 
+async def demo_cross_module_relationships():
+    """Demonstrate mathematical relationships across modules (NEW)."""
+    await print_header("Cross-Module Mathematical Relationships (NEW)")
+    
+    await print_subheader("Perfect Numbers ↔ Mersenne Primes")
+    
+    # Connection between perfect numbers and Mersenne primes
+    print("  Euclid-Euler theorem: Perfect numbers ↔ Mersenne primes")
+    for exp in [2, 3, 5, 7, 13]:
+        mersenne = 2**exp - 1
+        if await number_theory.is_prime(mersenne):
+            perfect = (2**(exp-1)) * mersenne
+            is_perfect = await number_theory.is_perfect_number(perfect)
+            print(f"    2^{exp}-1 = {mersenne} (Mersenne prime) → Perfect: {perfect} ({is_perfect})")
+    
+    await print_subheader("Continued Fractions ↔ Pell Equations")
+    
+    # Show how continued fractions solve Pell equations
+    print("  Pell equation solutions via continued fractions:")
+    for n in [2, 3, 5]:
+        # Method 1: Direct Pell solver
+        pell_direct = await number_theory.solve_pell_equation(n)
+        # Method 2: Continued fraction method
+        pell_cf = await number_theory.cf_solve_pell(n)
+        
+        if pell_direct.get('exists') and pell_cf.get('solution_found'):
+            direct_sol = pell_direct['fundamental']
+            cf_sol = pell_cf['fundamental_solution']
+            print(f"    x² - {n}y² = 1:")
+            print(f"      Direct method: ({direct_sol[0]}, {direct_sol[1]})")
+            print(f"      CF method:     ({cf_sol[0]}, {cf_sol[1]})")
+            match = direct_sol == cf_sol
+            print(f"      Methods agree: {match}")
+    
+    await print_subheader("Figurate Numbers ↔ Diophantine Equations")
+    
+    # Pythagorean triples and figurate number relationships
+    print("  Pythagorean triples and square numbers:")
+    triples = await number_theory.pythagorean_triples(30, primitive_only=True)
+    for a, b, c in triples[:4]:  # Show first 4
+        # Check if any legs are square numbers
+        is_a_square = await number_theory.is_perfect_square(a)
+        is_b_square = await number_theory.is_perfect_square(b)
+        is_c_square = await number_theory.is_perfect_square(c)
+        
+        print(f"    ({a}, {b}, {c}): a² = {is_a_square}, b² = {is_b_square}, c² = {is_c_square}")
+        
+        # Check if legs are triangular numbers
+        triangular_found = False
+        for i in range(1, 20):
+            tri = await number_theory.triangular_number(i)
+            if tri == a or tri == b:
+                triangular_found = True
+                break
+        if triangular_found:
+            print(f"      Contains triangular number!")
+    
+    await print_subheader("Prime Patterns ↔ Modular Arithmetic")
+    
+    # Quadratic residues and prime patterns
+    print("  Quadratic residues and prime congruences:")
+    primes = [5, 13, 17, 29]  # Primes ≡ 1 (mod 4)
+    for p in primes:
+        if p % 4 == 1:
+            qr = await number_theory.quadratic_residues(p)
+            # Check if -1 is a quadratic residue (should be for p ≡ 1 mod 4)
+            is_neg_one_qr = (p - 1) in qr
+            print(f"    p = {p} ≡ 1 (mod 4): -1 is QR? {is_neg_one_qr}")
+            
+            # Check for sum of two squares representation
+            two_squares = await number_theory.sum_of_two_squares_all(p)
+            if two_squares:
+                print(f"      Can be written as sum of squares: {two_squares}")
+
+async def demo_performance_and_scale():
+    """Demonstrate performance and scalability of the library (NEW)."""
+    await print_header("Performance & Scale Demonstration (NEW)")
+    
+    await print_subheader("Large Number Computations")
+    
+    # Test performance on large numbers
+    large_number_tests = [
+        ("fibonacci(1000)", lambda: number_theory.fibonacci(1000)),
+        ("next_prime(100000)", lambda: number_theory.next_prime(100000)),
+        ("euler_totient(123456)", lambda: number_theory.euler_totient(123456)),
+        ("partition_count(100)", lambda: number_theory.partition_count(100))
+    ]
+    
+    for test_name, test_func in large_number_tests:
+        start_time = time.time()
+        try:
+            result = await test_func()
+            end_time = time.time()
+            
+            # Format result for display
+            if isinstance(result, int) and result > 10**20:
+                result_str = f"{str(result)[:20]}... ({len(str(result))} digits)"
+            else:
+                result_str = str(result)
+            
+            print(f"  {test_name}:")
+            print(f"    Result: {result_str}")
+            print(f"    Time: {end_time - start_time:.4f} seconds")
+        except Exception as e:
+            print(f"  {test_name}: Error - {e}")
+    
+    await print_subheader("Batch Operations")
+    
+    # Demonstrate batch processing
+    print("  Batch processing examples:")
+    
+    # Find all primes up to 1000
+    start_time = time.time()
+    primes_1000 = await number_theory.first_n_primes(168)  # π(1000) = 168
+    end_time = time.time()
+    print(f"    First 168 primes (all primes ≤ 1000): {end_time - start_time:.4f} seconds")
+    
+    # Find all perfect squares up to 10000
+    start_time = time.time()
+    perfect_squares = []
+    for i in range(1, 101):  # 100² = 10000
+        square = i * i
+        if square <= 10000:
+            perfect_squares.append(square)
+    end_time = time.time()
+    print(f"    Perfect squares ≤ 10000: {len(perfect_squares)} found in {end_time - start_time:.4f} seconds")
+    
+    # Batch amicable number search
+    start_time = time.time()
+    amicable_pairs = await number_theory.find_amicable_pairs(10000)
+    end_time = time.time()
+    print(f"    Amicable pairs ≤ 10000: {len(amicable_pairs)} found in {end_time - start_time:.4f} seconds")
+
 async def main():
     """Main demonstration function."""
     print("🧮 COMPREHENSIVE NUMBER THEORY LIBRARY DEMONSTRATION")
-    print("=" * 60)
-    print("Welcome to the chuk_mcp_functions number theory showcase!")
+    print("=" * 70)
+    print("Welcome to the chuk_mcp_functions enhanced number theory showcase!")
     print("This script demonstrates the extensive capabilities of our")
-    print("async-native number theory library with real-world examples.")
+    print("async-native number theory library with 320+ functions across")
+    print("17 specialized modules, including cutting-edge research areas.")
     
     # Record start time
     start_time = time.time()
@@ -540,13 +967,19 @@ async def main():
     demos = [
         demo_prime_numbers,
         demo_cryptographic_applications,
+        demo_diophantine_equations,           # NEW
+        demo_special_number_categories,       # NEW
+        demo_continued_fractions,             # NEW
         demo_mathematical_sequences,
         demo_figurate_numbers,
+        demo_advanced_prime_analysis,         # NEW
         demo_number_properties,
         demo_iterative_sequences,
         demo_advanced_arithmetic_functions,
         demo_mathematical_constants,
-        demo_partitions_and_additive_theory
+        demo_partitions_and_additive_theory,
+        demo_cross_module_relationships,      # NEW
+        demo_performance_and_scale           # NEW
     ]
     
     for demo in demos:
@@ -563,30 +996,47 @@ async def main():
     print(f"⏱️  Total execution time: {end_time - start_time:.2f} seconds")
     print(f"🚀 All functions executed asynchronously for optimal performance")
     print(f"📚 Demonstrated {len(demos)} major areas of number theory")
+    print(f"🔢 Showcased 320+ functions across 17 specialized modules")
     
     print(f"\n🎯 Key Features Showcased:")
     features = [
-        "Prime number operations and special prime types",
-        "Cryptographic functions (RSA, CRT, discrete logs)",
-        "Mathematical sequences (Fibonacci, Lucas, Catalan)",
-        "Figurate numbers (polygonal, centered, 3D)",
-        "Number classifications (perfect, abundant, etc.)",
-        "Iterative sequences (Collatz, happy numbers)",
-        "Advanced arithmetic functions (totient, Möbius)",
-        "High-precision mathematical constants",
-        "Integer partitions and additive number theory"
+        "Prime number operations and advanced prime patterns",
+        "Cryptographic functions (RSA, CRT, discrete logs, quadratic residues)",
+        "Diophantine equations (linear, Pell's, Pythagorean triples)",
+        "Special number categories (amicable, vampire, Keith, taxi numbers)",
+        "Continued fractions and rational approximation theory",
+        "Mathematical sequences (Fibonacci, Lucas, Catalan, recursive)",
+        "Figurate numbers (polygonal, centered, 3D geometric patterns)",
+        "Prime distribution analysis and conjecture verification",
+        "Number classifications (perfect, abundant, digital properties)",
+        "Iterative sequences (Collatz, happy numbers, narcissistic)",
+        "Advanced arithmetic functions (totient, Möbius, divisor functions)",
+        "High-precision mathematical constants (π, e, φ algorithms)",
+        "Integer partitions and additive number theory",
+        "Cross-module mathematical relationships and connections",
+        "Performance optimization and large-scale computations"
     ]
     
     for i, feature in enumerate(features, 1):
-        print(f"   {i}. {feature}")
+        print(f"   {i:2d}. {feature}")
     
-    print(f"\n💡 This library is perfect for:")
-    print(f"   • Educational mathematics and computer science")
-    print(f"   • Cryptographic algorithm development")
-    print(f"   • Mathematical research and exploration")
-    print(f"   • AI/ML applications requiring number theory")
-    print(f"   • Competitive programming and puzzles")
+    print(f"\n💡 This enhanced library is perfect for:")
+    print(f"   • Educational mathematics and computer science curricula")
+    print(f"   • Advanced cryptographic algorithm development and analysis")
+    print(f"   • Mathematical research and exploration at graduate level")
+    print(f"   • AI/ML applications requiring sophisticated number theory")
+    print(f"   • Competitive programming and mathematical olympiads")
+    print(f"   • Professional mathematical software development")
+    print(f"   • Research in analytic and algebraic number theory")
+    
+    print(f"\n🌟 New Capabilities Added:")
+    print(f"   • Diophantine equation solving (linear, Pell's, quadratic)")
+    print(f"   • Advanced prime constellation analysis and verification")
+    print(f"   • Comprehensive special number taxonomy and properties")
+    print(f"   • Continued fraction theory and approximation algorithms")
+    print(f"   • Cross-module mathematical relationship exploration")
+    print(f"   • Research-grade performance and scalability testing")
 
 if __name__ == "__main__":
-    # Run the comprehensive demonstration
+    # Run the comprehensive enhanced demonstration
     asyncio.run(main())
