@@ -166,7 +166,7 @@ def math_quick_reference() -> str:
 🎯 IMPORT PATTERNS:
    # Reorganized structure imports
    from chuk_mcp_functions.math.arithmetic.core import add, multiply
-   from chuk_mcp_functions.math.arithmetic.number_theory import is_prime
+   from chuk_mcp_functions.math.number_theory import is_prime
    from chuk_mcp_functions.math.arithmetic.comparison import minimum
    
    # Or use submodules
@@ -190,7 +190,7 @@ __all__ = [
 # DO NOT import specific functions here to avoid circular import issues
 # Users should import from the reorganized structure directly:
 # from chuk_mcp_functions.math.arithmetic.core.basic_operations import add
-# from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime
+# from chuk_mcp_functions.math.number_theory.primes import is_prime
 
 if __name__ == "__main__":
     import asyncio

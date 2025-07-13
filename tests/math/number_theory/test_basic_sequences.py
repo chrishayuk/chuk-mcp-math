@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_basic_sequences.py
+# tests/math/number_theory/test_basic_sequences.py
 """
 Comprehensive pytest test suite for basic_sequences.py module.
 
@@ -23,7 +23,7 @@ import math
 from typing import List
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.basic_sequences import (
+from chuk_mcp_functions.math.number_theory.basic_sequences import (
     # Perfect squares
     is_perfect_square, perfect_squares, nth_perfect_square,
     

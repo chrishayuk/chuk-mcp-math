@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_egyptian_fractions.py
+# tests/math/number_theory/test_egyptian_fractions.py
 """
 Comprehensive pytest test suite for egyptian_fractions.py module.
 
@@ -23,7 +23,7 @@ from typing import List, Dict, Tuple, Optional
 from fractions import Fraction
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.egyptian_fractions import (
+from chuk_mcp_functions.math.number_theory.egyptian_fractions import (
     # Egyptian fraction decomposition
     egyptian_fraction_decomposition, fibonacci_greedy_egyptian, binary_remainder_egyptian,
     

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_modular_arithmetic.py
+# tests/math/number_theory/test_modular_arithmetic.py
 """
 Comprehensive pytest test suite for modular_arithmetic.py module.
 
@@ -21,7 +21,7 @@ import math
 from typing import List, Tuple, Optional
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.modular_arithmetic import (
+from chuk_mcp_functions.math.number_theory.modular_arithmetic import (
     # Chinese Remainder Theorem
     crt_solve, generalized_crt,
     

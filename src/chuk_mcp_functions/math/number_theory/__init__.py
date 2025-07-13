@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/__init__.py
+# chuk_mcp_functions/math/number_theory/__init__.py
 """
 Number Theory Operations Module - Enhanced with Advanced Modules
 

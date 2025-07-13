@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/primes.py
+# chuk_mcp_functions/math/number_theory/primes.py
 """
 Prime Number Operations - Async Native
 

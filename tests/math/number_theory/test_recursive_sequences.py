@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_recursive_sequences.py
+# tests/math/number_theory/test_recursive_sequences.py
 """
 Comprehensive pytest test suite for recursive_sequences.py module.
 
@@ -22,7 +22,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.recursive_sequences import (
+from chuk_mcp_functions.math.number_theory.recursive_sequences import (
     # Lucas sequences
     lucas_number, lucas_sequence, lucas_u_v,
     

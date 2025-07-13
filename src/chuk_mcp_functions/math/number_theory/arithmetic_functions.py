@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/arithmetic_functions.py
+# chuk_mcp_functions/math/number_theory/arithmetic_functions.py
 """
 Arithmetic Functions - Async Native
 

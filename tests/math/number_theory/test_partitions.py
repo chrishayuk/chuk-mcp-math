@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_partitions.py
+# tests/math/number_theory/test_partitions.py
 """
 Comprehensive pytest test suite for partitions.py module.
 
@@ -22,7 +22,7 @@ import math
 from typing import List, Tuple, Optional, Set
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.partitions import (
+from chuk_mcp_functions.math.number_theory.partitions import (
     # Integer partitions
     partition_count, generate_partitions, partitions_into_k_parts,
     distinct_partitions, restricted_partitions,

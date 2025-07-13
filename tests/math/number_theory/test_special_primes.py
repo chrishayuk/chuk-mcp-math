@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_special_primes.py
+# tests/math/number_theory/test_special_primes.py
 """
 Comprehensive pytest test suite for special_primes.py module.
 
@@ -21,7 +21,7 @@ import time
 from typing import List, Tuple, Dict
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.special_primes import (
+from chuk_mcp_functions.math.number_theory.special_primes import (
     # Mersenne primes
     is_mersenne_prime, mersenne_prime_exponents, lucas_lehmer_test, mersenne_numbers,
     
@@ -374,7 +374,7 @@ class TestTwinPrimesAndRelated:
         for p1, p2 in pairs:
             assert p2 == p1 + 4, f"Cousin primes should differ by 4: {p1}, {p2}"
             # Import is_prime for verification
-            from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime
+            from chuk_mcp_functions.math.number_theory.primes import is_prime
             assert await is_prime(p1) == True, f"{p1} should be prime"
             assert await is_prime(p2) == True, f"{p2} should be prime"
     
@@ -399,7 +399,7 @@ class TestTwinPrimesAndRelated:
         for p1, p2 in pairs:
             assert p2 == p1 + 6, f"Sexy primes should differ by 6: {p1}, {p2}"
             # Import is_prime for verification
-            from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime
+            from chuk_mcp_functions.math.number_theory.primes import is_prime
             assert await is_prime(p1) == True, f"{p1} should be prime"
             assert await is_prime(p2) == True, f"{p2} should be prime"
 
@@ -605,7 +605,7 @@ class TestPrimeGaps:
     @pytest.mark.asyncio
     async def test_prime_gap_consistency(self):
         """Test that prime gaps are consistent with next prime calculation."""
-        from chuk_mcp_functions.math.arithmetic.number_theory.primes import next_prime
+        from chuk_mcp_functions.math.number_theory.primes import next_prime
         
         test_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
         
@@ -681,7 +681,7 @@ class TestIntegration:
     @pytest.mark.asyncio
     async def test_wilson_theorem_vs_primality(self):
         """Test Wilson's theorem against known primality results."""
-        from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime
+        from chuk_mcp_functions.math.number_theory.primes import is_prime
         
         # Wilson's theorem should agree with primality for reasonable range
         for n in range(2, 30):
@@ -701,7 +701,7 @@ class TestIntegration:
             # Should be pseudoprime to several coprime bases
             coprime_bases = [2, 5, 7, 13]  # These should be coprime to the Carmichael numbers
             for base in coprime_bases:
-                from chuk_mcp_functions.math.arithmetic.number_theory.divisibility import gcd
+                from chuk_mcp_functions.math.number_theory.divisibility import gcd
                 if await gcd(base, cn) == 1:
                     assert await is_fermat_pseudoprime(cn, base) == True, f"{cn} should be pseudoprime to base {base}"
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/special_primes.py
+# chuk_mcp_functions/math/number_theory/special_primes.py
 """
 Special Prime Numbers and Prime-Related Functions - Async Native
 

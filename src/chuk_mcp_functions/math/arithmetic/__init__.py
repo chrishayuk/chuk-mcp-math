@@ -18,11 +18,6 @@
 # │   ├── relational.py       - equal, less_than, greater_than, in_range, between
 # │   ├── extrema.py          - minimum, maximum, clamp, sort_numbers, rank_numbers
 # │   └── tolerance.py        - approximately_equal, close_to_zero, is_finite, is_nan, is_infinite
-# ├── number_theory/           - Integer properties and prime numbers
-# │   ├── primes.py           - is_prime, next_prime, nth_prime, prime_factors, prime_count
-# │   ├── divisibility.py     - gcd, lcm, divisors, is_divisible, is_even, is_odd
-# │   ├── special_numbers.py  - is_perfect_square, is_power_of_two, fibonacci, factorial
-# │   └── sequences.py        - collatz_steps, triangular_numbers, perfect_numbers
 # ├── sequences/               - Mathematical sequences and series
 # │   ├── arithmetic.py       - arithmetic_sequence, arithmetic_sum
 # │   ├── geometric.py        - geometric_sequence, geometric_sum
@@ -143,19 +138,6 @@ if _comparison_available:
     except ImportError as e:
         print(f"Warning: Could not import comparison.tolerance: {e}")
 
-# Number theory functions
-if _number_theory_available:
-    try:
-        from .number_theory.primes import is_prime, next_prime, prime_factors
-        functions_imported.extend(['is_prime', 'next_prime', 'prime_factors'])
-    except ImportError as e:
-        print(f"Warning: Could not import number_theory.primes: {e}")
-    
-    try:
-        from .number_theory.divisibility import gcd, lcm, is_even, is_odd, divisors
-        functions_imported.extend(['gcd', 'lcm', 'is_even', 'is_odd', 'divisors'])
-    except ImportError as e:
-        print(f"Warning: Could not import number_theory.divisibility: {e}")
 
 # Build __all__ with only available modules and functions
 __all__ = []
@@ -165,8 +147,6 @@ if _core_available:
     __all__.append('core')
 if _comparison_available:
     __all__.append('comparison')
-if _number_theory_available:
-    __all__.append('number_theory')
 
 # Add successfully imported functions
 __all__.extend(functions_imported)
@@ -177,8 +157,7 @@ def print_reorganized_status():
     print("=" * 50)
     print(f"📐 Core Operations: {_core_available}")
     print(f"🔍 Comparison Operations: {_comparison_available}")
-    print(f"🔢 Number Theory Operations: {_number_theory_available}")
-    print(f"📊 Available modules: {len([m for m in ['core', 'comparison', 'number_theory'] if m in __all__])}")
+    print(f"📊 Available modules: {len([m for m in ['core', 'comparison'] if m in __all__])}")
     print(f"📊 Available functions: {len(functions_imported)}")
     print()
     
@@ -195,8 +174,6 @@ def print_reorganized_status():
         print("   📐 core/ - basic_operations, rounding, modular")
     if _comparison_available:
         print("   🔍 comparison/ - relational, extrema, tolerance")
-    if _number_theory_available:
-        print("   🔢 number_theory/ - primes, divisibility")
 
 def get_reorganized_modules():
     """Get list of available reorganized modules."""
@@ -205,8 +182,6 @@ def get_reorganized_modules():
         available.append('core')
     if _comparison_available:
         available.append('comparison')
-    if _number_theory_available:
-        available.append('number_theory')
     return available
 
 # For debugging - show what was imported

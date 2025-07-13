@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_mathematical_constants.py
+# tests/math/number_theory/test_mathematical_constants.py
 """
 Comprehensive pytest test suite for mathematical_constants.py module (FIXED VERSION).
 
@@ -26,7 +26,7 @@ import math
 from typing import List, Dict
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.mathematical_constants import (
+from chuk_mcp_functions.math.number_theory.mathematical_constants import (
     # Pi approximations
     compute_pi_leibniz, compute_pi_nilakantha, compute_pi_machin, compute_pi_chudnovsky,
     

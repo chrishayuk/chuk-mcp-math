@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_combinatorial_numbers.py
+# tests/math/number_theory/test_combinatorial_numbers.py
 """
 Comprehensive pytest test suite for combinatorial_numbers.py module.
 
@@ -19,7 +19,7 @@ import time
 from typing import List
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.combinatorial_numbers import (
+from chuk_mcp_functions.math.number_theory.combinatorial_numbers import (
     # Catalan numbers
     catalan_number, catalan_sequence, is_catalan_number,
     

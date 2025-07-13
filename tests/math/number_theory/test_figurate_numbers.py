@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_figurate_numbers.py
+# tests/math/number_theory/test_figurate_numbers.py
 """
 Comprehensive pytest test suite for figurate_numbers.py module.
 
@@ -23,7 +23,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.figurate_numbers import (
+from chuk_mcp_functions.math.number_theory.figurate_numbers import (
     # General polygonal numbers
     polygonal_number, is_polygonal_number, polygonal_sequence,
     

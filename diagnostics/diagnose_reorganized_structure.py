@@ -105,7 +105,7 @@ async def test_imports():
         ("core", "chuk_mcp_functions.math.arithmetic.core"),
         ("core.basic_operations", "chuk_mcp_functions.math.arithmetic.core.basic_operations"),
         ("comparison", "chuk_mcp_functions.math.arithmetic.comparison"),
-        ("number_theory", "chuk_mcp_functions.math.arithmetic.number_theory"),
+        ("number_theory", "chuk_mcp_functions.math.number_theory"),
     ]
     
     working_modules = []

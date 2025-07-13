@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# tests/math/arithmetic/number_theory/test_iterative_sequences.py
+# tests/math/number_theory/test_iterative_sequences.py
 """
 Comprehensive pytest test suite for iterative_sequences.py module.
 
@@ -23,7 +23,7 @@ import time
 from typing import List, Set
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.number_theory.iterative_sequences import (
+from chuk_mcp_functions.math.number_theory.iterative_sequences import (
     # Collatz sequence
     collatz_sequence, collatz_stopping_time, collatz_max_value,
     

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/modular_arithmetic.py
+# chuk_mcp_functions/math/number_theory/modular_arithmetic.py
 """
 Extended Modular Arithmetic - Async Native
 

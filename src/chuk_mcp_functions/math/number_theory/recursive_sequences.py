@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/math/arithmetic/number_theory/recursive_sequences.py
+# chuk_mcp_functions/math/number_theory/recursive_sequences.py
 """
 Lucas & Recursive Sequences - Async Native
 

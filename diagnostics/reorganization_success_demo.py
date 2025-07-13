@@ -38,7 +38,7 @@ async def demo_structured_imports():
     # Pattern 1: Category-specific imports
     print("1. 📐 Category-specific imports:")
     from chuk_mcp_functions.math.arithmetic.core.basic_operations import add, multiply, sqrt
-    from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime
+    from chuk_mcp_functions.math.number_theory.primes import is_prime
     from chuk_mcp_functions.math.arithmetic.comparison.extrema import minimum, maximum
     
     print("   ✅ Imported from core.basic_operations: add, multiply, sqrt")
@@ -130,7 +130,7 @@ async def demo_complex_calculations():
     print("-" * 35)
     
     from chuk_mcp_functions.math.arithmetic.core.basic_operations import add, multiply, power, sqrt
-    from chuk_mcp_functions.math.arithmetic.number_theory.primes import is_prime, prime_factors
+    from chuk_mcp_functions.math.number_theory.primes import is_prime, prime_factors
     from chuk_mcp_functions.math.arithmetic.comparison.extrema import sort_numbers
     
     # Calculate some interesting math
