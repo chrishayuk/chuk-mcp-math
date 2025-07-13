@@ -1,51 +1,3 @@
-# #!/usr/bin/env python3
-# # chuk_mcp_functions/math/arithmetic/__init__.py
-# """
-# Arithmetic Functions Module for AI Models (Async Native) - REORGANIZED
-
-# A comprehensive collection of arithmetic functions organized into logical groupings.
-# This module provides fundamental mathematical operations that AI models need for
-# numerical computation, pattern recognition, and mathematical reasoning.
-
-# All functions are async native for optimal performance in async environments.
-
-# NEW STRUCTURE:
-# ├── core/                    - Fundamental operations
-# │   ├── basic_operations.py  - add, subtract, multiply, divide, power, sqrt, abs_value, sign, negate
-# │   ├── rounding.py         - round_number, floor, ceil, truncate, mround, ceiling_multiple, floor_multiple
-# │   └── modular.py          - modulo, divmod_operation, mod_power, quotient, remainder, fmod
-# ├── comparison/              - Comparison and ordering
-# │   ├── relational.py       - equal, less_than, greater_than, in_range, between
-# │   ├── extrema.py          - minimum, maximum, clamp, sort_numbers, rank_numbers
-# │   └── tolerance.py        - approximately_equal, close_to_zero, is_finite, is_nan, is_infinite
-# ├── sequences/               - Mathematical sequences and series
-# │   ├── arithmetic.py       - arithmetic_sequence, arithmetic_sum
-# │   ├── geometric.py        - geometric_sequence, geometric_sum
-# │   ├── series.py           - harmonic_series, power_series_sum, series_sum
-# │   ├── polygonal.py        - triangular_numbers, square_numbers, cube_numbers
-# │   └── analysis.py         - find_differences, is_arithmetic, is_geometric
-# ├── advanced/                - Advanced mathematical operations
-# │   ├── logarithmic.py      - ln, log, log10, log2, exp
-# │   ├── base_conversion.py  - decimal_to_base, base_to_decimal, arabic_to_roman, roman_to_arabic
-# │   └── floating_point.py   - hypot, fma, ldexp, frexp, copysign
-# ├── statistics/              - Statistical functions
-# │   ├── descriptive.py      - mean, median, mode, variance, std_dev
-# │   ├── aggregation.py      - sum_product, sum_squares, product
-# │   └── distributions.py    - normal_pdf, binomial_pmf
-# ├── random/                  - Random number generation
-# │   ├── generators.py       - random_float, random_int, random_array
-# │   ├── sampling.py         - random_choice, random_sample, random_shuffle
-# │   └── distributions.py    - random_gaussian, random_uniform
-# ├── constants/               - Mathematical constants
-# │   ├── fundamental.py      - pi, e, tau, golden_ratio, silver_ratio
-# │   ├── roots.py           - sqrt2, sqrt3, sqrt5, cbrt2, cbrt3
-# │   ├── logarithmic.py     - ln2, ln10, log2e, log10e
-# │   ├── special.py         - euler_gamma, catalan, apery, khinchin, glaisher
-# │   └── limits.py          - infinity, nan, machine_epsilon, max_float, min_float
-# └── utilities/              - Utility functions
-#     ├── validation.py      - type checking, range validation
-#     ├── precision.py       - decimal precision utilities
-#     └── formatting.py      - number formatting, display utilities
 #!/usr/bin/env python3
 # src/chuk_mcp_functions/math/arithmetic/__init__.py
 """
@@ -55,21 +7,8 @@ Mathematical arithmetic operations organized into logical categories.
 This version ONLY imports from the reorganized structure:
 - core/
 - comparison/  
-- number_theory/
 
-Ignores old flat files to avoid conflicts.
-"""
-#!/usr/bin/env python3
-# src/chuk_mcp_functions/math/arithmetic/__init__.py
-"""
-Arithmetic Functions Library - REORGANIZED STRUCTURE ONLY
-
-Mathematical arithmetic operations organized into logical categories.
-This version ONLY imports from the reorganized structure:
-- core/
-- comparison/  
-- number_theory/
-
+Note: number_theory is a separate module at the math level, not part of arithmetic.
 Ignores old flat files to avoid conflicts.
 """
 
@@ -88,12 +27,14 @@ except ImportError as e:
     print(f"Warning: Could not import comparison: {e}")
     _comparison_available = False
 
-try:
-    from . import number_theory
-    _number_theory_available = True
-except ImportError as e:
-    print(f"Warning: Could not import number_theory: {e}")
-    _number_theory_available = False
+# REMOVED: number_theory import - it's not part of arithmetic, it's a separate math module
+# This was causing the circular import warning:
+# try:
+#     from . import number_theory  # ❌ WRONG - causes circular import
+#     _number_theory_available = True
+# except ImportError as e:
+#     print(f"Warning: Could not import number_theory: {e}")
+#     _number_theory_available = False
 
 # Import specific functions for backward compatibility - ONLY from reorganized modules
 functions_imported = []
@@ -138,11 +79,10 @@ if _comparison_available:
     except ImportError as e:
         print(f"Warning: Could not import comparison.tolerance: {e}")
 
-
 # Build __all__ with only available modules and functions
 __all__ = []
 
-# Add available modules
+# Add available modules (only core and comparison are part of arithmetic)
 if _core_available:
     __all__.append('core')
 if _comparison_available:
@@ -174,6 +114,11 @@ def print_reorganized_status():
         print("   📐 core/ - basic_operations, rounding, modular")
     if _comparison_available:
         print("   🔍 comparison/ - relational, extrema, tolerance")
+    
+    print()
+    print("📝 Note: number_theory is a separate module at math level:")
+    print("   Use: from chuk_mcp_functions.math import number_theory")
+    print("   Not: from chuk_mcp_functions.math.arithmetic import number_theory")
 
 def get_reorganized_modules():
     """Get list of available reorganized modules."""
@@ -184,6 +129,23 @@ def get_reorganized_modules():
         available.append('comparison')
     return available
 
+def get_module_info():
+    """Get information about this arithmetic module."""
+    return {
+        'name': 'arithmetic',
+        'description': 'Core arithmetic operations organized into logical categories',
+        'available_modules': get_reorganized_modules(),
+        'function_count': len(functions_imported),
+        'core_available': _core_available,
+        'comparison_available': _comparison_available,
+        'note': 'number_theory is a separate math module, not part of arithmetic'
+    }
+
 # For debugging - show what was imported
 if __name__ == "__main__":
     print_reorganized_status()
+    print("\n" + "="*50)
+    print("🔍 Module Information:")
+    info = get_module_info()
+    for key, value in info.items():
+        print(f"  {key}: {value}")
