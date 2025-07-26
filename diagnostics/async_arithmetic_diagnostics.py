@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# chuk_mcp_functions/diagnostics/async_arithmetic_diagnostics.py
+# chuk_mcp_math/diagnostics/async_arithmetic_diagnostics.py
 """
 Async Native Arithmetic Library Diagnostic Script
 
@@ -32,14 +32,14 @@ src_path = project_root / "src"
 sys.path.insert(0, str(src_path))
 
 try:
-    from chuk_mcp_functions.math.arithmetic import *
-    from chuk_mcp_functions.math.arithmetic import (
+    from chuk_mcp_math.arithmetic import *
+    from chuk_mcp_math.arithmetic import (
         get_arithmetic_functions, get_arithmetic_constants,
         validate_arithmetic_installation
     )
-    from chuk_mcp_functions.math.arithmetic.sequences import harmonic_series
-    from chuk_mcp_functions.math.arithmetic.comparison import sort_numbers  # Fixed: Added missing import
-    from chuk_mcp_functions.mcp_decorator import (
+    from chuk_mcp_math.arithmetic.sequences import harmonic_series
+    from chuk_mcp_math.arithmetic.comparison import sort_numbers  # Fixed: Added missing import
+    from chuk_mcp_math.mcp_decorator import (
         get_mcp_functions, get_async_functions, print_function_summary_async
     )
     IMPORTS_OK = True

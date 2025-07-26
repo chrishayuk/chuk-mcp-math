@@ -2,7 +2,7 @@
 """
 Comprehensive Number Theory Library Demonstration Script
 
-A complete showcase of the chuk_mcp_functions number theory capabilities.
+A complete showcase of the chuk_mcp_math number theory capabilities.
 This script demonstrates real-world applications, mathematical relationships,
 advanced cryptographic functions, and cutting-edge number theory research
 in an educational format.
@@ -26,7 +26,7 @@ import math
 from typing import List, Tuple, Dict, Any
 
 # Import the enhanced number theory library
-from chuk_mcp_functions.math import number_theory
+from chuk_mcp_math import number_theory
 
 async def print_header(title: str, char: str = "="):
     """Print a formatted section header."""
@@ -1121,7 +1121,7 @@ async def main():
     """Main demonstration function."""
     print("🧮 COMPREHENSIVE NUMBER THEORY LIBRARY DEMONSTRATION")
     print("=" * 70)
-    print("Welcome to the chuk_mcp_functions enhanced number theory showcase!")
+    print("Welcome to the chuk_mcp_math enhanced number theory showcase!")
     print("This script demonstrates the extensive capabilities of our")
     print("async-native number theory library with 340+ functions across")
     print("18 specialized modules, including cutting-edge research areas.")

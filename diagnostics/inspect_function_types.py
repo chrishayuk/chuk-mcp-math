@@ -23,9 +23,9 @@ async def inspect_function_types():
     
     try:
         # Import some key functions
-        from chuk_mcp_functions.math.arithmetic.basic_operations import add, subtract, multiply
-        from chuk_mcp_functions.math.number_theory import is_prime, factorial, fibonacci
-        from chuk_mcp_functions.math.arithmetic.constants import pi, e
+        from chuk_mcp_math.arithmetic.basic_operations import add, subtract, multiply
+        from chuk_mcp_math.number_theory import is_prime, factorial, fibonacci
+        from chuk_mcp_math.arithmetic.constants import pi, e
         
         functions_to_test = {
             'add': add,
@@ -97,8 +97,8 @@ async def test_async_calls():
     print("="*30)
     
     try:
-        from chuk_mcp_functions.math.arithmetic.basic_operations import add, multiply
-        from chuk_mcp_functions.math.number_theory import is_prime, fibonacci
+        from chuk_mcp_math.arithmetic.basic_operations import add, multiply
+        from chuk_mcp_math.number_theory import is_prime, fibonacci
         
         functions_and_args = [
             (add, (2, 3), "add(2, 3)"),

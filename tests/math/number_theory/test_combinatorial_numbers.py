@@ -19,7 +19,7 @@ import time
 from typing import List
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.combinatorial_numbers import (
+from chuk_mcp_math.number_theory.combinatorial_numbers import (
     # Catalan numbers
     catalan_number, catalan_sequence, is_catalan_number,
     

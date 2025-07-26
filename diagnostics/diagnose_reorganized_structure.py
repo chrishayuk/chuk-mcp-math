@@ -20,8 +20,8 @@ print(f"   src exists: {src_path.exists()}")
 
 # Verify we have the right structure
 if src_path.exists():
-    chuk_path = src_path / "chuk_mcp_functions"
-    print(f"   chuk_mcp_functions exists: {chuk_path.exists()}")
+    chuk_path = src_path / "chuk_mcp_math"
+    print(f"   chuk_mcp_math exists: {chuk_path.exists()}")
     
     if chuk_path.exists():
         # Check key files
@@ -29,9 +29,9 @@ if src_path.exists():
         math_dir = chuk_path / "math"
         arith_dir = math_dir / "arithmetic" if math_dir.exists() else None
         
-        print(f"   chuk_mcp_functions/__init__.py: {init_file.exists()}")
-        print(f"   chuk_mcp_functions/math/: {math_dir.exists() if math_dir else False}")
-        print(f"   chuk_mcp_functions/math/arithmetic/: {arith_dir.exists() if arith_dir else False}")
+        print(f"   chuk_mcp_math/__init__.py: {init_file.exists()}")
+        print(f"   chuk_mcp_math/math/: {math_dir.exists() if math_dir else False}")
+        print(f"   chuk_mcp_math/math/arithmetic/: {arith_dir.exists() if arith_dir else False}")
         
         if arith_dir and arith_dir.exists():
             # Check reorganized structure
@@ -62,25 +62,25 @@ async def test_imports():
     
     # Step 1: Import root package
     try:
-        import chuk_mcp_functions
-        print("✅ Step 1: import chuk_mcp_functions")
-        print(f"   Location: {chuk_mcp_functions.__file__}")
+        import chuk_mcp_math
+        print("✅ Step 1: import chuk_mcp_math")
+        print(f"   Location: {chuk_mcp_math.__file__}")
     except Exception as e:
         print(f"❌ Step 1 failed: {e}")
         return False
     
     # Step 2: Import math
     try:
-        import chuk_mcp_functions.math
-        print("✅ Step 2: import chuk_mcp_functions.math")
+        import chuk_mcp_math
+        print("✅ Step 2: import chuk_mcp_math")
     except Exception as e:
         print(f"❌ Step 2 failed: {e}")
         return False
     
     # Step 3: Import arithmetic
     try:
-        import chuk_mcp_functions.math.arithmetic as arithmetic
-        print("✅ Step 3: import chuk_mcp_functions.math.arithmetic")
+        import chuk_mcp_math.arithmetic as arithmetic
+        print("✅ Step 3: import chuk_mcp_math.arithmetic")
         
         # Show what's available
         attrs = [attr for attr in dir(arithmetic) if not attr.startswith('_')]
@@ -102,10 +102,10 @@ async def test_imports():
     print(f"\n🏗️  Testing reorganized structure:")
     
     reorganized_tests = [
-        ("core", "chuk_mcp_functions.math.arithmetic.core"),
-        ("core.basic_operations", "chuk_mcp_functions.math.arithmetic.core.basic_operations"),
-        ("comparison", "chuk_mcp_functions.math.arithmetic.comparison"),
-        ("number_theory", "chuk_mcp_functions.math.number_theory"),
+        ("core", "chuk_mcp_math.arithmetic.core"),
+        ("core.basic_operations", "chuk_mcp_math.arithmetic.core.basic_operations"),
+        ("comparison", "chuk_mcp_math.arithmetic.comparison"),
+        ("number_theory", "chuk_mcp_math.number_theory"),
     ]
     
     working_modules = []
@@ -122,7 +122,7 @@ async def test_imports():
     if "core.basic_operations" in working_modules:
         print(f"\n🔧 Testing function calls:")
         try:
-            from chuk_mcp_functions.math.arithmetic.core.basic_operations import add
+            from chuk_mcp_math.arithmetic.core.basic_operations import add
             print("   ✅ Imported add function")
             
             # Test the function

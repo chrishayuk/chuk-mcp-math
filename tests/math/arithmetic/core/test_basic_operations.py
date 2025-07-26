@@ -20,7 +20,7 @@ from typing import Union
 from unittest.mock import patch, AsyncMock
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.core.basic_operations import (
+from chuk_mcp_math.arithmetic.core.basic_operations import (
     add, subtract, multiply, divide, power, sqrt,
     abs_value, sign, negate
 )

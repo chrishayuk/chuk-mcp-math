@@ -31,7 +31,7 @@ from typing import List, Dict, Any, Set
 from collections import Counter
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.advanced_prime_patterns import (
+from chuk_mcp_math.number_theory.advanced_prime_patterns import (
     # Prime constellations and patterns
     cousin_primes, sexy_primes, prime_triplets, prime_quadruplets,
     prime_constellations, is_admissible_pattern,

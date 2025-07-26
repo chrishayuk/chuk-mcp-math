@@ -19,7 +19,7 @@ import asyncio
 from typing import Union
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.comparison.relational import (
+from chuk_mcp_math.arithmetic.comparison.relational import (
     equal, not_equal, less_than, less_than_or_equal,
     greater_than, greater_than_or_equal, in_range, between
 )

@@ -19,7 +19,7 @@ import asyncio
 from typing import Union, List
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.comparison.extrema import (
+from chuk_mcp_math.arithmetic.comparison.extrema import (
     minimum, maximum, clamp, sort_numbers, rank_numbers, min_list, max_list
 )
 

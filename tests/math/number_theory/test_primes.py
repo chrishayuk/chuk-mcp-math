@@ -21,7 +21,7 @@ import time
 from typing import List
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.primes import (
+from chuk_mcp_math.number_theory.primes import (
     is_prime, next_prime, nth_prime, prime_factors,
     prime_count, is_coprime, first_n_primes
 )
@@ -642,7 +642,7 @@ class TestIntegration:
     async def test_coprimality_and_gcd_relationship(self):
         """Test relationship between coprimality and GCD."""
         # Import gcd for verification
-        from chuk_mcp_functions.math.number_theory.divisibility import gcd
+        from chuk_mcp_math.number_theory.divisibility import gcd
         
         test_pairs = [(8, 15), (12, 18), (7, 13), (14, 15), (9, 16), (25, 36)]
         

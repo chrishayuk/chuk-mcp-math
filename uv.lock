@@ -48,7 +48,7 @@ wheels = [
 ]
 
 [[package]]
-name = "chuk-mcp-functions"
+name = "chuk-mcp-math"
 version = "0.1.0"
 source = { editable = "." }
 

@@ -19,7 +19,7 @@ import asyncio
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.divisibility import (
+from chuk_mcp_math.number_theory.divisibility import (
     gcd, lcm, divisors, is_divisible, is_even, is_odd,
     extended_gcd, divisor_count, divisor_sum
 )

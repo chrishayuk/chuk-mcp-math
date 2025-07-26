@@ -23,7 +23,7 @@ import math
 from typing import List, Dict
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.digital_operations import (
+from chuk_mcp_math.number_theory.digital_operations import (
     # Digital sums and roots
     digit_sum, digital_root, digit_product, persistent_digital_root,
     

@@ -2,7 +2,7 @@
 """
 Comprehensive Trigonometry Library Demonstration Script
 
-A complete showcase of the chuk_mcp_functions trigonometry capabilities.
+A complete showcase of the chuk_mcp_math trigonometry capabilities.
 This script demonstrates real-world applications, mathematical relationships,
 advanced wave analysis, and cutting-edge trigonometric research applications
 in an educational format.
@@ -25,20 +25,20 @@ import math
 from typing import List, Tuple, Dict, Any
 
 # Import the comprehensive trigonometry library
-from chuk_mcp_functions.math import trigonometry
-from chuk_mcp_functions.math.trigonometry.basic_functions import (
+from chuk_mcp_math import trigonometry
+from chuk_mcp_math.trigonometry.basic_functions import (
     sin, cos, tan, csc, sec, cot, sin_degrees, cos_degrees, tan_degrees
 )
-from chuk_mcp_functions.math.trigonometry.inverse_functions import asin, acos, atan, atan2
-from chuk_mcp_functions.math.trigonometry.hyperbolic import sinh, cosh, tanh
-from chuk_mcp_functions.math.trigonometry.angle_conversion import (
+from chuk_mcp_math.trigonometry.inverse_functions import asin, acos, atan, atan2
+from chuk_mcp_math.trigonometry.hyperbolic import sinh, cosh, tanh
+from chuk_mcp_math.trigonometry.angle_conversion import (
     degrees_to_radians, radians_to_degrees, normalize_angle, angle_difference
 )
-from chuk_mcp_functions.math.trigonometry.applications import (
+from chuk_mcp_math.trigonometry.applications import (
     distance_haversine, bearing_calculation, triangulation,
     oscillation_analysis, pendulum_period, spring_oscillation
 )
-from chuk_mcp_functions.math.trigonometry.wave_analysis import (
+from chuk_mcp_math.trigonometry.wave_analysis import (
     amplitude_from_coefficients, beat_frequency_analysis, harmonic_analysis,
     phase_shift_analysis, wave_equation, fourier_coefficients_basic
 )
@@ -664,7 +664,7 @@ async def main():
     """Main demonstration function."""
     print("📐 COMPREHENSIVE TRIGONOMETRY LIBRARY DEMONSTRATION")
     print("=" * 70)
-    print("Welcome to the chuk_mcp_functions trigonometry showcase!")
+    print("Welcome to the chuk_mcp_math trigonometry showcase!")
     print("This script demonstrates the extensive capabilities of our")
     print("async-native trigonometry library with 120+ functions across")
     print("8 specialized modules, covering everything from basic trig")

@@ -26,7 +26,7 @@ from typing import List, Dict, Any
 
 # Import the functions to test
 try:
-    from chuk_mcp_functions.math.number_theory.special_number_categories import (
+    from chuk_mcp_math.number_theory.special_number_categories import (
         # Amicable numbers and chains
         find_amicable_pairs, is_amicable_number, find_social_numbers, aliquot_sequence_analysis,
         

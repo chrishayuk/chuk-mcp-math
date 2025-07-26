@@ -23,7 +23,7 @@ import time
 from typing import List, Set
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.iterative_sequences import (
+from chuk_mcp_math.number_theory.iterative_sequences import (
     # Collatz sequence
     collatz_sequence, collatz_stopping_time, collatz_max_value,
     

@@ -32,7 +32,7 @@ from typing import List, Dict, Any, Set, Tuple
 from fractions import Fraction
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.farey_sequences import (
+from chuk_mcp_math.number_theory.farey_sequences import (
     # Basic operations
     farey_sequence, farey_sequence_length, farey_neighbors,
     
@@ -1207,6 +1207,6 @@ if __name__ == "__main__":
         "--strict-markers",     # Require markers to be defined
         "--strict-config",      # Strict configuration parsing
         "-x",                   # Stop on first failure for debugging
-        "--cov=chuk_mcp_functions.math.number_theory.farey_sequences",  # Coverage
+        "--cov=chuk_mcp_math.number_theory.farey_sequences",  # Coverage
         "--cov-report=term-missing"  # Show missing lines in coverage
     ])

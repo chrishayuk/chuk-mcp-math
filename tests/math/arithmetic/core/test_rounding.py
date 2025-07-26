@@ -19,7 +19,7 @@ import asyncio
 from typing import Union
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.core.rounding import (
+from chuk_mcp_math.arithmetic.core.rounding import (
     round_number, floor, ceil, truncate,
     ceiling_multiple, floor_multiple, mround
 )

@@ -23,7 +23,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.figurate_numbers import (
+from chuk_mcp_math.number_theory.figurate_numbers import (
     # General polygonal numbers
     polygonal_number, is_polygonal_number, polygonal_sequence,
     

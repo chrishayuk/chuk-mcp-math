@@ -18,7 +18,7 @@ import asyncio
 from typing import Union
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.core.modular import (
+from chuk_mcp_math.arithmetic.core.modular import (
     modulo, divmod_operation, mod_power, quotient, remainder, fmod
 )
 

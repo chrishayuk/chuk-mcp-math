@@ -23,7 +23,7 @@ from typing import List, Dict, Any, Tuple
 from decimal import Decimal, getcontext
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.continued_fractions import (
+from chuk_mcp_math.number_theory.continued_fractions import (
     # Basic operations
     continued_fraction_expansion, cf_to_rational, rational_to_cf,
     

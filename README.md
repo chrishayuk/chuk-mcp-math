@@ -1,4 +1,4 @@
-# CHUK MCP Functions Library
+# CHUK MCP Math Library
 
 🧮 **Comprehensive Mathematical Functions Library for AI Models (Async Native)**
 
@@ -19,8 +19,7 @@ A cutting-edge collection of 400+ mathematical functions organized by domain, de
 ## 🏗️ Architecture Overview
 
 ```
-chuk_mcp_functions/
-├── math/
+chuk_mcp_math/
 │   ├── arithmetic/           # Core arithmetic operations
 │   │   ├── core/            # Basic operations, rounding, modular
 │   │   └── comparison/      # Relational, extrema, tolerance
@@ -49,14 +48,14 @@ chuk_mcp_functions/
 ### Installation
 
 ```bash
-pip install chuk-mcp-functions
+pip install chuk-mcp-math
 ```
 
 ### Basic Usage
 
 ```python
 import asyncio
-from chuk_mcp_functions.math import number_theory, trigonometry
+from chuk_mcp_math import number_theory, trigonometry
 
 async def main():
     # Number theory operations
@@ -80,7 +79,7 @@ asyncio.run(main())
 ### MCP Function Decorator
 
 ```python
-from chuk_mcp_functions.mcp_decorator import mcp_function
+from chuk_mcp_math.mcp_decorator import mcp_function
 
 @mcp_function(
     description="Calculate compound interest with async optimization",
@@ -115,7 +114,7 @@ The most comprehensive number theory library available, featuring:
 ```python
 # Advanced number theory examples
 import asyncio
-from chuk_mcp_functions.math import number_theory
+from chuk_mcp_math import number_theory
 
 async def advanced_demo():
     # Solve Pell's equation x² - 2y² = 1
@@ -154,7 +153,7 @@ Complete trigonometric capabilities for navigation, physics, and signal processi
 ```python
 # Navigation and wave analysis examples
 import asyncio
-from chuk_mcp_functions.math import trigonometry
+from chuk_mcp_math import trigonometry
 
 async def navigation_demo():
     # Calculate great circle distance between cities
@@ -184,8 +183,8 @@ Reorganized structure with logical categorization:
 
 #### 🔧 Core Operations
 ```python
-from chuk_mcp_functions.math.arithmetic.core import add, multiply, power, sqrt
-from chuk_mcp_functions.math.arithmetic.comparison import minimum, maximum, clamp
+from chuk_mcp_math.arithmetic.core import add, multiply, power, sqrt
+from chuk_mcp_math.arithmetic.comparison import minimum, maximum, clamp
 
 # Basic operations with async support
 result = await add(5, 3)
@@ -331,10 +330,10 @@ async def benchmark_demo():
 
 ```bash
 # Number theory comprehensive demo
-python -m chuk_mcp_functions.math.number_theory
+python -m chuk_mcp_math.number_theory
 
 # Trigonometry comprehensive demo  
-python -m chuk_mcp_functions.math.trigonometry
+python -m chuk_mcp_math.trigonometry
 
 # Run specific demonstrations
 python number_theory_demo.py
@@ -345,7 +344,7 @@ python trigonometry_demo.py
 
 ```python
 import asyncio
-from chuk_mcp_functions.math import number_theory
+from chuk_mcp_math import number_theory
 
 async def test_functions():
     # Test prime operations
@@ -415,9 +414,9 @@ Contributions welcome! Please see CONTRIBUTING.md for guidelines.
 
 ## 🔗 Links
 
-- [GitHub Repository](https://github.com/yourusername/chuk-mcp-functions)
+- [GitHub Repository](https://github.com/yourusername/chuk-mcp-math)
 - [Documentation](https://docs.example.com)
-- [PyPI Package](https://pypi.org/project/chuk-mcp-functions/)
+- [PyPI Package](https://pypi.org/project/chuk-mcp-math/)
 - [Examples & Tutorials](https://examples.example.com)
 
 ---

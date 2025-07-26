@@ -23,7 +23,7 @@ from typing import List, Dict, Any
 
 # Import the functions to test
 try:
-    from chuk_mcp_functions.math.number_theory.diophantine_equations import (
+    from chuk_mcp_math.number_theory.diophantine_equations import (
         # Linear Diophantine equations
         solve_linear_diophantine, count_solutions_diophantine, parametric_solutions_diophantine,
         

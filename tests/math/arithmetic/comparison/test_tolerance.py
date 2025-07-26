@@ -22,7 +22,7 @@ import warnings
 from typing import Union
 
 # Import the functions to test
-from chuk_mcp_functions.math.arithmetic.comparison.tolerance import (
+from chuk_mcp_math.arithmetic.comparison.tolerance import (
     approximately_equal, close_to_zero, is_finite, is_nan, 
     is_infinite, is_normal, is_close
 )

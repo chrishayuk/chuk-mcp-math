@@ -23,7 +23,7 @@ import math
 from typing import List
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.basic_sequences import (
+from chuk_mcp_math.number_theory.basic_sequences import (
     # Perfect squares
     is_perfect_square, perfect_squares, nth_perfect_square,
     

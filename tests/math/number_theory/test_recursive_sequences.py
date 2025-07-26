@@ -22,7 +22,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.recursive_sequences import (
+from chuk_mcp_math.number_theory.recursive_sequences import (
     # Lucas sequences
     lucas_number, lucas_sequence, lucas_u_v,
     

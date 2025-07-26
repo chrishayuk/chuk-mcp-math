@@ -21,7 +21,7 @@ import math
 from typing import List, Tuple, Optional
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.modular_arithmetic import (
+from chuk_mcp_math.number_theory.modular_arithmetic import (
     # Chinese Remainder Theorem
     crt_solve, generalized_crt,
     

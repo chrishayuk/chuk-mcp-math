@@ -34,11 +34,11 @@ def check_directory_structure():
             else:
                 print(f"  📄 {item.name}")
         
-        # Check for chuk_mcp_functions
-        chuk_dir = src_dir / "chuk_mcp_functions"
+        # Check for chuk_mcp_math
+        chuk_dir = src_dir / "chuk_mcp_math"
         if chuk_dir.exists():
-            print(f"\n✅ Found src/chuk_mcp_functions/")
-            print(f"📂 Contents of src/chuk_mcp_functions/:")
+            print(f"\n✅ Found src/chuk_mcp_math/")
+            print(f"📂 Contents of src/chuk_mcp_math/:")
             for item in sorted(chuk_dir.iterdir()):
                 if item.is_dir():
                     print(f"  📁 {item.name}/")
@@ -48,11 +48,11 @@ def check_directory_structure():
             # Check for math/arithmetic
             math_dir = chuk_dir / "math"
             if math_dir.exists():
-                print(f"\n✅ Found src/chuk_mcp_functions/math/")
+                print(f"\n✅ Found src/chuk_mcp_math/math/")
                 arith_dir = math_dir / "arithmetic"
                 if arith_dir.exists():
-                    print(f"✅ Found src/chuk_mcp_functions/math/arithmetic/")
-                    print(f"📂 Contents of src/chuk_mcp_functions/math/arithmetic/:")
+                    print(f"✅ Found src/chuk_mcp_math/math/arithmetic/")
+                    print(f"📂 Contents of src/chuk_mcp_math/math/arithmetic/:")
                     for item in sorted(arith_dir.iterdir()):
                         if item.is_dir():
                             print(f"  📁 {item.name}/")
@@ -65,26 +65,26 @@ def check_directory_structure():
                         else:
                             print(f"  📄 {item.name}")
                 else:
-                    print(f"❌ No src/chuk_mcp_functions/math/arithmetic/")
+                    print(f"❌ No src/chuk_mcp_math/math/arithmetic/")
             else:
-                print(f"❌ No src/chuk_mcp_functions/math/")
+                print(f"❌ No src/chuk_mcp_math/math/")
         else:
-            print(f"❌ No src/chuk_mcp_functions/")
+            print(f"❌ No src/chuk_mcp_math/")
     else:
         print(f"❌ No src/ directory found")
         
-        # Check if chuk_mcp_functions is directly in current directory
-        direct_chuk = current_dir / "chuk_mcp_functions"
+        # Check if chuk_mcp_math is directly in current directory
+        direct_chuk = current_dir / "chuk_mcp_math"
         if direct_chuk.exists():
-            print(f"✅ Found chuk_mcp_functions/ directly in current directory")
-            print(f"📂 Contents of chuk_mcp_functions/:")
+            print(f"✅ Found chuk_mcp_math/ directly in current directory")
+            print(f"📂 Contents of chuk_mcp_math/:")
             for item in sorted(direct_chuk.iterdir()):
                 if item.is_dir():
                     print(f"  📁 {item.name}/")
                 else:
                     print(f"  📄 {item.name}")
         else:
-            print(f"❌ No chuk_mcp_functions/ in current directory either")
+            print(f"❌ No chuk_mcp_math/ in current directory either")
 
 def try_imports():
     """Try different import approaches."""
@@ -109,20 +109,20 @@ def try_imports():
     
     # Try importing
     try:
-        import chuk_mcp_functions
-        print(f"✅ Successfully imported chuk_mcp_functions")
-        print(f"   Location: {chuk_mcp_functions.__file__}")
+        import chuk_mcp_math
+        print(f"✅ Successfully imported chuk_mcp_math")
+        print(f"   Location: {chuk_mcp_math.__file__}")
         
         try:
-            import chuk_mcp_functions.math
-            print(f"✅ Successfully imported chuk_mcp_functions.math")
+            import chuk_mcp_math
+            print(f"✅ Successfully imported chuk_mcp_math")
             
             try:
-                import chuk_mcp_functions.math.arithmetic
-                print(f"✅ Successfully imported chuk_mcp_functions.math.arithmetic")
+                import chuk_mcp_math.arithmetic
+                print(f"✅ Successfully imported chuk_mcp_math.arithmetic")
                 
                 # Check what's available
-                arith = chuk_mcp_functions.math.arithmetic
+                arith = chuk_mcp_math.arithmetic
                 attrs = [attr for attr in dir(arith) if not attr.startswith('_')]
                 print(f"   Available attributes: {attrs[:10]}...")  # Show first 10
                 
@@ -131,7 +131,7 @@ def try_imports():
         except Exception as e:
             print(f"❌ Failed to import math: {e}")
     except Exception as e:
-        print(f"❌ Failed to import chuk_mcp_functions: {e}")
+        print(f"❌ Failed to import chuk_mcp_math: {e}")
 
 def main():
     """Main diagnostic function."""
@@ -139,7 +139,7 @@ def main():
     try_imports()
     
     print(f"\n💡 RECOMMENDATIONS:")
-    print("1. Make sure the chuk_mcp_functions package exists")
+    print("1. Make sure the chuk_mcp_math package exists")
     print("2. Make sure all directories have __init__.py files")
     print("3. Check that the reorganized structure is in place")
 

@@ -66,12 +66,12 @@ def test_module_import(module_path):
 
 def find_trigonometry_files():
     """Find all trigonometry Python files."""
-    base_path = "src/chuk_mcp_functions/math/trigonometry"
+    base_path = "src/chuk_mcp_math/math/trigonometry"
     
     if not os.path.exists(base_path):
         # Try alternative paths
         alt_paths = [
-            "chuk_mcp_functions/math/trigonometry",
+            "chuk_mcp_math/math/trigonometry",
             "math/trigonometry",
             "trigonometry"
         ]
@@ -133,7 +133,7 @@ def main():
     # Step 3: Test mcp_decorator
     print("\n3. Testing mcp_decorator...")
     try:
-        from chuk_mcp_functions.mcp_decorator import mcp_function
+        from chuk_mcp_math.mcp_decorator import mcp_function
         print("✅ mcp_decorator import successful")
     except ImportError as e:
         print(f"❌ mcp_decorator failed: {e}")
@@ -144,14 +144,14 @@ def main():
     print("\n4. Testing individual trigonometry modules...")
     
     modules_to_test = [
-        "chuk_mcp_functions.math.trigonometry.basic_functions",
-        "chuk_mcp_functions.math.trigonometry.inverse_functions", 
-        "chuk_mcp_functions.math.trigonometry.hyperbolic",
-        "chuk_mcp_functions.math.trigonometry.inverse_hyperbolic",
-        "chuk_mcp_functions.math.trigonometry.angle_conversion",
-        "chuk_mcp_functions.math.trigonometry.identities",
-        "chuk_mcp_functions.math.trigonometry.wave_analysis",
-        "chuk_mcp_functions.math.trigonometry.applications"
+        "chuk_mcp_math.trigonometry.basic_functions",
+        "chuk_mcp_math.trigonometry.inverse_functions", 
+        "chuk_mcp_math.trigonometry.hyperbolic",
+        "chuk_mcp_math.trigonometry.inverse_hyperbolic",
+        "chuk_mcp_math.trigonometry.angle_conversion",
+        "chuk_mcp_math.trigonometry.identities",
+        "chuk_mcp_math.trigonometry.wave_analysis",
+        "chuk_mcp_math.trigonometry.applications"
     ]
     
     failed_modules = []
@@ -168,7 +168,7 @@ def main():
     
     # Step 5: Test the main trigonometry module
     print("\n5. Testing main trigonometry module...")
-    success, module = test_module_import("chuk_mcp_functions.math.trigonometry")
+    success, module = test_module_import("chuk_mcp_math.trigonometry")
     
     if success:
         print("✅ Main trigonometry module imported successfully!")

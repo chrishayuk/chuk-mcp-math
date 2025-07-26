@@ -23,7 +23,7 @@ async def demo_reorganized_structure():
     print()
     
     # Import and show status
-    import chuk_mcp_functions.math.arithmetic as arithmetic
+    import chuk_mcp_math.arithmetic as arithmetic
     arithmetic.print_reorganized_status()
     
     print("\n" + "="*55)
@@ -37,9 +37,9 @@ async def demo_structured_imports():
     
     # Pattern 1: Category-specific imports
     print("1. 📐 Category-specific imports:")
-    from chuk_mcp_functions.math.arithmetic.core.basic_operations import add, multiply, sqrt
-    from chuk_mcp_functions.math.number_theory.primes import is_prime
-    from chuk_mcp_functions.math.arithmetic.comparison.extrema import minimum, maximum
+    from chuk_mcp_math.arithmetic.core.basic_operations import add, multiply, sqrt
+    from chuk_mcp_math.number_theory.primes import is_prime
+    from chuk_mcp_math.arithmetic.comparison.extrema import minimum, maximum
     
     print("   ✅ Imported from core.basic_operations: add, multiply, sqrt")
     print("   ✅ Imported from number_theory.primes: is_prime")
@@ -64,7 +64,7 @@ async def demo_structured_imports():
 async def demo_submodule_imports():
     """Demo submodule import patterns."""
     print("\n2. 🎯 Submodule imports:")
-    from chuk_mcp_functions.math.arithmetic import core, comparison, number_theory
+    from chuk_mcp_math.arithmetic import core, comparison, number_theory
     
     print("   ✅ Imported submodules: core, comparison, number_theory")
     
@@ -81,7 +81,7 @@ async def demo_submodule_imports():
 async def demo_flat_imports():
     """Demo backward-compatible flat imports."""
     print("\n3. 🔄 Backward-compatible flat imports:")
-    from chuk_mcp_functions.math.arithmetic import add, subtract, is_prime, gcd, clamp
+    from chuk_mcp_math.arithmetic import add, subtract, is_prime, gcd, clamp
     
     print("   ✅ Imported via flat imports: add, subtract, is_prime, gcd, clamp")
     
@@ -104,7 +104,7 @@ async def demo_parallel_execution():
     print("\n⚡ PARALLEL EXECUTION DEMO")
     print("-" * 30)
     
-    from chuk_mcp_functions.math.arithmetic import add, multiply, is_prime, gcd
+    from chuk_mcp_math.arithmetic import add, multiply, is_prime, gcd
     
     print("📊 Running operations in parallel...")
     
@@ -129,9 +129,9 @@ async def demo_complex_calculations():
     print("\n🔬 COMPLEX CALCULATIONS DEMO")
     print("-" * 35)
     
-    from chuk_mcp_functions.math.arithmetic.core.basic_operations import add, multiply, power, sqrt
-    from chuk_mcp_functions.math.number_theory.primes import is_prime, prime_factors
-    from chuk_mcp_functions.math.arithmetic.comparison.extrema import sort_numbers
+    from chuk_mcp_math.arithmetic.core.basic_operations import add, multiply, power, sqrt
+    from chuk_mcp_math.number_theory.primes import is_prime, prime_factors
+    from chuk_mcp_math.arithmetic.comparison.extrema import sort_numbers
     
     # Calculate some interesting math
     print("📐 Calculating mathematical relationships...")

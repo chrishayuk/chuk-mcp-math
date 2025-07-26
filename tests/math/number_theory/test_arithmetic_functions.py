@@ -24,7 +24,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.arithmetic_functions import (
+from chuk_mcp_math.number_theory.arithmetic_functions import (
     # Multiplicative functions
     euler_totient, jordan_totient, mobius_function,
     
@@ -535,7 +535,7 @@ class TestIntegrationAndProperties:
         # Sum of μ(d) over all divisors d of n should be 1 if n=1, 0 otherwise
         for n in range(1, 31):
             # Import divisors function
-            from chuk_mcp_functions.math.number_theory.divisibility import divisors
+            from chuk_mcp_math.number_theory.divisibility import divisors
             
             divisors_n = await divisors(n)
             mobius_sum = sum([await mobius_function(d) for d in divisors_n])
@@ -548,7 +548,7 @@ class TestIntegrationAndProperties:
         """Test that sum of φ(d) over divisors of n equals n."""
         # ∑_{d|n} φ(d) = n
         for n in range(1, 31):
-            from chuk_mcp_functions.math.number_theory.divisibility import divisors
+            from chuk_mcp_math.number_theory.divisibility import divisors
             
             divisors_n = await divisors(n)
             phi_sum = sum([await euler_totient(d) for d in divisors_n])
@@ -560,7 +560,7 @@ class TestIntegrationAndProperties:
         """Test relationships between different divisor functions."""
         for n in range(1, 21):
             # σ₀(n) = τ(n) should equal actual divisor count
-            from chuk_mcp_functions.math.number_theory.divisibility import divisor_count, divisor_sum
+            from chuk_mcp_math.number_theory.divisibility import divisor_count, divisor_sum
             
             sigma_0 = await divisor_power_sum(n, 0)
             tau_n = await divisor_count(n)
@@ -777,7 +777,7 @@ import math
 from typing import List, Tuple
 
 # Import the functions to test
-from chuk_mcp_functions.math.number_theory.arithmetic_functions import (
+from chuk_mcp_math.number_theory.arithmetic_functions import (
     # Multiplicative functions
     euler_totient, jordan_totient, mobius_function,
     
@@ -1288,7 +1288,7 @@ class TestIntegrationAndProperties:
         # Sum of μ(d) over all divisors d of n should be 1 if n=1, 0 otherwise
         for n in range(1, 31):
             # Import divisors function
-            from chuk_mcp_functions.math.number_theory.divisibility import divisors
+            from chuk_mcp_math.number_theory.divisibility import divisors
             
             divisors_n = await divisors(n)
             mobius_sum = sum([await mobius_function(d) for d in divisors_n])
@@ -1301,7 +1301,7 @@ class TestIntegrationAndProperties:
         """Test that sum of φ(d) over divisors of n equals n."""
         # ∑_{d|n} φ(d) = n
         for n in range(1, 31):
-            from chuk_mcp_functions.math.number_theory.divisibility import divisors
+            from chuk_mcp_math.number_theory.divisibility import divisors
             
             divisors_n = await divisors(n)
             phi_sum = sum([await euler_totient(d) for d in divisors_n])
@@ -1313,7 +1313,7 @@ class TestIntegrationAndProperties:
         """Test relationships between different divisor functions."""
         for n in range(1, 21):
             # σ₀(n) = τ(n) should equal actual divisor count
-            from chuk_mcp_functions.math.number_theory.divisibility import divisor_count, divisor_sum
+            from chuk_mcp_math.number_theory.divisibility import divisor_count, divisor_sum
             
             sigma_0 = await divisor_power_sum(n, 0)
             tau_n = await divisor_count(n)
