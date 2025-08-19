@@ -326,6 +326,29 @@ async def benchmark_demo():
 
 ## 🛠️ Development & Testing
 
+### Testing Documentation
+
+Comprehensive testing patterns and workflows are available in [`docs/testing/`](./docs/testing/):
+- [Testing Overview](./docs/testing/TESTING.md) - Complete testing guide
+- [Unit Testing](./docs/testing/UNIT_TESTING.md) - Test isolation patterns
+- [Math Testing](./docs/testing/MATH_PATTERNS.md) - Numerical precision patterns
+- [Test Templates](./docs/testing/templates/) - Ready-to-use templates
+
+### Running Tests
+
+```bash
+# Run all tests
+make test
+
+# Run with coverage
+make test-cov
+
+# Run specific test types
+pytest tests/unit/ -v
+pytest tests/integration/ -v
+pytest -m math  # Math-specific tests
+```
+
 ### Running the Demos
 
 ```bash
@@ -407,7 +430,20 @@ Contributions welcome! Please see CONTRIBUTING.md for guidelines.
 
 ## 📚 Documentation
 
-- Full API documentation available in docstrings
+### Core Documentation
+- [Architecture](./ARCHITECTURE.md) - Module structure and organization
+- [Principles](./PRINCIPLES.md) - Design philosophy
+- [Patterns](./PATTERNS.md) - Implementation patterns
+- [Roadmap](./ROADMAP.md) - Development timeline
+
+### Testing Documentation
+- [Testing Guide](./docs/testing/TESTING.md) - Complete testing documentation
+- [Unit Testing](./docs/testing/UNIT_TESTING.md) - Isolation and mocking
+- [Math Testing](./docs/testing/MATH_PATTERNS.md) - Numerical testing patterns
+- [Performance Testing](./docs/testing/PERFORMANCE_TESTING.md) - Benchmarking
+
+### Additional Resources
+- Full API documentation in docstrings
 - Comprehensive examples in demo files
 - Educational materials for classroom use
 - Research applications and case studies
