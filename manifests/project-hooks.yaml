@@ -1,0 +1,86 @@
+# Project Pre-commit Hooks Configuration
+# This file defines which pre-commit hooks are needed for this project
+# Agents and developers should use this to set up the development environment
+
+project: chuk-mcp-math
+version: 1.0.0
+
+hooks:
+  # Code Quality
+  - id: ruff-check
+    name: Ruff Linter
+    description: Fast Python linter for code quality
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-ruff-hook.yaml
+    required: true
+    
+  - id: ruff-format
+    name: Ruff Formatter
+    description: Python code formatting
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-ruff-hook.yaml
+    required: true
+    
+  # Type Checking
+  - id: mypy
+    name: MyPy Type Checker
+    description: Static type checking for Python
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-mypy-hook.yaml
+    required: true
+    config:
+      strict: true
+      ignore_missing_imports: true
+    
+  # Testing
+  - id: test-coverage
+    name: Test Coverage Check
+    description: Ensure minimum test coverage
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-coverage-hook.yaml
+    required: true
+    config:
+      min_coverage: 80
+      package_name: chuk_mcp_math
+      
+  - id: pytest-fast
+    name: Fast Tests
+    description: Run quick unit tests before commit
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-pytest-hook.yaml
+    required: false
+    config:
+      markers: "not slow"
+      
+  # Security
+  - id: detect-secrets
+    name: Secret Detection
+    description: Prevent committing secrets
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-secrets-hook.yaml
+    required: true
+    
+  # Documentation
+  - id: check-markdown
+    name: Markdown Linter
+    description: Validate markdown files
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-markdown-hook.yaml
+    required: false
+
+# Hook stages configuration
+stages:
+  pre-commit:
+    - ruff-check
+    - ruff-format
+    - detect-secrets
+  pre-push:
+    - mypy
+    - test-coverage
+  manual:
+    - pytest-fast
+    - check-markdown
+
+# Installation instructions
+installation:
+  commands:
+    - uv add --dev pre-commit
+    - pre-commit install
+    - pre-commit install --hook-type pre-push
+  notes:
+    - Hooks are configured in .pre-commit-config.yaml
+    - Run 'pre-commit run --all-files' to test all hooks
+    - Use 'pre-commit run <hook-id>' to run specific hook

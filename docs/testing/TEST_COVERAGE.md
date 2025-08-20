@@ -205,33 +205,30 @@ uv run pytest --cov=src/chuk_mcp_math --cov-report=term-missing | grep -E "[0-9]
 
 ## Coverage in CI/CD
 
-### GitHub Actions Example
-```yaml
-- name: Run tests with coverage
-  run: |
-    uv run pytest --cov=src/chuk_mcp_math \
-                  --cov-report=xml \
-                  --cov-report=term \
-                  --cov-fail-under=80
+### GitHub Actions
+For GitHub Actions workflow configuration, see:
+- **Template**: [github-actions-coverage.yaml](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-coverage.yaml)
+- **Local Implementation**: [github-actions-coverage.yaml](../../templates/cicd/workflows/github-actions-coverage.yaml)
 
-- name: Upload coverage to Codecov
-  uses: codecov/codecov-action@v3
-  with:
-    file: ./coverage.xml
-    fail_ci_if_error: true
-```
+The workflow includes coverage reporting, Codecov integration, and artifact uploading.
 
-### Pre-commit Hook
+### Pre-commit Hooks
+For pre-commit hook configuration, see:
+- **Template**: [pre-commit-coverage-hook.yaml](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/hooks/pre-commit-coverage-hook.yaml)
+- **Local Implementation**: [pre-commit-coverage-hook.yaml](../../templates/cicd/hooks/pre-commit-coverage-hook.yaml)
+
+Quick setup:
 ```bash
-# .pre-commit-config.yaml
-- repo: local
-  hooks:
-    - id: test-coverage
-      name: Check test coverage
-      entry: uv run pytest --cov=src/chuk_mcp_math --cov-fail-under=80
-      language: system
-      pass_filenames: false
-      always_run: true
+# Install pre-commit
+uv add --dev pre-commit
+
+# Add hooks to .pre-commit-config.yaml from template
+
+# Install hooks
+pre-commit install
+
+# Run coverage check
+pre-commit run test-coverage --all-files
 ```
 
 ## Common Coverage Patterns
@@ -335,3 +332,12 @@ Or with dynamic coverage:
 - [Unit Testing](./UNIT_TESTING.md) - General unit testing practices
 - [Testing Overview](./TESTING.md) - Complete testing guide
 - [Math Patterns](./MATH_PATTERNS.md) - Mathematical testing patterns
+- [Package Management](../PACKAGE_MANAGEMENT.md) - Using uv for dependencies
+
+## Template Information
+
+- **Source**: [vibe-coding-templates](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/docs/testing/TEST_COVERAGE.md)
+- **Version**: 1.0.0
+- **Date**: 2025-01-19
+- **Author**: chrishayuk
+- **Last Synced**: 2025-01-19

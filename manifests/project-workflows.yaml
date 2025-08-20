@@ -1,0 +1,132 @@
+# Project GitHub Actions Workflows Configuration
+# This file defines which GitHub Actions workflows are needed for this project
+# Agents and developers should use this to set up CI/CD pipelines
+
+project: chuk-mcp-math
+version: 1.0.0
+
+workflows:
+  # Core Testing
+  - id: test-suite
+    name: Test Suite
+    description: Main test execution with coverage
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-test.yaml
+    file: .github/workflows/test.yml
+    required: true
+    triggers:
+      - push: [main, develop]
+      - pull_request: [main]
+    config:
+      python_versions: ['3.9', '3.10', '3.11', '3.12']
+      os: [ubuntu-latest]
+      package_name: chuk_mcp_math
+      
+  # Coverage Reporting
+  - id: coverage
+    name: Coverage Report
+    description: Test coverage with Codecov integration
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-coverage.yaml
+    file: .github/workflows/coverage.yml
+    required: true
+    triggers:
+      - push: [main]
+      - pull_request: [main]
+    config:
+      min_coverage: 80
+      codecov: true
+      package_name: chuk_mcp_math
+      
+  # Code Quality
+  - id: lint
+    name: Linting and Formatting
+    description: Code quality checks with ruff and mypy
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-lint.yaml
+    file: .github/workflows/lint.yml
+    required: true
+    triggers:
+      - push: [main, develop]
+      - pull_request: [main]
+    config:
+      tools:
+        - ruff
+        - mypy
+        - bandit
+      
+  # Performance Testing
+  - id: benchmark
+    name: Performance Benchmarks
+    description: Run performance benchmarks
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-benchmark.yaml
+    file: .github/workflows/benchmark.yml
+    required: false
+    triggers:
+      - push: [main]
+      - schedule: "0 0 * * 0"  # Weekly
+    config:
+      benchmark_suite: tests/performance/
+      
+  # Release Management
+  - id: release
+    name: Release to PyPI
+    description: Automated package publishing
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-release.yaml
+    file: .github/workflows/release.yml
+    required: true
+    triggers:
+      - release: [published]
+    secrets:
+      - PYPI_API_TOKEN
+    config:
+      build_tool: uv
+      
+  # Documentation
+  - id: docs
+    name: Documentation Build
+    description: Build and deploy documentation
+    template: https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/templates/cicd/workflows/github-actions-docs.yaml
+    file: .github/workflows/docs.yml
+    required: false
+    triggers:
+      - push: [main]
+    config:
+      docs_tool: mkdocs
+      deploy_to: github-pages
+
+# Workflow dependencies
+dependencies:
+  coverage:
+    needs: [test-suite]
+  release:
+    needs: [test-suite, lint, coverage]
+    
+# Secrets required
+secrets:
+  - name: PYPI_API_TOKEN
+    description: PyPI API token for publishing
+    required_for: [release]
+  - name: CODECOV_TOKEN
+    description: Codecov token for private repos
+    required_for: [coverage]
+    optional: true  # Public repos don't need this
+
+# Badge URLs
+badges:
+  tests: https://github.com/{owner}/{repo}/workflows/Test%20Suite/badge.svg
+  coverage: https://codecov.io/gh/{owner}/{repo}/branch/main/graph/badge.svg
+  pypi: https://img.shields.io/pypi/v/chuk_mcp_math.svg
+  python: https://img.shields.io/pypi/pyversions/chuk_mcp_math.svg
+  license: https://img.shields.io/github/license/{owner}/{repo}.svg
+
+# Setup instructions
+setup:
+  directory_structure:
+    - .github/workflows/
+  commands:
+    - mkdir -p .github/workflows
+    - "# Copy workflow templates from URLs above"
+    - "# Configure secrets in GitHub repository settings"
+  notes:
+    - Workflows are stored in .github/workflows/
+    - Each workflow file should be customized with project specifics
+    - Set up required secrets in repository settings
+    - Badge URLs need {owner} and {repo} placeholders replaced

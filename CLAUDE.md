@@ -14,11 +14,26 @@ CHUK MCP Math is an async-native mathematical functions library with 400+ functi
 - **[PATTERNS.md](./PATTERNS.md)** - Implementation patterns and code examples
 - **[ROADMAP.md](./ROADMAP.md)** - Development timeline and expansion plans
 
+### CI/CD Configuration
+- **[manifests/](./manifests/)** - Project CI/CD requirements:
+  - **project-hooks.yaml** - Pre-commit hooks manifest
+  - **project-workflows.yaml** - GitHub Actions workflows manifest
+- **[templates/cicd/](./templates/cicd/)** - CI/CD templates organized by type:
+  - **hooks/** - Pre-commit hook templates
+  - **workflows/** - GitHub Actions workflow templates
+
 ### Testing Documentation
 - **[docs/testing/TESTING.md](./docs/testing/TESTING.md)** - Testing documentation hub
 - **[docs/testing/UNIT_TESTING.md](./docs/testing/UNIT_TESTING.md)** - Unit testing patterns
 - **[docs/testing/MATH_PATTERNS.md](./docs/testing/MATH_PATTERNS.md)** - Mathematical testing patterns
+- **[docs/testing/TEST_COVERAGE.md](./docs/testing/TEST_COVERAGE.md)** - Coverage guidelines
 - **[docs/testing/templates/](./docs/testing/templates/)** - Test templates
+
+### Generic Documentation Templates
+- **[docs/templates/](./docs/templates/)** - Generic guides for common tools:
+  - **GITHUB_ACTIONS.md** - GitHub Actions setup guide
+  - **PRE_COMMIT.md** - Pre-commit hooks setup guide
+  - **TEST_COVERAGE.md** - Test coverage guidelines template
 
 ## Quick Reference
 
@@ -53,6 +68,54 @@ uv add --dev pytest-cov    # Add development dependency
 uv run pytest              # Run tests
 uv run python script.py    # Run Python scripts
 ```
+
+## CI/CD Configuration
+
+### Project Configuration Files
+The project uses manifest files to declare CI/CD requirements:
+
+- **`manifests/project-hooks.yaml`** - Declares all pre-commit hooks needed
+- **`manifests/project-workflows.yaml`** - Declares all GitHub Actions workflows needed
+
+**IMPORTANT**: Always check these manifest files first to understand what CI/CD configuration is required for this project.
+
+### CI/CD Setup Guides
+For detailed setup instructions, refer to these guides:
+- **GitHub Actions Setup**: [GITHUB_ACTIONS.md](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/docs/cicd/GITHUB_ACTIONS.md)
+- **Pre-commit Hooks Setup**: [PRE_COMMIT.md](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/docs/cicd/PRE_COMMIT.md)
+- **Test Coverage Setup**: [TEST_COVERAGE.md](https://github.com/chrishayuk/vibe-coding-templates/blob/main/python/docs/cicd/TEST_COVERAGE.md)
+
+### Quick Setup Commands
+
+#### Pre-commit Hooks
+```bash
+# 1. Check required hooks
+cat manifests/project-hooks.yaml
+
+# 2. Install and configure
+uv add --dev pre-commit
+pre-commit install
+pre-commit install --hook-type pre-push
+
+# 3. Test hooks
+pre-commit run --all-files
+```
+
+#### GitHub Actions
+```bash
+# 1. Check required workflows
+cat manifests/project-workflows.yaml
+
+# 2. Create workflow directory
+mkdir -p .github/workflows
+
+# 3. Copy templates from manifests/project-workflows.yaml URLs
+# 4. Configure secrets in GitHub repository settings
+```
+
+### Template Locations
+- **Local Templates**: `templates/cicd/` (hooks/ and workflows/)
+- **Remote Templates**: [vibe-coding-templates/python/templates/cicd](https://github.com/chrishayuk/vibe-coding-templates/tree/main/python/templates/cicd)
 
 ## Common Development Commands
 
