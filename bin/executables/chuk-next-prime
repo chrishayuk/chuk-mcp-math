@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+# Auto-generated CLI wrapper for next_prime
+import sys
+import os
+import logging
+
+# Suppress INFO logs for clean CLI output
+logging.getLogger('chuk_mcp_math').setLevel(logging.WARNING)
+
+sys.path.insert(0, "/Users/christopherhay/chris-source/chuk-mcp-math/src")
+
+from chuk_mcp_math.cli import CLIWrapper
+from chuk_mcp_math.number_theory.primes import next_prime
+
+if __name__ == "__main__":
+    wrapper = CLIWrapper(next_prime, "next_prime")
+    sys.exit(wrapper.run(sys.argv[1:]))
