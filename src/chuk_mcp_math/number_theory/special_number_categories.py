@@ -1190,7 +1190,7 @@ async def keith_numbers(limit: int) -> List[int]:
 
     for n in range(10, limit + 1):  # Keith numbers must have at least 2 digits
         digits = [int(d) for d in str(n)]
-        num_digits = len(digits)
+        len(digits)
 
         # Generate Fibonacci-like sequence
         sequence = digits[:]
@@ -1270,7 +1270,7 @@ async def is_keith_number(n: int) -> Dict:
         }
 
     digits = [int(d) for d in str(n)]
-    num_digits = len(digits)
+    len(digits)
 
     sequence = digits[:]
     current_sum = sum(sequence)

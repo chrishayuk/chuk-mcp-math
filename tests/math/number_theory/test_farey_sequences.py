@@ -321,7 +321,6 @@ class TestMediantOperations:
 
         # Test that fractions are properly ordered along the path
         fractions = result["fractions"][2:]  # Skip initial bounds 0/1, 1/1
-        target_val = 5 / 13
 
         for i, frac in enumerate(fractions[:-1]):  # Exclude final target
             p, q = frac
@@ -375,7 +374,7 @@ class TestMediantOperations:
 
         assert result["start"] == [1, 7]
         assert result["end"] == [1, 6]
-        assert result["converges"] == False
+        assert not result["converges"]
         assert "reason" in result
 
 
@@ -476,9 +475,9 @@ class TestFordCircles:
 
             assert result["fraction1"] == [p1, q1]
             assert result["fraction2"] == [p2, q2]
-            assert result["are_farey_adjacent"] == True
+            assert result["are_farey_adjacent"]
             assert result["determinant"] == 1
-            assert result["are_tangent"] == True
+            assert result["are_tangent"]
             assert result["tangency_type"] == "external"
 
             # Verify tangency condition: distance = sum of radii
@@ -505,11 +504,11 @@ class TestFordCircles:
             assert result["determinant"] == det
 
             if not expected_adjacent:
-                assert result["are_tangent"] == False
+                assert not result["are_tangent"]
                 assert result["tangency_type"] in ["separate", "overlapping"]
             else:
                 # If they are adjacent, they should be tangent
-                assert result["are_tangent"] == True
+                assert result["are_tangent"]
 
     @pytest.mark.asyncio
     async def test_circle_tangency_error_handling(self):
@@ -605,7 +604,7 @@ class TestMathematicalProperties:
     @pytest.mark.asyncio
     async def test_gap_formula_verification(self):
         """Test that gaps follow the formula 1/(q1*q2) for adjacent fractions."""
-        result = await gap_analysis(4)
+        await gap_analysis(4)
 
         # Get the actual Farey sequence to verify gaps
         farey_seq = await farey_sequence(4)
@@ -677,7 +676,7 @@ class TestApplications:
                 assert result["error"] < 0.5  # Should be reasonably close
 
                 # Verify that the approximation is actually closer than simple fractions
-                best_val = result["best_value"]
+                result["best_value"]
                 simple_errors = [abs(value - 0), abs(value - 0.5), abs(value - 1)]
                 assert result["error"] <= min(simple_errors)
 
@@ -717,8 +716,8 @@ class TestApplications:
             ]  # Input fractions (may be reordered)
             assert result["fraction2"] in [[p1, q1], [p2, q2]]
             assert result["fraction_between"] == expected
-            assert result["is_mediant"] == True
-            assert result["is_between"] == True
+            assert result["is_mediant"]
+            assert result["is_between"]
 
     @pytest.mark.asyncio
     async def test_farey_fraction_between_properties(self):
@@ -734,7 +733,7 @@ class TestApplications:
         min_val, max_val = min(val1, val2), max(val1, val2)
 
         assert min_val < between_val < max_val
-        assert result["is_between"] == True
+        assert result["is_between"]
 
         # Test adjacency detection
         # 1/4 and 1/3 are adjacent in some Farey sequence
@@ -778,7 +777,7 @@ class TestAdvancedConnections:
             assert result["fraction2"] == [p2, q2]
             assert result["farey_sum"] == expected
             assert result["regular_sum"] == expected
-            assert result["are_equal"] == True
+            assert result["are_equal"]
 
             # Verify the sum is correct (with relaxed tolerance)
             expected_val = expected[0] / expected[1]
@@ -907,7 +906,7 @@ class TestAdvancedConnections:
             # RH consistency check should be based on the bound
             rh_bound = result["rh_bound"]
             tolerance = 0.1  # Small tolerance for numerical errors
-            expected_consistent = error_exp <= rh_bound + tolerance
+            error_exp <= rh_bound + tolerance
             # Note: For small n, this might not hold due to lower-order terms
 
     @pytest.mark.asyncio

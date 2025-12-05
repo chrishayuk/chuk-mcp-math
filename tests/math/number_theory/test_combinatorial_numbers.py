@@ -128,7 +128,7 @@ class TestCatalanNumbers:
         known_catalan_numbers = [1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796]
 
         for cat in known_catalan_numbers:
-            assert await is_catalan_number(cat) == True, (
+            assert await is_catalan_number(cat), (
                 f"{cat} should be a Catalan number"
             )
 
@@ -138,7 +138,7 @@ class TestCatalanNumbers:
         non_catalan = [3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20]
 
         for n in non_catalan:
-            assert await is_catalan_number(n) == False, (
+            assert not await is_catalan_number(n), (
                 f"{n} should not be a Catalan number"
             )
 
@@ -146,11 +146,11 @@ class TestCatalanNumbers:
     async def test_is_catalan_number_edge_cases(self):
         """Test edge cases for Catalan number checking."""
         assert (
-            await is_catalan_number(0) == False
+            not await is_catalan_number(0)
         )  # 0 is not typically considered Catalan
-        assert await is_catalan_number(1) == True  # C_0 = C_1 = 1
-        assert await is_catalan_number(-1) == False  # Negative numbers
-        assert await is_catalan_number(-5) == False  # Negative numbers
+        assert await is_catalan_number(1)  # C_0 = C_1 = 1
+        assert not await is_catalan_number(-1)  # Negative numbers
+        assert not await is_catalan_number(-5)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_catalan_large_values(self):
@@ -893,13 +893,13 @@ class TestParametrized:
     @pytest.mark.parametrize("catalan_num", [1, 2, 5, 14, 42, 132, 429, 1430, 4862])
     async def test_is_catalan_number_parametrized(self, catalan_num):
         """Parametrized test for Catalan number identification."""
-        assert await is_catalan_number(catalan_num) == True
+        assert await is_catalan_number(catalan_num)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("non_catalan", [3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16])
     async def test_is_not_catalan_number_parametrized(self, non_catalan):
         """Parametrized test for non-Catalan number identification."""
-        assert await is_catalan_number(non_catalan) == False
+        assert not await is_catalan_number(non_catalan)
 
 
 if __name__ == "__main__":

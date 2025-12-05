@@ -38,30 +38,30 @@ class TestEqual:
     @pytest.mark.asyncio
     async def test_equal_integers(self):
         """Test equality with integer inputs."""
-        assert await equal(5, 5) == True
-        assert await equal(0, 0) == True
-        assert await equal(-3, -3) == True
-        assert await equal(5, 3) == False
-        assert await equal(-2, 2) == False
+        assert await equal(5, 5)
+        assert await equal(0, 0)
+        assert await equal(-3, -3)
+        assert not await equal(5, 3)
+        assert not await equal(-2, 2)
 
     @pytest.mark.asyncio
     async def test_equal_floats(self):
         """Test equality with float inputs."""
-        assert await equal(3.14, 3.14) == True
-        assert await equal(0.0, 0.0) == True
-        assert await equal(-2.5, -2.5) == True
-        assert await equal(3.14, 3.15) == False
-        assert await equal(1.0, 1.1) == False
+        assert await equal(3.14, 3.14)
+        assert await equal(0.0, 0.0)
+        assert await equal(-2.5, -2.5)
+        assert not await equal(3.14, 3.15)
+        assert not await equal(1.0, 1.1)
 
     @pytest.mark.asyncio
     async def test_equal_mixed_types(self):
         """Test equality with mixed int/float inputs."""
-        assert await equal(5, 5.0) == True
-        assert await equal(5.0, 5) == True
-        assert await equal(0, 0.0) == True
-        assert await equal(-3, -3.0) == True
-        assert await equal(5, 5.1) == False
-        assert await equal(5.1, 5) == False
+        assert await equal(5, 5.0)
+        assert await equal(5.0, 5)
+        assert await equal(0, 0.0)
+        assert await equal(-3, -3.0)
+        assert not await equal(5, 5.1)
+        assert not await equal(5.1, 5)
 
     @pytest.mark.asyncio
     async def test_equal_extreme_values(self):
@@ -69,11 +69,11 @@ class TestEqual:
         inf = float("inf")
         neg_inf = float("-inf")
 
-        assert await equal(inf, inf) == True
-        assert await equal(neg_inf, neg_inf) == True
-        assert await equal(inf, neg_inf) == False
-        assert await equal(inf, 1e10) == False
-        assert await equal(1e-10, 0) == False
+        assert await equal(inf, inf)
+        assert await equal(neg_inf, neg_inf)
+        assert not await equal(inf, neg_inf)
+        assert not await equal(inf, 1e10)
+        assert not await equal(1e-10, 0)
 
     @pytest.mark.asyncio
     async def test_equal_with_nan(self):
@@ -81,20 +81,20 @@ class TestEqual:
         nan = float("nan")
 
         # NaN is never equal to anything, including itself
-        assert await equal(nan, nan) == False
-        assert await equal(nan, 5) == False
-        assert await equal(5, nan) == False
-        assert await equal(nan, float("inf")) == False
+        assert not await equal(nan, nan)
+        assert not await equal(nan, 5)
+        assert not await equal(5, nan)
+        assert not await equal(nan, float("inf"))
 
     @pytest.mark.asyncio
     async def test_equal_floating_point_precision(self):
         """Test equality with floating point precision issues."""
         # These should be exactly equal due to binary representation
-        assert await equal(0.1 + 0.2, 0.3) == False  # Classic floating point issue
+        assert not await equal(0.1 + 0.2, 0.3)  # Classic floating point issue
 
         # But these should be equal
-        assert await equal(0.5 + 0.5, 1.0) == True
-        assert await equal(0.25 + 0.25, 0.5) == True
+        assert await equal(0.5 + 0.5, 1.0)
+        assert await equal(0.25 + 0.25, 0.5)
 
 
 class TestNotEqual:
@@ -103,27 +103,27 @@ class TestNotEqual:
     @pytest.mark.asyncio
     async def test_not_equal_basic(self):
         """Test basic not_equal functionality."""
-        assert await not_equal(5, 3) == True
-        assert await not_equal(3, 5) == True
-        assert await not_equal(-2, 2) == True
-        assert await not_equal(5, 5) == False
-        assert await not_equal(0, 0) == False
+        assert await not_equal(5, 3)
+        assert await not_equal(3, 5)
+        assert await not_equal(-2, 2)
+        assert not await not_equal(5, 5)
+        assert not await not_equal(0, 0)
 
     @pytest.mark.asyncio
     async def test_not_equal_floats(self):
         """Test not_equal with float inputs."""
-        assert await not_equal(3.14, 3.15) == True
-        assert await not_equal(1.0, 1.1) == True
-        assert await not_equal(3.14, 3.14) == False
-        assert await not_equal(0.0, 0.0) == False
+        assert await not_equal(3.14, 3.15)
+        assert await not_equal(1.0, 1.1)
+        assert not await not_equal(3.14, 3.14)
+        assert not await not_equal(0.0, 0.0)
 
     @pytest.mark.asyncio
     async def test_not_equal_mixed_types(self):
         """Test not_equal with mixed types."""
-        assert await not_equal(5, 5.0) == False
-        assert await not_equal(5.0, 5) == False
-        assert await not_equal(5, 5.1) == True
-        assert await not_equal(5.1, 5) == True
+        assert not await not_equal(5, 5.0)
+        assert not await not_equal(5.0, 5)
+        assert await not_equal(5, 5.1)
+        assert await not_equal(5.1, 5)
 
     @pytest.mark.asyncio
     async def test_not_equal_with_nan(self):
@@ -131,9 +131,9 @@ class TestNotEqual:
         nan = float("nan")
 
         # NaN is not equal to anything, so not_equal should return True
-        assert await not_equal(nan, nan) == True
-        assert await not_equal(nan, 5) == True
-        assert await not_equal(5, nan) == True
+        assert await not_equal(nan, nan)
+        assert await not_equal(nan, 5)
+        assert await not_equal(5, nan)
 
     @pytest.mark.asyncio
     async def test_not_equal_consistency_with_equal(self):
@@ -160,29 +160,29 @@ class TestLessThan:
     @pytest.mark.asyncio
     async def test_less_than_integers(self):
         """Test less_than with integers."""
-        assert await less_than(3, 5) == True
-        assert await less_than(-5, -3) == True
-        assert await less_than(-2, 1) == True
-        assert await less_than(0, 1) == True
-        assert await less_than(5, 3) == False
-        assert await less_than(5, 5) == False
+        assert await less_than(3, 5)
+        assert await less_than(-5, -3)
+        assert await less_than(-2, 1)
+        assert await less_than(0, 1)
+        assert not await less_than(5, 3)
+        assert not await less_than(5, 5)
 
     @pytest.mark.asyncio
     async def test_less_than_floats(self):
         """Test less_than with floats."""
-        assert await less_than(2.71, 3.14) == True
-        assert await less_than(-2.5, -1.5) == True
-        assert await less_than(0.0, 0.1) == True
-        assert await less_than(3.14, 2.71) == False
-        assert await less_than(2.5, 2.5) == False
+        assert await less_than(2.71, 3.14)
+        assert await less_than(-2.5, -1.5)
+        assert await less_than(0.0, 0.1)
+        assert not await less_than(3.14, 2.71)
+        assert not await less_than(2.5, 2.5)
 
     @pytest.mark.asyncio
     async def test_less_than_mixed_types(self):
         """Test less_than with mixed types."""
-        assert await less_than(3, 3.5) == True
-        assert await less_than(3.5, 4) == True
-        assert await less_than(5, 5.0) == False
-        assert await less_than(5.1, 5) == False
+        assert await less_than(3, 3.5)
+        assert await less_than(3.5, 4)
+        assert not await less_than(5, 5.0)
+        assert not await less_than(5.1, 5)
 
     @pytest.mark.asyncio
     async def test_less_than_extreme_values(self):
@@ -190,12 +190,12 @@ class TestLessThan:
         inf = float("inf")
         neg_inf = float("-inf")
 
-        assert await less_than(neg_inf, inf) == True
-        assert await less_than(neg_inf, 0) == True
-        assert await less_than(0, inf) == True
-        assert await less_than(1e10, inf) == True
-        assert await less_than(inf, inf) == False
-        assert await less_than(inf, 0) == False
+        assert await less_than(neg_inf, inf)
+        assert await less_than(neg_inf, 0)
+        assert await less_than(0, inf)
+        assert await less_than(1e10, inf)
+        assert not await less_than(inf, inf)
+        assert not await less_than(inf, 0)
 
     @pytest.mark.asyncio
     async def test_less_than_with_nan(self):
@@ -203,10 +203,10 @@ class TestLessThan:
         nan = float("nan")
 
         # NaN comparisons always return False
-        assert await less_than(nan, 5) == False
-        assert await less_than(5, nan) == False
-        assert await less_than(nan, nan) == False
-        assert await less_than(nan, float("inf")) == False
+        assert not await less_than(nan, 5)
+        assert not await less_than(5, nan)
+        assert not await less_than(nan, nan)
+        assert not await less_than(nan, float("inf"))
 
 
 class TestLessThanOrEqual:
@@ -215,10 +215,10 @@ class TestLessThanOrEqual:
     @pytest.mark.asyncio
     async def test_less_than_or_equal_basic(self):
         """Test basic less_than_or_equal functionality."""
-        assert await less_than_or_equal(3, 5) == True
-        assert await less_than_or_equal(5, 5) == True
-        assert await less_than_or_equal(-3, -3) == True
-        assert await less_than_or_equal(5, 3) == False
+        assert await less_than_or_equal(3, 5)
+        assert await less_than_or_equal(5, 5)
+        assert await less_than_or_equal(-3, -3)
+        assert not await less_than_or_equal(5, 3)
 
     @pytest.mark.asyncio
     async def test_less_than_or_equal_consistency(self):
@@ -240,21 +240,21 @@ class TestGreaterThan:
     @pytest.mark.asyncio
     async def test_greater_than_integers(self):
         """Test greater_than with integers."""
-        assert await greater_than(5, 3) == True
-        assert await greater_than(-3, -5) == True
-        assert await greater_than(1, -2) == True
-        assert await greater_than(1, 0) == True
-        assert await greater_than(3, 5) == False
-        assert await greater_than(5, 5) == False
+        assert await greater_than(5, 3)
+        assert await greater_than(-3, -5)
+        assert await greater_than(1, -2)
+        assert await greater_than(1, 0)
+        assert not await greater_than(3, 5)
+        assert not await greater_than(5, 5)
 
     @pytest.mark.asyncio
     async def test_greater_than_floats(self):
         """Test greater_than with floats."""
-        assert await greater_than(3.14, 2.71) == True
-        assert await greater_than(-1.5, -2.5) == True
-        assert await greater_than(0.1, 0.0) == True
-        assert await greater_than(2.71, 3.14) == False
-        assert await greater_than(2.5, 2.5) == False
+        assert await greater_than(3.14, 2.71)
+        assert await greater_than(-1.5, -2.5)
+        assert await greater_than(0.1, 0.0)
+        assert not await greater_than(2.71, 3.14)
+        assert not await greater_than(2.5, 2.5)
 
     @pytest.mark.asyncio
     async def test_greater_than_consistency_with_less_than(self):
@@ -275,10 +275,10 @@ class TestGreaterThanOrEqual:
     @pytest.mark.asyncio
     async def test_greater_than_or_equal_basic(self):
         """Test basic greater_than_or_equal functionality."""
-        assert await greater_than_or_equal(5, 3) == True
-        assert await greater_than_or_equal(5, 5) == True
-        assert await greater_than_or_equal(-3, -3) == True
-        assert await greater_than_or_equal(3, 5) == False
+        assert await greater_than_or_equal(5, 3)
+        assert await greater_than_or_equal(5, 5)
+        assert await greater_than_or_equal(-3, -3)
+        assert not await greater_than_or_equal(3, 5)
 
     @pytest.mark.asyncio
     async def test_greater_than_or_equal_consistency(self):
@@ -300,53 +300,53 @@ class TestInRange:
     @pytest.mark.asyncio
     async def test_in_range_inclusive_basic(self):
         """Test in_range with inclusive bounds (default)."""
-        assert await in_range(5, 1, 10) == True
-        assert await in_range(1, 1, 10) == True  # At lower bound
-        assert await in_range(10, 1, 10) == True  # At upper bound
-        assert await in_range(0, 1, 10) == False  # Below range
-        assert await in_range(11, 1, 10) == False  # Above range
+        assert await in_range(5, 1, 10)
+        assert await in_range(1, 1, 10)  # At lower bound
+        assert await in_range(10, 1, 10)  # At upper bound
+        assert not await in_range(0, 1, 10)  # Below range
+        assert not await in_range(11, 1, 10)  # Above range
 
     @pytest.mark.asyncio
     async def test_in_range_inclusive_explicit(self):
         """Test in_range with explicitly inclusive bounds."""
-        assert await in_range(5, 1, 10, inclusive=True) == True
-        assert await in_range(1, 1, 10, inclusive=True) == True
-        assert await in_range(10, 1, 10, inclusive=True) == True
-        assert await in_range(0, 1, 10, inclusive=True) == False
-        assert await in_range(11, 1, 10, inclusive=True) == False
+        assert await in_range(5, 1, 10, inclusive=True)
+        assert await in_range(1, 1, 10, inclusive=True)
+        assert await in_range(10, 1, 10, inclusive=True)
+        assert not await in_range(0, 1, 10, inclusive=True)
+        assert not await in_range(11, 1, 10, inclusive=True)
 
     @pytest.mark.asyncio
     async def test_in_range_exclusive(self):
         """Test in_range with exclusive bounds."""
-        assert await in_range(5, 1, 10, inclusive=False) == True
-        assert await in_range(1, 1, 10, inclusive=False) == False  # At lower bound
-        assert await in_range(10, 1, 10, inclusive=False) == False  # At upper bound
-        assert await in_range(0, 1, 10, inclusive=False) == False  # Below range
-        assert await in_range(11, 1, 10, inclusive=False) == False  # Above range
+        assert await in_range(5, 1, 10, inclusive=False)
+        assert not await in_range(1, 1, 10, inclusive=False)  # At lower bound
+        assert not await in_range(10, 1, 10, inclusive=False)  # At upper bound
+        assert not await in_range(0, 1, 10, inclusive=False)  # Below range
+        assert not await in_range(11, 1, 10, inclusive=False)  # Above range
 
     @pytest.mark.asyncio
     async def test_in_range_floats(self):
         """Test in_range with float values."""
-        assert await in_range(3.14, 1.0, 10.0) == True
-        assert await in_range(1.0, 1.0, 10.0, inclusive=True) == True
-        assert await in_range(1.0, 1.0, 10.0, inclusive=False) == False
-        assert await in_range(0.5, 1.0, 10.0) == False
+        assert await in_range(3.14, 1.0, 10.0)
+        assert await in_range(1.0, 1.0, 10.0, inclusive=True)
+        assert not await in_range(1.0, 1.0, 10.0, inclusive=False)
+        assert not await in_range(0.5, 1.0, 10.0)
 
     @pytest.mark.asyncio
     async def test_in_range_negative_bounds(self):
         """Test in_range with negative bounds."""
-        assert await in_range(-2, -5, 5) == True
-        assert await in_range(-5, -5, 5, inclusive=True) == True
-        assert await in_range(-5, -5, 5, inclusive=False) == False
-        assert await in_range(-10, -5, 5) == False
+        assert await in_range(-2, -5, 5)
+        assert await in_range(-5, -5, 5, inclusive=True)
+        assert not await in_range(-5, -5, 5, inclusive=False)
+        assert not await in_range(-10, -5, 5)
 
     @pytest.mark.asyncio
     async def test_in_range_zero_width_range(self):
         """Test in_range with zero-width range (min == max)."""
-        assert await in_range(5, 5, 5, inclusive=True) == True
-        assert await in_range(5, 5, 5, inclusive=False) == False
-        assert await in_range(3, 5, 5, inclusive=True) == False
-        assert await in_range(7, 5, 5, inclusive=True) == False
+        assert await in_range(5, 5, 5, inclusive=True)
+        assert not await in_range(5, 5, 5, inclusive=False)
+        assert not await in_range(3, 5, 5, inclusive=True)
+        assert not await in_range(7, 5, 5, inclusive=True)
 
     @pytest.mark.asyncio
     async def test_in_range_invalid_bounds(self):
@@ -367,11 +367,11 @@ class TestInRange:
         inf = float("inf")
         neg_inf = float("-inf")
 
-        assert await in_range(1000, neg_inf, inf) == True
-        assert await in_range(inf, 1, 10) == False
-        assert await in_range(neg_inf, 1, 10) == False
-        assert await in_range(5, neg_inf, 10) == True
-        assert await in_range(5, 1, inf) == True
+        assert await in_range(1000, neg_inf, inf)
+        assert not await in_range(inf, 1, 10)
+        assert not await in_range(neg_inf, 1, 10)
+        assert await in_range(5, neg_inf, 10)
+        assert await in_range(5, 1, inf)
 
     @pytest.mark.asyncio
     async def test_in_range_with_nan(self):
@@ -379,9 +379,9 @@ class TestInRange:
         nan = float("nan")
 
         # NaN comparisons should return False
-        assert await in_range(nan, 1, 10) == False
-        assert await in_range(5, nan, 10) == False
-        assert await in_range(5, 1, nan) == False
+        assert not await in_range(nan, 1, 10)
+        assert not await in_range(5, nan, 10)
+        assert not await in_range(5, 1, nan)
 
 
 class TestBetween:
@@ -390,29 +390,29 @@ class TestBetween:
     @pytest.mark.asyncio
     async def test_between_basic(self):
         """Test basic between functionality (exclusive bounds)."""
-        assert await between(5, 1, 10) == True
-        assert await between(2, 1, 10) == True
-        assert await between(9, 1, 10) == True
-        assert await between(1, 1, 10) == False  # At lower bound
-        assert await between(10, 1, 10) == False  # At upper bound
-        assert await between(0, 1, 10) == False  # Below range
-        assert await between(11, 1, 10) == False  # Above range
+        assert await between(5, 1, 10)
+        assert await between(2, 1, 10)
+        assert await between(9, 1, 10)
+        assert not await between(1, 1, 10)  # At lower bound
+        assert not await between(10, 1, 10)  # At upper bound
+        assert not await between(0, 1, 10)  # Below range
+        assert not await between(11, 1, 10)  # Above range
 
     @pytest.mark.asyncio
     async def test_between_floats(self):
         """Test between with float values."""
-        assert await between(3.14, 1.0, 10.0) == True
-        assert await between(1.0, 1.0, 10.0) == False  # At bound
-        assert await between(1.01, 1.0, 10.0) == True  # Just inside
-        assert await between(9.99, 1.0, 10.0) == True  # Just inside
+        assert await between(3.14, 1.0, 10.0)
+        assert not await between(1.0, 1.0, 10.0)  # At bound
+        assert await between(1.01, 1.0, 10.0)  # Just inside
+        assert await between(9.99, 1.0, 10.0)  # Just inside
 
     @pytest.mark.asyncio
     async def test_between_negative_bounds(self):
         """Test between with negative bounds."""
-        assert await between(0, -5, 5) == True
-        assert await between(-2, -5, 5) == True
-        assert await between(-5, -5, 5) == False  # At lower bound
-        assert await between(5, -5, 5) == False  # At upper bound
+        assert await between(0, -5, 5)
+        assert await between(-2, -5, 5)
+        assert not await between(-5, -5, 5)  # At lower bound
+        assert not await between(5, -5, 5)  # At upper bound
 
     @pytest.mark.asyncio
     async def test_between_consistency_with_in_range(self):
@@ -439,11 +439,11 @@ class TestBetween:
         inf = float("inf")
         neg_inf = float("-inf")
 
-        assert await between(1000, neg_inf, inf) == True
-        assert await between(inf, 1, 10) == False
-        assert await between(neg_inf, 1, 10) == False
-        assert await between(5, neg_inf, 10) == True
-        assert await between(5, 1, inf) == True
+        assert await between(1000, neg_inf, inf)
+        assert not await between(inf, 1, 10)
+        assert not await between(neg_inf, 1, 10)
+        assert await between(5, neg_inf, 10)
+        assert await between(5, 1, inf)
 
     @pytest.mark.asyncio
     async def test_between_with_nan(self):
@@ -451,9 +451,9 @@ class TestBetween:
         nan = float("nan")
 
         # NaN comparisons should return False
-        assert await between(nan, 1, 10) == False
-        assert await between(5, nan, 10) == False
-        assert await between(5, 1, nan) == False
+        assert not await between(nan, 1, 10)
+        assert not await between(5, nan, 10)
+        assert not await between(5, 1, nan)
 
 
 class TestIntegration:
@@ -465,14 +465,14 @@ class TestIntegration:
         # If a < b and b < c, then a < c
         a, b, c = 1, 5, 10
 
-        assert await less_than(a, b) == True
-        assert await less_than(b, c) == True
-        assert await less_than(a, c) == True
+        assert await less_than(a, b)
+        assert await less_than(b, c)
+        assert await less_than(a, c)
 
         # Similar for greater_than
-        assert await greater_than(c, b) == True
-        assert await greater_than(b, a) == True
-        assert await greater_than(c, a) == True
+        assert await greater_than(c, b)
+        assert await greater_than(b, a)
+        assert await greater_than(c, a)
 
     @pytest.mark.asyncio
     async def test_comparison_antisymmetry(self):
@@ -685,7 +685,7 @@ class TestErrorHandling:
         except ValueError:
             # Should be able to continue with async operations
             result = await equal(3, 3)
-            assert result == True
+            assert result
 
     @pytest.mark.asyncio
     async def test_nan_behavior_consistency(self):
@@ -694,26 +694,26 @@ class TestErrorHandling:
         regular_value = 5
 
         # All comparison operations with NaN should return False except not_equal
-        assert await equal(nan, regular_value) == False
-        assert await equal(regular_value, nan) == False
-        assert await equal(nan, nan) == False
+        assert not await equal(nan, regular_value)
+        assert not await equal(regular_value, nan)
+        assert not await equal(nan, nan)
 
-        assert await not_equal(nan, regular_value) == True
-        assert await not_equal(regular_value, nan) == True
-        assert await not_equal(nan, nan) == True
+        assert await not_equal(nan, regular_value)
+        assert await not_equal(regular_value, nan)
+        assert await not_equal(nan, nan)
 
-        assert await less_than(nan, regular_value) == False
-        assert await less_than(regular_value, nan) == False
-        assert await less_than_or_equal(nan, regular_value) == False
-        assert await less_than_or_equal(regular_value, nan) == False
+        assert not await less_than(nan, regular_value)
+        assert not await less_than(regular_value, nan)
+        assert not await less_than_or_equal(nan, regular_value)
+        assert not await less_than_or_equal(regular_value, nan)
 
-        assert await greater_than(nan, regular_value) == False
-        assert await greater_than(regular_value, nan) == False
-        assert await greater_than_or_equal(nan, regular_value) == False
-        assert await greater_than_or_equal(regular_value, nan) == False
+        assert not await greater_than(nan, regular_value)
+        assert not await greater_than(regular_value, nan)
+        assert not await greater_than_or_equal(nan, regular_value)
+        assert not await greater_than_or_equal(regular_value, nan)
 
-        assert await in_range(nan, 1, 10) == False
-        assert await between(nan, 1, 10) == False
+        assert not await in_range(nan, 1, 10)
+        assert not await between(nan, 1, 10)
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ Modules:
 - conversion: Unit and format conversions
 """
 
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Any
 import logging
 import math
 import asyncio
@@ -337,8 +337,12 @@ async def print_math_summary():
     print()
 
     # Check what's available in arithmetic
-    if hasattr(arithmetic, "print_reorganized_status"):
-        arithmetic.print_reorganized_status()
+    try:
+        from . import arithmetic as arith_module
+        if hasattr(arith_module, "print_reorganized_status"):
+            arith_module.print_reorganized_status()
+    except ImportError:
+        pass
 
     print()
 

@@ -236,7 +236,7 @@ async def apply_mobius_inversion(formula: str, n: int, description: str = "") ->
     try:
         # Parse the formula
         f_func = eval(formula)
-    except:
+    except Exception:
         return {"error": f"Invalid formula: {formula}"}
 
     if n < 1:
@@ -247,7 +247,7 @@ async def apply_mobius_inversion(formula: str, n: int, description: str = "") ->
     for k in range(1, n + 1):
         try:
             original_f[k] = f_func(k)
-        except:
+        except Exception:
             original_f[k] = 0
 
     # Compute summatory function g(n) = Σ_{d|n} f(d)

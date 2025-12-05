@@ -339,7 +339,7 @@ class TestHappyNumbers:
 
         for happy_num in known_happy:
             result = await is_happy_number(happy_num)
-            assert result == True, f"{happy_num} should be happy"
+            assert result, f"{happy_num} should be happy"
 
     @pytest.mark.asyncio
     async def test_is_happy_number_known_sad(self):
@@ -372,30 +372,30 @@ class TestHappyNumbers:
 
         for sad_num in known_sad:
             result = await is_happy_number(sad_num)
-            assert result == False, f"{sad_num} should be sad (not happy)"
+            assert not result, f"{sad_num} should be sad (not happy)"
 
     @pytest.mark.asyncio
     async def test_is_happy_number_manual_verification(self):
         """Test happy number calculation with manual verification."""
         # 7: 7 -> 49 -> 97 -> 130 -> 10 -> 1 (happy)
-        assert await is_happy_number(7) == True
+        assert await is_happy_number(7)
 
         # 19: 19 -> 82 -> 68 -> 100 -> 1 (happy)
-        assert await is_happy_number(19) == True
+        assert await is_happy_number(19)
 
         # 4: 4 -> 16 -> 37 -> 58 -> 89 -> 145 -> 42 -> 20 -> 4 (cycles, sad)
-        assert await is_happy_number(4) == False
+        assert not await is_happy_number(4)
 
     @pytest.mark.asyncio
     async def test_is_happy_number_edge_cases(self):
         """Test happy number edge cases."""
         # 1 is happy by definition
-        assert await is_happy_number(1) == True
+        assert await is_happy_number(1)
 
         # 0 and negative numbers are not happy
-        assert await is_happy_number(0) == False
-        assert await is_happy_number(-1) == False
-        assert await is_happy_number(-7) == False
+        assert not await is_happy_number(0)
+        assert not await is_happy_number(-1)
+        assert not await is_happy_number(-7)
 
     @pytest.mark.asyncio
     async def test_happy_numbers_generation(self):
@@ -431,7 +431,7 @@ class TestHappyNumbers:
 
         # All numbers in the list should be happy
         for num in happy_list:
-            assert await is_happy_number(num) == True, (
+            assert await is_happy_number(num), (
                 f"{num} in happy list should be happy"
             )
 
@@ -482,22 +482,22 @@ class TestNarcissisticNumbers:
 
         for narcissistic_num in known_narcissistic:
             result = await is_narcissistic_number(narcissistic_num)
-            assert result == True, f"{narcissistic_num} should be narcissistic"
+            assert result, f"{narcissistic_num} should be narcissistic"
 
     @pytest.mark.asyncio
     async def test_is_narcissistic_number_manual_verification(self):
         """Test narcissistic numbers with manual verification."""
         # 153 = 1³ + 5³ + 3³ = 1 + 125 + 27 = 153
-        assert await is_narcissistic_number(153) == True
+        assert await is_narcissistic_number(153)
 
         # 371 = 3³ + 7³ + 1³ = 27 + 343 + 1 = 371
-        assert await is_narcissistic_number(371) == True
+        assert await is_narcissistic_number(371)
 
         # 1634 = 1⁴ + 6⁴ + 3⁴ + 4⁴ = 1 + 1296 + 81 + 256 = 1634
-        assert await is_narcissistic_number(1634) == True
+        assert await is_narcissistic_number(1634)
 
         # 123 ≠ 1³ + 2³ + 3³ = 1 + 8 + 27 = 36
-        assert await is_narcissistic_number(123) == False
+        assert not await is_narcissistic_number(123)
 
     @pytest.mark.asyncio
     async def test_is_narcissistic_number_non_narcissistic(self):
@@ -506,15 +506,15 @@ class TestNarcissisticNumbers:
 
         for non_narcissistic_num in non_narcissistic:
             result = await is_narcissistic_number(non_narcissistic_num)
-            assert result == False, f"{non_narcissistic_num} should not be narcissistic"
+            assert not result, f"{non_narcissistic_num} should not be narcissistic"
 
     @pytest.mark.asyncio
     async def test_is_narcissistic_number_edge_cases(self):
         """Test narcissistic number edge cases."""
         # 0 and negative numbers are not narcissistic
-        assert await is_narcissistic_number(0) == False
-        assert await is_narcissistic_number(-1) == False
-        assert await is_narcissistic_number(-153) == False
+        assert not await is_narcissistic_number(0)
+        assert not await is_narcissistic_number(-1)
+        assert not await is_narcissistic_number(-153)
 
     @pytest.mark.asyncio
     async def test_narcissistic_numbers_generation(self):
@@ -540,7 +540,7 @@ class TestNarcissisticNumbers:
 
         # All numbers in the list should be narcissistic
         for num in narcissistic_list:
-            assert await is_narcissistic_number(num) == True, (
+            assert await is_narcissistic_number(num), (
                 f"{num} should be narcissistic"
             )
 
@@ -756,19 +756,19 @@ class TestKeithNumbers:
 
         for keith_num in known_keith[:10]:  # Test first 10 to avoid long computation
             result = await is_keith_number(keith_num)
-            assert result == True, f"{keith_num} should be a Keith number"
+            assert result, f"{keith_num} should be a Keith number"
 
     @pytest.mark.asyncio
     async def test_is_keith_number_manual_verification(self):
         """Test Keith numbers with manual verification."""
         # 14: digits [1, 4], sequence: 1, 4, 5, 9, 14 ✓
-        assert await is_keith_number(14) == True
+        assert await is_keith_number(14)
 
         # 197: digits [1, 9, 7], sequence: 1, 9, 7, 17, 33, 57, 107, 197 ✓
-        assert await is_keith_number(197) == True
+        assert await is_keith_number(197)
 
         # 15: not Keith
-        assert await is_keith_number(15) == False
+        assert not await is_keith_number(15)
 
     @pytest.mark.asyncio
     async def test_is_keith_number_non_keith(self):
@@ -796,20 +796,20 @@ class TestKeithNumbers:
 
         for non_keith_num in non_keith:
             result = await is_keith_number(non_keith_num)
-            assert result == False, f"{non_keith_num} should not be a Keith number"
+            assert not result, f"{non_keith_num} should not be a Keith number"
 
     @pytest.mark.asyncio
     async def test_is_keith_number_edge_cases(self):
         """Test Keith number edge cases."""
         # Single digits are not Keith numbers
         for i in range(1, 10):
-            assert await is_keith_number(i) == False, (
+            assert not await is_keith_number(i), (
                 f"Single digit {i} should not be Keith"
             )
 
         # Zero and negative numbers
-        assert await is_keith_number(0) == False
-        assert await is_keith_number(-14) == False
+        assert not await is_keith_number(0)
+        assert not await is_keith_number(-14)
 
     @pytest.mark.asyncio
     async def test_keith_numbers_generation(self):
@@ -835,7 +835,7 @@ class TestKeithNumbers:
 
         # All numbers in the list should be Keith numbers
         for num in keith_list:
-            assert await is_keith_number(num) == True, f"{num} should be a Keith number"
+            assert await is_keith_number(num), f"{num} should be a Keith number"
 
         # Should be in ascending order
         assert keith_list == sorted(keith_list), (
@@ -997,7 +997,7 @@ class TestIntegrationAndProperties:
 
         # Happy number determination is consistent
         for n in [1, 7, 19, 23]:
-            assert await is_happy_number(n) == True, f"{n} should be happy"
+            assert await is_happy_number(n), f"{n} should be happy"
 
     @pytest.mark.asyncio
     async def test_sequence_length_relationships(self):
@@ -1061,7 +1061,7 @@ class TestIntegrationAndProperties:
 
         # Narcissistic numbers equal sum of powered digits
         for n in [153, 370, 371, 1634]:
-            assert await is_narcissistic_number(n) == True, (
+            assert await is_narcissistic_number(n), (
                 f"{n} should be narcissistic"
             )
 
@@ -1077,18 +1077,18 @@ class TestIntegrationAndProperties:
 
         # Verify any intersections
         for num in keith_and_happy:
-            assert await is_keith_number(num) == True, f"{num} should be Keith"
-            assert await is_happy_number(num) == True, f"{num} should be happy"
+            assert await is_keith_number(num), f"{num} should be Keith"
+            assert await is_happy_number(num), f"{num} should be happy"
 
         # Check narcissistic vs happy overlap
         narcissistic_list = await narcissistic_numbers(500)
         narcissistic_and_happy = set(narcissistic_list) & set(happy_list)
 
         for num in narcissistic_and_happy:
-            assert await is_narcissistic_number(num) == True, (
+            assert await is_narcissistic_number(num), (
                 f"{num} should be narcissistic"
             )
-            assert await is_happy_number(num) == True, f"{num} should be happy"
+            assert await is_happy_number(num), f"{num} should be happy"
 
 
 # ============================================================================
@@ -1151,13 +1151,13 @@ class TestPerformance:
         assert results[2] == 52  # collatz_max_value(7)
         assert results[3] == [1234, 3087, 8352, 6174]  # kaprekar_sequence(1234, 4)
         assert results[4] == 6174  # kaprekar_constant(4)
-        assert results[5] == True  # is_happy_number(7)
+        assert results[5]  # is_happy_number(7)
         assert isinstance(results[6], list)  # happy_numbers(20)
-        assert results[7] == True  # is_narcissistic_number(153)
+        assert results[7]  # is_narcissistic_number(153)
         assert isinstance(results[8], list)  # narcissistic_numbers(200)
         assert isinstance(results[9], list)  # look_and_say_sequence("1", 5)
         assert isinstance(results[10], list)  # recaman_sequence(10)
-        assert results[11] == True  # is_keith_number(14)
+        assert results[11]  # is_keith_number(14)
         assert isinstance(results[12], list)  # keith_numbers(50)
         assert isinstance(results[13], list)  # digital_sum_sequence(123)
         assert isinstance(results[14], list)  # digital_product_sequence(39)
@@ -1291,22 +1291,21 @@ class TestErrorHandling:
     async def test_edge_case_handling(self):
         """Test edge case handling across all functions."""
         # Functions that should handle edge cases gracefully
-        edge_cases = []
 
         # Happy number functions with edge cases
-        assert await is_happy_number(1) == True, "1 should be happy"
-        assert await is_happy_number(0) == False, "0 should not be happy"
+        assert await is_happy_number(1), "1 should be happy"
+        assert not await is_happy_number(0), "0 should not be happy"
         assert await happy_numbers(0) == [], "Empty range should return empty list"
 
         # Narcissistic number functions with edge cases
-        assert await is_narcissistic_number(1) == True, "1 should be narcissistic"
-        assert await is_narcissistic_number(0) == False, "0 should not be narcissistic"
+        assert await is_narcissistic_number(1), "1 should be narcissistic"
+        assert not await is_narcissistic_number(0), "0 should not be narcissistic"
         assert await narcissistic_numbers(0) == [], (
             "Empty range should return empty list"
         )
 
         # Keith number functions with edge cases
-        assert await is_keith_number(9) == False, "Single digits should not be Keith"
+        assert not await is_keith_number(9), "Single digits should not be Keith"
         assert await keith_numbers(9) == [], "No Keith numbers < 10"
 
         # Look-and-say with edge cases
@@ -1364,7 +1363,7 @@ class TestParametrized:
     async def test_is_happy_number_parametrized(self, happy_num):
         """Parametrized test for happy number identification."""
         result = await is_happy_number(happy_num)
-        assert result == True
+        assert result
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1373,14 +1372,14 @@ class TestParametrized:
     async def test_is_narcissistic_number_parametrized(self, narcissistic_num):
         """Parametrized test for narcissistic number identification."""
         result = await is_narcissistic_number(narcissistic_num)
-        assert result == True
+        assert result
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("keith_num", [14, 19, 28, 47, 61, 75])
     async def test_is_keith_number_parametrized(self, keith_num):
         """Parametrized test for Keith number identification."""
         result = await is_keith_number(keith_num)
-        assert result == True
+        assert result
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(

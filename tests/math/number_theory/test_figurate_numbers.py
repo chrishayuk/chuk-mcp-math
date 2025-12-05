@@ -194,7 +194,7 @@ class TestPolygonalNumbers:
         for n in [1, 3, 5, 7, 9]:  # Odd numbers
             triangular = await polygonal_number(n, 3)
             hexagonal_index = (n + 1) // 2
-            hexagonal = await polygonal_number(hexagonal_index, 6)
+            await polygonal_number(hexagonal_index, 6)
             # Not all triangular numbers are hexagonal, so we test specific cases
             if n == 1:
                 assert triangular == 1
@@ -481,7 +481,7 @@ class TestStarNumbers:
         # Star numbers are centered hexagonal numbers with different indexing
         for n in range(1, 8):
             star = await star_number(n)
-            centered_hex = await centered_hexagonal_number(n - 1)
+            await centered_hexagonal_number(n - 1)
             # They're not always equal, but there are relationships
             if n == 1:
                 assert star == 1

@@ -48,7 +48,7 @@ try:
             from pydantic import __version__ as pydantic_version
 
             PYDANTIC_V2 = pydantic_version.startswith("2.")
-        except:
+        except Exception:
             PYDANTIC_V2 = False
 
         PYDANTIC_AVAILABLE = True

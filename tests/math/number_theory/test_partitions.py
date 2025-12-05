@@ -756,22 +756,22 @@ class TestAdditiveBases:
 
         for basis in test_sets:
             result = await is_additive_basis(basis, 15)
-            assert result == True, f"Set containing 1 should be additive basis: {basis}"
+            assert result, f"Set containing 1 should be additive basis: {basis}"
 
         # Empty set should not be additive basis
-        assert await is_additive_basis([], 5) == False
+        assert not await is_additive_basis([], 5)
 
         # Set with only large numbers cannot represent small numbers
-        assert await is_additive_basis([10, 20], 5) == False
+        assert not await is_additive_basis([10, 20], 5)
 
     @pytest.mark.asyncio
     async def test_is_additive_basis_edge_cases(self):
         """Test edge cases for additive basis checking."""
         # Zero limit
-        assert await is_additive_basis([1, 2], 0) == False
+        assert not await is_additive_basis([1, 2], 0)
 
         # Negative limit
-        assert await is_additive_basis([1, 2], -5) == False
+        assert not await is_additive_basis([1, 2], -5)
 
         # Basis with zeros or negatives (should be filtered)
         result = await is_additive_basis([0, 1, 2, -3], 5)
@@ -954,7 +954,7 @@ class TestIntegrationAndProperties:
                 is_basis = await is_additive_basis(small_basis, n)
                 # Should be true for sets containing 1
                 if 1 in small_basis:
-                    assert is_basis == True, (
+                    assert is_basis, (
                         f"{small_basis} should be additive basis for {n}"
                     )
 
@@ -1133,7 +1133,7 @@ class TestErrorHandling:
     async def test_empty_input_handling(self):
         """Test handling of empty inputs where applicable."""
         # Empty basis for additive basis
-        assert await is_additive_basis([], 10) == False
+        assert not await is_additive_basis([], 10)
 
         # Empty or invalid Sidon set requests
         result = await generate_sidon_set(5, 0)

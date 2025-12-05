@@ -100,6 +100,23 @@ exclude_lines = [
     "if __name__ == .__main__.:"
 ]
 
+# Ruff linting configuration
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".eggs",
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "build",
+    "dist",
+    "diagnostics",  # Diagnostic scripts with intentional patterns
+    "docs",          # Documentation and templates
+]
+
 # Black code formatting
 [tool.black]
 line-length = 100

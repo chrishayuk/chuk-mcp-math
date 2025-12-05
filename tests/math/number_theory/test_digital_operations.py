@@ -356,14 +356,6 @@ class TestDigitalTransformations:
     @pytest.mark.asyncio
     async def test_digit_sort_with_repeated_digits(self):
         """Test digit sorting with repeated digits."""
-        test_cases = [
-            (112233, 123123),  # Ascending: 112233
-            (332211, 123123),  # Ascending: 112233
-            (112233, 332211),  # Descending: 332211
-            (555, 555),  # All same digits
-            (100200, 1200),  # With zeros (ascending: 000012 → 12)
-            (100200, 210000),  # With zeros (descending: 210000)
-        ]
 
         # Test ascending
         assert await digit_sort(112233, descending=False) == 112233
@@ -440,7 +432,7 @@ class TestPalindromicNumbers:
         ]
 
         for palindrome in palindromes_base_10:
-            assert await is_palindromic_number(palindrome) == True, (
+            assert await is_palindromic_number(palindrome), (
                 f"{palindrome} should be palindromic"
             )
 
@@ -478,7 +470,7 @@ class TestPalindromicNumbers:
         ]
 
         for non_palindrome in non_palindromes:
-            assert await is_palindromic_number(non_palindrome) == False, (
+            assert not await is_palindromic_number(non_palindrome), (
                 f"{non_palindrome} should not be palindromic"
             )
 
@@ -486,26 +478,26 @@ class TestPalindromicNumbers:
     async def test_is_palindromic_number_different_bases(self):
         """Test palindromic numbers in different bases."""
         # 9 in binary is 1001, which is palindromic
-        assert await is_palindromic_number(9, 2) == True
+        assert await is_palindromic_number(9, 2)
 
         # 15 in binary is 1111, which is palindromic
-        assert await is_palindromic_number(15, 2) == True
+        assert await is_palindromic_number(15, 2)
 
         # 10 in binary is 1010, which is not palindromic
-        assert await is_palindromic_number(10, 2) == False
+        assert not await is_palindromic_number(10, 2)
 
         # 17 in base 8 is 21, which is not palindromic
-        assert await is_palindromic_number(17, 8) == False
+        assert not await is_palindromic_number(17, 8)
 
         # 85 in base 16 is 55, which is palindromic
-        assert await is_palindromic_number(85, 16) == True
+        assert await is_palindromic_number(85, 16)
 
     @pytest.mark.asyncio
     async def test_is_palindromic_number_negative(self):
         """Test palindromic check with negative numbers."""
-        assert await is_palindromic_number(-1) == False
-        assert await is_palindromic_number(-121) == False
-        assert await is_palindromic_number(-1221) == False
+        assert not await is_palindromic_number(-1)
+        assert not await is_palindromic_number(-121)
+        assert not await is_palindromic_number(-1221)
 
     @pytest.mark.asyncio
     async def test_is_palindromic_number_invalid_base(self):
@@ -588,7 +580,7 @@ class TestPalindromicNumbers:
         for n in test_numbers:
             next_pal = await next_palindrome(n)
             assert next_pal > n, f"next_palindrome({n}) should be greater than {n}"
-            assert await is_palindromic_number(next_pal) == True, (
+            assert await is_palindromic_number(next_pal), (
                 f"next_palindrome({n}) = {next_pal} should be palindromic"
             )
 
@@ -645,7 +637,7 @@ class TestHarshadNumbers:
         ]
 
         for harshad in known_harshad:
-            assert await is_harshad_number(harshad) == True, (
+            assert await is_harshad_number(harshad), (
                 f"{harshad} should be Harshad"
             )
 
@@ -684,49 +676,49 @@ class TestHarshadNumbers:
         ]
 
         for non_harshad in non_harshad:
-            assert await is_harshad_number(non_harshad) == False, (
+            assert not await is_harshad_number(non_harshad), (
                 f"{non_harshad} should not be Harshad"
             )
 
     @pytest.mark.asyncio
     async def test_is_harshad_number_edge_cases(self):
         """Test Harshad number edge cases."""
-        assert await is_harshad_number(0) == False  # 0 is not positive
-        assert await is_harshad_number(-12) == False  # Negative numbers
-        assert await is_harshad_number(-1) == False  # Negative numbers
+        assert not await is_harshad_number(0)  # 0 is not positive
+        assert not await is_harshad_number(-12)  # Negative numbers
+        assert not await is_harshad_number(-1)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_is_harshad_number_manual_verification(self):
         """Test Harshad numbers with manual verification."""
         # 12: digit sum = 1+2 = 3, 12 % 3 = 0 ✓
-        assert await is_harshad_number(12) == True
+        assert await is_harshad_number(12)
 
         # 18: digit sum = 1+8 = 9, 18 % 9 = 0 ✓
-        assert await is_harshad_number(18) == True
+        assert await is_harshad_number(18)
 
         # 19: digit sum = 1+9 = 10, 19 % 10 = 9 ≠ 0 ✗
-        assert await is_harshad_number(19) == False
+        assert not await is_harshad_number(19)
 
         # 102: digit sum = 1+0+2 = 3, 102 % 3 = 0 ✓
-        assert await is_harshad_number(102) == True
+        assert await is_harshad_number(102)
 
         # 103: digit sum = 1+0+3 = 4, 103 % 4 = 3 ≠ 0 ✗
-        assert await is_harshad_number(103) == False
+        assert not await is_harshad_number(103)
 
     @pytest.mark.asyncio
     async def test_is_harshad_number_different_bases(self):
         """Test Harshad numbers in different bases."""
         # In base 2: 6 = 110₂, digit sum = 1+1+0 = 2, 6 % 2 = 0 ✓
-        assert await is_harshad_number(6, 2) == True
+        assert await is_harshad_number(6, 2)
 
         # In base 2: 7 = 111₂, digit sum = 1+1+1 = 3, 7 % 3 = 1 ≠ 0 ✗
-        assert await is_harshad_number(7, 2) == False
+        assert not await is_harshad_number(7, 2)
 
         # In base 16: 255 = FF₁₆, digit sum = 15+15 = 30, 255 % 30 = 15 ≠ 0 ✗
-        assert await is_harshad_number(255, 16) == False
+        assert not await is_harshad_number(255, 16)
 
         # In base 16: 240 = F0₁₆, digit sum = 15+0 = 15, 240 % 15 = 0 ✓
-        assert await is_harshad_number(240, 16) == True
+        assert await is_harshad_number(240, 16)
 
     @pytest.mark.asyncio
     async def test_harshad_numbers_generation(self):
@@ -1082,7 +1074,7 @@ class TestDigitProperties:
         """Test repdigit detection with basic cases."""
         # Single digits are repdigits
         for i in range(10):
-            assert await is_repdigit(i) == True, f"Single digit {i} should be repdigit"
+            assert await is_repdigit(i), f"Single digit {i} should be repdigit"
 
         # Known repdigits
         repdigits = [
@@ -1108,7 +1100,7 @@ class TestDigitProperties:
             2222,
         ]
         for repdigit in repdigits:
-            assert await is_repdigit(repdigit) == True, f"{repdigit} should be repdigit"
+            assert await is_repdigit(repdigit), f"{repdigit} should be repdigit"
 
         # Non-repdigits
         non_repdigits = [
@@ -1127,7 +1119,7 @@ class TestDigitProperties:
             1234,
         ]
         for non_repdigit in non_repdigits:
-            assert await is_repdigit(non_repdigit) == False, (
+            assert not await is_repdigit(non_repdigit), (
                 f"{non_repdigit} should not be repdigit"
             )
 
@@ -1135,23 +1127,23 @@ class TestDigitProperties:
     async def test_is_repdigit_different_bases(self):
         """Test repdigit detection in different bases."""
         # 15 in binary is 1111, which is a repdigit
-        assert await is_repdigit(15, 2) == True
+        assert await is_repdigit(15, 2)
 
         # 7 in binary is 111, which is a repdigit
-        assert await is_repdigit(7, 2) == True
+        assert await is_repdigit(7, 2)
 
         # 9 in binary is 1001, which is not a repdigit
-        assert await is_repdigit(9, 2) == False
+        assert not await is_repdigit(9, 2)
 
         # 85 in hex is 55, which is a repdigit
-        assert await is_repdigit(85, 16) == True
+        assert await is_repdigit(85, 16)
 
     @pytest.mark.asyncio
     async def test_is_repdigit_negative_numbers(self):
         """Test repdigit detection with negative numbers."""
-        assert await is_repdigit(-11) == True  # Absolute value is repdigit
-        assert await is_repdigit(-123) == False  # Absolute value is not repdigit
-        assert await is_repdigit(-5) == True  # Single digit absolute value
+        assert await is_repdigit(-11)  # Absolute value is repdigit
+        assert not await is_repdigit(-123)  # Absolute value is not repdigit
+        assert await is_repdigit(-5)  # Single digit absolute value
 
 
 # ============================================================================
@@ -1168,7 +1160,7 @@ class TestSpecialNumbers:
         known_automorphic = [0, 1, 5, 6, 25, 76, 376, 625, 9376, 90625]
 
         for automorphic in known_automorphic:
-            assert await is_automorphic_number(automorphic) == True, (
+            assert await is_automorphic_number(automorphic), (
                 f"{automorphic} should be automorphic"
             )
 
@@ -1176,19 +1168,19 @@ class TestSpecialNumbers:
     async def test_is_automorphic_number_manual_verification(self):
         """Test automorphic numbers with manual verification."""
         # 25² = 625, ends with 25 ✓
-        assert await is_automorphic_number(25) == True
+        assert await is_automorphic_number(25)
         assert 25 * 25 == 625
 
         # 76² = 5776, ends with 76 ✓
-        assert await is_automorphic_number(76) == True
+        assert await is_automorphic_number(76)
         assert 76 * 76 == 5776
 
         # 625² = 390625, ends with 625 ✓
-        assert await is_automorphic_number(625) == True
+        assert await is_automorphic_number(625)
         assert 625 * 625 == 390625
 
         # 376² = 141376, ends with 376 ✓
-        assert await is_automorphic_number(376) == True
+        assert await is_automorphic_number(376)
         assert 376 * 376 == 141376
 
     @pytest.mark.asyncio
@@ -1217,17 +1209,17 @@ class TestSpecialNumbers:
         ]
 
         for non_automorphic in non_automorphic:
-            assert await is_automorphic_number(non_automorphic) == False, (
+            assert not await is_automorphic_number(non_automorphic), (
                 f"{non_automorphic} should not be automorphic"
             )
 
     @pytest.mark.asyncio
     async def test_is_automorphic_number_edge_cases(self):
         """Test automorphic number edge cases."""
-        assert await is_automorphic_number(0) == True  # 0² = 0, ends with 0
-        assert await is_automorphic_number(1) == True  # 1² = 1, ends with 1
-        assert await is_automorphic_number(-1) == False  # Negative numbers
-        assert await is_automorphic_number(-25) == False  # Negative numbers
+        assert await is_automorphic_number(0)  # 0² = 0, ends with 0
+        assert await is_automorphic_number(1)  # 1² = 1, ends with 1
+        assert not await is_automorphic_number(-1)  # Negative numbers
+        assert not await is_automorphic_number(-25)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_automorphic_numbers_generation(self):
@@ -1280,7 +1272,7 @@ class TestIntegrationAndProperties:
         test_numbers = [121, 1221, 12321, 123321, 1234321]
 
         for palindrome in test_numbers:
-            assert await is_palindromic_number(palindrome) == True, (
+            assert await is_palindromic_number(palindrome), (
                 f"{palindrome} should be palindromic"
             )
 
@@ -1300,7 +1292,7 @@ class TestIntegrationAndProperties:
             sorted_desc = await digit_sort(n, descending=True)
 
             # Count digits in sorted numbers
-            freq_asc = await digit_frequency(sorted_asc)
+            await digit_frequency(sorted_asc)
             freq_desc = await digit_frequency(sorted_desc)
 
             # Frequencies should be preserved (except for leading zeros in ascending)
@@ -1337,7 +1329,7 @@ class TestIntegrationAndProperties:
         automorphic_nums = [1, 5, 6, 25, 76, 376, 625]
 
         for automorphic in automorphic_nums:
-            assert await is_automorphic_number(automorphic) == True
+            assert await is_automorphic_number(automorphic)
 
             # Check that square actually ends with the number
             square = automorphic * automorphic
@@ -1369,7 +1361,7 @@ class TestIntegrationAndProperties:
                     )
 
                     if non_harshad_candidate % candidate_digit_sum != 0:
-                        assert is_harshad_candidate == False, (
+                        assert not is_harshad_candidate, (
                             f"{non_harshad_candidate} should not be Harshad"
                         )
 
@@ -1420,15 +1412,15 @@ class TestPerformance:
         assert results[3] == 2  # persistent_digital_root(12345)
         assert results[4] == 54321  # digit_reversal(12345)
         assert results[5] == 12345  # digit_sort(54321)
-        assert results[6] == True  # is_palindromic_number(12321)
+        assert results[6]  # is_palindromic_number(12321)
         assert results[7] == 131  # next_palindrome(123)
-        assert results[8] == True  # is_harshad_number(12)
+        assert results[8]  # is_harshad_number(12)
         assert results[9] == "11111111"  # number_to_base(255, 2)
         assert results[10] == 255  # base_to_number("FF", 16)
         assert results[11] == 5  # digit_count(12345)
         assert results[12] == {1: 2, 2: 2, 3: 2}  # digit_frequency(112233)
-        assert results[13] == True  # is_repdigit(1111)
-        assert results[14] == True  # is_automorphic_number(25)
+        assert results[13]  # is_repdigit(1111)
+        assert results[14]  # is_automorphic_number(25)
         assert isinstance(results[15], list)  # palindromic_numbers(50)
         assert isinstance(results[16], list)  # harshad_numbers(50)
         assert isinstance(results[17], list)  # automorphic_numbers(100)
@@ -1480,7 +1472,7 @@ class TestPerformance:
         assert results[1] == 9  # digital_root(987654321)
         assert results[2] == 987654321  # digit_reversal(1234567890)
         assert results[3] == 11  # digit_count(10^10)
-        assert results[4] == True  # is_palindromic_number(1234554321)
+        assert results[4]  # is_palindromic_number(1234554321)
         assert len(results[5]) == 21  # binary representation of 2^20
         assert isinstance(results[6], list)  # palindromic_numbers(500)
         assert isinstance(results[7], list)  # harshad_numbers(500)
@@ -1619,7 +1611,7 @@ class TestErrorHandling:
         except ValueError:
             # Should be able to continue with async operations
             result = await is_palindromic_number(12321)
-            assert result == True
+            assert result
 
 
 # ============================================================================
@@ -1704,7 +1696,7 @@ class TestParametrized:
     )
     async def test_is_palindromic_number_parametrized(self, palindrome):
         """Parametrized test for palindrome identification."""
-        assert await is_palindromic_number(palindrome) == True
+        assert await is_palindromic_number(palindrome)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1737,7 +1729,7 @@ class TestParametrized:
     )
     async def test_is_harshad_number_parametrized(self, harshad):
         """Parametrized test for Harshad number identification."""
-        assert await is_harshad_number(harshad) == True
+        assert await is_harshad_number(harshad)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1816,13 +1808,13 @@ class TestParametrized:
     )
     async def test_is_repdigit_parametrized(self, repdigit):
         """Parametrized test for repdigit identification."""
-        assert await is_repdigit(repdigit) == True
+        assert await is_repdigit(repdigit)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("automorphic", [0, 1, 5, 6, 25, 76, 376, 625])
     async def test_is_automorphic_number_parametrized(self, automorphic):
         """Parametrized test for automorphic number identification."""
-        assert await is_automorphic_number(automorphic) == True
+        assert await is_automorphic_number(automorphic)
 
 
 # ============================================================================
@@ -1862,9 +1854,9 @@ class TestComprehensiveIntegration:
         assert reversed_n == 54321
         assert sorted_asc == 12345
         assert sorted_desc == 54321
-        assert is_palindrome == False
-        assert is_harshad == True  # 12345 % 15 = 0
-        assert is_automorphic == False
+        assert not is_palindrome
+        assert is_harshad  # 12345 % 15 = 0
+        assert not is_automorphic
 
         # Test relationships
         assert dr == 1 + (ds - 1) % 9  # Digital root formula
@@ -1912,7 +1904,7 @@ class TestComprehensiveIntegration:
 
         # Verify all generated numbers are palindromic
         for palindrome in palindromes:
-            assert await is_palindromic_number(palindrome) == True
+            assert await is_palindromic_number(palindrome)
             assert palindrome <= limit
 
         # Test next palindrome function
@@ -1924,7 +1916,7 @@ class TestComprehensiveIntegration:
             assert next_palindrome_val > current_palindrome
 
             # Should be palindromic
-            assert await is_palindromic_number(next_palindrome_val) == True
+            assert await is_palindromic_number(next_palindrome_val)
 
             # Should be the next one in our list (if within limit)
             if next_palindrome_val <= limit:
@@ -1948,16 +1940,16 @@ class TestComprehensiveIntegration:
 
         # Verify intersections have both properties
         for n in harshad_palindromes:
-            assert await is_harshad_number(n) == True
-            assert await is_palindromic_number(n) == True
+            assert await is_harshad_number(n)
+            assert await is_palindromic_number(n)
 
         for n in automorphic_palindromes:
-            assert await is_automorphic_number(n) == True
-            assert await is_palindromic_number(n) == True
+            assert await is_automorphic_number(n)
+            assert await is_palindromic_number(n)
 
         for n in harshad_automorphic:
-            assert await is_harshad_number(n) == True
-            assert await is_automorphic_number(n) == True
+            assert await is_harshad_number(n)
+            assert await is_automorphic_number(n)
 
         # Some expected intersections
         assert 1 in harshad_palindromes  # 1 is both Harshad and palindromic

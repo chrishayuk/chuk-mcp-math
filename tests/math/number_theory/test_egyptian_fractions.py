@@ -290,11 +290,11 @@ class TestUnitFractionOperations:
 
         # Zero numerator
         result = await is_unit_fraction(0, 5)
-        assert result == False, "0/5 should not be a unit fraction"
+        assert not result, "0/5 should not be a unit fraction"
 
         # Negative numerator
         result = await is_unit_fraction(-1, 5)
-        assert result == False, "-1/5 should not be a unit fraction"
+        assert not result, "-1/5 should not be a unit fraction"
 
     @pytest.mark.asyncio
     async def test_egyptian_fraction_lcm_basic_cases(self):
@@ -700,7 +700,7 @@ class TestEgyptianFractionProperties:
         result = await egyptian_fraction_properties([])
         assert result["sum"] == [0, 1], "Empty list should have sum 0"
         assert result["length"] == 0, "Empty list should have length 0"
-        assert result["is_complete"] == False, "Empty list should not be complete"
+        assert not result["is_complete"], "Empty list should not be complete"
 
         # Single unit fraction
         result = await egyptian_fraction_properties([5])
@@ -708,19 +708,19 @@ class TestEgyptianFractionProperties:
         assert result["length"] == 1, "Single term should have length 1"
         assert result["max_denom"] == 5, "Max denominator should be 5"
         assert result["min_denom"] == 5, "Min denominator should be 5"
-        assert result["is_complete"] == False, "1/5 is not complete (≠ 1)"
+        assert not result["is_complete"], "1/5 is not complete (≠ 1)"
 
     @pytest.mark.asyncio
     async def test_egyptian_fraction_properties_duplicate_detection(self):
         """Test detection of duplicate denominators."""
         # No duplicates
         result = await egyptian_fraction_properties([2, 3, 6])
-        assert result["has_duplicates"] == False, "Should detect no duplicates"
+        assert not result["has_duplicates"], "Should detect no duplicates"
         assert result["total_denominators"] == 3, "Should count unique denominators"
 
         # With duplicates
         result = await egyptian_fraction_properties([2, 3, 2, 6])
-        assert result["has_duplicates"] == True, "Should detect duplicates"
+        assert result["has_duplicates"], "Should detect duplicates"
         assert result["total_denominators"] == 3, "Should count unique denominators"
         assert result["length"] == 4, "Should count total terms"
 
@@ -736,7 +736,7 @@ class TestEgyptianFractionProperties:
 
         for num, den, representation in optimal_cases:
             result = await is_optimal_egyptian_fraction(num, den, representation)
-            assert result == True, (
+            assert result, (
                 f"Representation {representation} should be optimal for {num}/{den}"
             )
 
@@ -745,15 +745,15 @@ class TestEgyptianFractionProperties:
         """Test optimality checking with incorrect representations."""
         # Wrong representation
         result = await is_optimal_egyptian_fraction(2, 3, [3, 4])  # Doesn't sum to 2/3
-        assert result == False, "Incorrect representation should not be optimal"
+        assert not result, "Incorrect representation should not be optimal"
 
         # Empty representation for non-zero fraction
         result = await is_optimal_egyptian_fraction(1, 2, [])
-        assert result == False, "Empty representation for 1/2 should not be optimal"
+        assert not result, "Empty representation for 1/2 should not be optimal"
 
         # Correct for zero fraction
         result = await is_optimal_egyptian_fraction(0, 1, [])
-        assert result == True, "Empty representation for 0 should be optimal"
+        assert result, "Empty representation for 0 should be optimal"
 
     @pytest.mark.asyncio
     async def test_two_unit_fraction_representations_known_cases(self):
@@ -843,11 +843,11 @@ class TestFractionUtilities:
         """Test proper fraction identification edge cases."""
         # Zero numerator
         result = await is_proper_fraction(0, 5)
-        assert result == False, "0/5 should not be proper"
+        assert not result, "0/5 should not be proper"
 
         # Negative numerator
         result = await is_proper_fraction(-3, 5)
-        assert result == False, "-3/5 should not be proper"
+        assert not result, "-3/5 should not be proper"
 
         # Invalid denominator
         with pytest.raises(ValueError, match="Denominator must be positive"):
@@ -929,7 +929,6 @@ class TestFractionUtilities:
         """Test Egyptian expansion length calculation."""
         # For unit fractions 1/n, the expansion length is always 1
         result = await egyptian_expansion_lengths(10)
-        expected = {2: 1, 3: 1, 4: 1, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1}
 
         for n in range(2, 11):
             assert result[n] == 1, (
@@ -1137,7 +1136,7 @@ class TestIntegrationAndProperties:
         for num, den in test_fractions:
             # Should be proper
             is_proper = await is_proper_fraction(num, den)
-            assert is_proper == True, f"{num}/{den} should be proper"
+            assert is_proper, f"{num}/{den} should be proper"
 
             # Should have valid Egyptian decomposition
             egyptian_denoms = await egyptian_fraction_decomposition(num, den)
@@ -1195,7 +1194,7 @@ class TestPerformance:
         assert results[0] == [2, 6]  # egyptian_fraction_decomposition(2, 3)
         assert results[1] == [2, 4]  # fibonacci_greedy_egyptian(3, 4)
         assert results[2] == (1, 1)  # unit_fraction_sum([2, 3, 6])
-        assert results[3] == True  # is_unit_fraction(1, 5)
+        assert results[3]  # is_unit_fraction(1, 5)
         assert results[4] == 12  # egyptian_fraction_lcm([2, 3, 4])
         assert isinstance(results[5], float)  # harmonic_number(10)
         assert results[6] == (137, 60)  # harmonic_number_fraction(5)
@@ -1204,8 +1203,8 @@ class TestPerformance:
         assert results[9] == [2, 3, 7, 43]  # sylvester_sequence(4)
         assert results[10] == [2, 3, 7]  # sylvester_expansion_of_one(3)
         assert isinstance(results[11], dict)  # egyptian_fraction_properties([2, 6])
-        assert results[12] == True  # is_optimal_egyptian_fraction(2, 3, [2, 6])
-        assert results[13] == True  # is_proper_fraction(3, 4)
+        assert results[12]  # is_optimal_egyptian_fraction(2, 3, [2, 6])
+        assert results[13]  # is_proper_fraction(3, 4)
         assert isinstance(results[14], dict)  # improper_to_egyptian(7, 3)
         assert isinstance(results[15], dict)  # egyptian_expansion_lengths(10)
 
@@ -1512,7 +1511,7 @@ class TestParametrized:
     async def test_is_unit_fraction_parametrized(self, numerator, denominator):
         """Parametrized test for unit fraction identification."""
         result = await is_unit_fraction(numerator, denominator)
-        assert result == True
+        assert result
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1521,7 +1520,7 @@ class TestParametrized:
     async def test_is_proper_fraction_parametrized(self, numerator, denominator):
         """Parametrized test for proper fraction identification."""
         result = await is_proper_fraction(numerator, denominator)
-        assert result == True
+        assert result
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1551,13 +1550,13 @@ class TestComprehensiveIntegration:
 
         # Check if it's proper
         is_proper = await is_proper_fraction(num, den)
-        assert is_proper == True, f"{num}/{den} should be proper"
+        assert is_proper, f"{num}/{den} should be proper"
 
         # Decompose into Egyptian fraction
         egyptian_denoms = await egyptian_fraction_decomposition(num, den)
 
         # Analyze properties
-        properties = await egyptian_fraction_properties(egyptian_denoms)
+        await egyptian_fraction_properties(egyptian_denoms)
 
         # Verify the sum equals original fraction
         sum_num, sum_den = await unit_fraction_sum(egyptian_denoms)
@@ -1566,7 +1565,7 @@ class TestComprehensiveIntegration:
         assert original_fraction == reconstructed_fraction
 
         # Check optimality
-        is_optimal = await is_optimal_egyptian_fraction(num, den, egyptian_denoms)
+        await is_optimal_egyptian_fraction(num, den, egyptian_denoms)
         # Should be optimal (greedy algorithm typically gives good results)
 
         # Find two-term representations if they exist
@@ -1639,12 +1638,12 @@ class TestComprehensiveIntegration:
         assert properties["length"] == n
 
         # Should not be complete (sum ≠ 1)
-        assert properties["is_complete"] == False, (
+        assert not properties["is_complete"], (
             "Sylvester expansion should not sum to exactly 1"
         )
 
         # Denominators should be distinct and increasing
-        assert properties["has_duplicates"] == False, (
+        assert not properties["has_duplicates"], (
             "Sylvester denominators should be distinct"
         )
         assert sylvester_terms == sorted(sylvester_terms), (
@@ -1722,7 +1721,7 @@ class TestComprehensiveIntegration:
         two_term_reps = await two_unit_fraction_representations(num, den, 50)
 
         # Check if standard decomposition is optimal
-        is_standard_optimal = await is_optimal_egyptian_fraction(
+        await is_optimal_egyptian_fraction(
             num, den, standard_decomp
         )
 
@@ -1768,10 +1767,10 @@ class TestEdgeCasesAndBoundaryConditions:
 
         for num, den in small_fractions:
             # Should be proper
-            assert await is_proper_fraction(num, den) == True
+            assert await is_proper_fraction(num, den)
 
             # Should be unit fractions
-            assert await is_unit_fraction(num, den) == True
+            assert await is_unit_fraction(num, den)
 
             # Egyptian decomposition should be trivial
             decomp = await egyptian_fraction_decomposition(num, den)
@@ -1786,7 +1785,7 @@ class TestEdgeCasesAndBoundaryConditions:
 
         for num, den in close_to_one:
             # Should be proper
-            assert await is_proper_fraction(num, den) == True
+            assert await is_proper_fraction(num, den)
 
             # Should have Egyptian decomposition
             decomp = await egyptian_fraction_decomposition(num, den)

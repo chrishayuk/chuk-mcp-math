@@ -1191,7 +1191,7 @@ async def prime_density_analysis(limit: int, interval_size: int) -> Dict:
         return {"intervals": [], "avg_density": 0}
 
     primes = await _sieve_of_eratosthenes(limit)
-    prime_set = set(primes)
+    set(primes)
 
     intervals = []
     densities = []

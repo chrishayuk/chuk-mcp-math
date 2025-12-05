@@ -90,7 +90,7 @@ class TestPerfectSquares:
         ]
 
         for square in perfect_squares_list:
-            assert await is_perfect_square(square) == True, (
+            assert await is_perfect_square(square), (
                 f"{square} should be a perfect square"
             )
 
@@ -121,7 +121,7 @@ class TestPerfectSquares:
         ]
 
         for n in non_squares:
-            assert await is_perfect_square(n) == False, (
+            assert not await is_perfect_square(n), (
                 f"{n} should not be a perfect square"
             )
 
@@ -142,17 +142,17 @@ class TestPerfectSquares:
         ]
 
         for square in large_squares:
-            assert await is_perfect_square(square) == True, (
+            assert await is_perfect_square(square), (
                 f"{square} should be a perfect square"
             )
 
     @pytest.mark.asyncio
     async def test_is_perfect_square_edge_cases(self):
         """Test edge cases for perfect square checking."""
-        assert await is_perfect_square(0) == True  # 0² = 0
-        assert await is_perfect_square(1) == True  # 1² = 1
-        assert await is_perfect_square(-1) == False  # Negative numbers
-        assert await is_perfect_square(-4) == False  # Negative numbers
+        assert await is_perfect_square(0)  # 0² = 0
+        assert await is_perfect_square(1)  # 1² = 1
+        assert not await is_perfect_square(-1)  # Negative numbers
+        assert not await is_perfect_square(-4)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_perfect_squares_generation(self):
@@ -210,7 +210,7 @@ class TestPerfectSquares:
             assert squares_list[i] == nth_square, (
                 f"perfect_squares[{i}] should equal nth_perfect_square({i})"
             )
-            assert await is_perfect_square(nth_square) == True, (
+            assert await is_perfect_square(nth_square), (
                 f"{nth_square} should be identified as perfect square"
             )
 
@@ -247,7 +247,7 @@ class TestPowersOfTwo:
         ]
 
         for power in powers_of_two_list:
-            assert await is_power_of_two(power) == True, (
+            assert await is_power_of_two(power), (
                 f"{power} should be a power of two"
             )
 
@@ -278,17 +278,17 @@ class TestPowersOfTwo:
         ]
 
         for n in non_powers:
-            assert await is_power_of_two(n) == False, (
+            assert not await is_power_of_two(n), (
                 f"{n} should not be a power of two"
             )
 
     @pytest.mark.asyncio
     async def test_is_power_of_two_edge_cases(self):
         """Test edge cases for power of two checking."""
-        assert await is_power_of_two(1) == True  # 2⁰ = 1
-        assert await is_power_of_two(0) == False  # 0 is not a power of two
-        assert await is_power_of_two(-1) == False  # Negative numbers
-        assert await is_power_of_two(-8) == False  # Negative powers
+        assert await is_power_of_two(1)  # 2⁰ = 1
+        assert not await is_power_of_two(0)  # 0 is not a power of two
+        assert not await is_power_of_two(-1)  # Negative numbers
+        assert not await is_power_of_two(-8)  # Negative powers
 
     @pytest.mark.asyncio
     async def test_powers_of_two_generation(self):
@@ -346,7 +346,7 @@ class TestPowersOfTwo:
             assert powers_list[i] == nth_power, (
                 f"powers_of_two[{i}] should equal nth_power_of_two({i})"
             )
-            assert await is_power_of_two(nth_power) == True, (
+            assert await is_power_of_two(nth_power), (
                 f"{nth_power} should be identified as power of two"
             )
 
@@ -466,7 +466,7 @@ class TestFibonacciNumbers:
         ]
 
         for fib in known_fibonacci_numbers:
-            assert await is_fibonacci_number(fib) == True, (
+            assert await is_fibonacci_number(fib), (
                 f"{fib} should be a Fibonacci number"
             )
 
@@ -497,17 +497,17 @@ class TestFibonacciNumbers:
         ]
 
         for n in non_fibonacci:
-            assert await is_fibonacci_number(n) == False, (
+            assert not await is_fibonacci_number(n), (
                 f"{n} should not be a Fibonacci number"
             )
 
     @pytest.mark.asyncio
     async def test_is_fibonacci_number_edge_cases(self):
         """Test edge cases for Fibonacci number checking."""
-        assert await is_fibonacci_number(0) == True  # F₀ = 0
-        assert await is_fibonacci_number(1) == True  # F₁ = F₂ = 1
-        assert await is_fibonacci_number(-1) == False  # Negative numbers
-        assert await is_fibonacci_number(-5) == False  # Negative numbers
+        assert await is_fibonacci_number(0)  # F₀ = 0
+        assert await is_fibonacci_number(1)  # F₁ = F₂ = 1
+        assert not await is_fibonacci_number(-1)  # Negative numbers
+        assert not await is_fibonacci_number(-5)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_fibonacci_recurrence_relation(self):
@@ -766,7 +766,7 @@ class TestTriangularNumbers:
         ]
 
         for tri in known_triangular_numbers:
-            assert await is_triangular_number(tri) == True, (
+            assert await is_triangular_number(tri), (
                 f"{tri} should be a triangular number"
             )
 
@@ -797,17 +797,17 @@ class TestTriangularNumbers:
         ]
 
         for n in non_triangular:
-            assert await is_triangular_number(n) == False, (
+            assert not await is_triangular_number(n), (
                 f"{n} should not be a triangular number"
             )
 
     @pytest.mark.asyncio
     async def test_is_triangular_number_edge_cases(self):
         """Test edge cases for triangular number checking."""
-        assert await is_triangular_number(0) == True  # T₀ = 0
-        assert await is_triangular_number(1) == True  # T₁ = 1
-        assert await is_triangular_number(-1) == False  # Negative numbers
-        assert await is_triangular_number(-5) == False  # Negative numbers
+        assert await is_triangular_number(0)  # T₀ = 0
+        assert await is_triangular_number(1)  # T₁ = 1
+        assert not await is_triangular_number(-1)  # Negative numbers
+        assert not await is_triangular_number(-5)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_triangular_sequence_generation(self):
@@ -837,7 +837,7 @@ class TestTriangularNumbers:
         for i in range(n):
             individual = await triangular_number(i)
             assert sequence[i] == individual, f"T({i}) should match sequence[{i}]"
-            assert await is_triangular_number(individual) == True, (
+            assert await is_triangular_number(individual), (
                 f"{individual} should be identified as triangular"
             )
 
@@ -915,7 +915,7 @@ class TestPentagonalNumbers:
         ]
 
         for pent in known_pentagonal_numbers:
-            assert await is_pentagonal_number(pent) == True, (
+            assert await is_pentagonal_number(pent), (
                 f"{pent} should be a pentagonal number"
             )
 
@@ -946,17 +946,17 @@ class TestPentagonalNumbers:
         ]
 
         for n in non_pentagonal:
-            assert await is_pentagonal_number(n) == False, (
+            assert not await is_pentagonal_number(n), (
                 f"{n} should not be a pentagonal number"
             )
 
     @pytest.mark.asyncio
     async def test_is_pentagonal_number_edge_cases(self):
         """Test edge cases for pentagonal number checking."""
-        assert await is_pentagonal_number(0) == True  # P₀ = 0
-        assert await is_pentagonal_number(1) == True  # P₁ = 1
-        assert await is_pentagonal_number(-1) == False  # Negative numbers
-        assert await is_pentagonal_number(-5) == False  # Negative numbers
+        assert await is_pentagonal_number(0)  # P₀ = 0
+        assert await is_pentagonal_number(1)  # P₁ = 1
+        assert not await is_pentagonal_number(-1)  # Negative numbers
+        assert not await is_pentagonal_number(-5)  # Negative numbers
 
     @pytest.mark.asyncio
     async def test_pentagonal_sequence_generation(self):
@@ -986,7 +986,7 @@ class TestPentagonalNumbers:
         for i in range(n):
             individual = await pentagonal_number(i)
             assert sequence[i] == individual, f"P({i}) should match sequence[{i}]"
-            assert await is_pentagonal_number(individual) == True, (
+            assert await is_pentagonal_number(individual), (
                 f"{individual} should be identified as pentagonal"
             )
 
@@ -1179,7 +1179,7 @@ class TestIntegrationAndProperties:
     async def test_modular_properties(self):
         """Test modular arithmetic properties of sequences."""
         # Fibonacci numbers modulo small primes have periods
-        fib_mod_5 = [(await fibonacci(i)) % 5 for i in range(20)]
+        [(await fibonacci(i)) % 5 for i in range(20)]
         # Fibonacci sequence mod 5 has period 20
 
         # Perfect squares modulo 4 are always 0 or 1
@@ -1451,7 +1451,7 @@ class TestParametrized:
     )
     async def test_is_perfect_square_parametrized(self, perfect_square):
         """Parametrized test for perfect square identification."""
-        assert await is_perfect_square(perfect_square) == True
+        assert await is_perfect_square(perfect_square)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
@@ -1459,13 +1459,13 @@ class TestParametrized:
     )
     async def test_is_power_of_two_parametrized(self, power_of_two):
         """Parametrized test for power of two identification."""
-        assert await is_power_of_two(power_of_two) == True
+        assert await is_power_of_two(power_of_two)
 
     @pytest.mark.asyncio
     @pytest.mark.parametrize("fib_num", [0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144])
     async def test_is_fibonacci_number_parametrized(self, fib_num):
         """Parametrized test for Fibonacci number identification."""
-        assert await is_fibonacci_number(fib_num) == True
+        assert await is_fibonacci_number(fib_num)
 
 
 if __name__ == "__main__":

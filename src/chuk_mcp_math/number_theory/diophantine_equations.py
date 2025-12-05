@@ -961,7 +961,7 @@ async def frobenius_number(denominations: List[int]) -> int:
             return a * b - a - b
 
     # General case: use dynamic programming
-    min_denom = min(denoms)
+    min(denoms)
     upper_bound = denoms[0] * denoms[1]  # Conservative upper bound
 
     # DP array: can_make[i] = True if amount i can be made

@@ -386,7 +386,7 @@ class TestRankNumbers:
 
         # The maximum rank will be much higher than 100 because of the indexing pattern
         # Each group of 100 creates ranks from 1 to (number of complete groups * 100 + remainder)
-        expected_max_rank = (
+        (
             max(large_list) + 1
         )  # Since we have values 0-99, max rank should be around 100
         # But actually, rank depends on position, not just unique values

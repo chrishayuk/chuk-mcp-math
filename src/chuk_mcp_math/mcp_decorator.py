@@ -495,17 +495,17 @@ def _detect_yield_strategy(func: Callable) -> AsyncYieldStrategy:
 
 def _type_to_json_schema(type_hint) -> Dict[str, Any]:
     """Convert type hint to JSON Schema (enhanced for async types)."""
-    if type_hint == int:
+    if type_hint is int:
         return {"type": "integer"}
-    elif type_hint == float:
+    elif type_hint is float:
         return {"type": "number"}
-    elif type_hint == str:
+    elif type_hint is str:
         return {"type": "string"}
-    elif type_hint == bool:
+    elif type_hint is bool:
         return {"type": "boolean"}
-    elif type_hint == list:
+    elif type_hint is list:
         return {"type": "array"}
-    elif type_hint == dict:
+    elif type_hint is dict:
         return {"type": "object"}
 
     # Handle typing module types
@@ -526,7 +526,7 @@ def _type_to_json_schema(type_hint) -> Dict[str, Any]:
             schema["items"] = _type_to_json_schema(args[0])
         return schema
     elif origin is Union:
-        non_none_args = [arg for arg in args if arg != type(None)]
+        non_none_args = [arg for arg in args if arg is not type(None)]
         if len(non_none_args) == 1:
             schema = _type_to_json_schema(non_none_args[0])
             return {"anyOf": [schema, {"type": "null"}]}
@@ -952,7 +952,9 @@ __all__ = [
 ]
 
 # Legacy compatibility
-export_function_specs = lambda filename, namespace=None: asyncio.run(
+def export_function_specs(filename, namespace=None):
+    return asyncio.run(
     export_function_specs_async(filename, namespace)
 )
-print_function_summary = lambda: asyncio.run(print_function_summary_async())
+def print_function_summary():
+    return asyncio.run(print_function_summary_async())

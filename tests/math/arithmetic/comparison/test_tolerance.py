@@ -39,37 +39,37 @@ class TestApproximatelyEqual:
     @pytest.mark.asyncio
     async def test_approximately_equal_exact_match(self):
         """Test approximately_equal with exactly equal values."""
-        assert await approximately_equal(5, 5) == True
-        assert await approximately_equal(0, 0) == True
-        assert await approximately_equal(-3.14, -3.14) == True
-        assert await approximately_equal(0.0, 0.0) == True
+        assert await approximately_equal(5, 5)
+        assert await approximately_equal(0, 0)
+        assert await approximately_equal(-3.14, -3.14)
+        assert await approximately_equal(0.0, 0.0)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_within_default_tolerance(self):
         """Test approximately_equal with default tolerance (1e-9)."""
         # These should be within default tolerance
-        assert await approximately_equal(1.0, 1.0 + 1e-10) == True
-        assert await approximately_equal(1.0, 1.0 - 1e-10) == True
-        assert await approximately_equal(0.0, 1e-10) == True
+        assert await approximately_equal(1.0, 1.0 + 1e-10)
+        assert await approximately_equal(1.0, 1.0 - 1e-10)
+        assert await approximately_equal(0.0, 1e-10)
 
         # These should exceed default tolerance
-        assert await approximately_equal(1.0, 1.0 + 1e-8) == False
-        assert await approximately_equal(0.0, 1e-8) == False
+        assert not await approximately_equal(1.0, 1.0 + 1e-8)
+        assert not await approximately_equal(0.0, 1e-8)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_custom_tolerance(self):
         """Test approximately_equal with custom tolerance values."""
         # Large tolerance
-        assert await approximately_equal(1.0, 1.1, tolerance=0.2) == True
-        assert await approximately_equal(1.0, 1.3, tolerance=0.2) == False
+        assert await approximately_equal(1.0, 1.1, tolerance=0.2)
+        assert not await approximately_equal(1.0, 1.3, tolerance=0.2)
 
         # Small tolerance
-        assert await approximately_equal(1.0, 1.0001, tolerance=1e-3) == True
-        assert await approximately_equal(1.0, 1.01, tolerance=1e-3) == False
+        assert await approximately_equal(1.0, 1.0001, tolerance=1e-3)
+        assert not await approximately_equal(1.0, 1.01, tolerance=1e-3)
 
         # Very strict tolerance
-        assert await approximately_equal(1.0, 1.0 + 1e-12, tolerance=1e-15) == False
-        assert await approximately_equal(1.0, 1.0 + 1e-16, tolerance=1e-15) == True
+        assert not await approximately_equal(1.0, 1.0 + 1e-12, tolerance=1e-15)
+        assert await approximately_equal(1.0, 1.0 + 1e-16, tolerance=1e-15)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_floating_point_precision(self):
@@ -82,24 +82,24 @@ class TestApproximatelyEqual:
         assert a != b  # Fixed: This should be != not ==
 
         # But should be approximately equal with reasonable tolerance
-        assert await approximately_equal(a, b, tolerance=1e-15) == True
+        assert await approximately_equal(a, b, tolerance=1e-15)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_negative_numbers(self):
         """Test approximately_equal with negative numbers."""
-        assert await approximately_equal(-1.0, -1.0 + 1e-10) == True
-        assert await approximately_equal(-1.0, -1.0 - 1e-10) == True
-        assert await approximately_equal(-5.5, -5.5000001, tolerance=1e-6) == True
-        assert await approximately_equal(-1.0, -2.0, tolerance=0.5) == False
+        assert await approximately_equal(-1.0, -1.0 + 1e-10)
+        assert await approximately_equal(-1.0, -1.0 - 1e-10)
+        assert await approximately_equal(-5.5, -5.5000001, tolerance=1e-6)
+        assert not await approximately_equal(-1.0, -2.0, tolerance=0.5)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_mixed_types(self):
         """Test approximately_equal with mixed int/float types."""
-        assert await approximately_equal(5, 5.0) == True
-        assert await approximately_equal(5.0, 5) == True
-        assert await approximately_equal(0, 0.0) == True
-        assert await approximately_equal(5, 5.0000001, tolerance=1e-6) == True
-        assert await approximately_equal(5, 6, tolerance=0.5) == False
+        assert await approximately_equal(5, 5.0)
+        assert await approximately_equal(5.0, 5)
+        assert await approximately_equal(0, 0.0)
+        assert await approximately_equal(5, 5.0000001, tolerance=1e-6)
+        assert not await approximately_equal(5, 6, tolerance=0.5)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_extreme_values(self):
@@ -107,14 +107,14 @@ class TestApproximatelyEqual:
         # Large numbers
         large1 = 1e15
         large2 = 1e15 + 1000
-        assert await approximately_equal(large1, large2, tolerance=2000) == True
-        assert await approximately_equal(large1, large2, tolerance=500) == False
+        assert await approximately_equal(large1, large2, tolerance=2000)
+        assert not await approximately_equal(large1, large2, tolerance=500)
 
         # Very small numbers
         small1 = 1e-15
         small2 = 2e-15
-        assert await approximately_equal(small1, small2, tolerance=1e-15) == True
-        assert await approximately_equal(small1, small2, tolerance=1e-16) == False
+        assert await approximately_equal(small1, small2, tolerance=1e-15)
+        assert not await approximately_equal(small1, small2, tolerance=1e-16)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_with_infinity(self):
@@ -128,12 +128,12 @@ class TestApproximatelyEqual:
         # Let's test what actually happens
         result = await approximately_equal(inf, inf)
         # This might be False due to inf - inf = nan
-        assert result == False  # Fixed: Expect False due to nan comparison
+        assert not result  # Fixed: Expect False due to nan comparison
 
-        assert await approximately_equal(neg_inf, neg_inf) == False  # Same issue
-        assert await approximately_equal(inf, neg_inf) == False
-        assert await approximately_equal(inf, 1e100) == False
-        assert await approximately_equal(neg_inf, -1e100) == False
+        assert not await approximately_equal(neg_inf, neg_inf)  # Same issue
+        assert not await approximately_equal(inf, neg_inf)
+        assert not await approximately_equal(inf, 1e100)
+        assert not await approximately_equal(neg_inf, -1e100)
 
     @pytest.mark.asyncio
     async def test_approximately_equal_with_nan(self):
@@ -141,10 +141,10 @@ class TestApproximatelyEqual:
         nan = float("nan")
 
         # NaN comparisons should always be False (due to abs(nan - x) being nan)
-        assert await approximately_equal(nan, nan) == False
-        assert await approximately_equal(nan, 5) == False
-        assert await approximately_equal(5, nan) == False
-        assert await approximately_equal(nan, float("inf")) == False
+        assert not await approximately_equal(nan, nan)
+        assert not await approximately_equal(nan, 5)
+        assert not await approximately_equal(5, nan)
+        assert not await approximately_equal(nan, float("inf"))
 
 
 class TestCloseToZero:
@@ -153,33 +153,33 @@ class TestCloseToZero:
     @pytest.mark.asyncio
     async def test_close_to_zero_exact_zero(self):
         """Test close_to_zero with exactly zero."""
-        assert await close_to_zero(0) == True
-        assert await close_to_zero(0.0) == True
-        assert await close_to_zero(-0.0) == True
+        assert await close_to_zero(0)
+        assert await close_to_zero(0.0)
+        assert await close_to_zero(-0.0)
 
     @pytest.mark.asyncio
     async def test_close_to_zero_within_default_tolerance(self):
         """Test close_to_zero with default tolerance (1e-9)."""
         # Within default tolerance
-        assert await close_to_zero(1e-10) == True
-        assert await close_to_zero(-1e-10) == True
-        assert await close_to_zero(1e-9) == True  # Exactly at boundary
+        assert await close_to_zero(1e-10)
+        assert await close_to_zero(-1e-10)
+        assert await close_to_zero(1e-9)  # Exactly at boundary
 
         # Outside default tolerance
-        assert await close_to_zero(1e-8) == False
-        assert await close_to_zero(-1e-8) == False
+        assert not await close_to_zero(1e-8)
+        assert not await close_to_zero(-1e-8)
 
     @pytest.mark.asyncio
     async def test_close_to_zero_custom_tolerance(self):
         """Test close_to_zero with custom tolerance values."""
         # Large tolerance
-        assert await close_to_zero(0.05, tolerance=0.1) == True
-        assert await close_to_zero(-0.05, tolerance=0.1) == True
-        assert await close_to_zero(0.15, tolerance=0.1) == False
+        assert await close_to_zero(0.05, tolerance=0.1)
+        assert await close_to_zero(-0.05, tolerance=0.1)
+        assert not await close_to_zero(0.15, tolerance=0.1)
 
         # Small tolerance
-        assert await close_to_zero(1e-12, tolerance=1e-11) == True
-        assert await close_to_zero(1e-10, tolerance=1e-11) == False
+        assert await close_to_zero(1e-12, tolerance=1e-11)
+        assert not await close_to_zero(1e-10, tolerance=1e-11)
 
     @pytest.mark.asyncio
     async def test_close_to_zero_symmetry(self):
@@ -199,14 +199,14 @@ class TestCloseToZero:
         # Very small numbers - sys.float_info.min is actually quite large compared to 1e-300
         # sys.float_info.min ≈ 2.2e-308, so with tolerance 1e-300, it should return True
         assert (
-            await close_to_zero(sys.float_info.min, tolerance=1e-300) == True
+            await close_to_zero(sys.float_info.min, tolerance=1e-300)
         )  # Fixed expectation
-        assert await close_to_zero(sys.float_info.min, tolerance=1e-310) == False
+        assert not await close_to_zero(sys.float_info.min, tolerance=1e-310)
 
         # Regular numbers that are definitely not close to zero
-        assert await close_to_zero(1.0) == False
-        assert await close_to_zero(-1.0) == False
-        assert await close_to_zero(1e6) == False
+        assert not await close_to_zero(1.0)
+        assert not await close_to_zero(-1.0)
+        assert not await close_to_zero(1e6)
 
     @pytest.mark.asyncio
     async def test_close_to_zero_with_infinity(self):
@@ -214,10 +214,10 @@ class TestCloseToZero:
         inf = float("inf")
         neg_inf = float("-inf")
 
-        assert await close_to_zero(inf) == False
-        assert await close_to_zero(neg_inf) == False
-        assert await close_to_zero(inf, tolerance=1e100) == False
-        assert await close_to_zero(neg_inf, tolerance=1e100) == False
+        assert not await close_to_zero(inf)
+        assert not await close_to_zero(neg_inf)
+        assert not await close_to_zero(inf, tolerance=1e100)
+        assert not await close_to_zero(neg_inf, tolerance=1e100)
 
     @pytest.mark.asyncio
     async def test_close_to_zero_with_nan(self):
@@ -225,8 +225,8 @@ class TestCloseToZero:
         nan = float("nan")
 
         # abs(nan) is nan, and nan <= tolerance is False
-        assert await close_to_zero(nan) == False
-        assert await close_to_zero(nan, tolerance=1e6) == False
+        assert not await close_to_zero(nan)
+        assert not await close_to_zero(nan, tolerance=1e6)
 
 
 class TestIsFinite:
@@ -235,40 +235,40 @@ class TestIsFinite:
     @pytest.mark.asyncio
     async def test_is_finite_regular_numbers(self):
         """Test is_finite with regular finite numbers."""
-        assert await is_finite(0) == True
-        assert await is_finite(42) == True
-        assert await is_finite(-17) == True
-        assert await is_finite(3.14) == True
-        assert await is_finite(-2.71) == True
-        assert await is_finite(1e10) == True
-        assert await is_finite(-1e-10) == True
+        assert await is_finite(0)
+        assert await is_finite(42)
+        assert await is_finite(-17)
+        assert await is_finite(3.14)
+        assert await is_finite(-2.71)
+        assert await is_finite(1e10)
+        assert await is_finite(-1e-10)
 
     @pytest.mark.asyncio
     async def test_is_finite_extreme_but_finite(self):
         """Test is_finite with extreme but still finite values."""
-        assert await is_finite(sys.float_info.max) == True
-        assert await is_finite(-sys.float_info.max) == True
-        assert await is_finite(sys.float_info.min) == True
-        assert await is_finite(-sys.float_info.min) == True
+        assert await is_finite(sys.float_info.max)
+        assert await is_finite(-sys.float_info.max)
+        assert await is_finite(sys.float_info.min)
+        assert await is_finite(-sys.float_info.min)
 
     @pytest.mark.asyncio
     async def test_is_finite_infinite_values(self):
         """Test is_finite with infinite values."""
-        assert await is_finite(float("inf")) == False
-        assert await is_finite(float("-inf")) == False
+        assert not await is_finite(float("inf"))
+        assert not await is_finite(float("-inf"))
 
     @pytest.mark.asyncio
     async def test_is_finite_nan_values(self):
         """Test is_finite with NaN values."""
-        assert await is_finite(float("nan")) == False
+        assert not await is_finite(float("nan"))
 
     @pytest.mark.asyncio
     async def test_is_finite_mixed_types(self):
         """Test is_finite with mixed int/float types."""
-        assert await is_finite(5) == True
-        assert await is_finite(5.0) == True
-        assert await is_finite(0) == True
-        assert await is_finite(0.0) == True
+        assert await is_finite(5)
+        assert await is_finite(5.0)
+        assert await is_finite(0)
+        assert await is_finite(0.0)
 
 
 class TestIsNan:
@@ -277,43 +277,43 @@ class TestIsNan:
     @pytest.mark.asyncio
     async def test_is_nan_with_nan(self):
         """Test is_nan with NaN values."""
-        assert await is_nan(float("nan")) == True
+        assert await is_nan(float("nan"))
 
         # Safe ways to create NaN without raising exceptions
         nan_from_inf = float("inf") * 0  # This creates NaN
-        assert await is_nan(nan_from_inf) == True
+        assert await is_nan(nan_from_inf)
 
         nan_from_operations = float("inf") - float("inf")
-        assert await is_nan(nan_from_operations) == True
+        assert await is_nan(nan_from_operations)
 
         # Another safe way to create NaN
         nan_from_zero_div = float("inf") / float("inf")
-        assert await is_nan(nan_from_zero_div) == True
+        assert await is_nan(nan_from_zero_div)
 
     @pytest.mark.asyncio
     async def test_is_nan_with_regular_numbers(self):
         """Test is_nan with regular numbers."""
-        assert await is_nan(0) == False
-        assert await is_nan(42) == False
-        assert await is_nan(-17) == False
-        assert await is_nan(3.14) == False
-        assert await is_nan(-2.71) == False
-        assert await is_nan(1e10) == False
-        assert await is_nan(-1e-10) == False
+        assert not await is_nan(0)
+        assert not await is_nan(42)
+        assert not await is_nan(-17)
+        assert not await is_nan(3.14)
+        assert not await is_nan(-2.71)
+        assert not await is_nan(1e10)
+        assert not await is_nan(-1e-10)
 
     @pytest.mark.asyncio
     async def test_is_nan_with_infinity(self):
         """Test is_nan with infinite values."""
-        assert await is_nan(float("inf")) == False
-        assert await is_nan(float("-inf")) == False
+        assert not await is_nan(float("inf"))
+        assert not await is_nan(float("-inf"))
 
     @pytest.mark.asyncio
     async def test_is_nan_mixed_types(self):
         """Test is_nan with mixed int/float types."""
-        assert await is_nan(5) == False
-        assert await is_nan(5.0) == False
-        assert await is_nan(0) == False
-        assert await is_nan(0.0) == False
+        assert not await is_nan(5)
+        assert not await is_nan(5.0)
+        assert not await is_nan(0)
+        assert not await is_nan(0.0)
 
 
 class TestIsInfinite:
@@ -322,48 +322,48 @@ class TestIsInfinite:
     @pytest.mark.asyncio
     async def test_is_infinite_with_infinity(self):
         """Test is_infinite with infinite values."""
-        assert await is_infinite(float("inf")) == True
-        assert await is_infinite(float("-inf")) == True
+        assert await is_infinite(float("inf"))
+        assert await is_infinite(float("-inf"))
 
         # Different ways to create infinity - but division by zero raises error
         # Let's use safe methods
         large_exp = float("inf")  # Direct creation
-        assert await is_infinite(large_exp) == True
+        assert await is_infinite(large_exp)
 
         # inf * 2 = inf
         inf_times_two = float("inf") * 2
-        assert await is_infinite(inf_times_two) == True
+        assert await is_infinite(inf_times_two)
 
     @pytest.mark.asyncio
     async def test_is_infinite_with_regular_numbers(self):
         """Test is_infinite with regular numbers."""
-        assert await is_infinite(0) == False
-        assert await is_infinite(42) == False
-        assert await is_infinite(-17) == False
-        assert await is_infinite(3.14) == False
-        assert await is_infinite(-2.71) == False
-        assert await is_infinite(1e10) == False
-        assert await is_infinite(-1e100) == False
+        assert not await is_infinite(0)
+        assert not await is_infinite(42)
+        assert not await is_infinite(-17)
+        assert not await is_infinite(3.14)
+        assert not await is_infinite(-2.71)
+        assert not await is_infinite(1e10)
+        assert not await is_infinite(-1e100)
 
     @pytest.mark.asyncio
     async def test_is_infinite_with_large_but_finite(self):
         """Test is_infinite with large but finite numbers."""
-        assert await is_infinite(sys.float_info.max) == False
-        assert await is_infinite(-sys.float_info.max) == False
-        assert await is_infinite(1e308) == False  # Still finite
+        assert not await is_infinite(sys.float_info.max)
+        assert not await is_infinite(-sys.float_info.max)
+        assert not await is_infinite(1e308)  # Still finite
 
     @pytest.mark.asyncio
     async def test_is_infinite_with_nan(self):
         """Test is_infinite with NaN values."""
-        assert await is_infinite(float("nan")) == False
+        assert not await is_infinite(float("nan"))
 
     @pytest.mark.asyncio
     async def test_is_infinite_mixed_types(self):
         """Test is_infinite with mixed int/float types."""
-        assert await is_infinite(5) == False
-        assert await is_infinite(5.0) == False
-        assert await is_infinite(0) == False
-        assert await is_infinite(0.0) == False
+        assert not await is_infinite(5)
+        assert not await is_infinite(5.0)
+        assert not await is_infinite(0)
+        assert not await is_infinite(0.0)
 
 
 class TestIsNormal:
@@ -372,53 +372,53 @@ class TestIsNormal:
     @pytest.mark.asyncio
     async def test_is_normal_regular_numbers(self):
         """Test is_normal with regular normal numbers."""
-        assert await is_normal(42) == True
-        assert await is_normal(-17) == True
-        assert await is_normal(3.14) == True
-        assert await is_normal(-2.71) == True
-        assert await is_normal(1.0) == True
-        assert await is_normal(-1.0) == True
+        assert await is_normal(42)
+        assert await is_normal(-17)
+        assert await is_normal(3.14)
+        assert await is_normal(-2.71)
+        assert await is_normal(1.0)
+        assert await is_normal(-1.0)
 
     @pytest.mark.asyncio
     async def test_is_normal_zero(self):
         """Test is_normal with zero (not normal)."""
-        assert await is_normal(0) == False
-        assert await is_normal(0.0) == False
-        assert await is_normal(-0.0) == False
+        assert not await is_normal(0)
+        assert not await is_normal(0.0)
+        assert not await is_normal(-0.0)
 
     @pytest.mark.asyncio
     async def test_is_normal_infinite_and_nan(self):
         """Test is_normal with infinite and NaN values."""
-        assert await is_normal(float("inf")) == False
-        assert await is_normal(float("-inf")) == False
-        assert await is_normal(float("nan")) == False
+        assert not await is_normal(float("inf"))
+        assert not await is_normal(float("-inf"))
+        assert not await is_normal(float("nan"))
 
     @pytest.mark.asyncio
     async def test_is_normal_large_numbers(self):
         """Test is_normal with large numbers."""
-        assert await is_normal(1e100) == True
-        assert await is_normal(-1e100) == True
-        assert await is_normal(sys.float_info.max) == True
-        assert await is_normal(-sys.float_info.max) == True
+        assert await is_normal(1e100)
+        assert await is_normal(-1e100)
+        assert await is_normal(sys.float_info.max)
+        assert await is_normal(-sys.float_info.max)
 
     @pytest.mark.asyncio
     async def test_is_normal_small_numbers(self):
         """Test is_normal with small numbers."""
         # Normal small numbers
-        assert await is_normal(1e-100) == True
-        assert await is_normal(-1e-100) == True
+        assert await is_normal(1e-100)
+        assert await is_normal(-1e-100)
 
         # sys.float_info.min is the smallest positive normal number
-        assert await is_normal(sys.float_info.min) == True
-        assert await is_normal(-sys.float_info.min) == True
+        assert await is_normal(sys.float_info.min)
+        assert await is_normal(-sys.float_info.min)
 
     @pytest.mark.asyncio
     async def test_is_normal_mixed_types(self):
         """Test is_normal with mixed int/float types."""
-        assert await is_normal(5) == True
-        assert await is_normal(5.0) == True
-        assert await is_normal(-5) == True
-        assert await is_normal(-5.0) == True
+        assert await is_normal(5)
+        assert await is_normal(5.0)
+        assert await is_normal(-5)
+        assert await is_normal(-5.0)
 
 
 class TestIsClose:
@@ -427,64 +427,64 @@ class TestIsClose:
     @pytest.mark.asyncio
     async def test_is_close_exact_equality(self):
         """Test is_close with exactly equal values."""
-        assert await is_close(5, 5) == True
-        assert await is_close(0, 0) == True
-        assert await is_close(-3.14, -3.14) == True
-        assert await is_close(float("inf"), float("inf")) == True
-        assert await is_close(float("-inf"), float("-inf")) == True
+        assert await is_close(5, 5)
+        assert await is_close(0, 0)
+        assert await is_close(-3.14, -3.14)
+        assert await is_close(float("inf"), float("inf"))
+        assert await is_close(float("-inf"), float("-inf"))
 
     @pytest.mark.asyncio
     async def test_is_close_relative_tolerance(self):
         """Test is_close with relative tolerance."""
         # Large numbers - relative tolerance should apply
-        assert await is_close(1000000, 1000001, rel_tol=1e-5) == True
-        assert await is_close(1000000, 1000001, rel_tol=1e-7) == False
+        assert await is_close(1000000, 1000001, rel_tol=1e-5)
+        assert not await is_close(1000000, 1000001, rel_tol=1e-7)
 
         # Medium numbers
-        assert await is_close(100, 100.001, rel_tol=1e-4) == True
-        assert await is_close(100, 100.001, rel_tol=1e-6) == False
+        assert await is_close(100, 100.001, rel_tol=1e-4)
+        assert not await is_close(100, 100.001, rel_tol=1e-6)
 
     @pytest.mark.asyncio
     async def test_is_close_absolute_tolerance(self):
         """Test is_close with absolute tolerance."""
         # Small numbers near zero - absolute tolerance should apply
-        assert await is_close(0, 1e-10, abs_tol=1e-9) == True
-        assert await is_close(0, 1e-8, abs_tol=1e-9) == False
+        assert await is_close(0, 1e-10, abs_tol=1e-9)
+        assert not await is_close(0, 1e-8, abs_tol=1e-9)
 
         # Very small numbers
-        assert await is_close(1e-10, 2e-10, abs_tol=1e-10) == True
-        assert await is_close(1e-10, 3e-10, abs_tol=1e-10) == False
+        assert await is_close(1e-10, 2e-10, abs_tol=1e-10)
+        assert not await is_close(1e-10, 3e-10, abs_tol=1e-10)
 
     @pytest.mark.asyncio
     async def test_is_close_both_tolerances(self):
         """Test is_close with both relative and absolute tolerances."""
         # Should pass relative tolerance test
-        assert await is_close(1000, 1001, rel_tol=1e-2, abs_tol=1e-9) == True
+        assert await is_close(1000, 1001, rel_tol=1e-2, abs_tol=1e-9)
 
         # Should pass absolute tolerance test
-        assert await is_close(0, 1e-10, rel_tol=1e-9, abs_tol=1e-9) == True
+        assert await is_close(0, 1e-10, rel_tol=1e-9, abs_tol=1e-9)
 
         # Should fail both tests
-        assert await is_close(1000, 1100, rel_tol=1e-2, abs_tol=1e-9) == False
-        assert await is_close(0, 1e-8, rel_tol=1e-9, abs_tol=1e-9) == False
+        assert not await is_close(1000, 1100, rel_tol=1e-2, abs_tol=1e-9)
+        assert not await is_close(0, 1e-8, rel_tol=1e-9, abs_tol=1e-9)
 
     @pytest.mark.asyncio
     async def test_is_close_negative_numbers(self):
         """Test is_close with negative numbers."""
-        assert await is_close(-1000, -1001, rel_tol=1e-2) == True
-        assert await is_close(-1, -1.001, rel_tol=1e-2) == True
-        assert await is_close(-1e-10, -2e-10, abs_tol=1e-10) == True
+        assert await is_close(-1000, -1001, rel_tol=1e-2)
+        assert await is_close(-1, -1.001, rel_tol=1e-2)
+        assert await is_close(-1e-10, -2e-10, abs_tol=1e-10)
 
     @pytest.mark.asyncio
     async def test_is_close_mixed_signs(self):
         """Test is_close with numbers of different signs."""
         # Different signs, small absolute values
-        assert await is_close(-1e-10, 1e-10, abs_tol=1e-9) == True
-        assert await is_close(-1e-8, 1e-8, abs_tol=1e-9) == False
+        assert await is_close(-1e-10, 1e-10, abs_tol=1e-9)
+        assert not await is_close(-1e-8, 1e-8, abs_tol=1e-9)
 
         # Different signs, larger values
-        assert await is_close(-1, 1, rel_tol=0.5, abs_tol=3) == True
-        assert await is_close(-100, 100, rel_tol=0.5, abs_tol=100) == False
+        assert await is_close(-1, 1, rel_tol=0.5, abs_tol=3)
+        assert not await is_close(-100, 100, rel_tol=0.5, abs_tol=100)
 
     @pytest.mark.asyncio
     async def test_is_close_infinite_values(self):
@@ -493,15 +493,15 @@ class TestIsClose:
         neg_inf = float("-inf")
 
         # Same infinities
-        assert await is_close(inf, inf) == True
-        assert await is_close(neg_inf, neg_inf) == True
+        assert await is_close(inf, inf)
+        assert await is_close(neg_inf, neg_inf)
 
         # Different infinities
-        assert await is_close(inf, neg_inf) == False
+        assert not await is_close(inf, neg_inf)
 
         # Infinity vs finite numbers
-        assert await is_close(inf, 1e100) == False
-        assert await is_close(neg_inf, -1e100) == False
+        assert not await is_close(inf, 1e100)
+        assert not await is_close(neg_inf, -1e100)
 
     @pytest.mark.asyncio
     async def test_is_close_nan_values(self):
@@ -509,20 +509,20 @@ class TestIsClose:
         nan = float("nan")
 
         # NaN should never be close to anything, including itself
-        assert await is_close(nan, nan) == False
-        assert await is_close(nan, 5) == False
-        assert await is_close(5, nan) == False
-        assert await is_close(nan, float("inf")) == False
+        assert not await is_close(nan, nan)
+        assert not await is_close(nan, 5)
+        assert not await is_close(5, nan)
+        assert not await is_close(nan, float("inf"))
 
     @pytest.mark.asyncio
     async def test_is_close_default_values(self):
         """Test is_close with default parameter values."""
         # Default rel_tol=1e-9, abs_tol=0.0
-        assert await is_close(1.0, 1.0 + 1e-10) == True
-        assert await is_close(1.0, 1.0 + 1e-8) == False
+        assert await is_close(1.0, 1.0 + 1e-10)
+        assert not await is_close(1.0, 1.0 + 1e-8)
 
         # With abs_tol=0.0, small numbers need relative tolerance
-        assert await is_close(1e-10, 2e-10) == False  # Relative difference is 100%
+        assert not await is_close(1e-10, 2e-10)  # Relative difference is 100%
 
     @pytest.mark.asyncio
     async def test_is_close_consistency_with_approximately_equal(self):
@@ -745,29 +745,29 @@ class TestErrorHandling:
     async def test_tolerance_parameter_validation(self):
         """Test behavior with various tolerance parameter values."""
         # Zero tolerance
-        assert await approximately_equal(1.0, 1.0, tolerance=0.0) == True
-        assert await approximately_equal(1.0, 1.000001, tolerance=0.0) == False
+        assert await approximately_equal(1.0, 1.0, tolerance=0.0)
+        assert not await approximately_equal(1.0, 1.000001, tolerance=0.0)
 
         # Negative tolerance - the function uses abs() which makes negative tolerance positive
         # But abs(-1e-5) = 1e-5, and abs(1.0 - 1.000001) = 1e-6, so 1e-6 <= 1e-5 is True
         assert (
-            await approximately_equal(1.0, 1.000001, tolerance=-1e-5) == False
+            not await approximately_equal(1.0, 1.000001, tolerance=-1e-5)
         )  # Fixed: Should be False
 
         # Very large tolerance
-        assert await approximately_equal(1.0, 100.0, tolerance=1000.0) == True
+        assert await approximately_equal(1.0, 100.0, tolerance=1000.0)
 
     @pytest.mark.asyncio
     async def test_edge_case_values(self):
         """Test with edge case values."""
         # Test with very large tolerance values
-        assert await is_close(0, 1, rel_tol=10.0, abs_tol=10.0) == True
+        assert await is_close(0, 1, rel_tol=10.0, abs_tol=10.0)
 
         # Test with very small tolerance values
         # 1e-16 difference might still pass due to floating point precision
         result = await is_close(1.0, 1.0 + 1e-16, rel_tol=1e-20, abs_tol=1e-20)
         # This might be True due to floating point precision limits
-        assert result == True  # Fixed: Accept that tiny differences might pass
+        assert result  # Fixed: Accept that tiny differences might pass
 
     @pytest.mark.asyncio
     async def test_type_conversion_handling(self):

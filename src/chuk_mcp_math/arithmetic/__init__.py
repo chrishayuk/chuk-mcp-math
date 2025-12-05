@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # src/chuk_mcp_math/math/arithmetic/__init__.py
+# ruff: noqa: F401
 """
 Arithmetic Functions Library - REORGANIZED STRUCTURE ONLY
 

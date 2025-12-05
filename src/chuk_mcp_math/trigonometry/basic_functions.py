@@ -573,7 +573,7 @@ __all__ = [
 # The @mcp_function decorator creates wrappers that need to be explicitly
 # made available in the module namespace for normal Python imports
 
-import sys
+import sys  # noqa: E402
 
 _current_module = sys.modules[__name__]
 

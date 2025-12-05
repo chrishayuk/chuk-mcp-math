@@ -66,7 +66,7 @@ class TestMersennePrimes:
         known_mersenne_primes = [3, 7, 31, 127, 8191, 131071, 524287]
 
         for mp in known_mersenne_primes:
-            assert await is_mersenne_prime(mp) == True, (
+            assert await is_mersenne_prime(mp), (
                 f"{mp} should be a Mersenne prime"
             )
 
@@ -76,7 +76,7 @@ class TestMersennePrimes:
         non_mersenne = [5, 11, 13, 17, 19, 23, 29, 37, 41, 43, 47]
 
         for n in non_mersenne:
-            assert await is_mersenne_prime(n) == False, (
+            assert not await is_mersenne_prime(n), (
                 f"{n} should not be a Mersenne prime"
             )
 
@@ -87,15 +87,15 @@ class TestMersennePrimes:
         mersenne_composites = [15, 63, 255, 511]
 
         for mc in mersenne_composites:
-            assert await is_mersenne_prime(mc) == False, f"{mc} should not be prime"
+            assert not await is_mersenne_prime(mc), f"{mc} should not be prime"
 
     @pytest.mark.asyncio
     async def test_is_mersenne_prime_edge_cases(self):
         """Test edge cases for Mersenne prime checking."""
-        assert await is_mersenne_prime(0) == False
-        assert await is_mersenne_prime(1) == False
-        assert await is_mersenne_prime(-1) == False
-        assert await is_mersenne_prime(2) == False  # Not of Mersenne form
+        assert not await is_mersenne_prime(0)
+        assert not await is_mersenne_prime(1)
+        assert not await is_mersenne_prime(-1)
+        assert not await is_mersenne_prime(2)  # Not of Mersenne form
 
     @pytest.mark.asyncio
     async def test_mersenne_prime_exponents_basic(self):
@@ -123,21 +123,21 @@ class TestMersennePrimes:
     async def test_lucas_lehmer_test_known_cases(self):
         """Test Lucas-Lehmer test with known cases."""
         # Known Mersenne prime exponents
-        assert await lucas_lehmer_test(2) == True  # 2^2 - 1 = 3
-        assert await lucas_lehmer_test(3) == True  # 2^3 - 1 = 7
-        assert await lucas_lehmer_test(5) == True  # 2^5 - 1 = 31
-        assert await lucas_lehmer_test(7) == True  # 2^7 - 1 = 127
-        assert await lucas_lehmer_test(13) == True  # 2^13 - 1 = 8191
+        assert await lucas_lehmer_test(2)  # 2^2 - 1 = 3
+        assert await lucas_lehmer_test(3)  # 2^3 - 1 = 7
+        assert await lucas_lehmer_test(5)  # 2^5 - 1 = 31
+        assert await lucas_lehmer_test(7)  # 2^7 - 1 = 127
+        assert await lucas_lehmer_test(13)  # 2^13 - 1 = 8191
 
         # Known composite Mersenne numbers
-        assert await lucas_lehmer_test(11) == False  # 2^11 - 1 = 2047 = 23 × 89
+        assert not await lucas_lehmer_test(11)  # 2^11 - 1 = 2047 = 23 × 89
 
     @pytest.mark.asyncio
     async def test_lucas_lehmer_test_invalid_input(self):
         """Test Lucas-Lehmer test with invalid input."""
-        assert await lucas_lehmer_test(1) == False
-        assert await lucas_lehmer_test(4) == False  # Not prime
-        assert await lucas_lehmer_test(6) == False  # Not prime
+        assert not await lucas_lehmer_test(1)
+        assert not await lucas_lehmer_test(4)  # Not prime
+        assert not await lucas_lehmer_test(6)  # Not prime
 
     @pytest.mark.asyncio
     async def test_mersenne_numbers_generation(self):
@@ -159,7 +159,7 @@ class TestMersennePrimes:
             lucas_lehmer_result = await lucas_lehmer_test(p)
 
             if is_mersenne:
-                assert lucas_lehmer_result == True, (
+                assert lucas_lehmer_result, (
                     f"Lucas-Lehmer should confirm 2^{p}-1 is prime"
                 )
 
@@ -178,7 +178,7 @@ class TestFermatPrimes:
         known_fermat_primes = [3, 5, 17, 257, 65537]
 
         for fp in known_fermat_primes:
-            assert await is_fermat_prime(fp) == True, f"{fp} should be a Fermat prime"
+            assert await is_fermat_prime(fp), f"{fp} should be a Fermat prime"
 
     @pytest.mark.asyncio
     async def test_is_fermat_prime_non_fermat(self):
@@ -186,7 +186,7 @@ class TestFermatPrimes:
         non_fermat_primes = [2, 7, 11, 13, 19, 23, 29, 31, 37, 41, 43, 47]
 
         for p in non_fermat_primes:
-            assert await is_fermat_prime(p) == False, (
+            assert not await is_fermat_prime(p), (
                 f"{p} should not be a Fermat prime"
             )
 
@@ -196,17 +196,17 @@ class TestFermatPrimes:
         composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20]
 
         for c in composites:
-            assert await is_fermat_prime(c) == False, (
+            assert not await is_fermat_prime(c), (
                 f"{c} should not be a Fermat prime"
             )
 
     @pytest.mark.asyncio
     async def test_is_fermat_prime_edge_cases(self):
         """Test edge cases for Fermat prime checking."""
-        assert await is_fermat_prime(0) == False
-        assert await is_fermat_prime(1) == False
-        assert await is_fermat_prime(2) == False
-        assert await is_fermat_prime(-5) == False
+        assert not await is_fermat_prime(0)
+        assert not await is_fermat_prime(1)
+        assert not await is_fermat_prime(2)
+        assert not await is_fermat_prime(-5)
 
     @pytest.mark.asyncio
     async def test_fermat_numbers_generation(self):
@@ -235,7 +235,7 @@ class TestFermatPrimes:
 
         # Verify they are all actually Fermat primes
         for fp in known:
-            assert await is_fermat_prime(fp) == True
+            assert await is_fermat_prime(fp)
 
     @pytest.mark.asyncio
     async def test_fermat_number_formula(self):
@@ -261,7 +261,7 @@ class TestSophieGermainAndSafePrimes:
         known_sophie_germain = [2, 3, 5, 11, 23, 29, 41, 53, 83, 89]
 
         for sg in known_sophie_germain:
-            assert await is_sophie_germain_prime(sg) == True, (
+            assert await is_sophie_germain_prime(sg), (
                 f"{sg} should be Sophie Germain prime"
             )
 
@@ -271,7 +271,7 @@ class TestSophieGermainAndSafePrimes:
         non_sophie_germain = [7, 13, 17, 19, 31, 37, 43, 47]
 
         for p in non_sophie_germain:
-            assert await is_sophie_germain_prime(p) == False, (
+            assert not await is_sophie_germain_prime(p), (
                 f"{p} should not be Sophie Germain prime"
             )
 
@@ -281,7 +281,7 @@ class TestSophieGermainAndSafePrimes:
         composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20]
 
         for c in composites:
-            assert await is_sophie_germain_prime(c) == False, (
+            assert not await is_sophie_germain_prime(c), (
                 f"{c} should not be Sophie Germain prime"
             )
 
@@ -291,7 +291,7 @@ class TestSophieGermainAndSafePrimes:
         known_safe = [5, 7, 11, 23, 47, 59, 83, 107, 167, 179]
 
         for sp in known_safe:
-            assert await is_safe_prime(sp) == True, f"{sp} should be safe prime"
+            assert await is_safe_prime(sp), f"{sp} should be safe prime"
 
     @pytest.mark.asyncio
     async def test_is_safe_prime_non_safe(self):
@@ -299,15 +299,15 @@ class TestSophieGermainAndSafePrimes:
         non_safe = [3, 13, 17, 19, 29, 31, 37, 41, 43, 53]
 
         for p in non_safe:
-            assert await is_safe_prime(p) == False, f"{p} should not be safe prime"
+            assert not await is_safe_prime(p), f"{p} should not be safe prime"
 
     @pytest.mark.asyncio
     async def test_is_safe_prime_edge_cases(self):
         """Test edge cases for safe prime checking."""
-        assert await is_safe_prime(2) == False  # Special case
-        assert await is_safe_prime(3) == False  # Special case
-        assert await is_safe_prime(1) == False
-        assert await is_safe_prime(0) == False
+        assert not await is_safe_prime(2)  # Special case
+        assert not await is_safe_prime(3)  # Special case
+        assert not await is_safe_prime(1)
+        assert not await is_safe_prime(0)
 
     @pytest.mark.asyncio
     async def test_safe_prime_pairs_consistency(self):
@@ -316,10 +316,10 @@ class TestSophieGermainAndSafePrimes:
 
         for sg, safe in pairs:
             # Verify Sophie Germain property
-            assert await is_sophie_germain_prime(sg) == True, (
+            assert await is_sophie_germain_prime(sg), (
                 f"{sg} should be Sophie Germain"
             )
-            assert await is_safe_prime(safe) == True, f"{safe} should be safe prime"
+            assert await is_safe_prime(safe), f"{safe} should be safe prime"
             assert safe == 2 * sg + 1, f"Safe prime {safe} should equal 2×{sg}+1"
 
     @pytest.mark.asyncio
@@ -355,7 +355,7 @@ class TestTwinPrimesAndRelated:
         known_twin_primes = [3, 5, 11, 13, 17, 19, 29, 31, 41, 43]
 
         for tp in known_twin_primes:
-            assert await is_twin_prime(tp) == True, (
+            assert await is_twin_prime(tp), (
                 f"{tp} should be part of twin prime pair"
             )
 
@@ -365,7 +365,7 @@ class TestTwinPrimesAndRelated:
         non_twin_primes = [2, 23, 37, 47, 53, 67, 79, 83, 89, 97]
 
         for p in non_twin_primes:
-            assert await is_twin_prime(p) == False, (
+            assert not await is_twin_prime(p), (
                 f"{p} should not be part of twin prime pair"
             )
 
@@ -375,7 +375,7 @@ class TestTwinPrimesAndRelated:
         composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20]
 
         for c in composites:
-            assert await is_twin_prime(c) == False, f"{c} should not be twin prime"
+            assert not await is_twin_prime(c), f"{c} should not be twin prime"
 
     @pytest.mark.asyncio
     async def test_twin_prime_pairs_known_values(self):
@@ -395,8 +395,8 @@ class TestTwinPrimesAndRelated:
 
         for p1, p2 in pairs:
             assert p2 == p1 + 2, f"Twin primes should differ by 2: {p1}, {p2}"
-            assert await is_twin_prime(p1) == True, f"{p1} should be twin prime"
-            assert await is_twin_prime(p2) == True, f"{p2} should be twin prime"
+            assert await is_twin_prime(p1), f"{p1} should be twin prime"
+            assert await is_twin_prime(p2), f"{p2} should be twin prime"
 
     @pytest.mark.asyncio
     async def test_cousin_primes_known_values(self):
@@ -419,8 +419,8 @@ class TestTwinPrimesAndRelated:
             # Import is_prime for verification
             from chuk_mcp_math.number_theory.primes import is_prime
 
-            assert await is_prime(p1) == True, f"{p1} should be prime"
-            assert await is_prime(p2) == True, f"{p2} should be prime"
+            assert await is_prime(p1), f"{p1} should be prime"
+            assert await is_prime(p2), f"{p2} should be prime"
 
     @pytest.mark.asyncio
     async def test_sexy_primes_known_values(self):
@@ -462,8 +462,8 @@ class TestTwinPrimesAndRelated:
             # Import is_prime for verification
             from chuk_mcp_math.number_theory.primes import is_prime
 
-            assert await is_prime(p1) == True, f"{p1} should be prime"
-            assert await is_prime(p2) == True, f"{p2} should be prime"
+            assert await is_prime(p1), f"{p1} should be prime"
+            assert await is_prime(p2), f"{p2} should be prime"
 
 
 # ============================================================================
@@ -480,7 +480,7 @@ class TestWilsonTheorem:
         small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23]
 
         for p in small_primes:
-            assert await wilson_theorem_check(p) == True, (
+            assert await wilson_theorem_check(p), (
                 f"Wilson's theorem should hold for prime {p}"
             )
 
@@ -490,16 +490,16 @@ class TestWilsonTheorem:
         composites = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 22]
 
         for c in composites:
-            assert await wilson_theorem_check(c) == False, (
+            assert not await wilson_theorem_check(c), (
                 f"Wilson's theorem should fail for composite {c}"
             )
 
     @pytest.mark.asyncio
     async def test_wilson_theorem_check_edge_cases(self):
         """Test Wilson's theorem with edge cases."""
-        assert await wilson_theorem_check(0) == False
-        assert await wilson_theorem_check(1) == False
-        assert await wilson_theorem_check(2) == True
+        assert not await wilson_theorem_check(0)
+        assert not await wilson_theorem_check(1)
+        assert await wilson_theorem_check(2)
 
     @pytest.mark.asyncio
     async def test_wilson_factorial_mod_known_values(self):
@@ -542,15 +542,15 @@ class TestPseudoprimesAndCarmichael:
     async def test_is_fermat_pseudoprime_known_cases(self):
         """Test with known Fermat pseudoprimes."""
         # 341 is the smallest base-2 Fermat pseudoprime
-        assert await is_fermat_pseudoprime(341, 2) == True
+        assert await is_fermat_pseudoprime(341, 2)
 
         # 341 = 11 × 31, fails for base 3
-        assert await is_fermat_pseudoprime(341, 3) == False
+        assert not await is_fermat_pseudoprime(341, 3)
 
         # 561 is Carmichael, so pseudoprime to coprime bases
-        assert await is_fermat_pseudoprime(561, 2) == True
-        assert await is_fermat_pseudoprime(561, 5) == True
-        assert await is_fermat_pseudoprime(561, 7) == True
+        assert await is_fermat_pseudoprime(561, 2)
+        assert await is_fermat_pseudoprime(561, 5)
+        assert await is_fermat_pseudoprime(561, 7)
 
     @pytest.mark.asyncio
     async def test_is_fermat_pseudoprime_with_primes(self):
@@ -560,7 +560,7 @@ class TestPseudoprimesAndCarmichael:
         for p in primes:
             for base in [2, 3, 5]:
                 if base != p:  # Don't test p with base p
-                    assert await is_fermat_pseudoprime(p, base) == False, (
+                    assert not await is_fermat_pseudoprime(p, base), (
                         f"Prime {p} should not be pseudoprime"
                     )
 
@@ -568,8 +568,8 @@ class TestPseudoprimesAndCarmichael:
     async def test_is_fermat_pseudoprime_gcd_condition(self):
         """Test that pseudoprime test requires gcd(a, n) = 1."""
         # 341 = 11 × 31
-        assert await is_fermat_pseudoprime(341, 11) == False  # gcd(11, 341) = 11
-        assert await is_fermat_pseudoprime(341, 31) == False  # gcd(31, 341) = 31
+        assert not await is_fermat_pseudoprime(341, 11)  # gcd(11, 341) = 11
+        assert not await is_fermat_pseudoprime(341, 31)  # gcd(31, 341) = 31
 
     @pytest.mark.asyncio
     async def test_fermat_primality_check_primes(self):
@@ -579,7 +579,7 @@ class TestPseudoprimesAndCarmichael:
         for p in primes:
             for base in [2, 3, 5]:
                 if base < p:  # Ensure gcd(base, p) = 1
-                    assert await fermat_primality_check(p, base) == True, (
+                    assert await fermat_primality_check(p, base), (
                         f"Prime {p} should pass Fermat test"
                     )
 
@@ -590,17 +590,17 @@ class TestPseudoprimesAndCarmichael:
         failing_composites = [9, 15, 21, 25, 27, 33, 35, 39, 45]
 
         for c in failing_composites:
-            assert await fermat_primality_check(c, 2) == False, (
+            assert not await fermat_primality_check(c, 2), (
                 f"Composite {c} should fail Fermat test"
             )
 
     @pytest.mark.asyncio
     async def test_fermat_primality_check_edge_cases(self):
         """Test edge cases for Fermat primality check."""
-        assert await fermat_primality_check(1, 2) == False
-        assert await fermat_primality_check(2, 2) == True
-        assert await fermat_primality_check(4, 2) == False  # Even composite
-        assert await fermat_primality_check(6, 3) == False  # gcd(3, 6) = 3
+        assert not await fermat_primality_check(1, 2)
+        assert await fermat_primality_check(2, 2)
+        assert not await fermat_primality_check(4, 2)  # Even composite
+        assert not await fermat_primality_check(6, 3)  # gcd(3, 6) = 3
 
     @pytest.mark.asyncio
     async def test_is_carmichael_number_known_cases(self):
@@ -608,7 +608,7 @@ class TestPseudoprimesAndCarmichael:
         known_carmichael = [561, 1105, 1729, 2465, 2821, 6601, 8911]
 
         for cn in known_carmichael:
-            assert await is_carmichael_number(cn) == True, (
+            assert await is_carmichael_number(cn), (
                 f"{cn} should be Carmichael number"
             )
 
@@ -626,7 +626,7 @@ class TestPseudoprimesAndCarmichael:
         ]  # Pseudoprimes but not Carmichael
 
         for n in non_carmichael:
-            assert await is_carmichael_number(n) == False, (
+            assert not await is_carmichael_number(n), (
                 f"{n} should not be Carmichael number"
             )
 
@@ -636,7 +636,7 @@ class TestPseudoprimesAndCarmichael:
         # Primes
         primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
         for p in primes:
-            assert await is_carmichael_number(p) == False, (
+            assert not await is_carmichael_number(p), (
                 f"Prime {p} should not be Carmichael"
             )
 
@@ -661,7 +661,7 @@ class TestPseudoprimesAndCarmichael:
             28,
         ]
         for c in small_composites:
-            assert await is_carmichael_number(c) == False, (
+            assert not await is_carmichael_number(c), (
                 f"Small composite {c} should not be Carmichael"
             )
 
@@ -669,7 +669,7 @@ class TestPseudoprimesAndCarmichael:
     async def test_carmichael_korselt_criterion(self):
         """Test that Carmichael numbers satisfy Korselt's criterion."""
         # Test with 561 = 3 × 11 × 17
-        assert await is_carmichael_number(561) == True
+        assert await is_carmichael_number(561)
 
         # Verify Korselt's criterion manually:
         # (561-1) = 560 should be divisible by (3-1)=2, (11-1)=10, (17-1)=16
@@ -785,16 +785,16 @@ class TestIntegration:
         # Some numbers can be multiple types of special primes
 
         # 3 is both Mersenne (2^2 - 1) and Fermat (2^(2^0) + 1) prime
-        assert await is_mersenne_prime(3) == True
-        assert await is_fermat_prime(3) == True
+        assert await is_mersenne_prime(3)
+        assert await is_fermat_prime(3)
 
         # 5 is both Fermat (2^(2^1) + 1) and twin prime
-        assert await is_fermat_prime(5) == True
-        assert await is_twin_prime(5) == True
+        assert await is_fermat_prime(5)
+        assert await is_twin_prime(5)
 
         # 7 is both Mersenne (2^3 - 1) and twin prime
-        assert await is_mersenne_prime(7) == True
-        assert await is_twin_prime(7) == True
+        assert await is_mersenne_prime(7)
+        assert await is_twin_prime(7)
 
     @pytest.mark.asyncio
     async def test_wilson_theorem_vs_primality(self):
@@ -816,7 +816,7 @@ class TestIntegration:
         carmichael_numbers = [561, 1105, 1729]
 
         for cn in carmichael_numbers:
-            assert await is_carmichael_number(cn) == True
+            assert await is_carmichael_number(cn)
 
             # Should be pseudoprime to several coprime bases
             coprime_bases = [
@@ -829,7 +829,7 @@ class TestIntegration:
                 from chuk_mcp_math.number_theory.divisibility import gcd
 
                 if await gcd(base, cn) == 1:
-                    assert await is_fermat_pseudoprime(cn, base) == True, (
+                    assert await is_fermat_pseudoprime(cn, base), (
                         f"{cn} should be pseudoprime to base {base}"
                     )
 

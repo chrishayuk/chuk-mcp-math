@@ -237,24 +237,24 @@ class TestIsDivisible:
     @pytest.mark.asyncio
     async def test_is_divisible_basic_cases(self):
         """Test basic divisibility cases."""
-        assert await is_divisible(20, 4) == True
-        assert await is_divisible(17, 3) == False
-        assert await is_divisible(15, 1) == True  # Any number divisible by 1
-        assert await is_divisible(0, 5) == True  # 0 divisible by any non-zero
+        assert await is_divisible(20, 4)
+        assert not await is_divisible(17, 3)
+        assert await is_divisible(15, 1)  # Any number divisible by 1
+        assert await is_divisible(0, 5)  # 0 divisible by any non-zero
 
     @pytest.mark.asyncio
     async def test_is_divisible_negative_numbers(self):
         """Test divisibility with negative numbers."""
-        assert await is_divisible(-20, 4) == True
-        assert await is_divisible(20, -4) == True
-        assert await is_divisible(-20, -4) == True
-        assert await is_divisible(-17, 3) == False
+        assert await is_divisible(-20, 4)
+        assert await is_divisible(20, -4)
+        assert await is_divisible(-20, -4)
+        assert not await is_divisible(-17, 3)
 
     @pytest.mark.asyncio
     async def test_is_divisible_same_numbers(self):
         """Test divisibility of identical numbers."""
-        assert await is_divisible(7, 7) == True
-        assert await is_divisible(-5, -5) == True
+        assert await is_divisible(7, 7)
+        assert await is_divisible(-5, -5)
 
         # Note: is_divisible(0, 0) should raise an error, not return False
         with pytest.raises(ValueError, match="Cannot check divisibility by zero"):
@@ -275,7 +275,7 @@ class TestIsDivisible:
         powers_of_two = [1, 2, 4, 8, 16, 32, 64]
 
         for power in powers_of_two:
-            assert await is_divisible(64, power) == True
+            assert await is_divisible(64, power)
             assert await is_divisible(63, power) == (power == 1)
 
 
@@ -285,28 +285,28 @@ class TestIsEven:
     @pytest.mark.asyncio
     async def test_is_even_basic_cases(self):
         """Test basic even number cases."""
-        assert await is_even(4) == True
-        assert await is_even(7) == False
-        assert await is_even(0) == True
-        assert await is_even(2) == True
-        assert await is_even(1) == False
+        assert await is_even(4)
+        assert not await is_even(7)
+        assert await is_even(0)
+        assert await is_even(2)
+        assert not await is_even(1)
 
     @pytest.mark.asyncio
     async def test_is_even_negative_numbers(self):
         """Test even check with negative numbers."""
-        assert await is_even(-2) == True
-        assert await is_even(-3) == False
-        assert await is_even(-4) == True
-        assert await is_even(-1) == False
+        assert await is_even(-2)
+        assert not await is_even(-3)
+        assert await is_even(-4)
+        assert not await is_even(-1)
 
     @pytest.mark.asyncio
     async def test_is_even_large_numbers(self):
         """Test even check with large numbers."""
-        assert await is_even(1000000) == True
-        assert await is_even(1000001) == False
-        assert await is_even(-1000000) == True
-        assert await is_even(2**31 - 2) == True
-        assert await is_even(2**31 - 1) == False
+        assert await is_even(1000000)
+        assert not await is_even(1000001)
+        assert await is_even(-1000000)
+        assert await is_even(2**31 - 2)
+        assert not await is_even(2**31 - 1)
 
 
 class TestIsOdd:
@@ -315,28 +315,28 @@ class TestIsOdd:
     @pytest.mark.asyncio
     async def test_is_odd_basic_cases(self):
         """Test basic odd number cases."""
-        assert await is_odd(7) == True
-        assert await is_odd(4) == False
-        assert await is_odd(1) == True
-        assert await is_odd(0) == False
-        assert await is_odd(2) == False
+        assert await is_odd(7)
+        assert not await is_odd(4)
+        assert await is_odd(1)
+        assert not await is_odd(0)
+        assert not await is_odd(2)
 
     @pytest.mark.asyncio
     async def test_is_odd_negative_numbers(self):
         """Test odd check with negative numbers."""
-        assert await is_odd(-3) == True
-        assert await is_odd(-2) == False
-        assert await is_odd(-1) == True
-        assert await is_odd(-4) == False
+        assert await is_odd(-3)
+        assert not await is_odd(-2)
+        assert await is_odd(-1)
+        assert not await is_odd(-4)
 
     @pytest.mark.asyncio
     async def test_is_odd_large_numbers(self):
         """Test odd check with large numbers."""
-        assert await is_odd(1000001) == True
-        assert await is_odd(1000000) == False
-        assert await is_odd(-1000001) == True
-        assert await is_odd(2**31 - 1) == True
-        assert await is_odd(2**31 - 2) == False
+        assert await is_odd(1000001)
+        assert not await is_odd(1000000)
+        assert await is_odd(-1000001)
+        assert await is_odd(2**31 - 1)
+        assert not await is_odd(2**31 - 2)
 
     @pytest.mark.asyncio
     async def test_even_odd_complementary(self):
@@ -560,7 +560,7 @@ class TestIntegration:
 
             # All divisors should actually divide n
             for d in divs:
-                assert await is_divisible(n, d) == True
+                assert await is_divisible(n, d)
 
     @pytest.mark.asyncio
     async def test_extended_gcd_consistency(self):
@@ -753,9 +753,9 @@ class TestErrorHandling:
         # Functions that should handle negatives gracefully
         assert await gcd(-12, 18) == 6
         assert await lcm(-12, 18) == 36
-        assert await is_even(-4) == True
-        assert await is_odd(-3) == True
-        assert await is_divisible(-20, 4) == True
+        assert await is_even(-4)
+        assert await is_odd(-3)
+        assert await is_divisible(-20, 4)
 
         # Functions that return empty/zero for non-positive inputs
         assert await divisors(-5) == []

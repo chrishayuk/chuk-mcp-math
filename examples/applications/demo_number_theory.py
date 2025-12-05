@@ -205,7 +205,7 @@ async def demo_cryptographic_applications():
                         print(
                             f"      {prim_root}^{log_val} ≡ {verification} ≡ {target} (mod {p})"
                         )
-                except:
+                except Exception:
                     pass
 
 
@@ -1203,7 +1203,7 @@ async def demo_performance_and_scale():
 
     # Find all primes up to 1000
     start_time = time.time()
-    primes_1000 = await number_theory.first_n_primes(168)  # π(1000) = 168
+    await number_theory.first_n_primes(168)  # π(1000) = 168
     end_time = time.time()
     print(
         f"    First 168 primes (all primes ≤ 1000): {end_time - start_time:.4f} seconds"

@@ -18,7 +18,7 @@ import math
 from pathlib import Path
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 from chuk_mcp_math.trigonometry.basic_functions import sin, cos, tan, cot, sec, csc
 from chuk_mcp_math.trigonometry.inverse import (

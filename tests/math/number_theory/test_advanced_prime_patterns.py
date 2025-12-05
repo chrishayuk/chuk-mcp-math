@@ -133,7 +133,7 @@ class TestPrimeConstellations:
         # This pattern hits residues {0, 0, 0} mod 3, so only one residue class
         # Should be admissible since it doesn't hit ALL residue classes
         # The test expectation was wrong
-        assert pattern_result["admissible"] == True
+        assert pattern_result["admissible"]
 
     @pytest.mark.asyncio
     async def test_cousin_primes_known_pairs(self):
@@ -320,7 +320,7 @@ class TestPrimeConstellations:
 
         for pattern in valid_patterns:
             result = await is_admissible_pattern(pattern)
-            assert result["admissible"] == True, (
+            assert result["admissible"], (
                 f"Pattern {pattern} should be admissible"
             )
             assert "reason" in result
@@ -336,7 +336,7 @@ class TestPrimeConstellations:
 
         for pattern in invalid_patterns:
             result = await is_admissible_pattern(pattern)
-            assert result["admissible"] == False, (
+            assert not result["admissible"], (
                 f"Pattern {pattern} should not be admissible"
             )
             assert "blocking_prime" in result
@@ -346,11 +346,11 @@ class TestPrimeConstellations:
         """Test admissible pattern edge cases."""
         # Empty pattern
         result = await is_admissible_pattern([])
-        assert result["admissible"] == True
+        assert result["admissible"]
 
         # Pattern not starting with 0
         result = await is_admissible_pattern([1, 3, 5])
-        assert result["admissible"] == False
+        assert not result["admissible"]
         assert "must start with 0" in result["reason"]
 
 
@@ -500,7 +500,7 @@ class TestPrimeConjectures:
         for n in test_values:
             result = await bertrand_postulate_verify(n)
 
-            assert result["holds"] == True, (
+            assert result["holds"], (
                 f"Bertrand's postulate should hold for n={n}"
             )
             assert result["n"] == n
@@ -522,11 +522,11 @@ class TestPrimeConjectures:
         """Test Bertrand's postulate edge cases."""
         # n ≤ 1 (postulate doesn't apply)
         result_0 = await bertrand_postulate_verify(0)
-        assert result_0["holds"] == False
+        assert not result_0["holds"]
         assert "only applies for n > 1" in result_0["reason"]
 
         result_1 = await bertrand_postulate_verify(1)
-        assert result_1["holds"] == False
+        assert not result_1["holds"]
 
     @pytest.mark.asyncio
     async def test_twin_prime_conjecture_data(self):
@@ -717,7 +717,7 @@ class TestAdvancedAnalysis:
 
         assert spiral_5["size"] == 5
         assert spiral_5["center"] == [2, 2]  # Center of 5x5 grid
-        assert spiral_5["primes_marked"] == True
+        assert spiral_5["primes_marked"]
         assert spiral_5["total_numbers"] == 25
         assert len(spiral_5["spiral"]) == 5
         assert len(spiral_5["spiral"][0]) == 5
@@ -864,7 +864,7 @@ class TestMathematicalProperties:
 
         for x in test_values:
             result = await prime_counting_function(x)
-            exact = result["exact"]
+            result["exact"]
             li_error_pct = result["li_error_percentage"]
             pnt_error_pct = result["pnt_error_percentage"]
 
@@ -882,21 +882,21 @@ class TestMathematicalProperties:
         """Test mathematical properties of admissible patterns."""
         # All twin prime patterns should be admissible
         twin_result = await is_admissible_pattern([0, 2])
-        assert twin_result["admissible"] == True
+        assert twin_result["admissible"]
 
         # All sexy prime patterns should be admissible
         sexy_result = await is_admissible_pattern([0, 6])
-        assert sexy_result["admissible"] == True
+        assert sexy_result["admissible"]
 
         # Pattern that hits all residues mod 2 should not be admissible
-        mod2_result = await is_admissible_pattern([0, 1])
+        await is_admissible_pattern([0, 1])
         # Actually [0, 1] is admissible because 2 is not checked as it's even
         # Let's test a pattern that definitely hits all residues mod 3
-        mod3_result = await is_admissible_pattern([0, 1, 2])
+        await is_admissible_pattern([0, 1, 2])
         # This might still be admissible due to 2 being prime...
         # Let's test [0, 3, 6] which should hit all residues mod 3
         mod3_pattern = await is_admissible_pattern([0, 3, 6])
-        assert mod3_pattern["admissible"] == False
+        assert not mod3_pattern["admissible"]
         # The blocking prime could be 2 or 3, depending on implementation
 
 
@@ -1144,7 +1144,7 @@ class TestParametrized:
     async def test_bertrand_postulate_parametrized(self, n):
         """Parametrized test for Bertrand's postulate."""
         result = await bertrand_postulate_verify(n)
-        assert result["holds"] == True
+        assert result["holds"]
         assert result["count"] > 0
         assert len(result["primes_between"]) == result["count"]
 

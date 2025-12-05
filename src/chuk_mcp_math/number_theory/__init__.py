@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # chuk_mcp_math/number_theory/__init__.py
+# ruff: noqa: F401
 """
 Number Theory Operations Module - Comprehensive Mathematical Library
 
@@ -904,7 +905,6 @@ async def demo_educational_applications():
     print(f"    F_8 contains {len(farey_8)} fractions")
 
     # Find n as a fraction in Farey sequence
-    n_as_frac = f"{n}/1"
     if [60, 1] in farey_8:
         print(f"    {n}/1 appears in F_8")
     else:

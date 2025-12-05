@@ -134,12 +134,12 @@ class TestAmicableNumbers:
         """Test with non-amicable numbers."""
         # Test perfect number (not amicable)
         result = await is_amicable_number(6)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
         assert result["sum_of_divisors"] == 6  # Perfect number
 
         # Test random number
         result = await is_amicable_number(100)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
         assert "partner" not in result
 
     @pytest.mark.asyncio
@@ -147,15 +147,15 @@ class TestAmicableNumbers:
         """Test edge cases for amicable number checking."""
         # Test 1
         result = await is_amicable_number(1)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
 
         # Test 0
         result = await is_amicable_number(0)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
 
         # Test negative number
         result = await is_amicable_number(-10)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
 
     @pytest.mark.asyncio
     async def test_find_social_numbers_basic(self):
@@ -191,7 +191,7 @@ class TestAmicableNumbers:
         result = await aliquot_sequence_analysis(220, 10)
 
         assert result["type"] == "amicable_cycle"
-        assert result["reaches_cycle"] == True
+        assert result["reaches_cycle"]
         assert result["cycle_length"] == 2
         assert 220 in result["sequence"]
         assert 284 in result["sequence"]
@@ -203,7 +203,7 @@ class TestAmicableNumbers:
         result = await aliquot_sequence_analysis(6, 5)
 
         assert result["type"] == "perfect"
-        assert result["reaches_cycle"] == True
+        assert result["reaches_cycle"]
         assert result["cycle_length"] == 1
         assert result["sequence"] == [6, 6]
 
@@ -214,7 +214,7 @@ class TestAmicableNumbers:
         result = await aliquot_sequence_analysis(12, 15)
 
         assert result["type"] == "reaches_one"
-        assert result["reaches_cycle"] == False
+        assert not result["reaches_cycle"]
         assert 1 in result["sequence"]
         assert "steps_to_one" in result
 
@@ -224,7 +224,7 @@ class TestAmicableNumbers:
         # Test 0
         result = await aliquot_sequence_analysis(0, 5)
         assert result["type"] == "invalid"
-        assert result["reaches_cycle"] == False
+        assert not result["reaches_cycle"]
 
         # Test 1 - this actually reaches 0, not 1
         result = await aliquot_sequence_analysis(1, 5)
@@ -289,7 +289,7 @@ class TestKaprekarNumbers:
         """Test with known Kaprekar numbers."""
         # Test 45: 45² = 2025, 20 + 25 = 45
         result = await is_kaprekar_number(45)
-        assert result["is_kaprekar"] == True
+        assert result["is_kaprekar"]
         assert result["square"] == 2025
         assert len(result["splits"]) >= 1
 
@@ -306,7 +306,7 @@ class TestKaprekarNumbers:
         """Test specific case of 297."""
         # 297² = 88209, 88 + 209 = 297
         result = await is_kaprekar_number(297)
-        assert result["is_kaprekar"] == True
+        assert result["is_kaprekar"]
         assert result["square"] == 88209
 
         # Check for valid split
@@ -321,7 +321,7 @@ class TestKaprekarNumbers:
         """Test with non-Kaprekar numbers."""
         # Test 10
         result = await is_kaprekar_number(10)
-        assert result["is_kaprekar"] == False
+        assert not result["is_kaprekar"]
         assert result["square"] == 100
         assert result["splits"] == []
 
@@ -330,11 +330,11 @@ class TestKaprekarNumbers:
         """Test edge cases."""
         # Test 0
         result = await is_kaprekar_number(0)
-        assert result["is_kaprekar"] == False
+        assert not result["is_kaprekar"]
 
         # Test negative
         result = await is_kaprekar_number(-5)
-        assert result["is_kaprekar"] == False
+        assert not result["is_kaprekar"]
 
 
 # ============================================================================
@@ -385,7 +385,7 @@ class TestVampireNumbers:
         # 1260 = 21 × 60, digits: 1,2,6,0 = 2,1,6,0
         result = await is_vampire_number(1260)
 
-        assert result["is_vampire"] == True
+        assert result["is_vampire"]
         assert result["digit_count"] == 4
         assert result["required_fang_digits"] == 2
 
@@ -398,7 +398,7 @@ class TestVampireNumbers:
         # 125460 has multiple representations
         result = await is_vampire_number(125460)
 
-        assert result["is_vampire"] == True
+        assert result["is_vampire"]
         assert result["digit_count"] == 6
         assert len(result["fangs"]) >= 1  # Should have multiple fang pairs
 
@@ -406,7 +406,7 @@ class TestVampireNumbers:
     async def test_is_vampire_number_non_vampire(self):
         """Test with non-vampire numbers."""
         result = await is_vampire_number(1234)
-        assert result["is_vampire"] == False
+        assert not result["is_vampire"]
         assert result["fangs"] == []
 
     @pytest.mark.asyncio
@@ -414,12 +414,12 @@ class TestVampireNumbers:
         """Test edge cases."""
         # Odd number of digits
         result = await is_vampire_number(123)
-        assert result["is_vampire"] == False
+        assert not result["is_vampire"]
         assert "reason" in result
 
         # Zero
         result = await is_vampire_number(0)
-        assert result["is_vampire"] == False
+        assert not result["is_vampire"]
 
 
 # ============================================================================
@@ -606,7 +606,7 @@ class TestKeithNumbers:
         """Test specific Keith number 14."""
         result = await is_keith_number(14)
 
-        assert result["is_keith"] == True
+        assert result["is_keith"]
         assert result["digits"] == [1, 4]
 
         # Sequence should be: 1, 4, 5, 9, 14
@@ -627,7 +627,7 @@ class TestKeithNumbers:
         """Test Keith number 197."""
         result = await is_keith_number(197)
 
-        assert result["is_keith"] == True
+        assert result["is_keith"]
         assert result["digits"] == [1, 9, 7]
         assert result["final_sum"] == 197
 
@@ -635,7 +635,7 @@ class TestKeithNumbers:
     async def test_is_keith_number_non_keith(self):
         """Test with non-Keith numbers."""
         result = await is_keith_number(15)
-        assert result["is_keith"] == False
+        assert not result["is_keith"]
         assert result["final_sum"] != 15
 
     @pytest.mark.asyncio
@@ -643,7 +643,7 @@ class TestKeithNumbers:
         """Test edge cases."""
         # Single digit (not Keith by definition)
         result = await is_keith_number(5)
-        assert result["is_keith"] == False
+        assert not result["is_keith"]
         assert "reason" in result
 
 
@@ -716,7 +716,7 @@ class TestDigitProperties:
         assert result["digits"] == [1, 5, 3]
         assert result["digit_powers"] == [1, 125, 27]
         assert result["digit_power_sum"] == 153
-        assert result["equals_original"] == True
+        assert result["equals_original"]
 
     @pytest.mark.asyncio
     async def test_sum_digit_powers_9474(self):
@@ -724,7 +724,7 @@ class TestDigitProperties:
         result = await sum_digit_powers(9474, 4)
 
         assert result["digit_power_sum"] == 9474
-        assert result["equals_original"] == True
+        assert result["equals_original"]
         assert result["digits"] == [9, 4, 7, 4]
 
     @pytest.mark.asyncio
@@ -734,7 +734,7 @@ class TestDigitProperties:
 
         assert result["digits"] == [1, 2, 3]
         assert result["digit_power_sum"] == 14  # 1² + 2² + 3² = 1 + 4 + 9 = 14
-        assert result["equals_original"] == False
+        assert not result["equals_original"]
 
     @pytest.mark.asyncio
     async def test_sum_digit_powers_edge_cases(self):
@@ -836,7 +836,7 @@ class TestIntegrationAndProperties:
 
         for k in kaprekar_list:
             result = await is_kaprekar_number(k)
-            assert result["is_kaprekar"] == True
+            assert result["is_kaprekar"]
 
             # Verify at least one valid split exists
             assert len(result["splits"]) > 0
@@ -911,7 +911,7 @@ class TestIntegrationAndProperties:
 
         for keith in keith_list:
             result = await is_keith_number(keith)
-            assert result["is_keith"] == True
+            assert result["is_keith"]
 
             # Final sum should equal the Keith number
             assert result["final_sum"] == keith
@@ -1052,16 +1052,16 @@ class TestErrorHandling:
         """Test handling of negative inputs where applicable."""
         # Functions that should handle negative inputs gracefully
         result = await is_amicable_number(-220)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
 
         result = await is_kaprekar_number(-45)
-        assert result["is_kaprekar"] == False
+        assert not result["is_kaprekar"]
 
         result = await is_vampire_number(-1260)
-        assert result["is_vampire"] == False
+        assert not result["is_vampire"]
 
         result = await is_keith_number(-14)
-        assert "reason" in result or result["is_keith"] == False
+        assert "reason" in result or not result["is_keith"]
 
         result = await sum_digit_powers(-153, 3)
         assert result["n"] == 153  # Should use absolute value
@@ -1073,13 +1073,13 @@ class TestErrorHandling:
     async def test_zero_input_handling(self):
         """Test handling of zero inputs."""
         result = await is_amicable_number(0)
-        assert result["is_amicable"] == False
+        assert not result["is_amicable"]
 
         result = await is_kaprekar_number(0)
-        assert result["is_kaprekar"] == False
+        assert not result["is_kaprekar"]
 
         result = await is_vampire_number(0)
-        assert result["is_vampire"] == False
+        assert not result["is_vampire"]
 
         result = await magic_constants(0)
         assert "error" in result
@@ -1152,7 +1152,7 @@ class TestParametrized:
     async def test_known_kaprekar_numbers(self, kaprekar_num):
         """Parametrized test for known Kaprekar numbers."""
         result = await is_kaprekar_number(kaprekar_num)
-        assert result["is_kaprekar"] == True
+        assert result["is_kaprekar"]
         assert len(result["splits"]) > 0
 
     @pytest.mark.asyncio
@@ -1183,7 +1183,7 @@ class TestParametrized:
     async def test_known_vampire_numbers(self, vampire_num, expected_fangs):
         """Parametrized test for known vampire numbers."""
         result = await is_vampire_number(vampire_num)
-        assert result["is_vampire"] == True
+        assert result["is_vampire"]
 
         for expected_fang in expected_fangs:
             assert expected_fang in result["fangs"]
@@ -1193,7 +1193,7 @@ class TestParametrized:
     async def test_known_keith_numbers(self, keith_num):
         """Parametrized test for known Keith numbers."""
         result = await is_keith_number(keith_num)
-        assert result["is_keith"] == True
+        assert result["is_keith"]
         assert result["final_sum"] == keith_num
 
     @pytest.mark.asyncio

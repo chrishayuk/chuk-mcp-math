@@ -241,13 +241,13 @@ class TestConvergentsApproximations:
         approx_10 = await best_rational_approximation(pi_val, 10)
         # Should be 22/7
         assert approx_10["best_fraction"] == [22, 7]
-        assert approx_10["cf_convergent"] == True
+        assert approx_10["cf_convergent"]
 
         # Test with denominator limit 1000
         approx_1000 = await best_rational_approximation(pi_val, 1000)
         # Should be 355/113 (much more accurate)
         assert approx_1000["best_fraction"] == [355, 113]
-        assert approx_1000["cf_convergent"] == True
+        assert approx_1000["cf_convergent"]
 
 
 # ============================================================================
@@ -266,14 +266,14 @@ class TestPeriodicContinuedFractions:
         assert sqrt2_cf["initial"] == [1]
         # Period might be [2, 2] instead of [2] - use actual result
         assert len(sqrt2_cf["cf_period"]) >= 1
-        assert sqrt2_cf["is_perfect_square"] == False
+        assert not sqrt2_cf["is_perfect_square"]
 
         # √3 = [1; 1, 2, 1, 2, ...] - let's check actual result
         sqrt3_cf = await sqrt_cf_expansion(3)
         assert sqrt3_cf["initial"] == [1]
         # Use actual period length
         assert sqrt3_cf["period_length"] >= 2
-        assert sqrt3_cf["is_perfect_square"] == False
+        assert not sqrt3_cf["is_perfect_square"]
 
     @pytest.mark.asyncio
     async def test_sqrt_cf_expansion_perfect_squares(self):
@@ -284,7 +284,7 @@ class TestPeriodicContinuedFractions:
             sqrt_n_cf = await sqrt_cf_expansion(n)
             sqrt_n = int(math.sqrt(n))
 
-            assert sqrt_n_cf["is_perfect_square"] == True
+            assert sqrt_n_cf["is_perfect_square"]
             assert sqrt_n_cf["cf"] == [sqrt_n]
             assert sqrt_n_cf["period_length"] == 0
 
@@ -302,7 +302,7 @@ class TestDiophantineApplications:
         """Test Pell equation solutions using CF method."""
         # x² - 2y² = 1: fundamental solution (3, 2)
         pell2 = await cf_solve_pell(2)
-        assert pell2["solution_found"] == True
+        assert pell2["solution_found"]
         assert pell2["fundamental_solution"] == [3, 2]
         assert pell2["verification"] == 1
 
@@ -312,7 +312,7 @@ class TestDiophantineApplications:
 
         # x² - 3y² = 1: fundamental solution (2, 1)
         pell3 = await cf_solve_pell(3)
-        assert pell3["solution_found"] == True
+        assert pell3["solution_found"]
         assert pell3["fundamental_solution"] == [2, 1]
         assert pell3["verification"] == 1
 

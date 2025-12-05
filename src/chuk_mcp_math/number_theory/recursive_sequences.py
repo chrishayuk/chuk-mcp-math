@@ -613,7 +613,8 @@ async def solve_linear_recurrence(coeffs: List[int], initial: List[int], n: int)
     sequence = list(initial)
 
     for i in range(k, n + 1):
-        next_val = sum(coeffs[j] * sequence[i - 1 - j] for j in range(k))
+        # Calculate next value using the last k values
+        next_val = sum(coeffs[j] * sequence[-(j + 1)] for j in range(k))
         sequence.append(next_val)
 
         # Keep only the last k values to save memory
@@ -624,7 +625,7 @@ async def solve_linear_recurrence(coeffs: List[int], initial: List[int], n: int)
         if i % 1000 == 0:
             await asyncio.sleep(0)
 
-    return sequence[-1] if len(sequence) == k else sequence[n]
+    return sequence[-1]
 
 
 @mcp_function(

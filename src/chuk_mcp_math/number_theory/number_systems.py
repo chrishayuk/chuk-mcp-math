@@ -146,7 +146,6 @@ async def decimal_to_binary(decimal: int) -> str:
         return "0"
 
     binary_digits = []
-    original_decimal = decimal
 
     while decimal > 0:
         binary_digits.append(str(decimal % 2))

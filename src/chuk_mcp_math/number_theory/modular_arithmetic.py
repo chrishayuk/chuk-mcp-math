@@ -656,7 +656,7 @@ async def order_modulo(a: int, n: int) -> Optional[int]:
     phi_n = await _euler_totient(n)
 
     # The order must divide φ(n)
-    factors = await prime_factors(phi_n)
+    await prime_factors(phi_n)
 
     # Try all divisors of φ(n)
     divisors = await _get_divisors(phi_n)
@@ -805,7 +805,7 @@ async def baby_step_giant_step(g: int, h: int, n: int) -> Optional[int]:
     # Giant steps: look for h * (g^(-m))^i in baby_steps
     try:
         g_inv_m = pow(g, n - 1 - m, n)  # g^(-m) = g^(φ(n)-m) when gcd(g,n)=1
-    except:
+    except Exception:
         return None
 
     y = h

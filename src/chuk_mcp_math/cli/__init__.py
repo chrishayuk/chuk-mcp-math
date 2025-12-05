@@ -1,4 +1,5 @@
 """CLI wrapper infrastructure for bash-executable math functions."""
+# ruff: noqa: F401
 
 import asyncio
 import json
@@ -29,7 +30,7 @@ class CLIWrapper:
     def parse_args(self, args: List[str]) -> Dict[str, Any]:
         """Parse command-line arguments into function parameters."""
         params = {}
-        param_names = list(self.signature.parameters.keys())
+        list(self.signature.parameters.keys())
 
         for i, (param_name, param) in enumerate(self.signature.parameters.items()):
             if i < len(args):
@@ -37,13 +38,13 @@ class CLIWrapper:
                 param_type = self.type_hints.get(param_name, str)
 
                 # Type conversion
-                if param_type == int:
+                if param_type is int:
                     params[param_name] = int(arg_value)  # type: ignore[assignment]
-                elif param_type == float:
+                elif param_type is float:
                     params[param_name] = float(arg_value)  # type: ignore[assignment]
-                elif param_type == bool:
+                elif param_type is bool:
                     params[param_name] = arg_value.lower() in ("true", "1", "yes")
-                elif param_type == list or param_type == List:
+                elif param_type is list or param_type is List:
                     # Try to parse as JSON array
                     try:
                         params[param_name] = json.loads(arg_value)  # type: ignore[assignment]

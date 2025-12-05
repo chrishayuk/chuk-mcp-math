@@ -210,7 +210,7 @@ async def variance(numbers: List[Union[int, float]], population: bool = False) -
     if len(numbers) == 1 and not population:
         raise ValueError("Cannot calculate sample variance with only one data point")
 
-    avg = mean(numbers)
+    avg = await mean(numbers)
     squared_diffs = [(x - avg) ** 2 for x in numbers]
 
     divisor = len(numbers) if population else len(numbers) - 1
@@ -260,7 +260,7 @@ async def standard_deviation(
         standard_deviation([5, 5, 5, 5]) → 0.0
     """
     await asyncio.sleep(0)  # Yield control for async execution
-    return math.sqrt(variance(numbers, population))
+    return math.sqrt(await variance(numbers, population))
 
 
 @mcp_function(
@@ -349,11 +349,11 @@ async def comprehensive_stats(numbers: List[Union[int, float]]) -> Dict[str, Any
         raise ValueError("Cannot calculate statistics for empty list")
 
     n = len(numbers)
-    mean_val = mean(numbers)
-    median_val = median(numbers)
+    mean_val = await mean(numbers)
+    median_val = await median(numbers)
     min_val = min(numbers)
     max_val = max(numbers)
-    variance_val = variance(numbers) if n > 1 else 0
+    variance_val = await variance(numbers) if n > 1 else 0
     std_dev_val = math.sqrt(variance_val)
 
     await asyncio.sleep(0)  # Yield control for async execution
@@ -469,9 +469,9 @@ async def quartiles(numbers: List[Union[int, float]]) -> Dict[str, float]:
     if not numbers:
         raise ValueError("Cannot calculate quartiles of empty list")
 
-    q1 = percentile(numbers, 25)
-    q2 = percentile(numbers, 50)  # median
-    q3 = percentile(numbers, 75)
+    q1 = await percentile(numbers, 25)
+    q2 = await percentile(numbers, 50)  # median
+    q3 = await percentile(numbers, 75)
     iqr = q3 - q1
 
     await asyncio.sleep(0)  # Yield control for async execution

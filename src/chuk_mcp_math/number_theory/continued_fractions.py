@@ -851,7 +851,7 @@ async def cf_solve_pell(n: int) -> Dict:
     # If period length is odd, solution is at end of second period
 
     # Build convergents using the periodic structure
-    convergents_to_check = (
+    (
         period_length if period_length % 2 == 0 else 2 * period_length
     )
 

@@ -239,7 +239,7 @@ async def farey_neighbors(p: int, q: int, n: int) -> Dict:
     farey_seq = await farey_sequence(n)
 
     # Find the position of p/q in the sequence
-    target_value = p / q
+    p / q
     position = -1
 
     for i, [num, den] in enumerate(farey_seq):
@@ -1839,7 +1839,7 @@ async def performance_benchmark():
 
     for name, operation in operations:
         start_time = time.time()
-        result = await operation()
+        await operation()
         duration = time.time() - start_time
         print(f"   {name}: {duration:.4f}s")
 
@@ -1854,7 +1854,7 @@ async def performance_benchmark():
         calkin_wilf_tree(6),
     ]
 
-    results = await asyncio.gather(*concurrent_tasks)
+    await asyncio.gather(*concurrent_tasks)
     concurrent_duration = time.time() - start_time
     print(f"   4 operations concurrently: {concurrent_duration:.4f}s")
 

@@ -984,7 +984,7 @@ class TestErrorHandling:
 
         try:
             await order_modulo(2, 4)  # Should return None
-        except:
+        except Exception:
             pass
 
         result = await order_modulo(3, 7)

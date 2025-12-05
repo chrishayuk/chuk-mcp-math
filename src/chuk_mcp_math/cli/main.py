@@ -198,7 +198,6 @@ def describe(function_name: str):
         for key, info in functions.items():
             if key.endswith(f".{function_name}"):
                 func_info = info
-                func_name = key
                 break
 
     if not func_info:

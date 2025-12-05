@@ -60,7 +60,7 @@ class TestLinearDiophantine:
         # 3x + 5y = 1 (solvable since gcd(3,5) = 1 divides 1)
         result = await solve_linear_diophantine(3, 5, 1)
 
-        assert result["solvable"] == True
+        assert result["solvable"]
         assert result["gcd"] == 1
         assert "particular" in result
         assert "general" in result
@@ -74,7 +74,7 @@ class TestLinearDiophantine:
         """Test specific case 3x + 5y = 1."""
         result = await solve_linear_diophantine(3, 5, 1)
 
-        assert result["solvable"] == True
+        assert result["solvable"]
         x0, y0 = result["particular"]
 
         # One known solution is (-2, 1): 3(-2) + 5(1) = -6 + 5 = -1... wait
@@ -92,7 +92,7 @@ class TestLinearDiophantine:
         # 6x + 9y = 7 (unsolvable since gcd(6,9) = 3 does not divide 7)
         result = await solve_linear_diophantine(6, 9, 7)
 
-        assert result["solvable"] == False
+        assert not result["solvable"]
         assert result["gcd"] == 3
         assert "reason" in result
         assert "3 does not divide 7" in result["reason"]
@@ -102,7 +102,7 @@ class TestLinearDiophantine:
         """Test case 2x + 3y = 7."""
         result = await solve_linear_diophantine(2, 3, 7)
 
-        assert result["solvable"] == True
+        assert result["solvable"]
         assert result["gcd"] == 1
 
         x0, y0 = result["particular"]
@@ -117,19 +117,19 @@ class TestLinearDiophantine:
         """Test edge cases for linear Diophantine equations."""
         # Both coefficients zero with c = 0 (infinitely many solutions)
         result = await solve_linear_diophantine(0, 0, 0)
-        assert result["solvable"] == True
+        assert result["solvable"]
         assert "any integers" in result["general"]
 
         # Both coefficients zero with c ≠ 0 (no solutions)
         result = await solve_linear_diophantine(0, 0, 5)
-        assert result["solvable"] == False
+        assert not result["solvable"]
         assert "0x + 0y = c where c ≠ 0" in result["reason"]
 
     @pytest.mark.asyncio
     async def test_solve_linear_diophantine_negative_coefficients(self):
         """Test with negative coefficients."""
         result = await solve_linear_diophantine(-3, 5, 1)
-        assert result["solvable"] == True
+        assert result["solvable"]
 
         x0, y0 = result["particular"]
         assert -3 * x0 + 5 * y0 == 1
@@ -193,7 +193,7 @@ class TestPellEquation:
         """Test Pell's equation x² - 2y² = 1."""
         result = await solve_pell_equation(2)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
 
         # Verify solution: x² - 2y² = 1
@@ -207,7 +207,7 @@ class TestPellEquation:
         """Test Pell's equation x² - 3y² = 1."""
         result = await solve_pell_equation(3)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
         assert x * x - 3 * y * y == 1
 
@@ -219,7 +219,7 @@ class TestPellEquation:
         """Test Pell's equation x² - 5y² = 1."""
         result = await solve_pell_equation(5)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
         assert x * x - 5 * y * y == 1
 
@@ -231,7 +231,7 @@ class TestPellEquation:
         """Test Pell's equation with perfect square (no non-trivial solutions)."""
         result = await solve_pell_equation(4)
 
-        assert result["exists"] == False
+        assert not result["exists"]
         assert "perfect square" in result["reason"]
 
     @pytest.mark.asyncio
@@ -291,7 +291,7 @@ class TestPellEquation:
         """Test negative Pell's equation x² - 2y² = -1."""
         result = await solve_negative_pell_equation(2)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
 
         # Verify solution: x² - 2y² = -1
@@ -305,7 +305,7 @@ class TestPellEquation:
         """Test negative Pell's equation x² - 5y² = -1."""
         result = await solve_negative_pell_equation(5)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
         assert x * x - 5 * y * y == -1
 
@@ -318,7 +318,7 @@ class TestPellEquation:
         # x² - 3y² = -1 has no solutions
         result = await solve_negative_pell_equation(3)
 
-        assert result["exists"] == False
+        assert not result["exists"]
         assert "even" in result["reason"] or "No solutions exist" in result["reason"]
 
     @pytest.mark.asyncio
@@ -326,7 +326,7 @@ class TestPellEquation:
         """Test negative Pell's equation with perfect square."""
         result = await solve_negative_pell_equation(4)
 
-        assert result["exists"] == False
+        assert not result["exists"]
         assert "perfect square" in result["reason"]
 
 
@@ -575,7 +575,7 @@ class TestSpecialDiophantineProblems:
         # 17 = 4*3 + 1*5
         result = await postage_stamp_problem(17, [3, 5])
 
-        assert result["possible"] == True
+        assert result["possible"]
         solution = result["solution"]
         assert len(solution) == 2  # Two denominations
 
@@ -591,7 +591,7 @@ class TestSpecialDiophantineProblems:
         """Test specific case: 43 with denominations [5, 9, 20]."""
         result = await postage_stamp_problem(43, [5, 9, 20])
 
-        assert result["possible"] == True
+        assert result["possible"]
         solution = result["solution"]
 
         # Verify solution: should sum to 43
@@ -613,28 +613,28 @@ class TestSpecialDiophantineProblems:
 
         # Let's try a truly unsolvable case: 1 with [3, 5]
         result = await postage_stamp_problem(1, [3, 5])
-        assert result["possible"] == False
+        assert not result["possible"]
 
         # Or 2 with [3, 5]
         result = await postage_stamp_problem(2, [3, 5])
-        assert result["possible"] == False
+        assert not result["possible"]
 
     @pytest.mark.asyncio
     async def test_postage_stamp_problem_edge_cases(self):
         """Test edge cases for postage stamp problem."""
         # Amount = 0
         result = await postage_stamp_problem(0, [3, 5])
-        assert result["possible"] == True
+        assert result["possible"]
         assert result["solution"] == [0, 0]
         assert result["stamps_used"] == 0
 
         # Negative amount
         result = await postage_stamp_problem(-5, [3, 5])
-        assert result["possible"] == False
+        assert not result["possible"]
 
         # No denominations
         result = await postage_stamp_problem(10, [])
-        assert result["possible"] == False
+        assert not result["possible"]
 
     @pytest.mark.asyncio
     async def test_postage_stamp_problem_optimization(self):
@@ -642,7 +642,7 @@ class TestSpecialDiophantineProblems:
         # For amount that can be made in multiple ways, should use minimum stamps
         result = await postage_stamp_problem(15, [3, 5])
 
-        assert result["possible"] == True
+        assert result["possible"]
         # 15 = 5*3 (3 stamps) or 15 = 3*5 (5 stamps)
         # Should prefer 5*3 = 15 (3 stamps)
         assert result["stamps_used"] == 3
@@ -662,8 +662,8 @@ class TestDiophantineAnalysis:
         result = await diophantine_analysis("linear", coefficients=[3, 5, 1])
 
         assert result["type"] == "linear"
-        assert result["solvable"] == True
-        assert result["infinite_solutions"] == True
+        assert result["solvable"]
+        assert result["infinite_solutions"]
         assert result["classification"] == "indefinite"
         assert result["gcd"] == 1
 
@@ -673,7 +673,7 @@ class TestDiophantineAnalysis:
         result = await diophantine_analysis("linear", coefficients=[6, 9, 7])
 
         assert result["type"] == "linear"
-        assert result["solvable"] == False
+        assert not result["solvable"]
         assert result["classification"] == "inconsistent"
         assert result["gcd"] == 3
 
@@ -683,10 +683,10 @@ class TestDiophantineAnalysis:
         result = await diophantine_analysis("pell", n=2)
 
         assert result["type"] == "pell"
-        assert result["has_solutions"] == True
+        assert result["has_solutions"]
         assert result["fundamental_solution"] == [3, 2]
         assert result["classification"] == "hyperbolic"
-        assert result["infinite_solutions"] == True
+        assert result["infinite_solutions"]
 
     @pytest.mark.asyncio
     async def test_diophantine_analysis_negative_pell(self):
@@ -695,14 +695,14 @@ class TestDiophantineAnalysis:
         result = await diophantine_analysis("negative_pell", n=2)
 
         assert result["type"] == "negative_pell"
-        assert result["has_solutions"] == True
+        assert result["has_solutions"]
         assert result["fundamental_solution"] == [1, 1]
 
         # n=3 has no solutions for x² - 3y² = -1
         result = await diophantine_analysis("negative_pell", n=3)
 
         assert result["type"] == "negative_pell"
-        assert result["has_solutions"] == False
+        assert not result["has_solutions"]
         assert result["classification"] == "no_solutions"
 
     @pytest.mark.asyncio
@@ -712,7 +712,7 @@ class TestDiophantineAnalysis:
 
         assert result["type"] == "pythagorean"
         assert result["classification"] == "elliptic"
-        assert result["infinite_solutions"] == True
+        assert result["infinite_solutions"]
         assert "parametric_form" in result
         assert result["primitive_triples_found"] > 0
 
@@ -827,13 +827,13 @@ class TestIntegrationAndProperties:
         if frobenius != float("inf") and frobenius >= 0:
             # Frobenius number should not be representable
             result = await postage_stamp_problem(frobenius, denominations)
-            assert result["possible"] == False
+            assert not result["possible"]
 
             # All numbers > Frobenius should be representable
             # Test a few numbers after Frobenius
             for amount in range(frobenius + 1, frobenius + 10):
                 result = await postage_stamp_problem(amount, denominations)
-                assert result["possible"] == True
+                assert result["possible"]
 
     @pytest.mark.asyncio
     async def test_pell_equation_solver_verification(self):
@@ -842,8 +842,8 @@ class TestIntegrationAndProperties:
         neg_pell_2 = await solve_negative_pell_equation(2)
         pos_pell_2 = await solve_pell_equation(2)
 
-        assert pos_pell_2["exists"] == True
-        assert neg_pell_2["exists"] == True
+        assert pos_pell_2["exists"]
+        assert neg_pell_2["exists"]
 
         # Verify solutions for n=2
         x, y = pos_pell_2["fundamental"]
@@ -858,8 +858,8 @@ class TestIntegrationAndProperties:
         neg_pell_5 = await solve_negative_pell_equation(5)
         pos_pell_5 = await solve_pell_equation(5)
 
-        assert pos_pell_5["exists"] == True
-        assert neg_pell_5["exists"] == True
+        assert pos_pell_5["exists"]
+        assert neg_pell_5["exists"]
 
         # Verify solutions for n=5
         x, y = pos_pell_5["fundamental"]
@@ -874,8 +874,8 @@ class TestIntegrationAndProperties:
         neg_pell_3 = await solve_negative_pell_equation(3)
         pos_pell_3 = await solve_pell_equation(3)
 
-        assert pos_pell_3["exists"] == True  # x² - 3y² = 1 has solutions
-        assert neg_pell_3["exists"] == False  # x² - 3y² = -1 has no solutions
+        assert pos_pell_3["exists"]  # x² - 3y² = 1 has solutions
+        assert not neg_pell_3["exists"]  # x² - 3y² = -1 has no solutions
 
         # Verify solution for n=3 positive case
         x, y = pos_pell_3["fundamental"]
@@ -952,11 +952,11 @@ class TestPerformance:
         assert len(results) == 5
 
         # Verify we got valid results
-        assert results[0]["solvable"] == True  # Linear Diophantine
-        assert results[1]["exists"] == True  # Pell equation
+        assert results[0]["solvable"]  # Linear Diophantine
+        assert results[1]["exists"]  # Pell equation
         assert len(results[2]) > 0  # Pythagorean triples
         assert isinstance(results[3], (int, float))  # Frobenius number
-        assert results[4]["possible"] == True  # Postage stamp
+        assert results[4]["possible"]  # Postage stamp
 
     @pytest.mark.asyncio
     async def test_large_input_handling(self):
@@ -1094,7 +1094,7 @@ class TestParametrized:
         """Parametrized test for Pell equation fundamental solutions."""
         result = await solve_pell_equation(n)
 
-        assert result["exists"] == True
+        assert result["exists"]
         x, y = result["fundamental"]
 
         # Verify it's a solution

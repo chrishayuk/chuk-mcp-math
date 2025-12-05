@@ -37,37 +37,37 @@ class TestIsPrime:
     @pytest.mark.asyncio
     async def test_is_prime_basic_cases(self):
         """Test prime checking with basic cases."""
-        assert await is_prime(17) == True
-        assert await is_prime(4) == False
-        assert await is_prime(2) == True
-        assert await is_prime(3) == True
-        assert await is_prime(5) == True
-        assert await is_prime(7) == True
-        assert await is_prime(11) == True
-        assert await is_prime(13) == True
+        assert await is_prime(17)
+        assert not await is_prime(4)
+        assert await is_prime(2)
+        assert await is_prime(3)
+        assert await is_prime(5)
+        assert await is_prime(7)
+        assert await is_prime(11)
+        assert await is_prime(13)
 
     @pytest.mark.asyncio
     async def test_is_prime_composite_numbers(self):
         """Test prime checking with composite numbers."""
-        assert await is_prime(4) == False  # 2²
-        assert await is_prime(6) == False  # 2×3
-        assert await is_prime(8) == False  # 2³
-        assert await is_prime(9) == False  # 3²
-        assert await is_prime(10) == False  # 2×5
-        assert await is_prime(12) == False  # 2²×3
-        assert await is_prime(15) == False  # 3×5
-        assert await is_prime(21) == False  # 3×7
-        assert await is_prime(25) == False  # 5²
-        assert await is_prime(27) == False  # 3³
+        assert not await is_prime(4)  # 2²
+        assert not await is_prime(6)  # 2×3
+        assert not await is_prime(8)  # 2³
+        assert not await is_prime(9)  # 3²
+        assert not await is_prime(10)  # 2×5
+        assert not await is_prime(12)  # 2²×3
+        assert not await is_prime(15)  # 3×5
+        assert not await is_prime(21)  # 3×7
+        assert not await is_prime(25)  # 5²
+        assert not await is_prime(27)  # 3³
 
     @pytest.mark.asyncio
     async def test_is_prime_edge_cases(self):
         """Test prime checking with edge cases."""
-        assert await is_prime(1) == False  # 1 is not prime by definition
-        assert await is_prime(0) == False  # 0 is not prime
-        assert await is_prime(-1) == False  # Negative numbers are not prime
-        assert await is_prime(-5) == False  # Negative prime-like number
-        assert await is_prime(-17) == False  # Negative prime
+        assert not await is_prime(1)  # 1 is not prime by definition
+        assert not await is_prime(0)  # 0 is not prime
+        assert not await is_prime(-1)  # Negative numbers are not prime
+        assert not await is_prime(-5)  # Negative prime-like number
+        assert not await is_prime(-17)  # Negative prime
 
     @pytest.mark.asyncio
     async def test_is_prime_small_primes(self):
@@ -101,7 +101,7 @@ class TestIsPrime:
         ]
 
         for p in first_25_primes:
-            assert await is_prime(p) == True, f"{p} should be prime"
+            assert await is_prime(p), f"{p} should be prime"
 
     @pytest.mark.asyncio
     async def test_is_prime_large_primes(self):
@@ -140,7 +140,7 @@ class TestIsPrime:
         ]
 
         for p in large_primes:
-            assert await is_prime(p) == True, f"{p} should be prime"
+            assert await is_prime(p), f"{p} should be prime"
 
     @pytest.mark.asyncio
     async def test_is_prime_large_composites(self):
@@ -179,7 +179,7 @@ class TestIsPrime:
         ]
 
         for c in large_composites:
-            assert await is_prime(c) == False, f"{c} should not be prime"
+            assert not await is_prime(c), f"{c} should not be prime"
 
     @pytest.mark.asyncio
     async def test_is_prime_perfect_squares(self):
@@ -187,7 +187,7 @@ class TestIsPrime:
         squares = [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256]
 
         for square in squares:
-            assert await is_prime(square) == False, (
+            assert not await is_prime(square), (
                 f"{square} = {int(math.sqrt(square))}² should not be prime"
             )
 
@@ -198,13 +198,13 @@ class TestIsPrime:
         mersenne_primes = [3, 7, 31, 127]  # 2^2-1, 2^3-1, 2^5-1, 2^7-1
 
         for mp in mersenne_primes:
-            assert await is_prime(mp) == True, f"Mersenne number {mp} should be prime"
+            assert await is_prime(mp), f"Mersenne number {mp} should be prime"
 
         # Some composite Mersenne numbers
         mersenne_composites = [15, 63, 255, 511]  # 2^4-1, 2^6-1, 2^8-1, 2^9-1
 
         for mc in mersenne_composites:
-            assert await is_prime(mc) == False, (
+            assert not await is_prime(mc), (
                 f"Mersenne number {mc} should be composite"
             )
 
@@ -385,7 +385,7 @@ class TestNthPrime:
 
         # Each should be prime
         for p in primes_by_nth:
-            assert await is_prime(p) == True
+            assert await is_prime(p)
 
 
 class TestPrimeFactors:
@@ -497,7 +497,7 @@ class TestPrimeFactors:
         for n in test_numbers:
             factors = await prime_factors(n)
             for factor in factors:
-                assert await is_prime(factor) == True, (
+                assert await is_prime(factor), (
                     f"Factor {factor} of {n} should be prime"
                 )
 
@@ -608,11 +608,11 @@ class TestIsCoprime:
     @pytest.mark.asyncio
     async def test_is_coprime_basic_cases(self):
         """Test coprimality with basic cases."""
-        assert await is_coprime(8, 15) == True  # gcd(8, 15) = 1
-        assert await is_coprime(12, 18) == False  # gcd(12, 18) = 6
-        assert await is_coprime(7, 13) == True  # Two primes are always coprime
-        assert await is_coprime(1, 100) == True  # 1 is coprime with any number
-        assert await is_coprime(14, 15) == True  # gcd(14, 15) = 1
+        assert await is_coprime(8, 15)  # gcd(8, 15) = 1
+        assert not await is_coprime(12, 18)  # gcd(12, 18) = 6
+        assert await is_coprime(7, 13)  # Two primes are always coprime
+        assert await is_coprime(1, 100)  # 1 is coprime with any number
+        assert await is_coprime(14, 15)  # gcd(14, 15) = 1
 
     @pytest.mark.asyncio
     async def test_is_coprime_with_one(self):
@@ -620,8 +620,8 @@ class TestIsCoprime:
         test_numbers = [1, 2, 3, 4, 5, 10, 17, 25, 100, 101]
 
         for n in test_numbers:
-            assert await is_coprime(1, n) == True
-            assert await is_coprime(n, 1) == True
+            assert await is_coprime(1, n)
+            assert await is_coprime(n, 1)
 
     @pytest.mark.asyncio
     async def test_is_coprime_prime_pairs(self):
@@ -630,7 +630,7 @@ class TestIsCoprime:
 
         for i, p1 in enumerate(primes):
             for p2 in primes[i + 1 :]:  # Only test each pair once
-                assert await is_coprime(p1, p2) == True, (
+                assert await is_coprime(p1, p2), (
                     f"Primes {p1} and {p2} should be coprime"
                 )
 
@@ -638,12 +638,12 @@ class TestIsCoprime:
     async def test_is_coprime_same_number(self):
         """Test coprimality of a number with itself."""
         # Only 1 is coprime with itself
-        assert await is_coprime(1, 1) == True
+        assert await is_coprime(1, 1)
 
         # All other numbers share all their factors with themselves
         test_numbers = [2, 3, 4, 5, 6, 10, 12, 15, 17, 20]
         for n in test_numbers:
-            assert await is_coprime(n, n) == False, (
+            assert not await is_coprime(n, n), (
                 f"{n} should not be coprime with itself"
             )
 
@@ -654,7 +654,7 @@ class TestIsCoprime:
 
         for i, a in enumerate(even_numbers):
             for b in even_numbers[i + 1 :]:
-                assert await is_coprime(a, b) == False, (
+                assert not await is_coprime(a, b), (
                     f"Even numbers {a} and {b} should not be coprime"
                 )
 
@@ -662,7 +662,7 @@ class TestIsCoprime:
     async def test_is_coprime_consecutive_integers(self):
         """Test that consecutive integers are always coprime."""
         for n in range(1, 50):
-            assert await is_coprime(n, n + 1) == True, (
+            assert await is_coprime(n, n + 1), (
                 f"Consecutive integers {n} and {n + 1} should be coprime"
             )
 
@@ -670,26 +670,26 @@ class TestIsCoprime:
     async def test_is_coprime_powers_of_same_prime(self):
         """Test that powers of the same prime are not coprime."""
         # Powers of 2
-        assert await is_coprime(4, 8) == False  # 2² and 2³
-        assert await is_coprime(2, 16) == False  # 2¹ and 2⁴
-        assert await is_coprime(8, 32) == False  # 2³ and 2⁵
+        assert not await is_coprime(4, 8)  # 2² and 2³
+        assert not await is_coprime(2, 16)  # 2¹ and 2⁴
+        assert not await is_coprime(8, 32)  # 2³ and 2⁵
 
         # Powers of 3
-        assert await is_coprime(3, 9) == False  # 3¹ and 3²
-        assert await is_coprime(9, 27) == False  # 3² and 3³
+        assert not await is_coprime(3, 9)  # 3¹ and 3²
+        assert not await is_coprime(9, 27)  # 3² and 3³
 
         # Powers of 5
-        assert await is_coprime(5, 25) == False  # 5¹ and 5²
+        assert not await is_coprime(5, 25)  # 5¹ and 5²
 
     @pytest.mark.asyncio
     async def test_is_coprime_negative_numbers(self):
         """Test coprimality with negative numbers."""
-        assert await is_coprime(-8, 15) == True
-        assert await is_coprime(8, -15) == True
-        assert await is_coprime(-8, -15) == True
-        assert await is_coprime(-12, 18) == False
-        assert await is_coprime(12, -18) == False
-        assert await is_coprime(-12, -18) == False
+        assert await is_coprime(-8, 15)
+        assert await is_coprime(8, -15)
+        assert await is_coprime(-8, -15)
+        assert not await is_coprime(-12, 18)
+        assert not await is_coprime(12, -18)
+        assert not await is_coprime(-12, -18)
 
     @pytest.mark.asyncio
     async def test_is_coprime_symmetry(self):
@@ -768,7 +768,7 @@ class TestFirstNPrimes:
         for n in [5, 10, 15, 20, 25]:
             primes = await first_n_primes(n)
             for p in primes:
-                assert await is_prime(p) == True, (
+                assert await is_prime(p), (
                     f"Generated number {p} should be prime"
                 )
 
@@ -823,7 +823,7 @@ class TestFirstNPrimes:
 
         # All should be prime
         for p in primes_50:
-            assert await is_prime(p) == True
+            assert await is_prime(p)
 
 
 class TestIntegration:
@@ -868,7 +868,7 @@ class TestIntegration:
 
             # All factors should be prime
             for factor in factors:
-                assert await is_prime(factor) == True, (
+                assert await is_prime(factor), (
                     f"Factor {factor} should be prime"
                 )
 
@@ -968,9 +968,9 @@ class TestPerformance:
         duration = time.time() - start_time
 
         # Verify some known results
-        assert results[1] == True  # 101 is prime
-        assert results[3] == True  # 103 is prime
-        assert results[7] == True  # 107 is prime
+        assert results[1]  # 101 is prime
+        assert results[3]  # 103 is prime
+        assert results[7]  # 107 is prime
 
         # Should complete quickly due to async nature
         assert duration < 2.0
@@ -1139,7 +1139,7 @@ class TestErrorHandling:
         except ValueError:
             # Should be able to continue with async operations
             result = await is_prime(17)
-            assert result == True
+            assert result
 
 
 if __name__ == "__main__":
