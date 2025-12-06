@@ -523,7 +523,7 @@ Features:
 ```
 ╔══════════════════════════════════════════════════════════════════╗
 ║  OVERALL COVERAGE: 94% (10,495 statements, 643 missed)         ║
-║  TESTS PASSING: 4,429 ✅                                        ║
+║  TESTS PASSING: 4,578 ✅  (149 new tests in v0.3)              ║
 ║  30 FILES WITH 100% COVERAGE ✅                                 ║
 ║  LINTING: PASSED ✅                                              ║
 ║  FORMATTING: PASSED ✅                                           ║
@@ -536,19 +536,21 @@ Features:
 - ✅ Linear Algebra: **100%** (matrices, vectors, solvers)
 - ✅ Calculus: **100%** (derivatives, integration, root finding)
 - ✅ Probability: **98-100%** (all distributions)
-- ✅ Statistics: **90%** (descriptive, regression, outlier detection)
+- ✅ Statistics: **90-92%** (descriptive, regression, **inferential** - v0.3 🆕)
 - ✅ Geometry: **92-98%** (distances, intersections, shapes)
 - ✅ Number Theory: **90-100%** across all 18 modules
 - ✅ Trigonometry: **90-100%** across all 8 modules
 - ✅ Arithmetic: **100%**
+- ✅ **Numerical Methods: 95-100%** (optimization, interpolation, series) - v0.3 🆕
+- ✅ **Time Series: 92%** (forecasting, decomposition, autocorrelation) - v0.3 🆕
 
 ### Quality Metrics
 
-- **4,429 tests passing** (0 failures)
+- **4,578 tests passing** (0 failures, +149 new tests in v0.3)
 - **Zero external dependencies** for core functionality
 - **Type-safe** with mypy (0 errors)
 - **Security-audited** with bandit (0 issues)
-- **Formatted** with ruff (153 files)
+- **Formatted** with ruff (166 files)
 - **Comprehensive error handling** with edge case tests
 
 ## 🛠️ Development & Testing
@@ -574,6 +576,9 @@ pytest tests/cli/ -v                    # CLI tests
 ### Running Examples
 
 ```bash
+# 🆕 Run Priority 2 demo (Business Analytics - v0.3)
+uv run python examples/demos/demo_priority2_simple.py
+
 # Run Phase 1 demo (AI Analyst)
 python examples/demos/ai_analyst_v0.py
 
