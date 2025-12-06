@@ -42,16 +42,16 @@ async def gcd(a: int, b: int) -> int:
     Calculate the Greatest Common Divisor (GCD) of two integers.
 
     Args:
-        a: First integer
-        b: Second integer
+        a (int): First integer
+        b (int): Second integer
 
     Returns:
         The GCD of a and b
 
-    Examples:
-        await gcd(48, 18) → 6
-        await gcd(17, 13) → 1
-        await gcd(100, 25) → 25
+    Example:
+        gcd(48, 18) = 6
+        gcd(17, 13) = 1
+        gcd(100, 25) = 25
     """
     return math.gcd(abs(a), abs(b))
 
@@ -86,16 +86,16 @@ async def lcm(a: int, b: int) -> int:
     Calculate the Least Common Multiple (LCM) of two integers.
 
     Args:
-        a: First integer
-        b: Second integer
+        a (int): First integer
+        b (int): Second integer
 
     Returns:
         The LCM of a and b
 
-    Examples:
-        await lcm(12, 18) → 36
-        await lcm(7, 13) → 91
-        await lcm(10, 5) → 10
+    Example:
+        lcm(12, 18) = 36
+        lcm(7, 13) = 91
+        lcm(10, 5) = 10
     """
     if a == 0 or b == 0:
         return 0
@@ -134,15 +134,15 @@ async def divisors(n: int) -> List[int]:
     Find all positive divisors of a number.
 
     Args:
-        n: Positive integer
+        n (int): Positive integer
 
     Returns:
         Sorted list of all positive divisors
 
-    Examples:
-        await divisors(12) → [1, 2, 3, 4, 6, 12]
-        await divisors(17) → [1, 17]
-        await divisors(1) → [1]
+    Example:
+        divisors(12) = [1, 2, 3, 4, 6, 12]
+        divisors(17) = [1, 17]
+        divisors(1) = [1]
     """
     if n <= 0:
         return []
@@ -200,19 +200,19 @@ async def is_divisible(a: int, b: int) -> bool:
     Check if a is divisible by b.
 
     Args:
-        a: Dividend
-        b: Divisor (cannot be zero)
+        a (int): Dividend
+        b (int): Divisor (cannot be zero)
 
     Returns:
         True if a is divisible by b, False otherwise
 
     Raises:
-        ValueError: If b is zero
+        ValueError (int): If b is zero
 
-    Examples:
-        await is_divisible(20, 4) → True
-        await is_divisible(17, 3) → False
-        await is_divisible(0, 5) → True
+    Example:
+        is_divisible(20, 4) = True
+        is_divisible(17, 3) = False
+        is_divisible(0, 5) = True
     """
     if b == 0:
         raise ValueError("Cannot check divisibility by zero")
@@ -236,15 +236,15 @@ async def is_even(n: int) -> bool:
     Check if a number is even.
 
     Args:
-        n: Integer to check
+        n (int): Integer to check
 
     Returns:
         True if n is even, False otherwise
 
-    Examples:
-        await is_even(4) → True
-        await is_even(7) → False
-        await is_even(0) → True
+    Example:
+        is_even(4) = True
+        is_even(7) = False
+        is_even(0) = True
     """
     return n % 2 == 0
 
@@ -266,15 +266,15 @@ async def is_odd(n: int) -> bool:
     Check if a number is odd.
 
     Args:
-        n: Integer to check
+        n (int): Integer to check
 
     Returns:
         True if n is odd, False otherwise
 
-    Examples:
-        await is_odd(7) → True
-        await is_odd(4) → False
-        await is_odd(1) → True
+    Example:
+        is_odd(7) = True
+        is_odd(4) = False
+        is_odd(1) = True
     """
     return n % 2 != 0
 
@@ -315,16 +315,16 @@ async def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
     Finds integers x, y such that ax + by = gcd(a, b).
 
     Args:
-        a: First integer
-        b: Second integer
+        a (int): First integer
+        b (int): Second integer
 
     Returns:
         Tuple (gcd, x, y) where gcd = gcd(a, b) and ax + by = gcd
 
-    Examples:
-        await extended_gcd(30, 18) → (6, -1, 2)
-        await extended_gcd(35, 15) → (5, 1, -2)
-        await extended_gcd(17, 13) → (1, -3, 4)
+    Example:
+        extended_gcd(30, 18) = (6, -1, 2)
+        extended_gcd(35, 15) = (5, 1, -2)
+        extended_gcd(17, 13) = (1, -3, 4)
     """
     if a == 0:
         return b, 0, 1
@@ -363,15 +363,15 @@ async def divisor_count(n: int) -> int:
     Count the number of positive divisors of a number.
 
     Args:
-        n: Positive integer
+        n (int): Positive integer
 
     Returns:
         Number of positive divisors of n
 
-    Examples:
-        await divisor_count(12) → 6  # divisors: 1,2,3,4,6,12
-        await divisor_count(17) → 2  # divisors: 1,17
-        await divisor_count(1) → 1   # divisors: 1
+    Example:
+        divisor_count(12) = 6  # divisors: 1,2,3,4,6,12
+        divisor_count(17) = 2  # divisors: 1,17
+        divisor_count(1) = 1   # divisors: 1
     """
     if n <= 0:
         return 0
@@ -415,15 +415,15 @@ async def divisor_sum(n: int) -> int:
     Calculate the sum of all positive divisors of a number.
 
     Args:
-        n: Positive integer
+        n (int): Positive integer
 
     Returns:
         Sum of all positive divisors of n
 
-    Examples:
-        await divisor_sum(12) → 28  # 1+2+3+4+6+12
-        await divisor_sum(6) → 12   # 1+2+3+6
-        await divisor_sum(17) → 18  # 1+17
+    Example:
+        divisor_sum(12) = 28  # 1+2+3+4+6+12
+        divisor_sum(6) = 12   # 1+2+3+6
+        divisor_sum(17) = 18  # 1+17
     """
     if n <= 0:
         return 0

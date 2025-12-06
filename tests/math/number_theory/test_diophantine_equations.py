@@ -42,9 +42,7 @@ try:
         diophantine_analysis,
     )
 except ImportError as e:
-    pytest.skip(
-        f"diophantine_equations module not available: {e}", allow_module_level=True
-    )
+    pytest.skip(f"diophantine_equations module not available: {e}", allow_module_level=True)
 
 # ============================================================================
 # LINEAR DIOPHANTINE EQUATIONS TESTS
@@ -811,9 +809,7 @@ class TestIntegrationAndProperties:
         for p in test_primes:
             if p == 2 or p % 4 == 1:
                 representations = await sum_of_two_squares_all(p)
-                assert (
-                    len(representations) > 0
-                )  # Should have at least one representation
+                assert len(representations) > 0  # Should have at least one representation
 
                 for x, y in representations:
                     assert x * x + y * y == p
@@ -1014,9 +1010,7 @@ class TestErrorHandling:
 
         # Invalid bounds length
         with pytest.raises(ValueError):
-            await solve_quadratic_diophantine(
-                [1, 0, 1, 0, 0, -25], [-5]
-            )  # Wrong bounds length
+            await solve_quadratic_diophantine([1, 0, 1, 0, 0, -25], [-5])  # Wrong bounds length
 
     @pytest.mark.asyncio
     async def test_empty_or_invalid_denominations(self):
@@ -1037,9 +1031,7 @@ class TestErrorHandling:
     async def test_boundary_conditions(self):
         """Test boundary conditions."""
         # Empty range for parametric solutions
-        solutions = await parametric_solutions_diophantine(
-            3, 5, 1, 5, 2
-        )  # t_min > t_max
+        solutions = await parametric_solutions_diophantine(3, 5, 1, 5, 2)  # t_min > t_max
         assert solutions == []
 
         # Zero limit for Pythagorean triples
@@ -1124,9 +1116,7 @@ class TestParametrized:
             assert x * x - n * y * y == -1
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "triple", [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]]
-    )
+    @pytest.mark.parametrize("triple", [[3, 4, 5], [5, 12, 13], [8, 15, 17], [7, 24, 25]])
     async def test_known_pythagorean_triples(self, triple):
         """Parametrized test for known Pythagorean triples."""
         a, b, c = triple

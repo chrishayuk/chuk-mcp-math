@@ -522,9 +522,7 @@ async def test_all_functions():
                 if name.startswith("_"):
                     continue
                 obj = getattr(module, name)
-                if callable(obj) and (
-                    inspect.iscoroutinefunction(obj) or inspect.isfunction(obj)
-                ):
+                if callable(obj) and (inspect.iscoroutinefunction(obj) or inspect.isfunction(obj)):
                     # Skip if it's imported from another module
                     if hasattr(obj, "__module__") and obj.__module__ == module_path:
                         functions.append((name, obj))
@@ -566,9 +564,7 @@ async def test_all_functions():
 
             # Print module result
             status_icon = "✓" if module_failed == 0 else "✗"
-            print(
-                f"{status_icon} {module_path}: {module_passed}/{len(functions)} passed"
-            )
+            print(f"{status_icon} {module_path}: {module_passed}/{len(functions)} passed")
 
         except Exception as e:
             print(f"✗ {module_path}: Import failed - {e}")

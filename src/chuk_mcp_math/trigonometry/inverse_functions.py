@@ -735,9 +735,7 @@ if __name__ == "__main__":
             try:
                 asin_val = await asin(value)
                 acos_val = await acos(value)
-                print(
-                    f"  asin({value:.4f}) = {asin_val:.6f}, acos({value:.4f}) = {acos_val:.6f}"
-                )
+                print(f"  asin({value:.4f}) = {asin_val:.6f}, acos({value:.4f}) = {acos_val:.6f}")
             except ValueError as e:
                 print(f"  Error with value {value}: {e}")
 
@@ -760,9 +758,7 @@ if __name__ == "__main__":
             try:
                 acsc_val = await acsc(value)
                 asec_val = await asec(value)
-                print(
-                    f"  acsc({value:.4f}) = {acsc_val:.6f}, asec({value:.4f}) = {asec_val:.6f}"
-                )
+                print(f"  acsc({value:.4f}) = {acsc_val:.6f}, asec({value:.4f}) = {asec_val:.6f}")
             except ValueError as e:
                 print(f"  Error with value {value}: {e}")
 

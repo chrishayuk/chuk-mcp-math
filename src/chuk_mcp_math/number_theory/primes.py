@@ -43,16 +43,16 @@ async def is_prime(n: int) -> bool:
     Check if a number is prime.
 
     Args:
-        n: Positive integer to check
+        n (int): Positive integer to check
 
     Returns:
         True if n is prime, False otherwise
 
-    Examples:
-        await is_prime(17) → True
-        await is_prime(4) → False
-        await is_prime(2) → True
-        await is_prime(1) → False
+    Example:
+        is_prime(17) = True
+        is_prime(4) = False
+        is_prime(2) = True
+        is_prime(1) = False
     """
     if n < 2:
         return False
@@ -96,15 +96,15 @@ async def next_prime(n: int) -> int:
     Find the next prime number greater than n.
 
     Args:
-        n: Starting number
+        n (int or float): Starting number
 
     Returns:
         The smallest prime number greater than n
 
-    Examples:
-        await next_prime(10) → 11
-        await next_prime(17) → 19
-        await next_prime(1) → 2
+    Example:
+        next_prime(10) = 11
+        next_prime(17) = 19
+        next_prime(1) = 2
     """
     candidate = n + 1
     checks = 0
@@ -138,18 +138,18 @@ async def nth_prime(n: int) -> int:
     Find the nth prime number (1-indexed).
 
     Args:
-        n: Position of prime to find (must be positive)
+        n (int): Position of prime to find (must be positive)
 
     Returns:
         The nth prime number
 
     Raises:
-        ValueError: If n is not positive
+        ValueError (int): If n is not positive
 
-    Examples:
-        await nth_prime(1) → 2
-        await nth_prime(10) → 29
-        await nth_prime(5) → 11
+    Example:
+        nth_prime(1) = 2
+        nth_prime(10) = 29
+        nth_prime(5) = 11
     """
     if n < 1:
         raise ValueError("n must be positive")
@@ -195,15 +195,15 @@ async def prime_factors(n: int) -> List[int]:
     Find all prime factors of a number.
 
     Args:
-        n: Positive integer to factorize
+        n (int): Positive integer to factorize
 
     Returns:
         List of prime factors (with repetition)
 
-    Examples:
-        await prime_factors(12) → [2, 2, 3]
-        await prime_factors(17) → [17]
-        await prime_factors(60) → [2, 2, 3, 5]
+    Example:
+        prime_factors(12) = [2, 2, 3]
+        prime_factors(17) = [17]
+        prime_factors(60) = [2, 2, 3, 5]
     """
     if n <= 1:
         return []
@@ -251,15 +251,15 @@ async def prime_count(n: int) -> int:
     Count the number of prime numbers less than or equal to n.
 
     Args:
-        n: Upper limit (inclusive)
+        n (int): Upper limit (inclusive)
 
     Returns:
         Number of primes ≤ n
 
-    Examples:
-        await prime_count(10) → 4  # 2, 3, 5, 7
-        await prime_count(20) → 8
-        await prime_count(2) → 1
+    Example:
+        prime_count(10) = 4  # 2, 3, 5, 7
+        prime_count(20) = 8
+        prime_count(2) = 1
     """
     if n < 2:
         return 0
@@ -312,16 +312,16 @@ async def is_coprime(a: int, b: int) -> bool:
     Check if two numbers are coprime (gcd = 1).
 
     Args:
-        a: First integer
-        b: Second integer
+        a (int): First integer
+        b (int): Second integer
 
     Returns:
         True if gcd(a, b) = 1, False otherwise
 
-    Examples:
-        await is_coprime(8, 15) → True
-        await is_coprime(12, 18) → False
-        await is_coprime(7, 13) → True
+    Example:
+        is_coprime(8, 15) = True
+        is_coprime(12, 18) = False
+        is_coprime(7, 13) = True
     """
     # Import gcd function from divisibility module
     from .divisibility import gcd
@@ -356,15 +356,15 @@ async def first_n_primes(n: int) -> List[int]:
     Generate the first n prime numbers.
 
     Args:
-        n: Number of primes to generate (non-negative)
+        n (int or float): Number of primes to generate (non-negative)
 
     Returns:
         List of the first n prime numbers
 
-    Examples:
-        await first_n_primes(5) → [2, 3, 5, 7, 11]
-        await first_n_primes(10) → [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
-        await first_n_primes(0) → []
+    Example:
+        first_n_primes(5) = [2, 3, 5, 7, 11]
+        first_n_primes(10) = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+        first_n_primes(0) = []
     """
     if n <= 0:
         return []

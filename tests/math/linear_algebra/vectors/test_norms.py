@@ -302,15 +302,9 @@ class TestEuclideanNorm:
     @pytest.mark.asyncio
     async def test_unit_vectors(self):
         """Test that unit vectors have norm 1."""
-        assert math.isclose(
-            await euclidean_norm([1, 0, 0]), 1.0, abs_tol=TestData.ABS_TOL
-        )
-        assert math.isclose(
-            await euclidean_norm([0, 1, 0]), 1.0, abs_tol=TestData.ABS_TOL
-        )
-        assert math.isclose(
-            await euclidean_norm([0, 0, 1]), 1.0, abs_tol=TestData.ABS_TOL
-        )
+        assert math.isclose(await euclidean_norm([1, 0, 0]), 1.0, abs_tol=TestData.ABS_TOL)
+        assert math.isclose(await euclidean_norm([0, 1, 0]), 1.0, abs_tol=TestData.ABS_TOL)
+        assert math.isclose(await euclidean_norm([0, 0, 1]), 1.0, abs_tol=TestData.ABS_TOL)
 
     @pytest.mark.parametrize(
         "vector,expected",

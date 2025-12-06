@@ -90,9 +90,7 @@ class TestPerfectSquares:
         ]
 
         for square in perfect_squares_list:
-            assert await is_perfect_square(square), (
-                f"{square} should be a perfect square"
-            )
+            assert await is_perfect_square(square), f"{square} should be a perfect square"
 
     @pytest.mark.asyncio
     async def test_is_perfect_square_non_squares(self):
@@ -121,9 +119,7 @@ class TestPerfectSquares:
         ]
 
         for n in non_squares:
-            assert not await is_perfect_square(n), (
-                f"{n} should not be a perfect square"
-            )
+            assert not await is_perfect_square(n), f"{n} should not be a perfect square"
 
     @pytest.mark.asyncio
     async def test_is_perfect_square_large_numbers(self):
@@ -142,9 +138,7 @@ class TestPerfectSquares:
         ]
 
         for square in large_squares:
-            assert await is_perfect_square(square), (
-                f"{square} should be a perfect square"
-            )
+            assert await is_perfect_square(square), f"{square} should be a perfect square"
 
     @pytest.mark.asyncio
     async def test_is_perfect_square_edge_cases(self):
@@ -189,9 +183,7 @@ class TestPerfectSquares:
 
         for n, expected in test_cases:
             result = await nth_perfect_square(n)
-            assert result == expected, (
-                f"nth_perfect_square({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"nth_perfect_square({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_nth_perfect_square_negative(self):
@@ -247,9 +239,7 @@ class TestPowersOfTwo:
         ]
 
         for power in powers_of_two_list:
-            assert await is_power_of_two(power), (
-                f"{power} should be a power of two"
-            )
+            assert await is_power_of_two(power), f"{power} should be a power of two"
 
     @pytest.mark.asyncio
     async def test_is_power_of_two_non_powers(self):
@@ -278,9 +268,7 @@ class TestPowersOfTwo:
         ]
 
         for n in non_powers:
-            assert not await is_power_of_two(n), (
-                f"{n} should not be a power of two"
-            )
+            assert not await is_power_of_two(n), f"{n} should not be a power of two"
 
     @pytest.mark.asyncio
     async def test_is_power_of_two_edge_cases(self):
@@ -325,9 +313,7 @@ class TestPowersOfTwo:
 
         for n, expected in test_cases:
             result = await nth_power_of_two(n)
-            assert result == expected, (
-                f"nth_power_of_two({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"nth_power_of_two({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_nth_power_of_two_negative(self):
@@ -402,14 +388,10 @@ class TestFibonacciNumbers:
     @pytest.mark.asyncio
     async def test_fibonacci_negative_input(self):
         """Test Fibonacci function with negative input."""
-        with pytest.raises(
-            ValueError, match="Fibonacci number position must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Fibonacci number position must be non-negative"):
             await fibonacci(-1)
 
-        with pytest.raises(
-            ValueError, match="Fibonacci number position must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Fibonacci number position must be non-negative"):
             await fibonacci(-10)
 
     @pytest.mark.asyncio
@@ -466,9 +448,7 @@ class TestFibonacciNumbers:
         ]
 
         for fib in known_fibonacci_numbers:
-            assert await is_fibonacci_number(fib), (
-                f"{fib} should be a Fibonacci number"
-            )
+            assert await is_fibonacci_number(fib), f"{fib} should be a Fibonacci number"
 
     @pytest.mark.asyncio
     async def test_is_fibonacci_number_non_fibonacci(self):
@@ -497,9 +477,7 @@ class TestFibonacciNumbers:
         ]
 
         for n in non_fibonacci:
-            assert not await is_fibonacci_number(n), (
-                f"{n} should not be a Fibonacci number"
-            )
+            assert not await is_fibonacci_number(n), f"{n} should not be a Fibonacci number"
 
     @pytest.mark.asyncio
     async def test_is_fibonacci_number_edge_cases(self):
@@ -516,9 +494,7 @@ class TestFibonacciNumbers:
             f_n = await fibonacci(n)
             f_n_minus_1 = await fibonacci(n - 1)
             f_n_minus_2 = await fibonacci(n - 2)
-            assert f_n == f_n_minus_1 + f_n_minus_2, (
-                f"Fibonacci recurrence failed for n={n}"
-            )
+            assert f_n == f_n_minus_1 + f_n_minus_2, f"Fibonacci recurrence failed for n={n}"
 
 
 # ============================================================================
@@ -553,9 +529,7 @@ class TestCatalanNumbers:
     @pytest.mark.asyncio
     async def test_catalan_number_negative_input(self):
         """Test Catalan number with negative input."""
-        with pytest.raises(
-            ValueError, match="Catalan number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Catalan number index must be non-negative"):
             await catalan_number(-1)
 
 
@@ -594,14 +568,10 @@ class TestFactorials:
     @pytest.mark.asyncio
     async def test_factorial_negative_input(self):
         """Test factorial function with negative input."""
-        with pytest.raises(
-            ValueError, match="Factorial is not defined for negative numbers"
-        ):
+        with pytest.raises(ValueError, match="Factorial is not defined for negative numbers"):
             await factorial(-1)
 
-        with pytest.raises(
-            ValueError, match="Factorial is not defined for negative numbers"
-        ):
+        with pytest.raises(ValueError, match="Factorial is not defined for negative numbers"):
             await factorial(-5)
 
     @pytest.mark.asyncio
@@ -677,9 +647,7 @@ class TestFactorials:
     @pytest.mark.asyncio
     async def test_subfactorial_negative_input(self):
         """Test subfactorial function with negative input."""
-        with pytest.raises(
-            ValueError, match="Subfactorial is not defined for negative numbers"
-        ):
+        with pytest.raises(ValueError, match="Subfactorial is not defined for negative numbers"):
             await subfactorial(-1)
 
     @pytest.mark.asyncio
@@ -738,9 +706,7 @@ class TestTriangularNumbers:
     @pytest.mark.asyncio
     async def test_triangular_number_negative_input(self):
         """Test triangular number with negative input."""
-        with pytest.raises(
-            ValueError, match="Triangular number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Triangular number index must be non-negative"):
             await triangular_number(-1)
 
     @pytest.mark.asyncio
@@ -766,9 +732,7 @@ class TestTriangularNumbers:
         ]
 
         for tri in known_triangular_numbers:
-            assert await is_triangular_number(tri), (
-                f"{tri} should be a triangular number"
-            )
+            assert await is_triangular_number(tri), f"{tri} should be a triangular number"
 
     @pytest.mark.asyncio
     async def test_is_triangular_number_non_triangular(self):
@@ -797,9 +761,7 @@ class TestTriangularNumbers:
         ]
 
         for n in non_triangular:
-            assert not await is_triangular_number(n), (
-                f"{n} should not be a triangular number"
-            )
+            assert not await is_triangular_number(n), f"{n} should not be a triangular number"
 
     @pytest.mark.asyncio
     async def test_is_triangular_number_edge_cases(self):
@@ -887,9 +849,7 @@ class TestPentagonalNumbers:
     @pytest.mark.asyncio
     async def test_pentagonal_number_negative_input(self):
         """Test pentagonal number with negative input."""
-        with pytest.raises(
-            ValueError, match="Pentagonal number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Pentagonal number index must be non-negative"):
             await pentagonal_number(-1)
 
     @pytest.mark.asyncio
@@ -915,9 +875,7 @@ class TestPentagonalNumbers:
         ]
 
         for pent in known_pentagonal_numbers:
-            assert await is_pentagonal_number(pent), (
-                f"{pent} should be a pentagonal number"
-            )
+            assert await is_pentagonal_number(pent), f"{pent} should be a pentagonal number"
 
     @pytest.mark.asyncio
     async def test_is_pentagonal_number_non_pentagonal(self):
@@ -946,9 +904,7 @@ class TestPentagonalNumbers:
         ]
 
         for n in non_pentagonal:
-            assert not await is_pentagonal_number(n), (
-                f"{n} should not be a pentagonal number"
-            )
+            assert not await is_pentagonal_number(n), f"{n} should not be a pentagonal number"
 
     @pytest.mark.asyncio
     async def test_is_pentagonal_number_edge_cases(self):
@@ -1031,9 +987,7 @@ class TestPyramidalNumbers:
     @pytest.mark.asyncio
     async def test_square_pyramidal_number_negative_input(self):
         """Test square pyramidal number with negative input."""
-        with pytest.raises(
-            ValueError, match="Square pyramidal number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Square pyramidal number index must be non-negative"):
             await square_pyramidal_number(-1)
 
     @pytest.mark.asyncio
@@ -1042,9 +996,7 @@ class TestPyramidalNumbers:
         for n in range(1, 10):
             pyramidal_n = await square_pyramidal_number(n)
             sum_of_squares = sum(i * i for i in range(1, n + 1))
-            assert pyramidal_n == sum_of_squares, (
-                f"SP({n}) should equal sum of first {n} squares"
-            )
+            assert pyramidal_n == sum_of_squares, f"SP({n}) should equal sum of first {n} squares"
 
     @pytest.mark.asyncio
     async def test_tetrahedral_number_known_values(self):
@@ -1078,9 +1030,7 @@ class TestPyramidalNumbers:
     @pytest.mark.asyncio
     async def test_tetrahedral_number_negative_input(self):
         """Test tetrahedral number with negative input."""
-        with pytest.raises(
-            ValueError, match="Tetrahedral number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Tetrahedral number index must be non-negative"):
             await tetrahedral_number(-1)
 
     @pytest.mark.asyncio
@@ -1128,9 +1078,7 @@ class TestIntegrationAndProperties:
             if fib_seq[i - 1] > 0:
                 ratio = fib_seq[i] / fib_seq[i - 1]
                 # Golden ratio ≈ 1.618
-                assert 1.5 < ratio < 2.0, (
-                    f"Fibonacci growth ratio seems wrong at index {i}"
-                )
+                assert 1.5 < ratio < 2.0, f"Fibonacci growth ratio seems wrong at index {i}"
 
         # Factorial grows very rapidly
         factorials = [await factorial(i) for i in range(1, 10)]
@@ -1143,21 +1091,15 @@ class TestIntegrationAndProperties:
         """Test various sum formulas using the sequences."""
         # Sum of first n triangular numbers = tetrahedral number
         n = 8
-        triangular_values = await asyncio.gather(
-            *[triangular_number(i) for i in range(1, n + 1)]
-        )
+        triangular_values = await asyncio.gather(*[triangular_number(i) for i in range(1, n + 1)])
         triangular_sum = sum(triangular_values)
         tetrahedral_n = await tetrahedral_number(n)
-        assert triangular_sum == tetrahedral_n, (
-            "Sum of triangular numbers != tetrahedral number"
-        )
+        assert triangular_sum == tetrahedral_n, "Sum of triangular numbers != tetrahedral number"
 
         # Sum of first n squares = square pyramidal number
         squares_sum = sum(i * i for i in range(1, n + 1))
         square_pyramidal_n = await square_pyramidal_number(n)
-        assert squares_sum == square_pyramidal_n, (
-            "Sum of squares != square pyramidal number"
-        )
+        assert squares_sum == square_pyramidal_n, "Sum of squares != square pyramidal number"
 
     @pytest.mark.asyncio
     async def test_parity_patterns(self):
@@ -1185,9 +1127,7 @@ class TestIntegrationAndProperties:
         # Perfect squares modulo 4 are always 0 or 1
         for i in range(20):
             square = await nth_perfect_square(i)
-            assert square % 4 in [0, 1], (
-                f"Perfect square {square} mod 4 should be 0 or 1"
-            )
+            assert square % 4 in [0, 1], f"Perfect square {square} mod 4 should be 0 or 1"
 
 
 # ============================================================================
@@ -1250,9 +1190,7 @@ class TestPerformance:
         ]
         for i, (result, expected) in enumerate(zip(results, expected_results)):
             if isinstance(expected, type):
-                assert isinstance(result, expected), (
-                    f"Operation {i} returned wrong type"
-                )
+                assert isinstance(result, expected), f"Operation {i} returned wrong type"
             else:
                 assert result == expected, f"Operation {i} returned wrong value"
 
@@ -1446,17 +1384,13 @@ class TestParametrized:
         assert await factorial(n) == expected
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "perfect_square", [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-    )
+    @pytest.mark.parametrize("perfect_square", [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100])
     async def test_is_perfect_square_parametrized(self, perfect_square):
         """Parametrized test for perfect square identification."""
         assert await is_perfect_square(perfect_square)
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "power_of_two", [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]
-    )
+    @pytest.mark.parametrize("power_of_two", [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024])
     async def test_is_power_of_two_parametrized(self, power_of_two):
         """Parametrized test for power of two identification."""
         assert await is_power_of_two(power_of_two)
@@ -1466,6 +1400,129 @@ class TestParametrized:
     async def test_is_fibonacci_number_parametrized(self, fib_num):
         """Parametrized test for Fibonacci number identification."""
         assert await is_fibonacci_number(fib_num)
+
+
+# ============================================================================
+# LARGE NUMBER ASYNC TESTS (for coverage of asyncio.sleep lines)
+# ============================================================================
+
+
+class TestLargeNumberAsync:
+    """Test async yield points for large numbers."""
+
+    @pytest.mark.asyncio
+    async def test_perfect_squares_large_n(self):
+        """Test perfect_squares with large n to trigger async yield (line 127)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 127
+        result = await perfect_squares(1500)
+        assert len(result) == 1500
+        # Verify first and last few elements
+        assert result[0] == 0
+        assert result[1] == 1
+        assert result[1499] == 1499 * 1499
+
+    @pytest.mark.asyncio
+    async def test_powers_of_two_large_n(self):
+        """Test powers_of_two with large n to trigger async yield (line 259)."""
+        # n > 50 triggers asyncio.sleep(0) at line 259
+        result = await powers_of_two(100)
+        assert len(result) == 100
+        # Verify pattern
+        assert result[0] == 1
+        assert result[1] == 2
+        assert result[50] == 2**50
+
+    @pytest.mark.asyncio
+    async def test_fibonacci_large_n_matrix_path(self):
+        """Test fibonacci with n > 100 to trigger matrix exponentiation (lines 348-383)."""
+        # n > 100 triggers matrix exponentiation path (lines 348-383)
+        result = await fibonacci(150)
+        # Verify it's a reasonable large number
+        assert result > 0
+        assert isinstance(result, int)
+
+        # Test n=101 to trigger matrix_power base case (line 362)
+        result_101 = await fibonacci(101)
+        assert result_101 > 0
+        assert isinstance(result_101, int)
+
+        # Test another large value to ensure matrix_power loop and sleep are exercised (line 377)
+        result2 = await fibonacci(200)
+        assert result2 > result
+        assert isinstance(result2, int)
+
+        # Test very large value to ensure multiple iterations in matrix_power
+        result3 = await fibonacci(1000)
+        assert result3 > result2
+        assert isinstance(result3, int)
+
+    @pytest.mark.asyncio
+    async def test_fibonacci_sequence_large_n(self):
+        """Test fibonacci_sequence with large n to trigger async yield (line 435)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 435
+        result = await fibonacci_sequence(1500)
+        assert len(result) == 1500
+        assert result[0] == 0
+        assert result[1] == 1
+        # Verify recurrence relation holds
+        assert result[10] == result[9] + result[8]
+
+    @pytest.mark.asyncio
+    async def test_is_fibonacci_number_negative_in_helper(self):
+        """Test is_fibonacci_number helper function with negative check (line 490)."""
+        # This tests the is_perfect_square_helper internal function's return False for x < 0
+        # The helper is called with 5*n^2 + 4 and 5*n^2 - 4
+        # For n=0, it checks 5*0 + 4 = 4 and 5*0 - 4 = -4
+        # The -4 case triggers line 490
+        result = await is_fibonacci_number(0)
+        assert result is True  # 0 is a Fibonacci number
+
+        # For n=1, checks 5*1 + 4 = 9 and 5*1 - 4 = 1
+        result = await is_fibonacci_number(1)
+        assert result is True
+
+    @pytest.mark.asyncio
+    async def test_factorial_large_n(self):
+        """Test factorial with large n to trigger async yield (line 544)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 544
+        result = await factorial(1200)
+        assert result > 0
+        assert isinstance(result, int)
+
+    @pytest.mark.asyncio
+    async def test_double_factorial_large_iterations(self):
+        """Test double_factorial with large iterations to trigger async yield (line 594)."""
+        # Need iterations % 1000 == 0 to trigger line 594
+        # With n=2000, we get 1000 iterations (every other number)
+        result = await double_factorial(2000)
+        assert result > 0
+        assert isinstance(result, int)
+
+    @pytest.mark.asyncio
+    async def test_subfactorial_large_n(self):
+        """Test subfactorial with large n to trigger async yield (line 654)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 654
+        result = await subfactorial(1200)
+        assert result > 0
+        assert isinstance(result, int)
+
+    @pytest.mark.asyncio
+    async def test_triangular_sequence_large_n(self):
+        """Test triangular_sequence with large n to trigger async yield (line 781)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 781
+        result = await triangular_sequence(1500)
+        assert len(result) == 1500
+        assert result[0] == 0
+        assert result[10] == 10 * 11 // 2
+
+    @pytest.mark.asyncio
+    async def test_pentagonal_sequence_large_n(self):
+        """Test pentagonal_sequence with large n to trigger async yield (line 914)."""
+        # n > 1000 triggers asyncio.sleep(0) at line 914
+        result = await pentagonal_sequence(1500)
+        assert len(result) == 1500
+        assert result[0] == 0
+        assert result[10] == 10 * (3 * 10 - 1) // 2
 
 
 if __name__ == "__main__":

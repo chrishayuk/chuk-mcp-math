@@ -833,9 +833,7 @@ async def cf_solve_pell(n: int) -> Dict:
     # Check if n is a perfect square
     sqrt_n = int(math.sqrt(n))
     if sqrt_n * sqrt_n == n:
-        return {
-            "error": "n is a perfect square, Pell equation has only trivial solution (1,0)"
-        }
+        return {"error": "n is a perfect square, Pell equation has only trivial solution (1,0)"}
 
     # Get continued fraction expansion of √n
     cf_result = await sqrt_cf_expansion(n)
@@ -851,9 +849,7 @@ async def cf_solve_pell(n: int) -> Dict:
     # If period length is odd, solution is at end of second period
 
     # Build convergents using the periodic structure
-    (
-        period_length if period_length % 2 == 0 else 2 * period_length
-    )
+    (period_length if period_length % 2 == 0 else 2 * period_length)
 
     # Start with initial convergent
     if not initial:

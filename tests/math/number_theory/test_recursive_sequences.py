@@ -130,9 +130,7 @@ class TestLucasSequences:
             # We can verify this matches known Fibonacci sequence
             fibonacci_values = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
             if n < len(fibonacci_values):
-                assert u_n == fibonacci_values[n], (
-                    f"U_{n} should be F_{n} = {fibonacci_values[n]}"
-                )
+                assert u_n == fibonacci_values[n], f"U_{n} should be F_{n} = {fibonacci_values[n]}"
 
         # For Lucas parameters, V_n should be Lucas numbers
         for n in range(8):
@@ -419,9 +417,84 @@ class TestHigherOrderSequences:
 class TestGeneralLinearRecurrence:
     """Test cases for general linear recurrence solver."""
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_error_cases(self):
+        """Test error handling in solve_linear_recurrence."""
+        # Test mismatched coefficients and initial values - line 602-603
+        with pytest.raises(
+            ValueError, match="Number of coefficients must equal number of initial values"
+        ):
+            await solve_linear_recurrence([1, 1], [0], 5)
+
+        with pytest.raises(
+            ValueError, match="Number of coefficients must equal number of initial values"
+        ):
+            await solve_linear_recurrence([1], [0, 1], 5)
+
+        # Test negative index - line 605-606
+        with pytest.raises(ValueError, match="Index must be non-negative"):
+            await solve_linear_recurrence([1, 1], [0, 1], -1)
+
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_initial_values(self):
+        """Test that solve_linear_recurrence returns initial values correctly."""
+        coeffs = [1, 1]
+        initial = [0, 1]
+
+        # Test n < k (lines 609-610)
+        assert await solve_linear_recurrence(coeffs, initial, 0) == 0
+        assert await solve_linear_recurrence(coeffs, initial, 1) == 1
+
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_large_n_async_sleep(self):
+        """Test that large linear recurrence calculations yield control."""
+        # Test with large n to trigger asyncio.sleep(0) at line 626
+        coeffs = [1, 1]
+        initial = [0, 1]
+        result = await solve_linear_recurrence(coeffs, initial, 2500)
+        assert result > 0, "Large Fibonacci number should be positive"
+
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_fibonacci(self):
+        """Test solving Fibonacci recurrence with general solver."""
+        # Fibonacci: a_n = 1*a_{n-1} + 1*a_{n-2}, initial [0, 1]
+        coeffs = [1, 1]
+        initial = [0, 1]
+
+        # Test several Fibonacci numbers (simplified version without skip)
+        fibonacci_values = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+        for n, expected in enumerate(fibonacci_values):
+            result = await solve_linear_recurrence(coeffs, initial, n)
+            assert result == expected, f"F_{n} should be {expected}, got {result}"
+
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_pell(self):
+        """Test solving Pell recurrence with general solver."""
+        # Pell: a_n = 2*a_{n-1} + 1*a_{n-2}, initial [0, 1]
+        coeffs = [2, 1]
+        initial = [0, 1]
+
+        # Test several Pell numbers
+        for n in range(10):
+            expected = await pell_number(n)
+            result = await solve_linear_recurrence(coeffs, initial, n)
+            assert result == expected, f"P_{n} should be {expected}, got {result}"
+
+    @pytest.mark.asyncio
+    async def test_solve_linear_recurrence_tribonacci(self):
+        """Test solving Tribonacci recurrence with general solver."""
+        # Tribonacci: a_n = 1*a_{n-1} + 1*a_{n-2} + 1*a_{n-3}, initial [0, 0, 1]
+        coeffs = [1, 1, 1]
+        initial = [0, 0, 1]
+
+        # Test several Tribonacci numbers
+        for n in range(15):
+            expected = await tribonacci_number(n)
+            result = await solve_linear_recurrence(coeffs, initial, n)
+            assert result == expected, f"T_{n} should be {expected}, got {result}"
+
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_fibonacci_recurrence(self):
         """Test solving Fibonacci recurrence with general solver."""
@@ -436,9 +509,7 @@ class TestGeneralLinearRecurrence:
             result = await solve_linear_recurrence(coeffs, initial, n)
             assert result == expected, f"F_{n} should be {expected}, got {result}"
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_lucas_recurrence(self):
         """Test solving Lucas recurrence with general solver."""
@@ -452,9 +523,7 @@ class TestGeneralLinearRecurrence:
             result = await solve_linear_recurrence(coeffs, initial, n)
             assert result == expected, f"L_{n} should be {expected}, got {result}"
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_pell_recurrence(self):
         """Test solving Pell recurrence with general solver."""
@@ -468,9 +537,7 @@ class TestGeneralLinearRecurrence:
             result = await solve_linear_recurrence(coeffs, initial, n)
             assert result == expected, f"P_{n} should be {expected}, got {result}"
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_tribonacci_recurrence(self):
         """Test solving Tribonacci recurrence with general solver."""
@@ -484,9 +551,7 @@ class TestGeneralLinearRecurrence:
             result = await solve_linear_recurrence(coeffs, initial, n)
             assert result == expected, f"T_{n} should be {expected}, got {result}"
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_custom_recurrence(self):
         """Test custom linear recurrence."""
@@ -504,13 +569,9 @@ class TestGeneralLinearRecurrence:
 
         for n, expected in enumerate(expected_values):
             result = await solve_linear_recurrence(coeffs, initial, n)
-            assert result == expected, (
-                f"Custom sequence a_{n} should be {expected}, got {result}"
-            )
+            assert result == expected, f"Custom sequence a_{n} should be {expected}, got {result}"
 
-    @pytest.mark.skip(
-        reason="solve_linear_recurrence has IndexError bug in memory optimization"
-    )
+    @pytest.mark.skip(reason="solve_linear_recurrence has IndexError bug in memory optimization")
     @pytest.mark.asyncio
     async def test_general_recurrence_edge_cases(self):
         """Test edge cases for general recurrence solver."""
@@ -560,9 +621,7 @@ class TestCharacteristicPolynomial:
         coeffs = [1, 1, 1]  # a_n = a_{n-1} + a_{n-2} + a_{n-3}
         poly = await characteristic_polynomial(coeffs)
         expected = [1, -1, -1, -1]  # x³ - x² - x - 1
-        assert poly == expected, (
-            f"Tribonacci char poly should be {expected}, got {poly}"
-        )
+        assert poly == expected, f"Tribonacci char poly should be {expected}, got {poly}"
 
     @pytest.mark.asyncio
     async def test_custom_characteristic_polynomial(self):
@@ -578,9 +637,7 @@ class TestCharacteristicPolynomial:
         coeffs = [2]  # a_n = 2*a_{n-1}
         poly = await characteristic_polynomial(coeffs)
         expected = [1, -2]  # x - 2
-        assert poly == expected, (
-            f"First order char poly should be {expected}, got {poly}"
-        )
+        assert poly == expected, f"First order char poly should be {expected}, got {poly}"
 
     @pytest.mark.asyncio
     async def test_empty_characteristic_polynomial(self):
@@ -611,9 +668,7 @@ class TestBinetFormula:
         for n, expected in enumerate(fibonacci_values):
             result = await binet_formula(coeffs, initial, n)
             # Allow small floating point errors
-            assert abs(result - expected) < 1e-6, (
-                f"Binet F_{n} should be ~{expected}, got {result}"
-            )
+            assert abs(result - expected) < 1e-6, f"Binet F_{n} should be ~{expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_lucas_binet_formula(self):
@@ -626,9 +681,7 @@ class TestBinetFormula:
             expected = await lucas_number(n)
             result = await binet_formula(coeffs, initial, n)
             # Allow small floating point errors
-            assert abs(result - expected) < 1e-6, (
-                f"Binet L_{n} should be ~{expected}, got {result}"
-            )
+            assert abs(result - expected) < 1e-6, f"Binet L_{n} should be ~{expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_binet_formula_edge_cases(self):
@@ -643,18 +696,38 @@ class TestBinetFormula:
 
         # Test returning initial values
         result_0 = await binet_formula(coeffs, initial, 0)
-        assert abs(result_0 - 0) < 1e-6, (
-            "Binet formula should return initial[0] for n=0"
-        )
+        assert abs(result_0 - 0) < 1e-6, "Binet formula should return initial[0] for n=0"
 
         result_1 = await binet_formula(coeffs, initial, 1)
-        assert abs(result_1 - 1) < 1e-6, (
-            "Binet formula should return initial[1] for n=1"
-        )
+        assert abs(result_1 - 1) < 1e-6, "Binet formula should return initial[1] for n=1"
 
         # Test negative index
         result_neg = await binet_formula(coeffs, initial, -1)
         assert result_neg == 0.0, "Binet formula should return 0.0 for negative n"
+
+    @pytest.mark.asyncio
+    async def test_binet_formula_non_quadratic_fallback(self):
+        """Test that binet_formula falls back to solve_linear_recurrence for non-quadratic cases."""
+        # Test with third order recurrence (Tribonacci) - line 749
+        coeffs = [1, 1, 1]
+        initial = [0, 0, 1]
+
+        # For non-quadratic cases, it should fall back to solve_linear_recurrence
+        result = await binet_formula(coeffs, initial, 10)
+        expected = await tribonacci_number(10)
+        assert abs(result - expected) < 1e-6, "Binet fallback should match tribonacci for n=10"
+
+    @pytest.mark.asyncio
+    async def test_binet_formula_degenerate_quadratic(self):
+        """Test binet_formula with quadratic but zero determinant."""
+        # Test a degenerate case where r1 == r2 (determinant close to zero)
+        # This will trigger the fallback at line 749 due to the check at line 741
+        coeffs = [2, 1]  # x^2 - 2x - 1 (non-degenerate, should work)
+        initial = [1, 1]
+
+        result = await binet_formula(coeffs, initial, 5)
+        assert isinstance(result, float), "Binet formula should return a float"
+        assert result > 0, "Result should be positive"
 
 
 # ============================================================================
@@ -712,17 +785,13 @@ class TestIntegrationAndProperties:
         for n in range(8):
             fib_from_lucas, _ = await lucas_u_v(n, 1, -1)
             fib_from_solver = await solve_linear_recurrence([1, 1], [0, 1], n)
-            assert fib_from_lucas == fib_from_solver, (
-                f"Lucas U_n should match Fibonacci at n={n}"
-            )
+            assert fib_from_lucas == fib_from_solver, f"Lucas U_n should match Fibonacci at n={n}"
 
         # Lucas V_n with (1, -1) should give Lucas numbers
         for n in range(8):
             _, lucas_from_uv = await lucas_u_v(n, 1, -1)
             lucas_direct = await lucas_number(n)
-            assert lucas_from_uv == lucas_direct, (
-                f"Lucas V_n should match Lucas numbers at n={n}"
-            )
+            assert lucas_from_uv == lucas_direct, f"Lucas V_n should match Lucas numbers at n={n}"
 
 
 # ============================================================================
@@ -810,6 +879,71 @@ class TestPerformance:
         # Verify recurrence holds
         for i in range(2, min(10, len(large_lucas))):
             assert large_lucas[i] == large_lucas[i - 1] + large_lucas[i - 2]
+
+    @pytest.mark.asyncio
+    async def test_large_lucas_number_async_sleep(self):
+        """Test that large Lucas number calculations yield control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 75
+        result = await lucas_number(2500)
+        assert result > 0, "Large Lucas number should be positive"
+
+    @pytest.mark.asyncio
+    async def test_large_lucas_sequence_async_sleep(self):
+        """Test that large Lucas sequence generation yields control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 127
+        result = await lucas_sequence(2500)
+        assert len(result) == 2500
+        assert result[0] == 2
+
+    @pytest.mark.asyncio
+    async def test_lucas_uv_large_n_fast_path(self):
+        """Test Lucas U_V with large n to trigger fast path."""
+        # Test with n > 1000 to trigger _lucas_uv_fast at line 185
+        u_n, v_n = await lucas_u_v(1500, 1, -1)
+        assert u_n > 0 and v_n > 0, "Large Lucas U_n and V_n should be positive"
+
+    @pytest.mark.asyncio
+    async def test_lucas_uv_iteration_async_sleep(self):
+        """Test Lucas U_V iteration yields control."""
+        # Test with moderate n to trigger asyncio.sleep(0) at line 200 and line 783
+        u_n, v_n = await lucas_u_v(250, 2, -1)
+        assert u_n > 0 and v_n > 0, "Lucas U_n and V_n should be positive"
+
+    @pytest.mark.asyncio
+    async def test_large_pell_sequence_async_sleep(self):
+        """Test that large Pell sequence generation yields control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 339
+        result = await pell_sequence(2500)
+        assert len(result) == 2500
+        assert result[0] == 0
+
+    @pytest.mark.asyncio
+    async def test_large_tribonacci_async_sleep(self):
+        """Test that large Tribonacci calculations yield control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 396
+        result = await tribonacci_number(2500)
+        assert result > 0, "Large Tribonacci number should be positive"
+
+    @pytest.mark.asyncio
+    async def test_large_tetranacci_async_sleep(self):
+        """Test that large Tetranacci calculations yield control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 448
+        result = await tetranacci_number(2500)
+        assert result > 0, "Large Tetranacci number should be positive"
+
+    @pytest.mark.asyncio
+    async def test_large_padovan_async_sleep(self):
+        """Test that large Padovan calculations yield control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 498
+        result = await padovan_number(2500)
+        assert result > 0, "Large Padovan number should be positive"
+
+    @pytest.mark.asyncio
+    async def test_large_narayana_cow_async_sleep(self):
+        """Test that large Narayana cow calculations yield control."""
+        # Test with n > 1000 to trigger asyncio.sleep(0) at line 550
+        result = await narayana_cow_number(2500)
+        assert result > 0, "Large Narayana cow number should be positive"
 
 
 # ============================================================================

@@ -1002,9 +1002,7 @@ if __name__ == "__main__":
 
         # Test Look-and-say
         print("\nLook-and-Say:")
-        print(
-            f"  look_and_say_sequence('1', 5) = {await look_and_say_sequence('1', 5)}"
-        )
+        print(f"  look_and_say_sequence('1', 5) = {await look_and_say_sequence('1', 5)}")
 
         # Test Recamán
         print("\nRecamán Sequence:")

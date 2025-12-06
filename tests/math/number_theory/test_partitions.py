@@ -70,9 +70,7 @@ class TestIntegerPartitions:
 
         for n, expected in known_values:
             result = await partition_count(n)
-            assert result == expected, (
-                f"partition_count({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"partition_count({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_partition_count_properties(self):
@@ -281,9 +279,7 @@ class TestIntegerPartitions:
         # When max_part ≥ n, should equal unrestricted count
         unrestricted = await partition_count(n)
         large_max = await restricted_partitions(n, n + 5)
-        assert large_max == unrestricted, (
-            "Large max_part should give unrestricted count"
-        )
+        assert large_max == unrestricted, "Large max_part should give unrestricted count"
 
     @pytest.mark.asyncio
     async def test_restricted_partitions_edge_cases(self):
@@ -362,15 +358,11 @@ class TestGoldbachConjecture:
         # Known complete sets
         pairs_10 = await goldbach_pairs(10)
         expected_10 = [(3, 7), (5, 5)]
-        assert sorted(pairs_10) == sorted(expected_10), (
-            f"All pairs for 10 should be {expected_10}"
-        )
+        assert sorted(pairs_10) == sorted(expected_10), f"All pairs for 10 should be {expected_10}"
 
         pairs_12 = await goldbach_pairs(12)
         expected_12 = [(5, 7)]
-        assert sorted(pairs_12) == sorted(expected_12), (
-            f"All pairs for 12 should be {expected_12}"
-        )
+        assert sorted(pairs_12) == sorted(expected_12), f"All pairs for 12 should be {expected_12}"
 
         pairs_20 = await goldbach_pairs(20)
         # Should contain (3,17), (7,13), and possibly others
@@ -416,9 +408,7 @@ class TestGoldbachConjecture:
 
         for n, expected in known_cases:
             result = await weak_goldbach_check(n)
-            assert result is not None, (
-                f"Should find weak Goldbach decomposition for {n}"
-            )
+            assert result is not None, f"Should find weak Goldbach decomposition for {n}"
             a, b, c = result
             assert a + b + c == n, f"Triple should sum to {n}"
             assert a <= b <= c, "Triple should be ordered"
@@ -430,9 +420,7 @@ class TestGoldbachConjecture:
         # Test odd numbers > 5
         for n in range(7, 50, 2):  # Odd numbers from 7 to 49
             result = await weak_goldbach_check(n)
-            assert result is not None, (
-                f"Should find weak Goldbach decomposition for {n}"
-            )
+            assert result is not None, f"Should find weak Goldbach decomposition for {n}"
 
             a, b, c = result
             assert a + b + c == n, f"Triple should sum to {n}"
@@ -558,12 +546,8 @@ class TestSumOfSquares:
             )
 
             a, b, c, d = result
-            assert a * a + b * b + c * c + d * d == n, (
-                f"Should satisfy a²+b²+c²+d² = {n}"
-            )
-            assert all(x >= 0 for x in [a, b, c, d]), (
-                "All squares should be non-negative"
-            )
+            assert a * a + b * b + c * c + d * d == n, f"Should satisfy a²+b²+c²+d² = {n}"
+            assert all(x >= 0 for x in [a, b, c, d]), "All squares should be non-negative"
 
     @pytest.mark.asyncio
     async def test_sum_of_four_squares_properties(self):
@@ -610,9 +594,7 @@ class TestWaringsProblem:
 
         for n, k, expected_pattern in test_cases:
             result = await waring_representation(n, k)
-            assert result is not None, (
-                f"Should find {k}-th power representation for {n}"
-            )
+            assert result is not None, f"Should find {k}-th power representation for {n}"
 
             # Verify the sum
             total = sum(x**k for x in result)
@@ -744,9 +726,7 @@ class TestAdditiveBases:
 
         for basis, limit, expected in test_cases:
             result = await is_additive_basis(basis, limit)
-            assert result == expected, (
-                f"is_additive_basis({basis}, {limit}) should be {expected}"
-            )
+            assert result == expected, f"is_additive_basis({basis}, {limit}) should be {expected}"
 
     @pytest.mark.asyncio
     async def test_is_additive_basis_properties(self):
@@ -804,9 +784,7 @@ class TestAdditiveBases:
                 # The Sidon property might not be perfectly implemented
                 assert len(sidon_3) == 3, "At least should have correct size"
             else:
-                assert len(sums) == len(set(sums)), (
-                    "All pairwise sums should be distinct"
-                )
+                assert len(sums) == len(set(sums)), "All pairwise sums should be distinct"
 
     @pytest.mark.asyncio
     async def test_generate_sidon_set_properties(self):
@@ -836,14 +814,10 @@ class TestAdditiveBases:
             # If the implementation has issues, let's at least verify basic properties
             if duplicate_found:
                 # At least check that we have distinct elements
-                assert len(small_set) == len(set(small_set)), (
-                    "Should have distinct elements"
-                )
+                assert len(small_set) == len(set(small_set)), "Should have distinct elements"
             else:
                 # Full Sidon property holds
-                assert not duplicate_found, (
-                    "Should not have duplicate sums in Sidon set"
-                )
+                assert not duplicate_found, "Should not have duplicate sums in Sidon set"
 
     @pytest.mark.asyncio
     async def test_generate_sidon_set_edge_cases(self):
@@ -884,9 +858,7 @@ class TestIntegrationAndProperties:
             distinct_parts = await distinct_partitions(n)
 
             # Some basic relationships
-            assert distinct_parts <= total_partitions, (
-                f"Distinct partitions ≤ total for n={n}"
-            )
+            assert distinct_parts <= total_partitions, f"Distinct partitions ≤ total for n={n}"
 
             # For small n, we can verify some known relationships
             if n <= 6:
@@ -924,17 +896,13 @@ class TestIntegrationAndProperties:
 
             assert waring_result is not None, f"Waring squares should work for {n}"
             assert lagrange_result is not None, f"Lagrange should work for {n}"
-            assert min_squares is not None and min_squares <= 4, (
-                f"Min squares ≤ 4 for {n}"
-            )
+            assert min_squares is not None and min_squares <= 4, f"Min squares ≤ 4 for {n}"
 
             # Verify Waring result
             assert sum(x * x for x in waring_result) == n
 
             # Verify minimum is reasonable
-            assert len(waring_result) >= min_squares, (
-                "Actual length should be ≥ minimum"
-            )
+            assert len(waring_result) >= min_squares, "Actual length should be ≥ minimum"
 
     @pytest.mark.asyncio
     async def test_additive_combinatorial_connections(self):
@@ -954,9 +922,7 @@ class TestIntegrationAndProperties:
                 is_basis = await is_additive_basis(small_basis, n)
                 # Should be true for sets containing 1
                 if 1 in small_basis:
-                    assert is_basis, (
-                        f"{small_basis} should be additive basis for {n}"
-                    )
+                    assert is_basis, f"{small_basis} should be additive basis for {n}"
 
 
 # ============================================================================
@@ -1063,9 +1029,7 @@ class TestPerformance:
 
         # Verify results are reasonable
         assert isinstance(results[0], int) and results[0] > 1000  # Many partitions
-        assert (
-            isinstance(results[1], int) and results[1] > 0
-        )  # Some distinct partitions
+        assert isinstance(results[1], int) and results[1] > 0  # Some distinct partitions
         assert results[2] is not None  # Goldbach should work
         assert results[3] is not None  # Four squares should work
         assert results[4] is not None and results[4] <= 4  # Min squares ≤ 4
@@ -1096,9 +1060,7 @@ class TestErrorHandling:
 
         for func, args, expected in negative_safe_functions:
             result = await func(*args)
-            assert result == expected, (
-                f"{func.__name__} should handle negative input gracefully"
-            )
+            assert result == expected, f"{func.__name__} should handle negative input gracefully"
 
     @pytest.mark.asyncio
     async def test_zero_input_handling(self):
@@ -1113,9 +1075,7 @@ class TestErrorHandling:
 
         for func, args, expected in zero_cases:
             result = await func(*args)
-            assert result == expected, (
-                f"{func.__name__} should handle zero input correctly"
-            )
+            assert result == expected, f"{func.__name__} should handle zero input correctly"
 
     @pytest.mark.asyncio
     async def test_invalid_parameter_combinations(self):
@@ -1145,6 +1105,86 @@ class TestErrorHandling:
 # ============================================================================
 
 
+class TestAsyncSleepCoverage:
+    """Test async sleep branches to get full coverage."""
+
+    @pytest.mark.asyncio
+    async def test_partition_count_large_n(self):
+        """Test partition_count with n > 100 to trigger async sleep (line 84)."""
+        result = await partition_count(101)
+        assert result > 0
+
+    @pytest.mark.asyncio
+    async def test_distinct_partitions_large_n(self):
+        """Test distinct_partitions with n > 50 to trigger async sleep (line 268)."""
+        result = await distinct_partitions(51)
+        assert result > 0
+
+    @pytest.mark.asyncio
+    async def test_restricted_partitions_large_max_part(self):
+        """Test restricted_partitions with max_part > 50 to trigger async sleep (line 329)."""
+        result = await restricted_partitions(25, 51)
+        assert result > 0
+
+    @pytest.mark.asyncio
+    async def test_goldbach_large_n(self):
+        """Test goldbach_conjecture_check with n > 1000 to trigger async sleep (line 379)."""
+        result = await goldbach_conjecture_check(1002)
+        assert result is not None
+
+    @pytest.mark.asyncio
+    async def test_goldbach_pairs_large_n(self):
+        """Test goldbach_pairs with n > 1000 to trigger async sleep (line 432)."""
+        result = await goldbach_pairs(1002)
+        assert len(result) > 0
+
+    @pytest.mark.asyncio
+    async def test_weak_goldbach_large_n(self):
+        """Test weak_goldbach_check with n > 500 to trigger async sleep (line 481)."""
+        result = await weak_goldbach_check(501)
+        assert result is not None
+
+    @pytest.mark.asyncio
+    async def test_sum_of_two_squares_large_n(self):
+        """Test sum_of_two_squares with max_a > 1000 to trigger async sleep (line 541)."""
+        await sum_of_two_squares(1000001)
+        # May or may not find a representation, just test it runs
+
+    @pytest.mark.asyncio
+    async def test_sum_of_four_squares_large_n(self):
+        """Test sum_of_four_squares with max_val > 500 to trigger async sleep (line 612)."""
+        result = await sum_of_four_squares(250001)
+        assert result is not None
+
+    @pytest.mark.asyncio
+    async def test_waring_representation_large_result(self):
+        """Test waring_representation with len(result) > 100 to trigger async sleep (line 700)."""
+        # Use a number that requires many 1^k terms
+        result = await waring_representation(200, 2)
+        assert result is not None
+
+    @pytest.mark.asyncio
+    async def test_min_waring_number_large_n(self):
+        """Test min_waring_number with n > 5000 to trigger async sleep (line 774)."""
+        result = await min_waring_number(5001, 2)
+        assert result is not None
+        assert result <= 4  # Lagrange's theorem
+
+    @pytest.mark.asyncio
+    async def test_is_additive_basis_async_yield(self):
+        """Test is_additive_basis to trigger async yields."""
+        # Test with enough terms to trigger the async sleep at line 851
+        result = await is_additive_basis([1, 2, 3], 10, max_terms=10)
+        assert result is True
+
+    @pytest.mark.asyncio
+    async def test_generate_sidon_set_async_yield(self):
+        """Test generate_sidon_set with enough candidates to trigger async sleep (line 933)."""
+        # Use limit > 100 to trigger the async sleep
+        await generate_sidon_set(150, 4)
+        # May or may not succeed, just test it runs
+
+
 class TestParametrized:
     """Parametrized tests for comprehensive coverage."""
 
@@ -1158,9 +1198,7 @@ class TestParametrized:
         assert result == expected
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "n,expected", [(0, 1), (1, 1), (2, 1), (3, 2), (4, 2), (5, 3), (6, 4)]
-    )
+    @pytest.mark.parametrize("n,expected", [(0, 1), (1, 1), (2, 1), (3, 2), (4, 2), (5, 3), (6, 4)])
     async def test_distinct_partitions_parametrized(self, n, expected):
         """Parametrized test for distinct partitions."""
         result = await distinct_partitions(n)

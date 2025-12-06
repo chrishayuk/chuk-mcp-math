@@ -413,9 +413,7 @@ async def euler_totient_inversion(n: int) -> Dict:
         },
     ],
 )
-async def divisor_function_inversion(
-    n: int, function_type: str = "count", power: int = 1
-) -> Dict:
+async def divisor_function_inversion(n: int, function_type: str = "count", power: int = 1) -> Dict:
     """
     Analyze divisor functions using Möbius inversion relationships.
 
@@ -520,9 +518,7 @@ async def divisor_function_inversion(
         },
     ],
 )
-async def multiplicative_function_analysis(
-    function_name: str, range_end: int = 20
-) -> Dict:
+async def multiplicative_function_analysis(function_name: str, range_end: int = 20) -> Dict:
     """
     Analyze multiplicative properties of arithmetic functions using Möbius methods.
 
@@ -613,14 +609,10 @@ async def multiplicative_function_analysis(
     }
 
     if multiplicative_violations:
-        results["multiplicative_violations"] = multiplicative_violations[
-            :5
-        ]  # Show first 5
+        results["multiplicative_violations"] = multiplicative_violations[:5]  # Show first 5
 
     if completely_multiplicative_violations:
-        results["completely_multiplicative_violations"] = (
-            completely_multiplicative_violations[:5]
-        )
+        results["completely_multiplicative_violations"] = completely_multiplicative_violations[:5]
 
     # Add function-specific analysis
     if function_name == "totient":
@@ -736,9 +728,7 @@ async def test_mobius_inversion():
     print("\n3. Euler Totient via Möbius Inversion:")
     for n in [6, 10, 12]:
         result = await euler_totient_inversion(n)
-        print(
-            f"   φ({n}) = {result['phi']} (verification: {result['verification']['passed']})"
-        )
+        print(f"   φ({n}) = {result['phi']} (verification: {result['verification']['passed']})")
 
     # Test multiplicative function analysis
     print("\n4. Multiplicative Function Analysis:")

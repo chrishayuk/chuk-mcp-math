@@ -49,10 +49,10 @@ async def equal(a: Number, b: Number) -> bool:
     Returns:
         True if a equals b, False otherwise
 
-    Examples:
-        await equal(5, 5) → True
-        await equal(3.14, 3.14) → True
-        await equal(1, 2) → False
+    Example:
+        equal(5, 5) = True
+        equal(3.14, 3.14) = True
+        equal(1, 2) = False
     """
     return a == b
 
@@ -83,9 +83,9 @@ async def not_equal(a: Number, b: Number) -> bool:
     Returns:
         True if a does not equal b, False otherwise
 
-    Examples:
-        await not_equal(5, 3) → True
-        await not_equal(7, 7) → False
+    Example:
+        not_equal(5, 3) = True
+        not_equal(7, 7) = False
     """
     return a != b
 
@@ -125,10 +125,10 @@ async def less_than(a: Number, b: Number) -> bool:
     Returns:
         True if a < b, False otherwise
 
-    Examples:
-        await less_than(3, 5) → True
-        await less_than(5, 3) → False
-        await less_than(5, 5) → False
+    Example:
+        less_than(3, 5) = True
+        less_than(5, 3) = False
+        less_than(5, 5) = False
     """
     return a < b
 
@@ -159,10 +159,10 @@ async def less_than_or_equal(a: Number, b: Number) -> bool:
     Returns:
         True if a <= b, False otherwise
 
-    Examples:
-        await less_than_or_equal(3, 5) → True
-        await less_than_or_equal(5, 5) → True
-        await less_than_or_equal(7, 5) → False
+    Example:
+        less_than_or_equal(3, 5) = True
+        less_than_or_equal(5, 5) = True
+        less_than_or_equal(7, 5) = False
     """
     return a <= b
 
@@ -201,10 +201,10 @@ async def greater_than(a: Number, b: Number) -> bool:
     Returns:
         True if a > b, False otherwise
 
-    Examples:
-        await greater_than(5, 3) → True
-        await greater_than(3, 5) → False
-        await greater_than(5, 5) → False
+    Example:
+        greater_than(5, 3) = True
+        greater_than(3, 5) = False
+        greater_than(5, 5) = False
     """
     return a > b
 
@@ -235,10 +235,10 @@ async def greater_than_or_equal(a: Number, b: Number) -> bool:
     Returns:
         True if a >= b, False otherwise
 
-    Examples:
-        await greater_than_or_equal(5, 3) → True
-        await greater_than_or_equal(5, 5) → True
-        await greater_than_or_equal(3, 5) → False
+    Example:
+        greater_than_or_equal(5, 3) = True
+        greater_than_or_equal(5, 5) = True
+        greater_than_or_equal(3, 5) = False
     """
     return a >= b
 
@@ -271,9 +271,7 @@ async def greater_than_or_equal(a: Number, b: Number) -> bool:
         },
     ],
 )
-async def in_range(
-    value: Number, min_val: Number, max_val: Number, inclusive: bool = True
-) -> bool:
+async def in_range(value: Number, min_val: Number, max_val: Number, inclusive: bool = True) -> bool:
     """
     Check if a value is within a specified range.
 
@@ -289,10 +287,10 @@ async def in_range(
     Raises:
         ValueError: If min_val > max_val
 
-    Examples:
-        await in_range(5, 1, 10) → True
-        await in_range(1, 1, 10, inclusive=True) → True
-        await in_range(1, 1, 10, inclusive=False) → False
+    Example:
+        in_range(5, 1, 10) = True
+        in_range(1, 1, 10, inclusive=True) = True
+        in_range(1, 1, 10, inclusive=False) = False
     """
     if min_val > max_val:
         raise ValueError("Minimum value cannot be greater than maximum value")
@@ -343,10 +341,10 @@ async def between(value: Number, lower: Number, upper: Number) -> bool:
     Returns:
         True if lower < value < upper, False otherwise
 
-    Examples:
-        await between(5, 1, 10) → True
-        await between(1, 1, 10) → False
-        await between(10, 1, 10) → False
+    Example:
+        between(5, 1, 10) = True
+        between(1, 1, 10) = False
+        between(10, 1, 10) = False
     """
     return lower < value < upper
 
@@ -381,9 +379,7 @@ if __name__ == "__main__":
 
         # Test range operations
         print(f"in_range(5, 1, 10) = {await in_range(5, 1, 10)}")
-        print(
-            f"in_range(1, 1, 10, inclusive=False) = {await in_range(1, 1, 10, inclusive=False)}"
-        )
+        print(f"in_range(1, 1, 10, inclusive=False) = {await in_range(1, 1, 10, inclusive=False)}")
         print(f"between(5, 1, 10) = {await between(5, 1, 10)}")
         print(f"between(1, 1, 10) = {await between(1, 1, 10)}")
 

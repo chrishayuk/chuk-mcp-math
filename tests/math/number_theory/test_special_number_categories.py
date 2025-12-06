@@ -52,9 +52,7 @@ try:
         digital_persistence,
     )
 except ImportError as e:
-    pytest.skip(
-        f"special_number_categories module not available: {e}", allow_module_level=True
-    )
+    pytest.skip(f"special_number_categories module not available: {e}", allow_module_level=True)
 
 # ============================================================================
 # AMICABLE NUMBERS TESTS
@@ -1146,9 +1144,7 @@ class TestParametrized:
             ] in pairs
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "kaprekar_num", [9, 45, 55, 99, 297, 703, 999]
-    )  # Removed 1
+    @pytest.mark.parametrize("kaprekar_num", [9, 45, 55, 99, 297, 703, 999])  # Removed 1
     async def test_known_kaprekar_numbers(self, kaprekar_num):
         """Parametrized test for known Kaprekar numbers."""
         result = await is_kaprekar_number(kaprekar_num)
@@ -1167,9 +1163,7 @@ class TestParametrized:
         assert "is_kaprekar" in result
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "armstrong_num", [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407]
-    )
+    @pytest.mark.parametrize("armstrong_num", [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407])
     async def test_known_armstrong_numbers(self, armstrong_num):
         """Parametrized test for known Armstrong numbers."""
         armstrong_list = await armstrong_numbers(500)
@@ -1197,9 +1191,7 @@ class TestParametrized:
         assert result["final_sum"] == keith_num
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "n,expected_constant", [(3, 15), (4, 34), (5, 65), (6, 111)]
-    )
+    @pytest.mark.parametrize("n,expected_constant", [(3, 15), (4, 34), (5, 65), (6, 111)])
     async def test_magic_constants_formula(self, n, expected_constant):
         """Parametrized test for magic constants formula."""
         result = await magic_constants(n)

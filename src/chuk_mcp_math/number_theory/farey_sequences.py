@@ -738,9 +738,7 @@ async def ford_circle_properties(n: int) -> Dict:
         "max_radius": round(max_radius, 6),
         "min_radius": round(min_radius, 6),
         "avg_radius": round(avg_radius, 6),
-        "radius_ratio": round(max_radius / min_radius, 2)
-        if min_radius > 0
-        else float("inf"),
+        "radius_ratio": round(max_radius / min_radius, 2) if min_radius > 0 else float("inf"),
         "tangency_analysis": tangency_analysis[:5],  # Show first 5 for brevity
         "all_tangent": all(t["is_tangent"] for t in tangency_analysis),
     }
@@ -960,9 +958,7 @@ async def farey_sequence_properties(n: int) -> Dict:
         "max_gap": round(max_gap, 6),
         "min_gap": round(min_gap, 6),
         "avg_gap": round(avg_gap, 6),
-        "gap_variance": round(sum((g - avg_gap) ** 2 for g in gaps) / len(gaps), 8)
-        if gaps
-        else 0,
+        "gap_variance": round(sum((g - avg_gap) ** 2 for g in gaps) / len(gaps), 8) if gaps else 0,
         "max_denominator": max_denom,
         "avg_denominator": round(avg_denom, 2),
         "unique_denominators": unique_denoms,
@@ -1155,9 +1151,7 @@ async def gap_analysis(n: int) -> Dict:
         "max_gap": round(max_gap, 6),
         "min_gap": round(min_gap, 6),
         "avg_gap": round(avg_gap, 6),
-        "gap_variance": round(sum((g - avg_gap) ** 2 for g in gaps) / len(gaps), 8)
-        if gaps
-        else 0,
+        "gap_variance": round(sum((g - avg_gap) ** 2 for g in gaps) / len(gaps), 8) if gaps else 0,
         "gap_distribution": {str(k): v for k, v in sorted(gap_distribution.items())},
         "largest_gaps": largest_gaps,
         "gap_formula_note": "For adjacent fractions a/b, c/d in Farey sequence: gap = |c/d - a/b| = 1/(bd)",
@@ -1752,18 +1746,14 @@ async def demo_mathematical_properties():
         p1, q1 = f5[i]
         p2, q2 = f5[i + 1]
         tangency = await circle_tangency(p1, q1, p2, q2)
-        print(
-            f"   Ford circles for {p1}/{q1} and {p2}/{q2}: tangent = {tangency['are_tangent']}"
-        )
+        print(f"   Ford circles for {p1}/{q1} and {p2}/{q2}: tangent = {tangency['are_tangent']}")
 
     # Property 4: Length formula verification
     print("\n4. Length Formula |F_n| = 1 + Σφ(k):")
     for n in range(1, 8):
         length_data = await farey_sequence_length(n)
         actual_seq = await farey_sequence(n)
-        print(
-            f"   F_{n}: formula = {length_data['length']}, actual = {len(actual_seq)}"
-        )
+        print(f"   F_{n}: formula = {length_data['length']}, actual = {len(actual_seq)}")
 
 
 async def demo_applications():

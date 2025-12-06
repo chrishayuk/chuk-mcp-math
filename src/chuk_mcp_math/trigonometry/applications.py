@@ -507,9 +507,7 @@ async def oscillation_analysis(
             damping_type = "overdamped"
             damped_frequency = 0
 
-        quality_factor = (
-            angular_frequency / (2 * damping) if damping > 0 else float("inf")
-        )
+        quality_factor = angular_frequency / (2 * damping) if damping > 0 else float("inf")
         decay_time = 1 / damping if damping > 0 else float("inf")
 
     # Phase analysis
@@ -853,9 +851,7 @@ async def wave_interference(
         if freq_diff < 0.1:  # Same frequency (within tolerance)
             # Amplitude of resultant: A = √(A1² + A2² + 2A1A2cos(Δφ))
             cos_phase_diff = math.cos(phase_diff)
-            resulting_amplitude = math.sqrt(
-                A1**2 + A2**2 + 2 * A1 * A2 * cos_phase_diff
-            )
+            resulting_amplitude = math.sqrt(A1**2 + A2**2 + 2 * A1 * A2 * cos_phase_diff)
 
             if abs(cos_phase_diff - 1) < 0.1:
                 interference_type = "constructive"
@@ -899,9 +895,7 @@ async def wave_interference(
             {
                 "phase_difference": phase_diff,
                 "frequency_difference": freq_diff,
-                "beat_frequency": beat_frequency
-                if "beat_frequency" in locals()
-                else 0.0,
+                "beat_frequency": beat_frequency if "beat_frequency" in locals() else 0.0,
             }
         )
 
@@ -984,18 +978,12 @@ if __name__ == "__main__":
         print(f"    Max velocity: {osc_result['max_velocity']:.3f} m/s")
 
         # Test pendulum
-        pendulum_result = await pendulum_period(
-            1.0, 9.81, 0.2
-        )  # 1m pendulum, 0.2 rad swing
+        pendulum_result = await pendulum_period(1.0, 9.81, 0.2)  # 1m pendulum, 0.2 rad swing
         print("\n  Pendulum (1m, 0.2 rad swing):")
         print(f"    Small angle period: {pendulum_result['period_small_angle']:.3f} s")
         if "period_large_angle" in pendulum_result:
-            print(
-                f"    Large angle period: {pendulum_result['period_large_angle']:.3f} s"
-            )
-            print(
-                f"    Error in small angle: {pendulum_result['small_angle_error_percent']:.2f}%"
-            )
+            print(f"    Large angle period: {pendulum_result['period_large_angle']:.3f} s")
+            print(f"    Error in small angle: {pendulum_result['small_angle_error_percent']:.2f}%")
 
         # Test spring-mass system
         spring_result = await spring_oscillation(

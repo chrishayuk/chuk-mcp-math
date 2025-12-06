@@ -129,9 +129,7 @@ async def circle_circumference(radius: Union[int, float]) -> float:
         },
     ],
 )
-async def rectangle_area(
-    length: Union[int, float], width: Union[int, float]
-) -> Union[int, float]:
+async def rectangle_area(length: Union[int, float], width: Union[int, float]) -> Union[int, float]:
     """
     Calculate the area of a rectangle.
 

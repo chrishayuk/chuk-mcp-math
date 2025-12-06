@@ -659,9 +659,7 @@ async def solve_negative_pell_equation(n: int) -> Dict:
         },
     ],
 )
-async def pythagorean_triples(
-    limit: int, primitive_only: bool = False
-) -> List[List[int]]:
+async def pythagorean_triples(limit: int, primitive_only: bool = False) -> List[List[int]]:
     """
     Generate Pythagorean triples (a, b, c) where a² + b² = c².
 
@@ -844,9 +842,7 @@ async def sum_of_two_squares_all(n: int) -> List[List[int]]:
         },
     ],
 )
-async def solve_quadratic_diophantine(
-    coeffs: List[int], bounds: List[int]
-) -> List[List[int]]:
+async def solve_quadratic_diophantine(coeffs: List[int], bounds: List[int]) -> List[List[int]]:
     """
     Solve general quadratic Diophantine equation by exhaustive search.
 
@@ -1084,9 +1080,7 @@ async def postage_stamp_problem(amount: int, denominations: List[int]) -> Dict:
         "solution": solution,
         "stamps_used": dp[amount],
         "denomination_breakdown": {
-            denominations[i]: solution[i]
-            for i in range(len(denominations))
-            if solution[i] > 0
+            denominations[i]: solution[i] for i in range(len(denominations)) if solution[i] > 0
         },
     }
 
@@ -1151,9 +1145,7 @@ async def diophantine_analysis(equation_type: str, **kwargs) -> Dict:
                     "solvable": solution["solvable"],
                     "infinite_solutions": solution["solvable"],
                     "gcd": solution.get("gcd"),
-                    "classification": "indefinite"
-                    if solution["solvable"]
-                    else "inconsistent",
+                    "classification": "indefinite" if solution["solvable"] else "inconsistent",
                 }
             )
 
@@ -1178,9 +1170,7 @@ async def diophantine_analysis(equation_type: str, **kwargs) -> Dict:
                 {
                     "has_solutions": solution["exists"],
                     "fundamental_solution": solution.get("fundamental"),
-                    "classification": "elliptic"
-                    if solution["exists"]
-                    else "no_solutions",
+                    "classification": "elliptic" if solution["exists"] else "no_solutions",
                 }
             )
 

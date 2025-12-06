@@ -66,13 +66,9 @@ async def convert_temperature(
     if from_scale == "rankine" and value < 0:
         raise ValueError("Rankine temperature cannot be negative")
     if from_scale == "celsius" and value < -273.15:
-        raise ValueError(
-            "Celsius temperature cannot be below absolute zero (-273.15°C)"
-        )
+        raise ValueError("Celsius temperature cannot be below absolute zero (-273.15°C)")
     if from_scale == "fahrenheit" and value < -459.67:
-        raise ValueError(
-            "Fahrenheit temperature cannot be below absolute zero (-459.67°F)"
-        )
+        raise ValueError("Fahrenheit temperature cannot be below absolute zero (-459.67°F)")
 
     # Convert to Celsius first
     if from_scale == "fahrenheit":
@@ -87,20 +83,14 @@ async def convert_temperature(
     # Convert from Celsius to target scale
     if to_scale == "fahrenheit":
         result = celsius * 9 / 5 + 32
-        formula = (
-            "C × 9/5 + 32" if from_scale == "celsius" else "(converted to C) × 9/5 + 32"
-        )
+        formula = "C × 9/5 + 32" if from_scale == "celsius" else "(converted to C) × 9/5 + 32"
     elif to_scale == "kelvin":
         result = celsius + 273.15
-        formula = (
-            "C + 273.15" if from_scale == "celsius" else "(converted to C) + 273.15"
-        )
+        formula = "C + 273.15" if from_scale == "celsius" else "(converted to C) + 273.15"
     elif to_scale == "rankine":
         result = (celsius + 273.15) * 9 / 5
         formula = (
-            "(C + 273.15) × 9/5"
-            if from_scale == "celsius"
-            else "(converted to C + 273.15) × 9/5"
+            "(C + 273.15) × 9/5" if from_scale == "celsius" else "(converted to C + 273.15) × 9/5"
         )
     elif to_scale == "celsius":
         result = celsius
@@ -147,9 +137,7 @@ async def convert_temperature(
         },
     ],
 )
-async def convert_length(
-    value: Union[int, float], from_unit: str, to_unit: str
-) -> float:
+async def convert_length(value: Union[int, float], from_unit: str, to_unit: str) -> float:
     """
     Convert length between different units.
 
@@ -238,9 +226,7 @@ async def convert_length(
         },
     ],
 )
-async def convert_weight(
-    value: Union[int, float], from_unit: str, to_unit: str
-) -> float:
+async def convert_weight(value: Union[int, float], from_unit: str, to_unit: str) -> float:
     """
     Convert weight/mass between different units.
 
@@ -424,9 +410,7 @@ async def convert_area(value: Union[int, float], from_unit: str, to_unit: str) -
         },
     ],
 )
-async def convert_volume(
-    value: Union[int, float], from_unit: str, to_unit: str
-) -> float:
+async def convert_volume(value: Union[int, float], from_unit: str, to_unit: str) -> float:
     """
     Convert volume between different units.
 
@@ -613,9 +597,7 @@ async def convert_time(value: Union[int, float], from_unit: str, to_unit: str) -
         },
     ],
 )
-async def convert_speed(
-    value: Union[int, float], from_unit: str, to_unit: str
-) -> float:
+async def convert_speed(value: Union[int, float], from_unit: str, to_unit: str) -> float:
     """
     Convert speed between different units.
 
@@ -691,23 +673,15 @@ if __name__ == "__main__":
     temp = convert_temperature(100, "celsius", "fahrenheit")
     print(f"convert_temperature(100, 'celsius', 'fahrenheit') = {temp['result']}°F")
 
-    print(
-        f"convert_length(1, 'meter', 'feet') = {convert_length(1, 'meter', 'feet'):.3f} ft"
-    )
+    print(f"convert_length(1, 'meter', 'feet') = {convert_length(1, 'meter', 'feet'):.3f} ft")
     print(
         f"convert_weight(1, 'kilogram', 'pound') = {convert_weight(1, 'kilogram', 'pound'):.3f} lbs"
     )
     print(
         f"convert_area(1, 'square_meter', 'square_feet') = {convert_area(1, 'square_meter', 'square_feet'):.3f} ft²"
     )
-    print(
-        f"convert_volume(1, 'liter', 'gallon') = {convert_volume(1, 'liter', 'gallon'):.3f} gal"
-    )
-    print(
-        f"convert_time(1, 'hour', 'minute') = {convert_time(1, 'hour', 'minute')} min"
-    )
-    print(
-        f"convert_speed(60, 'mph', 'kph') = {convert_speed(60, 'mph', 'kph'):.2f} kph"
-    )
+    print(f"convert_volume(1, 'liter', 'gallon') = {convert_volume(1, 'liter', 'gallon'):.3f} gal")
+    print(f"convert_time(1, 'hour', 'minute') = {convert_time(1, 'hour', 'minute')} min")
+    print(f"convert_speed(60, 'mph', 'kph') = {convert_speed(60, 'mph', 'kph'):.2f} kph")
 
     print("\n✅ All conversion functions working correctly!")

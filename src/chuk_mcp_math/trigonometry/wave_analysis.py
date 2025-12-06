@@ -895,9 +895,7 @@ if __name__ == "__main__":
             freq = h["frequency"]
             amp = h["amplitude"]
             power = h["power_percent"]
-            print(
-                f"    H{h['harmonic_number']}: {freq} Hz, amp={amp:.3f}, power={power:.1f}%"
-            )
+            print(f"    H{h['harmonic_number']}: {freq} Hz, amp={amp:.3f}, power={power:.1f}%")
 
         print("\nFourier Series Coefficients:")
         waveforms = ["square", "sawtooth", "triangle"]

@@ -73,9 +73,7 @@ if PYDANTIC_AVAILABLE:
                 validate_assignment = True
                 json_encoders = {
                     # Custom encoders for MCP types
-                    bytes: lambda v: v.decode("utf-8")
-                    if isinstance(v, bytes)
-                    else str(v),
+                    bytes: lambda v: v.decode("utf-8") if isinstance(v, bytes) else str(v),
                 }
 
         def model_dump_mcp(self, **kwargs) -> Dict[str, Any]:
@@ -253,9 +251,7 @@ else:
         # List validation - MCP-optimized
         if origin in (list, List):
             if not isinstance(value, list):
-                raise ValidationError(
-                    "value is not a valid list", current_path, "type_error"
-                )
+                raise ValidationError("value is not a valid list", current_path, "type_error")
 
             item_type = get_args(expected)[0] if get_args(expected) else Any
             validated_items = []
@@ -264,9 +260,7 @@ else:
                     validated_items.append(item)
                 else:
                     try:
-                        validated_item = _deep_validate(
-                            f"[{i}]", item, item_type, current_path
-                        )
+                        validated_item = _deep_validate(f"[{i}]", item, item_type, current_path)
                         validated_items.append(validated_item)
                     except ValidationError:
                         # MCP fallback: Include item as-is rather than failing
@@ -276,9 +270,7 @@ else:
         # Dict validation - MCP-optimized
         if origin in (dict, Dict):
             if not isinstance(value, dict):
-                raise ValidationError(
-                    "value is not a valid dict", current_path, "type_error"
-                )
+                raise ValidationError("value is not a valid dict", current_path, "type_error")
 
             args = get_args(expected)
             key_type = args[0] if args else Any
@@ -288,9 +280,7 @@ else:
             for k, v in value.items():
                 try:
                     validated_key = (
-                        k
-                        if key_type is Any
-                        else _deep_validate("key", k, key_type, current_path)
+                        k if key_type is Any else _deep_validate("key", k, key_type, current_path)
                     )
                     validated_value = (
                         v
@@ -516,9 +506,7 @@ else:
 
                 if name in values:
                     try:
-                        validated_value = _deep_validate(
-                            name, values[name], expected_type
-                        )
+                        validated_value = _deep_validate(name, values[name], expected_type)
                         values[name] = validated_value
                     except ValidationError as e:
                         # For critical errors, still fail
@@ -576,9 +564,7 @@ else:
 
             return result
 
-        def _serialize_value(
-            self, value, exclude, exclude_none, by_alias, include, **kwargs
-        ):
+        def _serialize_value(self, value, exclude, exclude_none, by_alias, include, **kwargs):
             """Serialize a value with MCP-specific optimizations."""
             if hasattr(value, "model_dump"):
                 return value.model_dump(
@@ -590,24 +576,18 @@ else:
                 )
             elif isinstance(value, list):
                 return [
-                    self._serialize_value(
-                        item, exclude, exclude_none, by_alias, include, **kwargs
-                    )
+                    self._serialize_value(item, exclude, exclude_none, by_alias, include, **kwargs)
                     for item in value
                 ]
             elif isinstance(value, dict):
                 return {
-                    k: self._serialize_value(
-                        v, exclude, exclude_none, by_alias, include, **kwargs
-                    )
+                    k: self._serialize_value(v, exclude, exclude_none, by_alias, include, **kwargs)
                     for k, v in value.items()
                 }
             else:
                 return value
 
-        def _should_exclude(
-            self, key: str, exclude: Union[Set[str], Dict[str, Any]]
-        ) -> bool:
+        def _should_exclude(self, key: str, exclude: Union[Set[str], Dict[str, Any]]) -> bool:
             """Check if a key should be excluded."""
             if isinstance(exclude, set):
                 return key in exclude

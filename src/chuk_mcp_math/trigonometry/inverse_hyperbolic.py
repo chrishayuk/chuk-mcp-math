@@ -79,9 +79,7 @@ async def asinh(x: Union[int, float]) -> float:
     if abs(x) < 1e-10:
         # asinh(x) ≈ x - x³/6 + 3x⁵/40 - ... for small x
         x_squared = x * x
-        return x * (
-            1 - x_squared / 6 * (1 - 3 * x_squared / 20 * (1 - 5 * x_squared / 56))
-        )
+        return x * (1 - x_squared / 6 * (1 - 3 * x_squared / 20 * (1 - 5 * x_squared / 56)))
 
     # For large |x|, use asymptotic expansion to avoid overflow
     if abs(x) > 1e8:
@@ -237,9 +235,7 @@ async def atanh(x: Union[int, float]) -> float:
     if abs(x) < 1e-10:
         # atanh(x) ≈ x + x³/3 + 2x⁵/15 + ... for small x
         x_squared = x * x
-        return x * (
-            1 + x_squared / 3 * (1 + 2 * x_squared / 5 * (1 + 3 * x_squared / 7))
-        )
+        return x * (1 + x_squared / 3 * (1 + 2 * x_squared / 5 * (1 + 3 * x_squared / 7)))
 
     # For x close to ±1, use different approach to avoid precision loss
     if abs(x) > 0.95:

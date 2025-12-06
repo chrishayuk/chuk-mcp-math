@@ -277,9 +277,7 @@ async def find_social_numbers(limit: int, max_chain_length: int = 10) -> Dict:
 
                 if cycle_length > 2 and cycle[0] not in visited:
                     # Valid sociable chain
-                    chains.append(
-                        {"length": cycle_length, "chain": cycle, "type": "sociable"}
-                    )
+                    chains.append({"length": cycle_length, "chain": cycle, "type": "sociable"})
 
                     # Mark all numbers in chain as visited
                     for num in cycle:

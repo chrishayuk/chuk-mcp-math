@@ -73,14 +73,10 @@ class TestCatalanNumbers:
     @pytest.mark.asyncio
     async def test_catalan_number_negative_input(self):
         """Test Catalan function with negative input."""
-        with pytest.raises(
-            ValueError, match="Catalan number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Catalan number index must be non-negative"):
             await catalan_number(-1)
 
-        with pytest.raises(
-            ValueError, match="Catalan number index must be non-negative"
-        ):
+        with pytest.raises(ValueError, match="Catalan number index must be non-negative"):
             await catalan_number(-5)
 
     @pytest.mark.asyncio
@@ -128,9 +124,7 @@ class TestCatalanNumbers:
         known_catalan_numbers = [1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796]
 
         for cat in known_catalan_numbers:
-            assert await is_catalan_number(cat), (
-                f"{cat} should be a Catalan number"
-            )
+            assert await is_catalan_number(cat), f"{cat} should be a Catalan number"
 
     @pytest.mark.asyncio
     async def test_is_catalan_number_non_catalan(self):
@@ -138,16 +132,12 @@ class TestCatalanNumbers:
         non_catalan = [3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20]
 
         for n in non_catalan:
-            assert not await is_catalan_number(n), (
-                f"{n} should not be a Catalan number"
-            )
+            assert not await is_catalan_number(n), f"{n} should not be a Catalan number"
 
     @pytest.mark.asyncio
     async def test_is_catalan_number_edge_cases(self):
         """Test edge cases for Catalan number checking."""
-        assert (
-            not await is_catalan_number(0)
-        )  # 0 is not typically considered Catalan
+        assert not await is_catalan_number(0)  # 0 is not typically considered Catalan
         assert await is_catalan_number(1)  # C_0 = C_1 = 1
         assert not await is_catalan_number(-1)  # Negative numbers
         assert not await is_catalan_number(-5)  # Negative numbers
@@ -250,9 +240,7 @@ class TestBellNumbers:
 
         # Last element of each row should be the first element of the next row
         for i in range(len(triangle) - 1):
-            assert triangle[i][-1] == triangle[i + 1][0], (
-                f"Row {i} last != Row {i + 1} first"
-            )
+            assert triangle[i][-1] == triangle[i + 1][0], f"Row {i} last != Row {i + 1} first"
 
     @pytest.mark.asyncio
     async def test_bell_triangle_edge_cases(self):
@@ -272,9 +260,7 @@ class TestBellNumbers:
             for j in range(1, len(triangle[i])):  # Start from column 1
                 expected = triangle[i - 1][j - 1] + triangle[i][j - 1]
                 actual = triangle[i][j]
-                assert actual == expected, (
-                    f"Element at ({i},{j}) should equal sum pattern"
-                )
+                assert actual == expected, f"Element at ({i},{j}) should equal sum pattern"
 
 
 # ============================================================================
@@ -640,9 +626,7 @@ class TestPerformance:
         expected_types = [int, int, int, int, int, list, list, list, list, list]
 
         for i, (result, expected_type) in enumerate(zip(results, expected_types)):
-            assert isinstance(result, expected_type), (
-                f"Operation {i} returned wrong type"
-            )
+            assert isinstance(result, expected_type), f"Operation {i} returned wrong type"
 
     @pytest.mark.asyncio
     async def test_concurrent_execution(self):
@@ -700,9 +684,7 @@ class TestPerformance:
     async def test_memory_efficiency(self):
         """Test that functions don't consume excessive memory."""
         # Generate several sequences and verify they complete
-        sequences = await asyncio.gather(
-            catalan_sequence(25), bell_sequence(20), bell_triangle(10)
-        )
+        sequences = await asyncio.gather(catalan_sequence(25), bell_sequence(20), bell_triangle(10))
 
         # Verify sequences have expected lengths
         assert len(sequences[0]) == 25

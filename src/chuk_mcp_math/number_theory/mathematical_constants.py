@@ -62,9 +62,9 @@ async def compute_pi_leibniz(terms: int) -> float:
     Returns:
         Approximation of pi
 
-    Examples:
-        await compute_pi_leibniz(1000) → 3.1405926538397929
-        await compute_pi_leibniz(10000) → 3.1414926535900345
+    Example:
+        compute_pi_leibniz(1000) = 3.1405926538397929
+        compute_pi_leibniz(10000) = 3.1414926535900345
     """
     if terms <= 0:
         return 0.0
@@ -123,9 +123,9 @@ async def compute_pi_nilakantha(terms: int) -> float:
     Returns:
         Approximation of pi
 
-    Examples:
-        await compute_pi_nilakantha(100) → 3.1415919276751456
-        await compute_pi_nilakantha(1000) → 3.1415926535585324
+    Example:
+        compute_pi_nilakantha(100) = 3.1415919276751456
+        compute_pi_nilakantha(1000) = 3.1415926535585324
     """
     if terms <= 0:
         return 3.0
@@ -186,9 +186,9 @@ async def compute_pi_machin(terms: int) -> float:
     Returns:
         Very accurate approximation of pi
 
-    Examples:
-        await compute_pi_machin(50) → 3.141592653589793
-        await compute_pi_machin(20) → 3.141592653589793
+    Example:
+        compute_pi_machin(50) = 3.141592653589793
+        compute_pi_machin(20) = 3.141592653589793
     """
     if terms <= 0:
         return 0.0
@@ -259,9 +259,9 @@ async def compute_pi_chudnovsky(terms: int) -> float:
     Returns:
         Extremely accurate approximation of pi
 
-    Examples:
-        await compute_pi_chudnovsky(5) → 3.141592653589793
-        await compute_pi_chudnovsky(1) → 3.141592653589793
+    Example:
+        compute_pi_chudnovsky(5) = 3.141592653589793
+        compute_pi_chudnovsky(1) = 3.141592653589793
     """
     if terms <= 0:
         return 0.0
@@ -317,9 +317,9 @@ async def compute_e_series(terms: int) -> float:
     Returns:
         Approximation of e
 
-    Examples:
-        await compute_e_series(10) → 2.7182815255731922
-        await compute_e_series(20) → 2.7182818284590455
+    Example:
+        compute_e_series(10) = 2.7182815255731922
+        compute_e_series(20) = 2.7182818284590455
     """
     if terms <= 0:
         return 1.0
@@ -374,9 +374,9 @@ async def compute_e_limit(n: int) -> float:
     Returns:
         Approximation of e
 
-    Examples:
-        await compute_e_limit(100000) → 2.7182682371922975
-        await compute_e_limit(1000000) → 2.7182804690957534
+    Example:
+        compute_e_limit(100000) = 2.7182682371922975
+        compute_e_limit(1000000) = 2.7182804690957534
     """
     if n <= 0:
         return 1.0
@@ -430,9 +430,9 @@ async def compute_golden_ratio_fibonacci(terms: int) -> float:
     Returns:
         Approximation of the golden ratio φ ≈ 1.618033988749895
 
-    Examples:
-        await compute_golden_ratio_fibonacci(20) → 1.618033988749895
-        await compute_golden_ratio_fibonacci(30) → 1.618033988749895
+    Example:
+        compute_golden_ratio_fibonacci(20) = 1.618033988749895
+        compute_golden_ratio_fibonacci(30) = 1.618033988749895
     """
     if terms < 2:
         return 1.0
@@ -488,9 +488,9 @@ async def compute_golden_ratio_continued_fraction(depth: int) -> float:
     Returns:
         Approximation of the golden ratio
 
-    Examples:
-        await compute_golden_ratio_continued_fraction(20) → 1.618033988749895
-        await compute_golden_ratio_continued_fraction(10) → 1.6180555555555556
+    Example:
+        compute_golden_ratio_continued_fraction(20) = 1.618033988749895
+        compute_golden_ratio_continued_fraction(10) = 1.6180555555555556
     """
     if depth <= 0:
         return 1.0
@@ -557,9 +557,9 @@ async def compute_euler_gamma_harmonic(terms: int) -> float:
     Returns:
         Approximation of Euler-Mascheroni constant γ ≈ 0.5772156649015329
 
-    Examples:
-        await compute_euler_gamma_harmonic(10000) → 0.5772156649015329
-        await compute_euler_gamma_harmonic(100000) → 0.5772156649015329
+    Example:
+        compute_euler_gamma_harmonic(10000) = 0.5772156649015329
+        compute_euler_gamma_harmonic(100000) = 0.5772156649015329
     """
     if terms <= 0:
         return 0.0
@@ -618,8 +618,8 @@ async def continued_fraction_pi(depth: int) -> List[int]:
     Returns:
         List of continued fraction coefficients
 
-    Examples:
-        await continued_fraction_pi(10) → [3, 7, 15, 1, 292, 1, 1, 1, 2, 1]
+    Example:
+        continued_fraction_pi(10) = [3, 7, 15, 1, 292, 1, 1, 1, 2, 1]
     """
     if depth <= 0:
         return []
@@ -767,8 +767,8 @@ async def continued_fraction_e(depth: int) -> List[int]:
     Returns:
         List of continued fraction coefficients
 
-    Examples:
-        await continued_fraction_e(15) → [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10]
+    Example:
+        continued_fraction_e(15) = [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10]
     """
     if depth <= 0:
         return []
@@ -838,8 +838,8 @@ async def continued_fraction_golden_ratio(depth: int) -> List[int]:
     Returns:
         List of continued fraction coefficients (all 1s)
 
-    Examples:
-        await continued_fraction_golden_ratio(10) → [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    Example:
+        continued_fraction_golden_ratio(10) = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
     """
     return [1] * max(0, depth)
 
@@ -885,9 +885,9 @@ async def pi_digits(precision: int) -> str:
     Returns:
         String representation of pi to specified precision
 
-    Examples:
-        await pi_digits(50) → "3.14159265358979323846264338327950288419716939937510"
-        await pi_digits(20) → "3.14159265358979323846"
+    Example:
+        pi_digits(50) = "3.14159265358979323846264338327950288419716939937510"
+        pi_digits(20) = "3.14159265358979323846"
     """
     if precision <= 0:
         return "3"
@@ -938,9 +938,9 @@ async def e_digits(precision: int) -> str:
     Returns:
         String representation of e to specified precision
 
-    Examples:
-        await e_digits(50) → "2.71828182845904523536028747135266249775724709369995"
-        await e_digits(20) → "2.71828182845904523536"
+    Example:
+        e_digits(50) = "2.71828182845904523536028747135266249775724709369995"
+        e_digits(20) = "2.71828182845904523536"
     """
     if precision <= 0:
         return "2"
@@ -994,10 +994,10 @@ async def approximation_error(method: str, terms: int) -> float:
     Returns:
         Absolute error compared to math.pi
 
-    Examples:
-        await approximation_error("leibniz", 1000) → 0.001
-        await approximation_error("nilakantha", 100) → 7e-06
-        await approximation_error("machin", 20) → 1e-15
+    Example:
+        approximation_error("leibniz", 1000) = 0.001
+        approximation_error("nilakantha", 100) = 7e-06
+        approximation_error("machin", 20) = 1e-15
     """
     true_pi = math.pi
 
@@ -1052,8 +1052,8 @@ async def convergence_comparison(max_terms: int) -> Dict[str, List[float]]:
     Returns:
         Dictionary with method names and their approximation sequences
 
-    Examples:
-        await convergence_comparison(100) → {"leibniz": [...], "nilakantha": [...], "machin": [...]}
+    Example:
+        convergence_comparison(100) = {"leibniz": [...], "nilakantha": [...], "machin": [...]}
     """
     if max_terms <= 0:
         return {}
@@ -1123,10 +1123,10 @@ async def constant_relationships(identity: str) -> float:
     Returns:
         Result of the mathematical relationship
 
-    Examples:
-        await constant_relationships("euler") → -1.0  # e^(iπ) + 1 = 0
-        await constant_relationships("golden_conjugate") → -0.618...
-        await constant_relationships("pi_e_difference") → 0.423...
+    Example:
+        constant_relationships("euler") = -1.0  # e^(iπ) + 1 = 0
+        constant_relationships("golden_conjugate") = -0.618...
+        constant_relationships("pi_e_difference") = 0.423...
     """
     if identity == "euler":
         # Euler's identity: e^(iπ) + 1 = 0
@@ -1202,9 +1202,7 @@ if __name__ == "__main__":
 
         # Test Golden ratio
         print("\nGolden Ratio:")
-        print(
-            f"  compute_golden_ratio_fibonacci(20) = {await compute_golden_ratio_fibonacci(20)}"
-        )
+        print(f"  compute_golden_ratio_fibonacci(20) = {await compute_golden_ratio_fibonacci(20)}")
         print(
             f"  compute_golden_ratio_continued_fraction(15) = {await compute_golden_ratio_continued_fraction(15)}"
         )
@@ -1233,9 +1231,7 @@ if __name__ == "__main__":
         print(
             f"  approximation_error('leibniz', 1000) = {await approximation_error('leibniz', 1000)}"
         )
-        print(
-            f"  approximation_error('machin', 20) = {await approximation_error('machin', 20)}"
-        )
+        print(f"  approximation_error('machin', 20) = {await approximation_error('machin', 20)}")
 
         # Test Relationships
         print("\nConstant Relationships:")

@@ -156,9 +156,7 @@ class TestVectorsParallel:
         v1 = [1, 0, 0]
         v2 = [1, 1e-8, 0]  # Slightly off parallel
         assert await vectors_parallel(v1, v2, tolerance=1e-7) is True
-        assert (
-            await vectors_parallel(v1, v2, tolerance=1e-10) is False
-        )  # Stricter tolerance
+        assert await vectors_parallel(v1, v2, tolerance=1e-10) is False  # Stricter tolerance
 
 
 class TestVectorsOrthogonal:
@@ -256,14 +254,10 @@ class TestTripleScalarProduct:
     @pytest.mark.asyncio
     async def test_non_3d_vectors_error(self):
         """Test that non-3D vectors raise ValueError."""
-        with pytest.raises(
-            ValueError, match="Triple scalar product requires 3D vectors"
-        ):
+        with pytest.raises(ValueError, match="Triple scalar product requires 3D vectors"):
             await triple_scalar_product([1, 2], [3, 4], [5, 6])
 
-        with pytest.raises(
-            ValueError, match="Triple scalar product requires 3D vectors"
-        ):
+        with pytest.raises(ValueError, match="Triple scalar product requires 3D vectors"):
             await triple_scalar_product([1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4])
 
     @pytest.mark.asyncio
@@ -329,14 +323,10 @@ class TestTripleVectorProduct:
     @pytest.mark.asyncio
     async def test_non_3d_vectors_error(self):
         """Test that non-3D vectors raise ValueError."""
-        with pytest.raises(
-            ValueError, match="Triple vector product requires 3D vectors"
-        ):
+        with pytest.raises(ValueError, match="Triple vector product requires 3D vectors"):
             await triple_vector_product([1, 2], [3, 4], [5, 6])
 
-        with pytest.raises(
-            ValueError, match="Triple vector product requires 3D vectors"
-        ):
+        with pytest.raises(ValueError, match="Triple vector product requires 3D vectors"):
             await triple_vector_product([1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4])
 
     @pytest.mark.asyncio

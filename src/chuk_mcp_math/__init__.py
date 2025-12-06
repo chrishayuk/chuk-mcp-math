@@ -52,9 +52,7 @@ from .mcp_decorator import (
 # Package metadata
 __version__ = "1.0.0"
 __author__ = "Chuk MCP Functions"
-__description__ = (
-    "Comprehensive MCP function library for AI models with async native math support"
-)
+__description__ = "Comprehensive MCP function library for AI models with async native math support"
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -152,12 +150,8 @@ def get_execution_stats() -> Dict[str, Any]:
     all_funcs = get_mcp_functions()
 
     total_functions = len(all_funcs)
-    local_count = sum(
-        1 for spec in all_funcs.values() if spec.supports_local_execution()
-    )
-    remote_count = sum(
-        1 for spec in all_funcs.values() if spec.supports_remote_execution()
-    )
+    local_count = sum(1 for spec in all_funcs.values() if spec.supports_local_execution())
+    remote_count = sum(1 for spec in all_funcs.values() if spec.supports_remote_execution())
     cached_count = sum(
         1 for spec in all_funcs.values() if spec.cache_strategy != CacheStrategy.NONE
     )
@@ -339,6 +333,7 @@ async def print_math_summary():
     # Check what's available in arithmetic
     try:
         from . import arithmetic as arith_module
+
         if hasattr(arith_module, "print_reorganized_status"):
             arith_module.print_reorganized_status()
     except ImportError:

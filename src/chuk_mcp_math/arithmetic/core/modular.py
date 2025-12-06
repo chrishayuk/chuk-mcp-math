@@ -31,23 +31,21 @@ Number = Union[int, float]
     ],
 )
 async def modulo(a: Number, b: Number) -> Number:
-    """
-    Calculate the modulo (remainder) of division.
+    """Calculate remainder after division (a % b).
 
     Args:
-        a: Dividend
-        b: Divisor (cannot be zero)
+        a (int or float): Dividend
+        b (int or float): Divisor (cannot be zero)
 
     Returns:
-        The remainder when a is divided by b
+        Remainder when a is divided by b
 
     Raises:
         ValueError: If b is zero
 
-    Examples:
-        await modulo(17, 5) → 2
-        await modulo(10, 3) → 1
-        await modulo(-7, 3) → 2
+    Example:
+        modulo(17, 5) = 2
+        modulo(-7, 3) = 2
     """
     if b == 0:
         raise ValueError("Cannot calculate modulo with zero divisor")
@@ -83,12 +81,11 @@ async def modulo(a: Number, b: Number) -> Number:
     ],
 )
 async def divmod_operation(a: Number, b: Number) -> Tuple[Number, Number]:
-    """
-    Perform division and return both quotient and remainder.
+    """Return both quotient and remainder from division.
 
     Args:
-        a: Dividend
-        b: Divisor (cannot be zero)
+        a (int or float): Dividend
+        b (int or float): Divisor (cannot be zero)
 
     Returns:
         Tuple of (quotient, remainder)
@@ -96,10 +93,9 @@ async def divmod_operation(a: Number, b: Number) -> Tuple[Number, Number]:
     Raises:
         ValueError: If b is zero
 
-    Examples:
-        await divmod_operation(17, 5) → (3, 2)
-        await divmod_operation(20, 4) → (5, 0)
-        await divmod_operation(-17, 5) → (-4, 3)
+    Example:
+        divmod_operation(17, 5) = (3, 2)
+        divmod_operation(-17, 5) = (-4, 3)
     """
     if b == 0:
         raise ValueError("Cannot divide by zero")
@@ -137,23 +133,22 @@ async def divmod_operation(a: Number, b: Number) -> Tuple[Number, Number]:
     ],
 )
 async def mod_power(base: int, exponent: int, modulus: int) -> int:
-    """
-    Calculate modular exponentiation efficiently.
+    """Calculate (base^exponent) mod modulus efficiently.
 
     Args:
-        base: Base number
-        exponent: Non-negative exponent
-        modulus: Positive modulus
+        base (int): Base number
+        exponent (int): Non-negative exponent
+        modulus (int): Positive modulus
 
     Returns:
-        (base^exponent) mod modulus
+        Result of (base^exponent) mod modulus
 
     Raises:
-        ValueError: If exponent is negative or modulus is not positive
+        ValueError: If exponent < 0 or modulus ≤ 0
 
-    Examples:
-        await mod_power(2, 10, 1000) → 24
-        await mod_power(3, 5, 7) → 5
+    Example:
+        mod_power(2, 10, 1000) = 24
+        mod_power(3, 5, 7) = 5
     """
     if exponent < 0:
         raise ValueError("Exponent must be non-negative")
@@ -196,23 +191,21 @@ async def mod_power(base: int, exponent: int, modulus: int) -> int:
     ],
 )
 async def quotient(dividend: int, divisor: int) -> int:
-    """
-    Return the integer quotient of division.
+    """Return integer quotient of division (dividend // divisor).
 
     Args:
-        dividend: Number to be divided
-        divisor: Number to divide by (cannot be zero)
+        dividend (int): Number to be divided
+        divisor (int): Number to divide by (cannot be zero)
 
     Returns:
-        The integer quotient (dividend // divisor)
+        Integer quotient without remainder
 
     Raises:
         ValueError: If divisor is zero
 
-    Examples:
-        await quotient(17, 5) → 3
-        await quotient(20, 4) → 5
-        await quotient(-17, 5) → -4
+    Example:
+        quotient(17, 5) = 3
+        quotient(-17, 5) = -4
     """
     if divisor == 0:
         raise ValueError("Cannot divide by zero")
@@ -248,12 +241,11 @@ async def quotient(dividend: int, divisor: int) -> int:
     ],
 )
 async def remainder(x: float, y: float) -> float:
-    """
-    Calculate the IEEE remainder of x with respect to y.
+    """Calculate IEEE remainder of x with respect to y.
 
     Args:
-        x: Dividend
-        y: Divisor (cannot be zero)
+        x (float): Dividend
+        y (float): Divisor (cannot be zero)
 
     Returns:
         IEEE remainder of x / y
@@ -261,10 +253,9 @@ async def remainder(x: float, y: float) -> float:
     Raises:
         ValueError: If y is zero
 
-    Examples:
-        await remainder(7.5, 2.5) → 0.0
-        await remainder(10.3, 3.0) → 1.3
-        await remainder(-7.5, 2.5) → 0.0
+    Example:
+        remainder(7.5, 2.5) = 0.0
+        remainder(10.3, 3.0) = 1.3
     """
     if y == 0:
         raise ValueError("Cannot calculate remainder with zero divisor")
@@ -296,23 +287,21 @@ async def remainder(x: float, y: float) -> float:
     ],
 )
 async def fmod(x: float, y: float) -> float:
-    """
-    Calculate the floating-point remainder of x / y.
+    """Calculate floating-point remainder of x / y.
 
     Args:
-        x: Dividend
-        y: Divisor (cannot be zero)
+        x (float): Dividend
+        y (float): Divisor (cannot be zero)
 
     Returns:
-        Floating-point remainder of x / y
+        Floating-point remainder
 
     Raises:
         ValueError: If y is zero
 
-    Examples:
-        await fmod(7.5, 2.5) → 0.0
-        await fmod(10.3, 3.0) → 1.2999999999999998
-        await fmod(-7.5, 2.5) → -0.0
+    Example:
+        fmod(7.5, 2.5) = 0.0
+        fmod(10.3, 3.0) = 1.3
     """
     if y == 0:
         raise ValueError("Cannot calculate fmod with zero divisor")

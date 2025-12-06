@@ -164,6 +164,37 @@ class TestBasicFareyOperations:
         assert result == [[0, 1], [1, 1]]
 
     @pytest.mark.asyncio
+    async def test_farey_sequence_large_n_async_yield(self):
+        """Test that large n triggers async yield for responsiveness."""
+        # Test with n > 100 to trigger the asyncio.sleep(0) on line 111
+        result = await farey_sequence(150)
+        # Just verify it completes and has reasonable length
+        assert len(result) > 100
+        assert result[0] == [0, 1]
+        assert result[-1] == [1, 1]
+
+    @pytest.mark.asyncio
+    async def test_farey_sequence_length_edge_cases(self):
+        """Test edge cases for farey_sequence_length."""
+        # n < 0 should raise error (line 162)
+        with pytest.raises(ValueError, match="n must be non-negative"):
+            await farey_sequence_length(-1)
+
+        # n = 0 should return zeros (line 164)
+        result = await farey_sequence_length(0)
+        assert result["length"] == 0
+        assert result["formula_result"] == 0
+        assert result["totient_sum"] == 0
+
+    @pytest.mark.asyncio
+    async def test_farey_sequence_length_large_k_async_yield(self):
+        """Test that large k triggers async yield in totient sum."""
+        # Test with n > 1000 to trigger the asyncio.sleep(0) on line 173
+        result = await farey_sequence_length(1500)
+        assert result["length"] > 1000
+        assert result["n"] == 1500
+
+    @pytest.mark.asyncio
     async def test_farey_neighbors_basic(self):
         """Test finding neighbors of fractions in Farey sequences."""
         # Test 1/2 in F_5
@@ -206,21 +237,31 @@ class TestBasicFareyOperations:
             await farey_neighbors(2, 4, 5)  # 2/4 = 1/2 but not in lowest terms
 
         # Fraction not in sequence (denominator too large)
-        with pytest.raises(
-            ValueError, match="Invalid fraction or Farey sequence order"
-        ):
+        with pytest.raises(ValueError, match="Invalid fraction or Farey sequence order"):
             await farey_neighbors(1, 10, 5)  # 1/10 not in F_5
 
         # Invalid parameters
-        with pytest.raises(
-            ValueError, match="Invalid fraction or Farey sequence order"
-        ):
+        with pytest.raises(ValueError, match="Invalid fraction or Farey sequence order"):
             await farey_neighbors(-1, 2, 5)  # Negative numerator
 
-        with pytest.raises(
-            ValueError, match="Invalid fraction or Farey sequence order"
-        ):
+        with pytest.raises(ValueError, match="Invalid fraction or Farey sequence order"):
             await farey_neighbors(3, 2, 5)  # p > q
+
+    @pytest.mark.asyncio
+    async def test_farey_neighbors_fraction_not_found(self):
+        """Test error when fraction is not in sequence (line 251)."""
+        # Use a fraction that passes validation but mock farey_sequence to not include it
+        from unittest.mock import patch, AsyncMock
+
+        # Mock farey_sequence to return a sequence that doesn't include 1/3
+        mock_seq = [[0, 1], [1, 2], [2, 3], [1, 1]]  # Missing 1/3
+        with patch(
+            "chuk_mcp_math.number_theory.farey_sequences.farey_sequence",
+            new_callable=AsyncMock,
+            return_value=mock_seq,
+        ):
+            with pytest.raises(ValueError, match="Fraction .* not found in F_"):
+                await farey_neighbors(1, 3, 5)
 
 
 # ============================================================================
@@ -412,15 +453,9 @@ class TestFordCircles:
                 expected_center_x = p / q
                 expected_center_y = 1 / (2 * q * q)
 
-                assert abs(radius - expected_radius) < 1e-6, (
-                    f"Radius for {p}/{q} incorrect"
-                )
-                assert abs(center[0] - expected_center_x) < 1e-6, (
-                    f"Center x for {p}/{q} incorrect"
-                )
-                assert abs(center[1] - expected_center_y) < 1e-6, (
-                    f"Center y for {p}/{q} incorrect"
-                )
+                assert abs(radius - expected_radius) < 1e-6, f"Radius for {p}/{q} incorrect"
+                assert abs(center[0] - expected_center_x) < 1e-6, f"Center x for {p}/{q} incorrect"
+                assert abs(center[1] - expected_center_y) < 1e-6, f"Center y for {p}/{q} incorrect"
 
     @pytest.mark.asyncio
     async def test_ford_circles_special_case(self):
@@ -539,9 +574,7 @@ class TestMathematicalProperties:
         assert result["max_denominator"] == 5
         assert result["unique_denominators"] >= 1
         assert result["adjacent_pairs"] == 10  # n-1 adjacent pairs
-        assert (
-            result["farey_property_violations"] == 0
-        )  # Should be 0 for valid Farey sequence
+        assert result["farey_property_violations"] == 0  # Should be 0 for valid Farey sequence
 
         # Check gap statistics
         assert result["max_gap"] > 0
@@ -830,9 +863,7 @@ class TestAdvancedConnections:
         for level in result["tree_levels"]:
             for p, q in level:
                 assert p > 0 and q > 0, f"Fraction {p}/{q} should be positive"
-                assert math.gcd(p, q) == 1, (
-                    f"Fraction {p}/{q} should be in reduced form"
-                )
+                assert math.gcd(p, q) == 1, f"Fraction {p}/{q} should be in reduced form"
 
         # Check parent-child relationships for level 1 → level 2
         parent_level = result["tree_levels"][1]  # [[1, 2], [2, 1]]
@@ -899,9 +930,7 @@ class TestAdvancedConnections:
 
             # For reasonable n, error exponent should be between 0 and 1
             # (though RH predicts it should be ≤ 0.5 + ε)
-            assert 0 <= error_exp <= 2, (
-                f"Error exponent {error_exp} seems unreasonable for n={n}"
-            )
+            assert 0 <= error_exp <= 2, f"Error exponent {error_exp} seems unreasonable for n={n}"
 
             # RH consistency check should be based on the bound
             rh_bound = result["rh_bound"]
@@ -1164,13 +1193,9 @@ class TestErrorHandlingAndEdgeCases:
 
             # Check that fractions match
             seq_fractions = set((p, q) for p, q in seq)
-            circle_fractions = set(
-                (p, q) for p, q in [c["fraction"] for c in circles["circles"]]
-            )
+            circle_fractions = set((p, q) for p, q in [c["fraction"] for c in circles["circles"]])
 
-            assert seq_fractions == circle_fractions, (
-                f"Fraction sets don't match for F_{n}"
-            )
+            assert seq_fractions == circle_fractions, f"Fraction sets don't match for F_{n}"
 
 
 # ============================================================================
@@ -1274,6 +1299,143 @@ class TestParametrized:
         # Count should match Farey sequence length
         seq = await farey_sequence(n)
         assert result["count"] == len(seq)
+
+
+class TestDemoFunctions:
+    """Test demo functions at end of module."""
+
+    @pytest.mark.asyncio
+    async def test_demo_functions_execute(self):
+        """Test that all demo functions execute without errors."""
+        from chuk_mcp_math.number_theory import farey_sequences
+
+        # Run all demo/test functions to improve coverage
+        if hasattr(farey_sequences, "test_farey_sequences"):
+            await farey_sequences.test_farey_sequences()
+
+        if hasattr(farey_sequences, "demo_mathematical_properties"):
+            await farey_sequences.demo_mathematical_properties()
+
+        if hasattr(farey_sequences, "demo_applications"):
+            await farey_sequences.demo_applications()
+
+        if hasattr(farey_sequences, "performance_benchmark"):
+            await farey_sequences.performance_benchmark()
+
+
+class TestAdditionalEdgeCases:
+    """Additional edge case tests to improve coverage."""
+
+    @pytest.mark.asyncio
+    async def test_stern_brocot_tree_max_path_length(self):
+        """Test Stern-Brocot tree with path length limit."""
+        # Try to trigger the safety check on line 424 by using a large enough fraction
+        # that could potentially loop more than 100 times
+        result = await stern_brocot_tree(1, 2)
+        assert result["depth"] < 100
+
+    @pytest.mark.asyncio
+    async def test_farey_mediant_path_max_steps_exceeded(self):
+        """Test mediant path exceeding max steps."""
+        # Create a scenario where max_steps is hit (line 502)
+        result = await farey_mediant_path(0, 1, 1, 1, max_denom=2)
+        # Should either converge or report max steps exceeded
+        assert "steps" in result
+
+    @pytest.mark.asyncio
+    async def test_ford_circle_properties_edge_case(self):
+        """Test ford circle properties with edge cases."""
+        # Test with n <= 0 (lines 688, 695)
+        result = await ford_circle_properties(0)
+        assert result["total_circles"] == 0
+        assert result["tangent_pairs"] == 0
+
+        result_neg = await ford_circle_properties(-1)
+        assert result_neg["total_circles"] == 0
+
+    @pytest.mark.asyncio
+    async def test_farey_sequence_properties_edge_cases(self):
+        """Test farey sequence properties with edge cases."""
+        # Test with n <= 0 (line 904)
+        result = await farey_sequence_properties(0)
+        assert result["length"] == 0
+
+        # Test with length < 2 (line 911)
+        result_1 = await farey_sequence_properties(1)
+        assert result_1["length"] == 2
+
+    @pytest.mark.asyncio
+    async def test_density_analysis_edge_case(self):
+        """Test density analysis with n <= 0."""
+        # Line 1016
+        result = await density_analysis(0)
+        assert result["densities"] == []
+        assert result["density_ratios"] == []
+
+    @pytest.mark.asyncio
+    async def test_gap_analysis_edge_cases(self):
+        """Test gap analysis with edge cases."""
+        # Line 1104, 1110
+        result = await gap_analysis(0)
+        assert result["total_gaps"] == 0
+
+        result_1 = await gap_analysis(1)
+        # F_1 has only 2 elements, so 1 gap
+        assert result_1["total_gaps"] <= 1
+
+    @pytest.mark.asyncio
+    async def test_riemann_hypothesis_negative_n(self):
+        """Test Riemann hypothesis with n <= 0."""
+        # Line 1527
+        result = await riemann_hypothesis_connection(0)
+        assert result["farey_length"] == 0
+
+        result_neg = await riemann_hypothesis_connection(-1)
+        assert result_neg["farey_length"] == 0
+
+    @pytest.mark.asyncio
+    async def test_calkin_wilf_negative_levels(self):
+        """Test Calkin-Wilf tree with negative/zero levels."""
+        # Line 1433
+        result = await calkin_wilf_tree(0)
+        assert result["tree_levels"] == []
+
+        result_neg = await calkin_wilf_tree(-1)
+        assert result_neg["tree_levels"] == []
+
+    @pytest.mark.asyncio
+    async def test_farey_sum_error_handling(self):
+        """Test farey_sum error handling."""
+        # Line 1362
+        with pytest.raises(ValueError, match="Denominators must be positive"):
+            await farey_sum(1, 0, 1, 2)
+
+    @pytest.mark.asyncio
+    async def test_farey_mediant_path_invalid_params(self):
+        """Test farey_mediant_path with invalid parameters."""
+        # Line 493
+        with pytest.raises(ValueError, match="Invalid parameters"):
+            await farey_mediant_path(1, 0, 1, 2, 10)
+
+        with pytest.raises(ValueError, match="Invalid parameters"):
+            await farey_mediant_path(1, 2, 1, 0, 10)
+
+        with pytest.raises(ValueError, match="Invalid parameters"):
+            await farey_mediant_path(1, 2, 1, 3, 0)
+
+    @pytest.mark.asyncio
+    async def test_best_approximation_large_n(self):
+        """Test best approximation with async yield."""
+        # Trigger line 1228 (async sleep every 10 iterations)
+        result = await best_approximation_farey(0.618, 50)
+        assert result["max_denom"] == 50
+
+    @pytest.mark.asyncio
+    async def test_density_analysis_async_yield(self):
+        """Test density analysis with async yield."""
+        # Trigger line 1027 (async sleep every 5 iterations)
+        result = await density_analysis(15)
+        assert len(result["densities"]) == 15
 
 
 if __name__ == "__main__":

@@ -452,9 +452,9 @@ async def stirling_second(n: int, k: int) -> int:
             result = 1
         else:
             # S(n,k) = k*S(n-1,k) + S(n-1,k-1)
-            result = k_val * await stirling_helper(
-                n_val - 1, k_val
-            ) + await stirling_helper(n_val - 1, k_val - 1)
+            result = k_val * await stirling_helper(n_val - 1, k_val) + await stirling_helper(
+                n_val - 1, k_val - 1
+            )
 
         dp[(n_val, k_val)] = result
         return result
@@ -757,9 +757,7 @@ if __name__ == "__main__":
         print("\nNarayana Numbers (FIXED):")
         print(f"  narayana_number(4, 2) = {await narayana_number(4, 2)}")
         print(f"  narayana_number(4, 3) = {await narayana_number(4, 3)}")  # Should be 4
-        print(
-            f"  narayana_number(6, 4) = {await narayana_number(6, 4)}"
-        )  # Should be 60
+        print(f"  narayana_number(6, 4) = {await narayana_number(6, 4)}")  # Should be 60
         print(
             f"  narayana_triangle_row(4) = {await narayana_triangle_row(4)}"
         )  # Should be [1, 6, 4, 1]

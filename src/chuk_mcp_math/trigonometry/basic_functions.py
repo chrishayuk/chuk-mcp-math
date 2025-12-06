@@ -579,8 +579,9 @@ _current_module = sys.modules[__name__]
 
 # Ensure each function from __all__ is available in the module namespace
 for _func_name in __all__:
-    if not hasattr(_current_module, _func_name):
+    if not hasattr(_current_module, _func_name):  # pragma: no cover
         # Try to get the function from globals (it should be there from the decorators)
+        # This is defensive code that only executes if the decorator fails
         _func = globals().get(_func_name)
         if _func:
             setattr(_current_module, _func_name, _func)
@@ -602,7 +603,7 @@ for _func_name in __all__:
 
 # Clean up temporary variables
 del _current_module, _func_name
-if "_func" in locals():
+if "_func" in locals():  # pragma: no cover
     del _func
 
 if __name__ == "__main__":
@@ -629,9 +630,7 @@ if __name__ == "__main__":
                     tan_val = await tan(angle)
                     tan_str = f"{tan_val:8.4f}"
 
-                print(
-                    f"  {name:4s}: sin = {sin_val:8.4f}, cos = {cos_val:8.4f}, tan = {tan_str}"
-                )
+                print(f"  {name:4s}: sin = {sin_val:8.4f}, cos = {cos_val:8.4f}, tan = {tan_str}")
             except ValueError as e:
                 print(f"  {name:4s}: Error - {e}")
 
@@ -643,9 +642,7 @@ if __name__ == "__main__":
             csc_val = await csc(angle)
             sec_val = await sec(angle)
             cot_val = await cot(angle)
-            print(
-                f"  {name}: csc = {csc_val:8.4f}, sec = {sec_val:8.4f}, cot = {cot_val:8.4f}"
-            )
+            print(f"  {name}: csc = {csc_val:8.4f}, sec = {sec_val:8.4f}, cot = {cot_val:8.4f}")
 
         print("\nDegree Variants:")
         degree_angles = [0, 30, 45, 60, 90]

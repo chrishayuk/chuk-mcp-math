@@ -103,27 +103,19 @@ class TestEgyptianFractionDecomposition:
 
         for num, den in unit_fractions:
             result = await egyptian_fraction_decomposition(num, den)
-            assert result == [den], (
-                f"Unit fraction {num}/{den} should decompose to [{den}]"
-            )
+            assert result == [den], f"Unit fraction {num}/{den} should decompose to [{den}]"
 
     @pytest.mark.asyncio
     async def test_egyptian_fraction_decomposition_edge_cases(self):
         """Test Egyptian fraction decomposition edge cases and errors."""
         # Invalid inputs
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await egyptian_fraction_decomposition(0, 5)
 
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await egyptian_fraction_decomposition(2, 0)
 
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await egyptian_fraction_decomposition(-1, 3)
 
         # Improper fractions
@@ -385,9 +377,7 @@ class TestHarmonicNumbersAndSeries:
         # H_n should be approximately ln(n) + γ for large n (Euler-Mascheroni constant γ ≈ 0.5772)
         h_100 = await harmonic_number(100)
         approx = math.log(100) + 0.5772156649
-        assert abs(h_100 - approx) < 0.1, (
-            f"H_100 should approximate ln(100) + γ, got {h_100}"
-        )
+        assert abs(h_100 - approx) < 0.1, f"H_100 should approximate ln(100) + γ, got {h_100}"
 
     @pytest.mark.asyncio
     async def test_harmonic_number_edge_cases(self):
@@ -547,9 +537,7 @@ class TestSylvesterSequence:
 
         for n, expected in known_sylvester:
             result = await sylvester_sequence(n)
-            assert result == expected, (
-                f"sylvester_sequence({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"sylvester_sequence({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_sylvester_sequence_recurrence(self):
@@ -562,9 +550,7 @@ class TestSylvesterSequence:
             for j in range(i):
                 product *= sequence[j]
             expected_next = product + 1
-            assert sequence[i] == expected_next, (
-                f"Sylvester recurrence failed at position {i}"
-            )
+            assert sequence[i] == expected_next, f"Sylvester recurrence failed at position {i}"
 
     @pytest.mark.asyncio
     async def test_sylvester_sequence_edge_cases(self):
@@ -677,9 +663,7 @@ class TestEgyptianFractionProperties:
             result = await egyptian_fraction_properties(denominators)
 
             # Check key properties
-            assert result["sum"] == expected_partial["sum"], (
-                f"Sum mismatch for {denominators}"
-            )
+            assert result["sum"] == expected_partial["sum"], f"Sum mismatch for {denominators}"
             assert result["length"] == expected_partial["length"], (
                 f"Length mismatch for {denominators}"
             )
@@ -736,9 +720,7 @@ class TestEgyptianFractionProperties:
 
         for num, den, representation in optimal_cases:
             result = await is_optimal_egyptian_fraction(num, den, representation)
-            assert result, (
-                f"Representation {representation} should be optimal for {num}/{den}"
-            )
+            assert result, f"Representation {representation} should be optimal for {num}/{den}"
 
     @pytest.mark.asyncio
     async def test_is_optimal_egyptian_fraction_incorrect_representation(self):
@@ -765,9 +747,7 @@ class TestEgyptianFractionProperties:
             (1, 2, [[2, 2]]),  # 1/2 = 1/2 + 1/∞ or different interpretation
         ]
 
-        for num, den, expected_contains in test_cases[
-            :-1
-        ]:  # Skip the last ambiguous case
+        for num, den, expected_contains in test_cases[:-1]:  # Skip the last ambiguous case
             result = await two_unit_fraction_representations(num, den, 100)
 
             # Check that expected representations are found
@@ -796,9 +776,7 @@ class TestEgyptianFractionProperties:
     async def test_two_unit_fraction_representations_edge_cases(self):
         """Test two-term representation finding with edge cases."""
         # Invalid inputs
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await two_unit_fraction_representations(0, 3, 10)
 
         with pytest.raises(ValueError, match="Fraction must be proper"):
@@ -870,16 +848,12 @@ class TestFractionUtilities:
 
         for num, den, expected in test_cases:
             result = await improper_to_egyptian(num, den)
-            assert result["whole"] == expected["whole"], (
-                f"Whole part mismatch for {num}/{den}"
-            )
+            assert result["whole"] == expected["whole"], f"Whole part mismatch for {num}/{den}"
 
             # Verify Egyptian part sums correctly to remainder
             if expected["egyptian"]:
                 remainder = num - expected["whole"] * den
-                egyptian_sum_num, egyptian_sum_den = await unit_fraction_sum(
-                    result["egyptian"]
-                )
+                egyptian_sum_num, egyptian_sum_den = await unit_fraction_sum(result["egyptian"])
                 expected_remainder = Fraction(remainder, den)
                 actual_remainder = Fraction(egyptian_sum_num, egyptian_sum_den)
                 assert expected_remainder == actual_remainder, (
@@ -910,9 +884,7 @@ class TestFractionUtilities:
             # Reconstruct the original fraction
             whole_part = result["whole"]
             if result["egyptian"]:
-                egyptian_sum_num, egyptian_sum_den = await unit_fraction_sum(
-                    result["egyptian"]
-                )
+                egyptian_sum_num, egyptian_sum_den = await unit_fraction_sum(result["egyptian"])
                 fractional_part = Fraction(egyptian_sum_num, egyptian_sum_den)
             else:
                 fractional_part = Fraction(0, 1)
@@ -971,9 +943,7 @@ class TestFractionUtilities:
     async def test_shortest_egyptian_fraction_edge_cases(self):
         """Test shortest Egyptian fraction finding edge cases."""
         # Invalid inputs
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await shortest_egyptian_fraction(0, 3, 2)
 
         with pytest.raises(ValueError, match="Fraction must be proper"):
@@ -981,9 +951,7 @@ class TestFractionUtilities:
 
         # Unit fraction case
         result = await shortest_egyptian_fraction(1, 7, 2)
-        assert result == [7], (
-            "Unit fraction should have shortest representation as itself"
-        )
+        assert result == [7], "Unit fraction should have shortest representation as itself"
 
 
 # ============================================================================
@@ -1039,18 +1007,14 @@ class TestIntegrationAndProperties:
 
         # Should approach 1 but be less than 1
         fraction_sum = sum_num / sum_den
-        assert 0.9 < fraction_sum < 1.0, (
-            "Sylvester expansion should approach but not reach 1"
-        )
+        assert 0.9 < fraction_sum < 1.0, "Sylvester expansion should approach but not reach 1"
 
         # Adding more terms should get closer to 1
         sylvester_terms_5 = await sylvester_sequence(5)
         sum_5_num, sum_5_den = await unit_fraction_sum(sylvester_terms_5)
         fraction_sum_5 = sum_5_num / sum_5_den
 
-        assert fraction_sum_5 > fraction_sum, (
-            "More Sylvester terms should give larger sum"
-        )
+        assert fraction_sum_5 > fraction_sum, "More Sylvester terms should give larger sum"
 
     @pytest.mark.asyncio
     async def test_egyptian_fraction_properties_and_decomposition_consistency(self):
@@ -1062,22 +1026,14 @@ class TestIntegrationAndProperties:
             properties = await egyptian_fraction_properties(egyptian_denoms)
 
             # Verify properties match the decomposition
-            assert properties["length"] == len(egyptian_denoms), (
-                "Length should match decomposition"
-            )
-            assert properties["max_denom"] == max(egyptian_denoms), (
-                "Max denominator should match"
-            )
-            assert properties["min_denom"] == min(egyptian_denoms), (
-                "Min denominator should match"
-            )
+            assert properties["length"] == len(egyptian_denoms), "Length should match decomposition"
+            assert properties["max_denom"] == max(egyptian_denoms), "Max denominator should match"
+            assert properties["min_denom"] == min(egyptian_denoms), "Min denominator should match"
 
             # Sum should equal original fraction
             original_fraction = Fraction(num, den)
             property_sum = Fraction(properties["sum"][0], properties["sum"][1])
-            assert original_fraction == property_sum, (
-                "Property sum should equal original fraction"
-            )
+            assert original_fraction == property_sum, "Property sum should equal original fraction"
 
     @pytest.mark.asyncio
     async def test_harmonic_mean_and_arithmetic_relationship(self):
@@ -1093,9 +1049,7 @@ class TestIntegrationAndProperties:
             am = sum(numbers) / len(numbers)  # Arithmetic mean
 
             # Harmonic mean should be ≤ arithmetic mean
-            assert hm <= am + 1e-10, (
-                f"Harmonic mean should be ≤ arithmetic mean for {numbers}"
-            )
+            assert hm <= am + 1e-10, f"Harmonic mean should be ≤ arithmetic mean for {numbers}"
 
             # For positive numbers, harmonic mean should be positive
             assert hm > 0, f"Harmonic mean should be positive for {numbers}"
@@ -1233,9 +1187,7 @@ class TestPerformance:
 
         # Check some patterns in results
         egyptian_results = [
-            r
-            for r in results
-            if isinstance(r, list) and all(isinstance(x, int) for x in r)
+            r for r in results if isinstance(r, list) and all(isinstance(x, int) for x in r)
         ]
         harmonic_results = [r for r in results if isinstance(r, float)]
         boolean_results = [r for r in results if isinstance(r, bool)]
@@ -1284,9 +1236,7 @@ class TestPerformance:
             harmonic_numbers.append(h)
 
         assert len(harmonic_numbers) == 49, "Should calculate 49 harmonic numbers"
-        assert all(h > 0 for h in harmonic_numbers), (
-            "All harmonic numbers should be positive"
-        )
+        assert all(h > 0 for h in harmonic_numbers), "All harmonic numbers should be positive"
 
         # Test that harmonic numbers are increasing
         for i in range(len(harmonic_numbers) - 1):
@@ -1388,18 +1338,14 @@ class TestErrorHandling:
             await improper_to_egyptian(-5, 3)
 
         # shortest_egyptian_fraction errors
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await shortest_egyptian_fraction(0, 3, 2)
 
         with pytest.raises(ValueError, match="Fraction must be proper"):
             await shortest_egyptian_fraction(5, 3, 2)
 
         # two_unit_fraction_representations errors
-        with pytest.raises(
-            ValueError, match="Numerator and denominator must be positive"
-        ):
+        with pytest.raises(ValueError, match="Numerator and denominator must be positive"):
             await two_unit_fraction_representations(0, 3, 10)
 
         with pytest.raises(ValueError, match="Fraction must be proper"):
@@ -1514,18 +1460,14 @@ class TestParametrized:
         assert result
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "numerator,denominator", [(3, 4), (2, 5), (7, 8), (1, 100), (99, 100)]
-    )
+    @pytest.mark.parametrize("numerator,denominator", [(3, 4), (2, 5), (7, 8), (1, 100), (99, 100)])
     async def test_is_proper_fraction_parametrized(self, numerator, denominator):
         """Parametrized test for proper fraction identification."""
         result = await is_proper_fraction(numerator, denominator)
         assert result
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "n,expected_length", [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
-    )
+    @pytest.mark.parametrize("n,expected_length", [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)])
     async def test_sylvester_sequence_parametrized(self, n, expected_length):
         """Parametrized test for Sylvester sequence length."""
         result = await sylvester_sequence(n)
@@ -1596,9 +1538,7 @@ class TestComprehensiveIntegration:
         # Decompose harmonic fraction into Egyptian fractions
         # Note: This is an improper fraction, so we need to handle it specially
         if harmonic_frac_num >= harmonic_frac_den:
-            egyptian_result = await improper_to_egyptian(
-                harmonic_frac_num, harmonic_frac_den
-            )
+            egyptian_result = await improper_to_egyptian(harmonic_frac_num, harmonic_frac_den)
 
             # Verify reconstruction
             whole_part = egyptian_result["whole"]
@@ -1612,9 +1552,7 @@ class TestComprehensiveIntegration:
 
             reconstructed = whole_part + fractional_part
             original = Fraction(harmonic_frac_num, harmonic_frac_den)
-            assert reconstructed == original, (
-                f"Failed to reconstruct harmonic number {n}"
-            )
+            assert reconstructed == original, f"Failed to reconstruct harmonic number {n}"
 
     @pytest.mark.asyncio
     async def test_sylvester_sequence_egyptian_fraction_properties(self):
@@ -1630,25 +1568,17 @@ class TestComprehensiveIntegration:
         # Sum should be close to but less than 1
         sum_fraction = Fraction(properties["sum"][0], properties["sum"][1])
         sum_decimal = float(sum_fraction)
-        assert 0.9 < sum_decimal < 1.0, (
-            f"Sylvester expansion should approach 1, got {sum_decimal}"
-        )
+        assert 0.9 < sum_decimal < 1.0, f"Sylvester expansion should approach 1, got {sum_decimal}"
 
         # Length should match number of terms
         assert properties["length"] == n
 
         # Should not be complete (sum ≠ 1)
-        assert not properties["is_complete"], (
-            "Sylvester expansion should not sum to exactly 1"
-        )
+        assert not properties["is_complete"], "Sylvester expansion should not sum to exactly 1"
 
         # Denominators should be distinct and increasing
-        assert not properties["has_duplicates"], (
-            "Sylvester denominators should be distinct"
-        )
-        assert sylvester_terms == sorted(sylvester_terms), (
-            "Sylvester terms should be increasing"
-        )
+        assert not properties["has_duplicates"], "Sylvester denominators should be distinct"
+        assert sylvester_terms == sorted(sylvester_terms), "Sylvester terms should be increasing"
 
     @pytest.mark.asyncio
     async def test_mathematical_constants_and_egyptian_fractions(self):
@@ -1690,9 +1620,7 @@ class TestComprehensiveIntegration:
             # Sum of Egyptian part should equal the fractional part
             remainder = num - whole_part * den
             expected_fraction = Fraction(remainder, den)
-            actual_sum = Fraction(
-                egyptian_properties["sum"][0], egyptian_properties["sum"][1]
-            )
+            actual_sum = Fraction(egyptian_properties["sum"][0], egyptian_properties["sum"][1])
             assert expected_fraction == actual_sum, (
                 "Egyptian part should equal fractional remainder"
             )
@@ -1721,9 +1649,7 @@ class TestComprehensiveIntegration:
         two_term_reps = await two_unit_fraction_representations(num, den, 50)
 
         # Check if standard decomposition is optimal
-        await is_optimal_egyptian_fraction(
-            num, den, standard_decomp
-        )
+        await is_optimal_egyptian_fraction(num, den, standard_decomp)
 
         # Find shortest representation
         shortest_rep = await shortest_egyptian_fraction(num, den, max_terms=3)
@@ -1774,9 +1700,7 @@ class TestEdgeCasesAndBoundaryConditions:
 
             # Egyptian decomposition should be trivial
             decomp = await egyptian_fraction_decomposition(num, den)
-            assert decomp == [den], (
-                f"Unit fraction {num}/{den} should decompose to [{den}]"
-            )
+            assert decomp == [den], f"Unit fraction {num}/{den} should decompose to [{den}]"
 
     @pytest.mark.asyncio
     async def test_fractions_close_to_one(self):
@@ -1789,17 +1713,13 @@ class TestEdgeCasesAndBoundaryConditions:
 
             # Should have Egyptian decomposition
             decomp = await egyptian_fraction_decomposition(num, den)
-            assert len(decomp) > 0, (
-                f"Fraction {num}/{den} should have Egyptian decomposition"
-            )
+            assert len(decomp) > 0, f"Fraction {num}/{den} should have Egyptian decomposition"
 
             # Decomposition should sum correctly
             sum_num, sum_den = await unit_fraction_sum(decomp)
             original = Fraction(num, den)
             reconstructed = Fraction(sum_num, sum_den)
-            assert original == reconstructed, (
-                f"Decomposition of {num}/{den} should sum correctly"
-            )
+            assert original == reconstructed, f"Decomposition of {num}/{den} should sum correctly"
 
     @pytest.mark.asyncio
     async def test_harmonic_numbers_boundary_cases(self):
@@ -1822,9 +1742,7 @@ class TestEdgeCasesAndBoundaryConditions:
         for n in range(1, 10):
             partial = await harmonic_partial_sum(n, n)
             expected = 1.0 / n
-            assert abs(partial - expected) < 1e-15, (
-                f"Partial sum from {n} to {n} should be 1/{n}"
-            )
+            assert abs(partial - expected) < 1e-15, f"Partial sum from {n} to {n} should be 1/{n}"
 
     @pytest.mark.asyncio
     async def test_sylvester_sequence_boundary_cases(self):

@@ -186,14 +186,10 @@ class TestClamp:
     @pytest.mark.asyncio
     async def test_clamp_invalid_bounds(self):
         """Test clamp with invalid bounds (min > max)."""
-        with pytest.raises(
-            ValueError, match="Minimum value cannot be greater than maximum value"
-        ):
+        with pytest.raises(ValueError, match="Minimum value cannot be greater than maximum value"):
             await clamp(5, 10, 1)
 
-        with pytest.raises(
-            ValueError, match="Minimum value cannot be greater than maximum value"
-        ):
+        with pytest.raises(ValueError, match="Minimum value cannot be greater than maximum value"):
             await clamp(0, 5.5, 2.3)
 
     @pytest.mark.asyncio
@@ -386,9 +382,7 @@ class TestRankNumbers:
 
         # The maximum rank will be much higher than 100 because of the indexing pattern
         # Each group of 100 creates ranks from 1 to (number of complete groups * 100 + remainder)
-        (
-            max(large_list) + 1
-        )  # Since we have values 0-99, max rank should be around 100
+        (max(large_list) + 1)  # Since we have values 0-99, max rank should be around 100
         # But actually, rank depends on position, not just unique values
         # Let's just verify it's reasonable
         assert max(result) >= 100  # Should be at least 100 due to the pattern
@@ -746,9 +740,7 @@ class TestErrorHandling:
         with pytest.raises(ValueError) as exc_info:
             await clamp(5, 10, 1)
 
-        assert "Minimum value cannot be greater than maximum value" in str(
-            exc_info.value
-        )
+        assert "Minimum value cannot be greater than maximum value" in str(exc_info.value)
 
     @pytest.mark.asyncio
     async def test_empty_list_errors(self):

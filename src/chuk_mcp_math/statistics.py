@@ -241,9 +241,7 @@ async def variance(numbers: List[Union[int, float]], population: bool = False) -
         },
     ],
 )
-async def standard_deviation(
-    numbers: List[Union[int, float]], population: bool = False
-) -> float:
+async def standard_deviation(numbers: List[Union[int, float]], population: bool = False) -> float:
     """
     Calculate the standard deviation of a list of numbers.
 
@@ -393,9 +391,7 @@ async def comprehensive_stats(numbers: List[Union[int, float]]) -> Dict[str, Any
         },
     ],
 )
-async def percentile(
-    numbers: List[Union[int, float]], percentile: Union[int, float]
-) -> float:
+async def percentile(numbers: List[Union[int, float]], percentile: Union[int, float]) -> float:
     """
     Calculate a percentile of a dataset.
 

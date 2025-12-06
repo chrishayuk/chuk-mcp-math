@@ -351,14 +351,10 @@ class TestInRange:
     @pytest.mark.asyncio
     async def test_in_range_invalid_bounds(self):
         """Test in_range with invalid bounds (min > max)."""
-        with pytest.raises(
-            ValueError, match="Minimum value cannot be greater than maximum value"
-        ):
+        with pytest.raises(ValueError, match="Minimum value cannot be greater than maximum value"):
             await in_range(5, 10, 1)
 
-        with pytest.raises(
-            ValueError, match="Minimum value cannot be greater than maximum value"
-        ):
+        with pytest.raises(ValueError, match="Minimum value cannot be greater than maximum value"):
             await in_range(0, 5.5, 2.3)
 
     @pytest.mark.asyncio
@@ -502,12 +498,10 @@ class TestIntegration:
             assert in_range_inclusive == manual_check_inclusive
 
             # in_range(inclusive=False) should be equivalent to min_val < value < max_val
-            in_range_exclusive = await in_range(
-                value, min_val, max_val, inclusive=False
+            in_range_exclusive = await in_range(value, min_val, max_val, inclusive=False)
+            manual_check_exclusive = await less_than(min_val, value) and await less_than(
+                value, max_val
             )
-            manual_check_exclusive = await less_than(
-                min_val, value
-            ) and await less_than(value, max_val)
             assert in_range_exclusive == manual_check_exclusive
 
     @pytest.mark.asyncio
@@ -651,14 +645,8 @@ class TestParametrized:
         self, value, min_val, max_val, expected_inclusive, expected_exclusive
     ):
         """Parametrized test for range operations."""
-        assert (
-            await in_range(value, min_val, max_val, inclusive=True)
-            == expected_inclusive
-        )
-        assert (
-            await in_range(value, min_val, max_val, inclusive=False)
-            == expected_exclusive
-        )
+        assert await in_range(value, min_val, max_val, inclusive=True) == expected_inclusive
+        assert await in_range(value, min_val, max_val, inclusive=False) == expected_exclusive
         assert await between(value, min_val, max_val) == expected_exclusive
 
 
@@ -672,9 +660,7 @@ class TestErrorHandling:
         with pytest.raises(ValueError) as exc_info:
             await in_range(5, 10, 1)
 
-        assert "Minimum value cannot be greater than maximum value" in str(
-            exc_info.value
-        )
+        assert "Minimum value cannot be greater than maximum value" in str(exc_info.value)
 
     @pytest.mark.asyncio
     async def test_error_preserves_async_context(self):

@@ -159,9 +159,7 @@ class AsyncMemoryCache:
             # LRU eviction if needed
             if len(self.cache) >= self.max_size:
                 if self.access_times:
-                    oldest_key = min(
-                        self.access_times.keys(), key=lambda k: self.access_times[k]
-                    )
+                    oldest_key = min(self.access_times.keys(), key=lambda k: self.access_times[k])
                     await self._delete_unlocked(oldest_key)
 
             self.cache[key] = value
@@ -204,12 +202,8 @@ class MCPFunctionSpec(McpPydanticBase):
     category: str = Field(default="general", description="Category")
 
     # Function signature (auto-detected)
-    parameters: Dict[str, Any] = Field(
-        default_factory=dict, description="Parameter specifications"
-    )
-    returns: Dict[str, Any] = Field(
-        default_factory=dict, description="Return specification"
-    )
+    parameters: Dict[str, Any] = Field(default_factory=dict, description="Parameter specifications")
+    returns: Dict[str, Any] = Field(default_factory=dict, description="Return specification")
 
     # Implementation (auto-extracted)
     implementation: str = Field(description="Complete source code")
@@ -228,19 +222,13 @@ class MCPFunctionSpec(McpPydanticBase):
     async_yield_strategy: AsyncYieldStrategy = Field(
         default=AsyncYieldStrategy.NONE, description="Async yielding strategy"
     )
-    max_concurrent_executions: int = Field(
-        default=10, description="Max concurrent executions"
-    )
+    max_concurrent_executions: int = Field(default=10, description="Max concurrent executions")
 
     # Dependencies (optional)
-    dependencies: List[str] = Field(
-        default_factory=list, description="Required packages"
-    )
+    dependencies: List[str] = Field(default_factory=list, description="Required packages")
 
     # Usage examples (optional)
-    examples: List[Dict[str, Any]] = Field(
-        default_factory=list, description="Usage examples"
-    )
+    examples: List[Dict[str, Any]] = Field(default_factory=list, description="Usage examples")
 
     # Enhanced features (optional, lazy defaults)
     cache_strategy: CacheStrategy = Field(
@@ -254,12 +242,8 @@ class MCPFunctionSpec(McpPydanticBase):
         default=ResourceLevel.LOW, description="Memory usage estimate"
     )
     supports_streaming: bool = Field(default=False, description="Streaming support")
-    streaming_mode: StreamingMode = Field(
-        default=StreamingMode.NONE, description="Streaming mode"
-    )
-    timeout_seconds: Optional[float] = Field(
-        default=None, description="Execution timeout"
-    )
+    streaming_mode: StreamingMode = Field(default=StreamingMode.NONE, description="Streaming mode")
+    timeout_seconds: Optional[float] = Field(default=None, description="Execution timeout")
 
     # Security (safe defaults)
     trusted: bool = Field(default=False, description="Trusted source")
@@ -270,17 +254,13 @@ class MCPFunctionSpec(McpPydanticBase):
     workflow_compatible: bool = Field(default=True, description="Workflow compatible")
 
     # Metadata (extensible)
-    metadata: Dict[str, Any] = Field(
-        default_factory=dict, description="Additional metadata"
-    )
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
     created_at: str = Field(description="Creation timestamp")
     updated_at: str = Field(description="Update timestamp")
 
     # Runtime (excluded from serialization) - FIXED: No leading underscores, proper exclusion
     function_ref: Optional[Callable] = Field(default=None, exclude=True)
-    performance_metrics: Optional[PerformanceMetrics] = Field(
-        default=None, exclude=True
-    )
+    performance_metrics: Optional[PerformanceMetrics] = Field(default=None, exclude=True)
     cache_backend: Optional[AsyncMemoryCache] = Field(default=None, exclude=True)
     execution_semaphore: Optional[asyncio.Semaphore] = Field(default=None, exclude=True)
 
@@ -331,17 +311,13 @@ class MCPFunctionSpec(McpPydanticBase):
                 # Cache result
                 await self.cache_backend.set(cache_key, result, self.cache_ttl_seconds)
                 if self.performance_metrics:
-                    self.performance_metrics.update(
-                        duration, True, cache_hit=False, yields=yields
-                    )
+                    self.performance_metrics.update(duration, True, cache_hit=False, yields=yields)
                 return result
 
             except Exception:
                 duration = time.time() - start_time
                 if self.performance_metrics:
-                    self.performance_metrics.update(
-                        duration, False, cache_hit=False, yields=yields
-                    )
+                    self.performance_metrics.update(duration, False, cache_hit=False, yields=yields)
                 raise
 
     async def _execute_function_async(self, arguments: Dict[str, Any]) -> Any:
@@ -374,16 +350,12 @@ class MCPFunctionSpec(McpPydanticBase):
         metrics = self.performance_metrics
         cache_hit_rate = 0.0
         if metrics.cache_hits + metrics.cache_misses > 0:
-            cache_hit_rate = metrics.cache_hits / (
-                metrics.cache_hits + metrics.cache_misses
-            )
+            cache_hit_rate = metrics.cache_hits / (metrics.cache_hits + metrics.cache_misses)
 
         return {
             "execution_count": metrics.execution_count,
             "average_duration": metrics.average_duration,
-            "min_duration": metrics.min_duration
-            if metrics.min_duration != float("inf")
-            else 0,
+            "min_duration": metrics.min_duration if metrics.min_duration != float("inf") else 0,
             "max_duration": metrics.max_duration,
             "error_rate": metrics.error_count / max(metrics.execution_count, 1),
             "cache_hit_rate": cache_hit_rate,
@@ -513,9 +485,7 @@ def _type_to_json_schema(type_hint) -> Dict[str, Any]:
     args = getattr(type_hint, "__args__", ())
 
     # Handle Coroutine types
-    if origin is Coroutine or (
-        hasattr(type_hint, "__name__") and "Coroutine" in str(type_hint)
-    ):
+    if origin is Coroutine or (hasattr(type_hint, "__name__") and "Coroutine" in str(type_hint)):
         if args:
             return _type_to_json_schema(args[-1])  # Return type
         return {"type": "object", "description": "Coroutine result"}
@@ -686,9 +656,7 @@ def mcp_function(
         # Auto-detect yield strategy for async functions
         if is_async:
             detected_yield_strategy = _detect_yield_strategy(f)
-            final_yield_strategy = _normalize_string_arg(
-                async_yield_strategy, AsyncYieldStrategy
-            )
+            final_yield_strategy = _normalize_string_arg(async_yield_strategy, AsyncYieldStrategy)
             if final_yield_strategy == AsyncYieldStrategy.ADAPTIVE:
                 final_yield_strategy = detected_yield_strategy
         else:
@@ -709,9 +677,7 @@ def mcp_function(
             )
         else:
             final_cpu_usage = _normalize_string_arg(estimated_cpu_usage, ResourceLevel)
-            final_memory_usage = _normalize_string_arg(
-                estimated_memory_usage, ResourceLevel
-            )
+            final_memory_usage = _normalize_string_arg(estimated_memory_usage, ResourceLevel)
 
         # Normalize execution modes
         final_execution_modes = _normalize_list_arg(
@@ -828,11 +794,7 @@ def mcp_function(
 def get_mcp_functions(namespace: Optional[str] = None) -> Dict[str, MCPFunctionSpec]:
     """Get registered MCP functions with optional namespace filtering."""
     if namespace:
-        return {
-            name: spec
-            for name, spec in _mcp_functions.items()
-            if spec.namespace == namespace
-        }
+        return {name: spec for name, spec in _mcp_functions.items() if spec.namespace == namespace}
     return _mcp_functions.copy()
 
 
@@ -864,9 +826,7 @@ async def export_function_specs_async(filename: str, namespace: Optional[str] = 
         "metadata": {
             "export_timestamp": _get_current_timestamp(),
             "total_functions": len(functions),
-            "async_functions": len(
-                [s for s in functions.values() if s.is_async_native]
-            ),
+            "async_functions": len([s for s in functions.values() if s.is_async_native]),
             "namespace": namespace,
         },
     }
@@ -885,12 +845,8 @@ async def print_function_summary_async():
         return
 
     async_funcs = [spec for spec in functions.values() if spec.is_async_native]
-    local_funcs = [
-        spec for spec in functions.values() if spec.supports_local_execution()
-    ]
-    remote_funcs = [
-        spec for spec in functions.values() if spec.supports_remote_execution()
-    ]
+    local_funcs = [spec for spec in functions.values() if spec.supports_local_execution()]
+    remote_funcs = [spec for spec in functions.values() if spec.supports_remote_execution()]
     cached_funcs = [
         spec for spec in functions.values() if spec.cache_strategy != CacheStrategy.NONE
     ]
@@ -927,9 +883,7 @@ async def print_function_summary_async():
             if spec.supports_streaming:
                 features += " 🌊"
 
-            print(
-                f"   • {spec.function_name} v{spec.version} - {modes} {preferred}{features}"
-            )
+            print(f"   • {spec.function_name} v{spec.version} - {modes} {preferred}{features}")
             if spec.description:
                 desc = spec.description.replace("[ASYNC] ", "")[:60] + "..."
                 print(f"     {desc}")
@@ -951,10 +905,11 @@ __all__ = [
     "print_function_summary_async",
 ]
 
+
 # Legacy compatibility
 def export_function_specs(filename, namespace=None):
-    return asyncio.run(
-    export_function_specs_async(filename, namespace)
-)
+    return asyncio.run(export_function_specs_async(filename, namespace))
+
+
 def print_function_summary():
     return asyncio.run(print_function_summary_async())

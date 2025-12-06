@@ -1454,9 +1454,7 @@ if __name__ == "__main__":
 
         # Test pseudoprimes
         print("\nPseudoprimes:")
-        print(
-            f"  is_fermat_pseudoprime(341, 2) = {await is_fermat_pseudoprime(341, 2)}"
-        )
+        print(f"  is_fermat_pseudoprime(341, 2) = {await is_fermat_pseudoprime(341, 2)}")
         print(f"  is_carmichael_number(561) = {await is_carmichael_number(561)}")
 
         # Test prime gaps

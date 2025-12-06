@@ -368,21 +368,11 @@ async def prime_quadruplets(limit: int) -> List[Dict]:
 
     for p in primes:
         # Check (p, p+2, p+6, p+8) quadruplets
-        if (
-            p + 8 <= limit
-            and p + 2 in prime_set
-            and p + 6 in prime_set
-            and p + 8 in prime_set
-        ):
+        if p + 8 <= limit and p + 2 in prime_set and p + 6 in prime_set and p + 8 in prime_set:
             quadruplets_2_6_8.append([p, p + 2, p + 6, p + 8])
 
         # Check (p, p+4, p+6, p+10) quadruplets
-        if (
-            p + 10 <= limit
-            and p + 4 in prime_set
-            and p + 6 in prime_set
-            and p + 10 in prime_set
-        ):
+        if p + 10 <= limit and p + 4 in prime_set and p + 6 in prime_set and p + 10 in prime_set:
             quadruplets_4_6_10.append([p, p + 4, p + 6, p + 10])
 
     return [
@@ -656,12 +646,8 @@ async def prime_counting_function(x: int) -> Dict:
         "li_error": round(li_error, 4),
         "pnt_error": round(pnt_error, 4),
         "best_approximation": best_approximation,
-        "li_error_percentage": round(100 * li_error / exact_count, 2)
-        if exact_count > 0
-        else 0,
-        "pnt_error_percentage": round(100 * pnt_error / exact_count, 2)
-        if exact_count > 0
-        else 0,
+        "li_error_percentage": round(100 * li_error / exact_count, 2) if exact_count > 0 else 0,
+        "pnt_error_percentage": round(100 * pnt_error / exact_count, 2) if exact_count > 0 else 0,
     }
 
 

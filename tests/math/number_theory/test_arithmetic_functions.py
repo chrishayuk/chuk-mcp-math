@@ -175,9 +175,7 @@ class TestOmegaFunctions:
             little_result = await little_omega(n)
             big_result = await big_omega(n)
 
-            assert little_result == expected_little, (
-                f"ω({n}) should be {expected_little}"
-            )
+            assert little_result == expected_little, f"ω({n}) should be {expected_little}"
             assert big_result == expected_big, f"Ω({n}) should be {expected_big}"
 
     @pytest.mark.asyncio
@@ -219,9 +217,7 @@ class TestDivisorFunctions:
 
         for n, expected in known_tau_values:
             result = await divisor_power_sum(n, 0)
-            assert result == expected, (
-                f"τ({n}) = σ₀({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"τ({n}) = σ₀({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_divisor_power_sum_sigma_function(self):
@@ -241,9 +237,7 @@ class TestDivisorFunctions:
 
         for n, expected in known_sigma_values:
             result = await divisor_power_sum(n, 1)
-            assert result == expected, (
-                f"σ({n}) = σ₁({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"σ({n}) = σ₁({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_divisor_power_sum_higher_powers(self):
@@ -283,9 +277,7 @@ class TestVonMangoldtFunction:
         for p in primes:
             result = await von_mangoldt_function(p)
             expected = math.log(p)
-            assert abs(result - expected) < 1e-10, (
-                f"Λ({p}) should be ln({p}) ≈ {expected}"
-            )
+            assert abs(result - expected) < 1e-10, f"Λ({p}) should be ln({p}) ≈ {expected}"
 
     @pytest.mark.asyncio
     async def test_von_mangoldt_function_prime_powers(self):
@@ -303,9 +295,7 @@ class TestVonMangoldtFunction:
         for pk, p in prime_powers:
             result = await von_mangoldt_function(pk)
             expected = math.log(p)
-            assert abs(result - expected) < 1e-10, (
-                f"Λ({pk}) should be ln({p}) ≈ {expected}"
-            )
+            assert abs(result - expected) < 1e-10, f"Λ({pk}) should be ln({p}) ≈ {expected}"
 
     @pytest.mark.asyncio
     async def test_von_mangoldt_function_composites(self):
@@ -373,9 +363,7 @@ class TestLiouvilleFunction:
             lambda_n = await liouville_function(n)
             lambda_mn = await liouville_function(m * n)
 
-            assert lambda_mn == lambda_m * lambda_n, (
-                f"λ({m}×{n}) should equal λ({m})×λ({n})"
-            )
+            assert lambda_mn == lambda_m * lambda_n, f"λ({m}×{n}) should equal λ({m})×λ({n})"
 
     @pytest.mark.asyncio
     async def test_liouville_function_edge_cases(self):
@@ -585,9 +573,7 @@ class TestPerfectNumberFunctions:
 
             # Exactly one should be true
             total = sum([is_perfect, is_abundant, is_deficient])
-            assert total == 1, (
-                f"{n} should be exactly one of perfect/abundant/deficient"
-            )
+            assert total == 1, f"{n} should be exactly one of perfect/abundant/deficient"
 
     @pytest.mark.asyncio
     async def test_perfect_numbers_up_to_small(self):
@@ -845,9 +831,7 @@ class TestParametrized:
         assert await euler_totient(n) == expected
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "n,expected", [(1, 1), (2, -1), (6, 1), (12, 0), (30, -1), (42, -1)]
-    )
+    @pytest.mark.parametrize("n,expected", [(1, 1), (2, -1), (6, 1), (12, 0), (30, -1), (42, -1)])
     async def test_mobius_function_parametrized(self, n, expected):
         """Parametrized test for Möbius function calculation."""
         assert await mobius_function(n) == expected
@@ -865,9 +849,7 @@ class TestParametrized:
 
 if __name__ == "__main__":
     # Run the tests
-    pytest.main(
-        [__file__, "-v", "--tb=short", "--asyncio-mode=auto"]
-    )  #!/usr/bin/env python3
+    pytest.main([__file__, "-v", "--tb=short", "--asyncio-mode=auto"])  #!/usr/bin/env python3
 # tests/math/number_theory/test_arithmetic_functions.py
 """
 Comprehensive pytest test suite for arithmetic_functions.py module.

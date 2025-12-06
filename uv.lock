@@ -54,8 +54,12 @@ version = "0.1.1"
 source = { editable = "." }
 
 [package.optional-dependencies]
+cli = [
+    { name = "click" },
+]
 dev = [
     { name = "black" },
+    { name = "click" },
     { name = "flake8" },
     { name = "hypothesis" },
     { name = "pytest" },
@@ -76,6 +80,8 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = ">=23.0.0" },
+    { name = "click", marker = "extra == 'cli'", specifier = ">=8.0.0" },
+    { name = "click", marker = "extra == 'dev'", specifier = ">=8.0.0" },
     { name = "flake8", marker = "extra == 'dev'", specifier = ">=6.0.0" },
     { name = "hypothesis", marker = "extra == 'dev'", specifier = ">=6.70.0" },
     { name = "pydantic", marker = "extra == 'pydantic'", specifier = ">=2.11.1" },
@@ -84,7 +90,7 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0.0" },
     { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.10.0" },
 ]
-provides-extras = ["pydantic", "dev"]
+provides-extras = ["pydantic", "cli", "dev"]
 
 [package.metadata.requires-dev]
 dev = [

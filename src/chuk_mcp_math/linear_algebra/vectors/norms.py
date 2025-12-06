@@ -16,9 +16,7 @@ from ...mcp_decorator import mcp_function
     cache_strategy="memory",
     estimated_cpu_usage="low",
 )
-async def vector_norm(
-    vector: List[Union[int, float]], p: Union[int, float] = 2
-) -> float:
+async def vector_norm(vector: List[Union[int, float]], p: Union[int, float] = 2) -> float:
     """
     Calculate the p-norm of a vector.
 

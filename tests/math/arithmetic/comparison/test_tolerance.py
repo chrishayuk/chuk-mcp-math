@@ -198,9 +198,7 @@ class TestCloseToZero:
         """Test close_to_zero with extreme values."""
         # Very small numbers - sys.float_info.min is actually quite large compared to 1e-300
         # sys.float_info.min ≈ 2.2e-308, so with tolerance 1e-300, it should return True
-        assert (
-            await close_to_zero(sys.float_info.min, tolerance=1e-300)
-        )  # Fixed expectation
+        assert await close_to_zero(sys.float_info.min, tolerance=1e-300)  # Fixed expectation
         assert not await close_to_zero(sys.float_info.min, tolerance=1e-310)
 
         # Regular numbers that are definitely not close to zero
@@ -598,9 +596,7 @@ class TestIntegration:
             for tolerance in [1e-9, 1e-6, 1e-3]:
                 close_to_zero_result = await close_to_zero(value, tolerance)
                 approx_equal_result = await approximately_equal(value, 0, tolerance)
-                is_close_result = await is_close(
-                    value, 0, rel_tol=0.0, abs_tol=tolerance
-                )
+                is_close_result = await is_close(value, 0, rel_tol=0.0, abs_tol=tolerance)
 
                 # All three should give the same result
                 assert close_to_zero_result == approx_equal_result == is_close_result
@@ -750,8 +746,8 @@ class TestErrorHandling:
 
         # Negative tolerance - the function uses abs() which makes negative tolerance positive
         # But abs(-1e-5) = 1e-5, and abs(1.0 - 1.000001) = 1e-6, so 1e-6 <= 1e-5 is True
-        assert (
-            not await approximately_equal(1.0, 1.000001, tolerance=-1e-5)
+        assert not await approximately_equal(
+            1.0, 1.000001, tolerance=-1e-5
         )  # Fixed: Should be False
 
         # Very large tolerance

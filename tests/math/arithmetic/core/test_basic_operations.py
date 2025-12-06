@@ -469,14 +469,10 @@ class TestSqrt:
     @pytest.mark.asyncio
     async def test_sqrt_negative_raises_error(self):
         """Test that square root of negative number raises ValueError."""
-        with pytest.raises(
-            ValueError, match="Cannot calculate square root of negative number"
-        ):
+        with pytest.raises(ValueError, match="Cannot calculate square root of negative number"):
             await sqrt(-1)
 
-        with pytest.raises(
-            ValueError, match="Cannot calculate square root of negative number"
-        ):
+        with pytest.raises(ValueError, match="Cannot calculate square root of negative number"):
             await sqrt(-0.1)
 
     @pytest.mark.asyncio

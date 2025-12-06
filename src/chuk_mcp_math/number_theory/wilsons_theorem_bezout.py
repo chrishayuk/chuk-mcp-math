@@ -205,9 +205,7 @@ async def wilson_theorem_verify(p: int) -> Dict:
     # Include full factorial for small numbers
     if p <= 20:
         result["factorial"] = factorial
-        result["detailed_verification"] = (
-            f"({p - 1})! = {factorial} ≡ {factorial_mod_p} (mod {p})"
-        )
+        result["detailed_verification"] = f"({p - 1})! = {factorial} ≡ {factorial_mod_p} (mod {p})"
 
     # Include intermediate steps for very small numbers
     if p <= 10 and intermediate_steps:
@@ -397,9 +395,7 @@ async def bezout_identity(a: int, b: int) -> Dict:
         old_y, y = y, old_y - quotient * y
 
         # Record step
-        steps.append(
-            {"quotient": quotient, "remainder": b, "x_coeff": old_x, "y_coeff": old_y}
-        )
+        steps.append({"quotient": quotient, "remainder": b, "x_coeff": old_x, "y_coeff": old_y})
 
         # Yield control for very large numbers
         if len(steps) % 100 == 0 and max(abs(original_a), abs(original_b)) > 10**10:
@@ -412,7 +408,9 @@ async def bezout_identity(a: int, b: int) -> Dict:
         old_x = -old_x
         old_y = -old_y
 
-    verification = f"{original_a}*{old_x} + {original_b}*{old_y} = {original_a * old_x + original_b * old_y}"
+    verification = (
+        f"{original_a}*{old_x} + {original_b}*{old_y} = {original_a * old_x + original_b * old_y}"
+    )
 
     result = {
         "gcd": gcd_value,
@@ -629,9 +627,7 @@ async def bezout_applications(a: int, b: int, applications: List[str] = None) ->
                 # y is the inverse of b modulo a (if a > 1)
                 if a > 1:
                     inverse_b_mod_a = y % a
-                    results["modular_inverse"][f"inverse_of_{b}_mod_{a}"] = (
-                        inverse_b_mod_a
-                    )
+                    results["modular_inverse"][f"inverse_of_{b}_mod_{a}"] = inverse_b_mod_a
             else:
                 results["modular_inverse"] = {
                     "error": f"No modular inverse exists (gcd = {gcd_val} ≠ 1)"
@@ -825,9 +821,7 @@ async def demo_wilson_theorem():
                 f"  p={p}: ({p - 1})! = {verification['factorial']} ≡ {verification['factorial_mod_p']} ≡ -1 (mod {p}) ✓"
             )
         else:
-            print(
-                f"  p={p}: ({p - 1})! ≡ {verification['factorial_mod_p']} ≡ -1 (mod {p}) ✓"
-            )
+            print(f"  p={p}: ({p - 1})! ≡ {verification['factorial_mod_p']} ≡ -1 (mod {p}) ✓")
 
     # Test composite numbers
     composites = [4, 6, 8, 9, 10, 12]
@@ -835,9 +829,7 @@ async def demo_wilson_theorem():
 
     for n in composites:
         verification = await wilson_theorem_verify(n)
-        print(
-            f"  n={n}: ({n - 1})! ≡ {verification['factorial_mod_p']} ≢ -1 (mod {n}) ✗"
-        )
+        print(f"  n={n}: ({n - 1})! ≡ {verification['factorial_mod_p']} ≢ -1 (mod {n}) ✗")
 
 
 async def demo_bezout_identity():
@@ -845,9 +837,7 @@ async def demo_bezout_identity():
     print("\n🎯 Bézout's Identity Demonstration")
     print("=" * 35)
 
-    print(
-        "Bézout's Identity: For any integers a, b, ∃ integers x, y such that ax + by = gcd(a,b)"
-    )
+    print("Bézout's Identity: For any integers a, b, ∃ integers x, y such that ax + by = gcd(a,b)")
 
     examples = [
         (30, 18, "Common example"),
@@ -866,9 +856,7 @@ async def demo_bezout_identity():
         print(f"    Verification: {a}×{x} + {b}×{y} = {a * x + b * y} = {gcd_val} ✓")
 
         # Show applications
-        apps = await bezout_applications(
-            a, b, ["modular_inverse", "fraction_reduction"]
-        )
+        apps = await bezout_applications(a, b, ["modular_inverse", "fraction_reduction"])
 
         if "modular_inverse" in apps and "error" not in apps["modular_inverse"]:
             inv_info = apps["modular_inverse"]

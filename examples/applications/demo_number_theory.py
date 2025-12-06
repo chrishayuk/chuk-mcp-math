@@ -86,9 +86,7 @@ async def demo_prime_numbers():
 
     # Twin primes using new advanced module
     print("\n  Twin Prime Pairs:")
-    twin_data = await number_theory.twin_prime_conjecture_data(
-        100, return_all_pairs=True
-    )
+    twin_data = await number_theory.twin_prime_conjecture_data(100, return_all_pairs=True)
     if "twin_prime_pairs" in twin_data:
         twin_pairs = twin_data["twin_prime_pairs"][:8]  # Show first 8 pairs
         for p, q in twin_pairs:
@@ -196,15 +194,11 @@ async def demo_cryptographic_applications():
             print(f"    Discrete logs base {prim_root} mod {p}:")
             for target in range(1, min(p, 6)):
                 try:
-                    log_val = await number_theory.discrete_log_naive(
-                        prim_root, target, p
-                    )
+                    log_val = await number_theory.discrete_log_naive(prim_root, target, p)
                     if log_val is not None:
                         # Verify: prim_root^log_val ≡ target (mod p)
                         verification = pow(prim_root, log_val, p)
-                        print(
-                            f"      {prim_root}^{log_val} ≡ {verification} ≡ {target} (mod {p})"
-                        )
+                        print(f"      {prim_root}^{log_val} ≡ {verification} ≡ {target} (mod {p})")
                 except Exception:
                     pass
 
@@ -227,13 +221,9 @@ async def demo_diophantine_equations():
         if result["solvable"]:
             print(f"  {a}x + {b}y = {c}")
             print(f"    Solution: {result['general']}")
-            print(
-                f"    Particular: x = {result['particular'][0]}, y = {result['particular'][1]}"
-            )
+            print(f"    Particular: x = {result['particular'][0]}, y = {result['particular'][1]}")
         else:
-            print(
-                f"  {a}x + {b}y = {c}: No solution ({result.get('reason', 'Unknown')})"
-            )
+            print(f"  {a}x + {b}y = {c}: No solution ({result.get('reason', 'Unknown')})")
 
     await print_subheader("Pell's Equation")
 
@@ -373,9 +363,7 @@ async def demo_continued_fractions():
     for value, name in constants:
         cf_result = await number_theory.continued_fraction_expansion(value, 8)
         print(f"  {name}: CF = {cf_result['cf']}")
-        print(
-            f"    Convergent: {cf_result['convergent'][0]}/{cf_result['convergent'][1]}"
-        )
+        print(f"    Convergent: {cf_result['convergent'][0]}/{cf_result['convergent'][1]}")
         print(f"    Error: {cf_result['error']:.2e}")
 
     await print_subheader("Rational Approximations")
@@ -403,9 +391,7 @@ async def demo_continued_fractions():
         if not sqrt_cf.get("is_perfect_square", False):
             initial = sqrt_cf["initial"]
             period = sqrt_cf["cf_period"]
-            print(
-                f"  √{n} = {initial} + CF with period {period} (length {len(period)})"
-            )
+            print(f"  √{n} = {initial} + CF with period {period} (length {len(period)})")
 
     await print_subheader("Continued Fractions and Pell Equations")
 
@@ -442,9 +428,7 @@ async def demo_continued_fractions():
         fraction = approx["fraction"]
         error = approx["error"]
         interpretation = approx["calendar_interpretation"]
-        print(
-            f"    {fraction[0]}/{fraction[1]}: {interpretation} (error: {error:.6f} days)"
-        )
+        print(f"    {fraction[0]}/{fraction[1]}: {interpretation} (error: {error:.6f} days)")
 
 
 async def demo_farey_sequences():
@@ -518,9 +502,7 @@ async def demo_farey_sequences():
 
     for p1, q1, p2, q2 in tangency_examples:
         tangency = await number_theory.circle_tangency(p1, q1, p2, q2)
-        print(
-            f"    Circles for {p1}/{q1} and {p2}/{q2}: tangent = {tangency['are_tangent']}"
-        )
+        print(f"    Circles for {p1}/{q1} and {p2}/{q2}: tangent = {tangency['are_tangent']}")
         print(
             f"      Farey adjacent: {tangency['are_farey_adjacent']} (det = {tangency['determinant']})"
         )
@@ -575,9 +557,7 @@ async def demo_farey_sequences():
     for p1, q1, p2, q2 in between_examples:
         between_result = await number_theory.farey_fraction_between(p1, q1, p2, q2)
         between_frac = between_result["fraction_between"]
-        print(
-            f"    Between {p1}/{q1} and {p2}/{q2}: {between_frac[0]}/{between_frac[1]} (mediant)"
-        )
+        print(f"    Between {p1}/{q1} and {p2}/{q2}: {between_frac[0]}/{between_frac[1]} (mediant)")
         print(
             f"      Value: {between_result['value']:.6f}, adjacent: {between_result['fractions_are_adjacent']}"
         )
@@ -594,9 +574,7 @@ async def demo_mathematical_sequences():
     sequences = {
         "Fibonacci": [await number_theory.fibonacci(i) for i in range(n_terms)],
         "Lucas": [await number_theory.lucas_number(i) for i in range(n_terms)],
-        "Triangular": [
-            await number_theory.triangular_number(i) for i in range(1, n_terms + 1)
-        ],
+        "Triangular": [await number_theory.triangular_number(i) for i in range(1, n_terms + 1)],
         "Catalan": [await number_theory.catalan_number(i) for i in range(n_terms)],
         "Bell": [
             await number_theory.bell_number(i) for i in range(8)
@@ -735,9 +713,7 @@ async def demo_advanced_prime_analysis():
         print(f"  Prime gaps in range [{start}, {end}]:")
         print(f"    Average gap: {gaps_result['avg_gap']}")
         print(f"    Maximum gap: {gaps_result['max_gap']}")
-        print(
-            f"    Gap distribution: {dict(list(gaps_result['gap_distribution'].items())[:5])}"
-        )
+        print(f"    Gap distribution: {dict(list(gaps_result['gap_distribution'].items())[:5])}")
 
     await print_subheader("Prime Conjectures")
 
@@ -817,9 +793,7 @@ async def demo_number_properties():
     # Show digit sum calculation for some Harshad numbers
     for n in harshad_numbers[:5]:
         digit_sum = await number_theory.digit_sum(n)
-        print(
-            f"      {n}: digit sum = {digit_sum}, {n} ÷ {digit_sum} = {n // digit_sum}"
-        )
+        print(f"      {n}: digit sum = {digit_sum}, {n} ÷ {digit_sum} = {n // digit_sum}")
 
 
 async def demo_iterative_sequences():
@@ -923,12 +897,8 @@ async def demo_advanced_arithmetic_functions():
         divisors = await number_theory.divisors(n)
         divisor_count = await number_theory.divisor_count(n)
         divisor_sum = await number_theory.divisor_sum(n)
-        little_omega = await number_theory.little_omega(
-            n
-        )  # Number of distinct prime factors
-        big_omega = await number_theory.big_omega(
-            n
-        )  # Number of prime factors with multiplicity
+        little_omega = await number_theory.little_omega(n)  # Number of distinct prime factors
+        big_omega = await number_theory.big_omega(n)  # Number of prime factors with multiplicity
 
         print(f"  n = {n}:")
         print(f"    Divisors: {divisors} (count: {divisor_count}, sum: {divisor_sum})")
@@ -1009,9 +979,7 @@ async def demo_partitions_and_additive_theory():
         goldbach_result = await number_theory.goldbach_conjecture_check(n)
         if goldbach_result:
             pairs = await number_theory.goldbach_pairs(n)
-            print(
-                f"    {n} = {pairs[0][0]} + {pairs[0][1]} (and {len(pairs) - 1} other ways)"
-            )
+            print(f"    {n} = {pairs[0][0]} + {pairs[0][1]} (and {len(pairs) - 1} other ways)")
 
     await print_subheader("Sum of Squares")
 
@@ -1092,10 +1060,7 @@ async def demo_cross_module_relationships():
                     # Find the fraction key
                     cf_frac = None
                     for key in cf_approx.keys():
-                        if (
-                            isinstance(cf_approx[key], list)
-                            and len(cf_approx[key]) == 2
-                        ):
+                        if isinstance(cf_approx[key], list) and len(cf_approx[key]) == 2:
                             cf_frac = cf_approx[key]
                             break
 
@@ -1107,14 +1072,10 @@ async def demo_cross_module_relationships():
                     print(f"      CF:    {cf_approx}")
 
             except Exception as e:
-                print(
-                    f"    {name} ≈ {value:.6f}: Error in approximation comparison - {e}"
-                )
+                print(f"    {name} ≈ {value:.6f}: Error in approximation comparison - {e}")
                 # Fallback: just show Farey approximation
                 try:
-                    farey_approx = await number_theory.best_approximation_farey(
-                        value, 20
-                    )
+                    farey_approx = await number_theory.best_approximation_farey(value, 20)
                     print(
                         f"      Farey: {farey_approx['best_approximation'][0]}/{farey_approx['best_approximation'][1]} (error: {farey_approx['error']:.6f})"
                     )
@@ -1132,9 +1093,7 @@ async def demo_cross_module_relationships():
         is_b_square = await number_theory.is_perfect_square(b)
         is_c_square = await number_theory.is_perfect_square(c)
 
-        print(
-            f"    ({a}, {b}, {c}): a² = {is_a_square}, b² = {is_b_square}, c² = {is_c_square}"
-        )
+        print(f"    ({a}, {b}, {c}): a² = {is_a_square}, b² = {is_b_square}, c² = {is_c_square}")
 
         # Check if legs are triangular numbers
         triangular_found = False
@@ -1205,9 +1164,7 @@ async def demo_performance_and_scale():
     start_time = time.time()
     await number_theory.first_n_primes(168)  # π(1000) = 168
     end_time = time.time()
-    print(
-        f"    First 168 primes (all primes ≤ 1000): {end_time - start_time:.4f} seconds"
-    )
+    print(f"    First 168 primes (all primes ≤ 1000): {end_time - start_time:.4f} seconds")
 
     # Find all perfect squares up to 10000
     start_time = time.time()

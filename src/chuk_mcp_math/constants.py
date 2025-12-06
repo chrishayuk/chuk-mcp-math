@@ -987,9 +987,7 @@ if __name__ == "__main__":
 
         # Test parallel execution
         print("\n🚀 Testing Parallel Execution:")
-        parallel_results = await asyncio.gather(
-            pi(), e(), golden_ratio(), sqrt2(), ln2()
-        )
+        parallel_results = await asyncio.gather(pi(), e(), golden_ratio(), sqrt2(), ln2())
         print(f"Parallel results: {parallel_results}")
 
         # Test relationships

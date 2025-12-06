@@ -60,10 +60,10 @@ async def approximately_equal(a: Number, b: Number, tolerance: float = 1e-9) -> 
     Returns:
         True if |a - b| <= tolerance, False otherwise
 
-    Examples:
-        await approximately_equal(0.1, 0.1) → True
-        await approximately_equal(0.1, 0.10000001, 1e-7) → True
-        await approximately_equal(0.1, 0.2) → False
+    Example:
+        approximately_equal(0.1, 0.1) = True
+        approximately_equal(0.1, 0.10000001, 1e-7) = True
+        approximately_equal(0.1, 0.2) = False
     """
     return abs(a - b) <= tolerance
 
@@ -103,10 +103,10 @@ async def close_to_zero(x: Number, tolerance: float = 1e-9) -> bool:
     Returns:
         True if |x| <= tolerance, False otherwise
 
-    Examples:
-        await close_to_zero(0) → True
-        await close_to_zero(1e-10, 1e-9) → True
-        await close_to_zero(0.001) → False
+    Example:
+        close_to_zero(0) = True
+        close_to_zero(1e-10, 1e-9) = True
+        close_to_zero(0.001) = False
     """
     return abs(x) <= tolerance
 
@@ -141,11 +141,11 @@ async def is_finite(x: Number) -> bool:
     Returns:
         True if x is finite, False otherwise
 
-    Examples:
-        await is_finite(42.5) → True
-        await is_finite(0) → True
-        await is_finite(float('inf')) → False
-        await is_finite(float('nan')) → False
+    Example:
+        is_finite(42.5) = True
+        is_finite(0) = True
+        is_finite(float('inf')) = False
+        is_finite(float('nan')) = False
     """
     return math.isfinite(float(x))
 
@@ -180,11 +180,11 @@ async def is_nan(x: Number) -> bool:
     Returns:
         True if x is NaN, False otherwise
 
-    Examples:
-        await is_nan(float('nan')) → True
-        await is_nan(42.5) → False
-        await is_nan(float('inf')) → False
-        await is_nan(0) → False
+    Example:
+        is_nan(float('nan')) = True
+        is_nan(42.5) = False
+        is_nan(float('inf')) = False
+        is_nan(0) = False
     """
     return math.isnan(float(x))
 
@@ -227,11 +227,11 @@ async def is_infinite(x: Number) -> bool:
     Returns:
         True if x is infinite, False otherwise
 
-    Examples:
-        await is_infinite(float('inf')) → True
-        await is_infinite(float('-inf')) → True
-        await is_infinite(42.5) → False
-        await is_infinite(float('nan')) → False
+    Example:
+        is_infinite(float('inf')) = True
+        is_infinite(float('-inf')) = True
+        is_infinite(42.5) = False
+        is_infinite(float('nan')) = False
     """
     return math.isinf(float(x))
 
@@ -266,11 +266,11 @@ async def is_normal(x: Number) -> bool:
     Returns:
         True if x is a normal number, False otherwise
 
-    Examples:
-        await is_normal(42.5) → True
-        await is_normal(1e-308) → True
-        await is_normal(0) → False
-        await is_normal(float('inf')) → False
+    Example:
+        is_normal(42.5) = True
+        is_normal(1e-308) = True
+        is_normal(0) = False
+        is_normal(float('inf')) = False
     """
     # Check if it's a float first
     try:
@@ -309,9 +309,7 @@ async def is_normal(x: Number) -> bool:
         },
     ],
 )
-async def is_close(
-    a: Number, b: Number, rel_tol: float = 1e-9, abs_tol: float = 0.0
-) -> bool:
+async def is_close(a: Number, b: Number, rel_tol: float = 1e-9, abs_tol: float = 0.0) -> bool:
     """
     Check if two numbers are close using both relative and absolute tolerances.
 
@@ -326,10 +324,10 @@ async def is_close(
     Returns:
         True if numbers are close within tolerances, False otherwise
 
-    Examples:
-        await is_close(1000000.1, 1000000.2, rel_tol=1e-6) → True
-        await is_close(0, 1e-10, abs_tol=1e-9) → True
-        await is_close(1.0, 1.000001, rel_tol=1e-5) → True
+    Example:
+        is_close(1000000.1, 1000000.2, rel_tol=1e-6) = True
+        is_close(0, 1e-10, abs_tol=1e-9) = True
+        is_close(1.0, 1.000001, rel_tol=1e-5) = True
     """
     # Handle special cases
     if a == b:
@@ -404,9 +402,7 @@ if __name__ == "__main__":
         print(
             f"is_close(1000000.1, 1000000.2, rel_tol=1e-6) = {await is_close(1000000.1, 1000000.2, rel_tol=1e-6)}"
         )
-        print(
-            f"is_close(0, 1e-10, abs_tol=1e-9) = {await is_close(0, 1e-10, abs_tol=1e-9)}"
-        )
+        print(f"is_close(0, 1e-10, abs_tol=1e-9) = {await is_close(0, 1e-10, abs_tol=1e-9)}")
 
         print("\n✅ All tolerance-based comparison operations working!")
 

@@ -53,9 +53,7 @@ from .divisibility import gcd, extended_gcd
         },
     ],
 )
-async def crt_solve(
-    remainders: List[int], moduli: List[int]
-) -> Optional[Tuple[int, int]]:
+async def crt_solve(remainders: List[int], moduli: List[int]) -> Optional[Tuple[int, int]]:
     """
     Solve system of congruences using Chinese Remainder Theorem.
 
@@ -67,9 +65,9 @@ async def crt_solve(
         Tuple (solution, modulus) where solution is the unique solution
         modulo the product of pairwise coprime moduli, or None if no solution
 
-    Examples:
-        await crt_solve([2, 3, 2], [3, 5, 7]) → (23, 105)
-        await crt_solve([1, 4], [5, 6]) → None  # gcd(5,6) = 1 but 1 ≢ 4 (mod 1)
+    Example:
+        crt_solve([2, 3, 2], [3, 5, 7]) = (23, 105)
+        crt_solve([1, 4], [5, 6]) = None  # gcd(5,6) = 1 but 1 ≢ 4 (mod 1)
     """
     if len(remainders) != len(moduli) or len(remainders) == 0:
         return None
@@ -143,9 +141,9 @@ async def generalized_crt(congruences: List[List[int]]) -> Optional[Tuple[int, i
     Returns:
         Tuple (solution, lcm_modulus) or None if inconsistent
 
-    Examples:
-        await generalized_crt([[2, 6], [3, 10], [2, 15]]) → (2, 30)
-        await generalized_crt([[1, 4], [3, 6]]) → (9, 12)
+    Example:
+        generalized_crt([[2, 6], [3, 10], [2, 15]]) = (2, 30)
+        generalized_crt([[1, 4], [3, 6]]) = (9, 12)
     """
     if not congruences:
         return None
@@ -188,9 +186,9 @@ async def is_quadratic_residue(a: int, n: int) -> bool:
     Returns:
         True if there exists x such that x² ≡ a (mod n)
 
-    Examples:
-        await is_quadratic_residue(2, 7) → True   # 3² ≡ 2 (mod 7)
-        await is_quadratic_residue(3, 7) → False  # No solution
+    Example:
+        is_quadratic_residue(2, 7) = True   # 3² ≡ 2 (mod 7)
+        is_quadratic_residue(3, 7) = False  # No solution
     """
     if n <= 1:
         return False
@@ -245,9 +243,9 @@ async def quadratic_residues(n: int) -> List[int]:
     Returns:
         Sorted list of all quadratic residues modulo n
 
-    Examples:
-        await quadratic_residues(7) → [0, 1, 2, 4]
-        await quadratic_residues(8) → [0, 1, 4]
+    Example:
+        quadratic_residues(7) = [0, 1, 2, 4]
+        quadratic_residues(8) = [0, 1, 4]
     """
     if n <= 1:
         return []
@@ -300,9 +298,9 @@ async def tonelli_shanks(a: int, p: int) -> Optional[List[int]]:
     Returns:
         List of solutions [x, p-x] if they exist, None otherwise
 
-    Examples:
-        await tonelli_shanks(2, 7) → [3, 4]  # 3² ≡ 4² ≡ 2 (mod 7)
-        await tonelli_shanks(3, 7) → None    # No solution
+    Example:
+        tonelli_shanks(2, 7) = [3, 4]  # 3² ≡ 4² ≡ 2 (mod 7)
+        tonelli_shanks(3, 7) = None    # No solution
     """
     if not await is_prime(p) or p == 2:
         return None
@@ -404,9 +402,9 @@ async def legendre_symbol(a: int, p: int) -> int:
         -1 if a is a quadratic non-residue mod p
         0 if a ≡ 0 (mod p)
 
-    Examples:
-        await legendre_symbol(2, 7) → 1   # 2 is QR mod 7
-        await legendre_symbol(3, 7) → -1  # 3 is not QR mod 7
+    Example:
+        legendre_symbol(2, 7) = 1   # 2 is QR mod 7
+        legendre_symbol(3, 7) = -1  # 3 is not QR mod 7
     """
     if not await is_prime(p) or p == 2:
         raise ValueError("p must be an odd prime")
@@ -451,9 +449,9 @@ async def jacobi_symbol(a: int, n: int) -> int:
     Returns:
         Jacobi symbol value (-1, 0, or 1)
 
-    Examples:
-        await jacobi_symbol(2, 15) → 1
-        await jacobi_symbol(5, 21) → -1
+    Example:
+        jacobi_symbol(2, 15) = 1
+        jacobi_symbol(5, 21) = -1
     """
     if n <= 0 or n % 2 == 0:
         raise ValueError("n must be odd and positive")
@@ -515,10 +513,10 @@ async def primitive_root(n: int) -> Optional[int]:
     Returns:
         Smallest primitive root modulo n, or None if none exists
 
-    Examples:
-        await primitive_root(7) → 3   # 3 is primitive root mod 7
-        await primitive_root(11) → 2  # 2 is primitive root mod 11
-        await primitive_root(8) → None # No primitive root mod 8
+    Example:
+        primitive_root(7) = 3   # 3 is primitive root mod 7
+        primitive_root(11) = 2  # 2 is primitive root mod 11
+        primitive_root(8) = None # No primitive root mod 8
     """
     if n <= 1:
         return None
@@ -584,9 +582,9 @@ async def all_primitive_roots(n: int) -> List[int]:
     Returns:
         Sorted list of all primitive roots modulo n
 
-    Examples:
-        await all_primitive_roots(7) → [3, 5]
-        await all_primitive_roots(11) → [2, 6, 7, 8]
+    Example:
+        all_primitive_roots(7) = [3, 5]
+        all_primitive_roots(11) = [2, 6, 7, 8]
     """
     if n <= 1 or not await _has_primitive_root(n):
         return []
@@ -642,9 +640,9 @@ async def order_modulo(a: int, n: int) -> Optional[int]:
         Smallest positive integer k such that a^k ≡ 1 (mod n),
         or None if gcd(a,n) ≠ 1
 
-    Examples:
-        await order_modulo(3, 7) → 6  # 3⁶ ≡ 1 (mod 7)
-        await order_modulo(2, 7) → 3  # 2³ ≡ 1 (mod 7)
+    Example:
+        order_modulo(3, 7) = 6  # 3⁶ ≡ 1 (mod 7)
+        order_modulo(2, 7) = 3  # 2³ ≡ 1 (mod 7)
     """
     if n <= 1 or await gcd(a, n) != 1:
         return None
@@ -716,9 +714,9 @@ async def discrete_log_naive(
     Returns:
         Smallest non-negative x such that g^x ≡ h (mod n), or None
 
-    Examples:
-        await discrete_log_naive(3, 2, 7) → 2  # 3² ≡ 2 (mod 7)
-        await discrete_log_naive(2, 3, 5) → None
+    Example:
+        discrete_log_naive(3, 2, 7) = 2  # 3² ≡ 2 (mod 7)
+        discrete_log_naive(2, 3, 5) = None
     """
     if n <= 1:
         return None
@@ -774,8 +772,8 @@ async def baby_step_giant_step(g: int, h: int, n: int) -> Optional[int]:
     Returns:
         Solution x such that g^x ≡ h (mod n), or None
 
-    Examples:
-        await baby_step_giant_step(2, 5, 11) → 4  # 2⁴ ≡ 5 (mod 11)
+    Example:
+        baby_step_giant_step(2, 5, 11) = 4  # 2⁴ ≡ 5 (mod 11)
     """
     if n <= 1:
         return None

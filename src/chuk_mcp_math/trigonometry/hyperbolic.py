@@ -215,9 +215,7 @@ async def tanh(x: Union[int, float]) -> float:
     if abs(x) < 1e-10:
         # tanh(x) ≈ x - x³/3 + 2x⁵/15 - ... for small x
         x_squared = x * x
-        return x * (
-            1 - x_squared / 3 * (1 - 2 * x_squared / 15 * (1 - 17 * x_squared / 315))
-        )
+        return x * (1 - x_squared / 3 * (1 - 2 * x_squared / 15 * (1 - 17 * x_squared / 315)))
 
     # For large |x|, tanh saturates to ±1
     if abs(x) > 20:
@@ -513,9 +511,7 @@ async def hyperbolic_functions(x: Union[int, float]) -> dict:
         },
     ],
 )
-async def verify_hyperbolic_identity(
-    x: Union[int, float], tolerance: float = 1e-12
-) -> dict:
+async def verify_hyperbolic_identity(x: Union[int, float], tolerance: float = 1e-12) -> dict:
     """
     Verify the fundamental hyperbolic identity: cosh²(x) - sinh²(x) = 1.
 

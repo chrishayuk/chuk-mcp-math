@@ -8,7 +8,7 @@ A cutting-edge collection of 572 mathematical functions organized by domain, des
 
 - **🚀 Async Native**: All 572 functions built from the ground up for async/await patterns
 - **🔢 Comprehensive Coverage**: 572 functions across 25+ specialized mathematical domains
-- **✅ 100% Tested**: 533/533 functions individually tested with zero failures
+- **✅ 95% Test Coverage**: 4,406 tests passing with 95% code coverage
 - **🎯 MCP Integration**: Model Context Protocol compatible with smart caching and performance optimization
 - **📐 Mathematical Domains**: Number theory (340+ functions), trigonometry (120+ functions), arithmetic, statistics, geometry
 - **🌊 Streaming Support**: Real-time computation with backpressure handling
@@ -49,7 +49,20 @@ chuk_mcp_math/
 ### Installation
 
 ```bash
+# Basic installation
 pip install chuk-mcp-math
+
+# With Pydantic validation support (recommended)
+pip install chuk-mcp-math[pydantic]
+
+# With CLI support
+pip install chuk-mcp-math[cli]
+
+# With development dependencies
+pip install chuk-mcp-math[dev]
+
+# Install all optional dependencies
+pip install chuk-mcp-math[pydantic,cli,dev]
 ```
 
 ### Basic Usage
@@ -329,19 +342,26 @@ async def benchmark_demo():
 
 ### Test Results Summary
 
-The library maintains **100% test coverage** with zero failures:
+The library maintains **95% test coverage** with comprehensive testing:
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║  DEMOS: 4/4 PASSED ✅                                           ║
-║  EXAMPLES: 2/2 PASSED ✅                                        ║
-║  FUNCTIONS: 533/533 TESTED ✅                                  ║
-║  UNIT TESTS: 2419/2419 PASSING ✅                              ║
-║  FAILURES: 0 ✅                                                 ║
+║  TEST COVERAGE: 95% (9,842 statements, 482 missed)              ║
+║  TESTS PASSING: 4,406 ✅                                        ║
+║  TESTS SKIPPED: 12                                              ║
+║  LINTING: PASSED ✅                                              ║
+║  FORMATTING: PASSED ✅                                           ║
+║  TYPE CHECKING: PASSED ✅                                        ║
+║  ALL MATH FUNCTIONS: 90%+ COVERAGE ✅                           ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-See [TESTING_SUMMARY.md](./TESTING_SUMMARY.md) for complete test results.
+**Coverage Highlights:**
+- ✅ Number Theory: 90-100% coverage across all modules
+- ✅ Trigonometry: 90-100% coverage across all modules
+- ✅ Arithmetic: 100% coverage
+- ✅ Statistics: 100% coverage
+- ✅ Geometry: 100% coverage
 
 ### Testing Documentation
 
@@ -461,16 +481,18 @@ Both examples include:
 
 - **Total Functions**: 572
 - **Async Native**: 100% (all 572 functions)
-- **Test Coverage**: 533/533 functions individually tested (100%)
+- **Test Coverage**: 95% overall (4,406 tests passing)
+- **Math Functions**: 90%+ coverage for all math modules
 - **Type Safety**: 0 mypy errors
+- **Linting**: All checks passing
 - **Number Theory**: 340+ functions across 18 modules
 - **Trigonometry**: 120+ functions across 8 modules
-- **Arithmetic**: 44 functions in reorganized structure
-- **Statistics**: 9 functions for data analysis
-- **Geometry**: 12 functions for geometric calculations
+- **Arithmetic**: 44 functions in reorganized structure (100% coverage)
+- **Statistics**: 9 functions for data analysis (100% coverage)
+- **Geometry**: 12 functions for geometric calculations (100% coverage)
 - **Linear Algebra**: 23 vector operations
 - **Sequences**: 44 mathematical sequence functions
-- **Performance**: Built-in caching, concurrency control, zero failures
+- **Performance**: Built-in caching, concurrency control
 - **Documentation**: 4 demo scripts + 2 comprehensive example applications
 
 ## 🎓 Educational Use Cases

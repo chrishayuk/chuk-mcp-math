@@ -227,15 +227,11 @@ class TestPrimeConstellations:
         # Verify triplet properties
         for triplet in type_2_6["triplets"]:
             p, q, r = triplet
-            assert q - p == 2 and r - p == 6, (
-                f"Triplet {triplet} doesn't match (p, p+2, p+6)"
-            )
+            assert q - p == 2 and r - p == 6, f"Triplet {triplet} doesn't match (p, p+2, p+6)"
 
         for triplet in type_4_6["triplets"]:
             p, q, r = triplet
-            assert q - p == 4 and r - p == 6, (
-                f"Triplet {triplet} doesn't match (p, p+4, p+6)"
-            )
+            assert q - p == 4 and r - p == 6, f"Triplet {triplet} doesn't match (p, p+4, p+6)"
 
     @pytest.mark.asyncio
     async def test_prime_quadruplets_patterns(self):
@@ -256,9 +252,7 @@ class TestPrimeConstellations:
 
         # Verify we have at least the known quadruplets
         for expected in expected_2_6_8:
-            assert expected in type_2_6_8["quadruplets"], (
-                f"Missing quadruplet {expected}"
-            )
+            assert expected in type_2_6_8["quadruplets"], f"Missing quadruplet {expected}"
 
         # Check (p, p+4, p+6, p+10) pattern
         type_4_6_10 = next(q for q in quadruplets if q["type"] == "(p, p+4, p+6, p+10)")
@@ -267,9 +261,7 @@ class TestPrimeConstellations:
         # Verify quadruplet properties
         for quad in type_2_6_8["quadruplets"]:
             p, q, r, s = quad
-            assert [q - p, r - p, s - p] == [2, 6, 8], (
-                f"Quadruplet {quad} doesn't match pattern"
-            )
+            assert [q - p, r - p, s - p] == [2, 6, 8], f"Quadruplet {quad} doesn't match pattern"
 
     @pytest.mark.asyncio
     async def test_prime_constellations_custom_patterns(self):
@@ -320,9 +312,7 @@ class TestPrimeConstellations:
 
         for pattern in valid_patterns:
             result = await is_admissible_pattern(pattern)
-            assert result["admissible"], (
-                f"Pattern {pattern} should be admissible"
-            )
+            assert result["admissible"], f"Pattern {pattern} should be admissible"
             assert "reason" in result
 
     @pytest.mark.asyncio
@@ -336,9 +326,7 @@ class TestPrimeConstellations:
 
         for pattern in invalid_patterns:
             result = await is_admissible_pattern(pattern)
-            assert not result["admissible"], (
-                f"Pattern {pattern} should not be admissible"
-            )
+            assert not result["admissible"], f"Pattern {pattern} should not be admissible"
             assert "blocking_prime" in result
 
     @pytest.mark.asyncio
@@ -500,9 +488,7 @@ class TestPrimeConjectures:
         for n in test_values:
             result = await bertrand_postulate_verify(n)
 
-            assert result["holds"], (
-                f"Bertrand's postulate should hold for n={n}"
-            )
+            assert result["holds"], f"Bertrand's postulate should hold for n={n}"
             assert result["n"] == n
             assert result["range"] == [n + 1, 2 * n - 1]
             assert result["count"] > 0
@@ -556,9 +542,7 @@ class TestPrimeConjectures:
         # Verify all expected twins are present
         twin_pairs = twin_data_100["twin_prime_pairs"]
         for expected_pair in expected_twins:
-            assert expected_pair in twin_pairs, (
-                f"Missing twin prime pair {expected_pair}"
-            )
+            assert expected_pair in twin_pairs, f"Missing twin prime pair {expected_pair}"
 
         # Verify twin properties
         for p, q in twin_pairs:
@@ -567,9 +551,7 @@ class TestPrimeConjectures:
         # Test with return_all_pairs=False
         twin_data_large = await twin_prime_conjecture_data(1000, return_all_pairs=False)
         assert "twin_prime_pairs" not in twin_data_large
-        assert (
-            twin_data_large["count"] > twin_data_100["count"]
-        )  # More twins in larger range
+        assert twin_data_large["count"] > twin_data_100["count"]  # More twins in larger range
 
     @pytest.mark.asyncio
     async def test_twin_prime_conjecture_data_edge_cases(self):
@@ -604,9 +586,7 @@ class TestPrimeConjectures:
         records = gap_records["records"]
         for gap_size, expected_pair in expected_records.items():
             assert gap_size in records, f"Missing record gap of size {gap_size}"
-            assert records[gap_size] == expected_pair, (
-                f"Wrong record for gap {gap_size}"
-            )
+            assert records[gap_size] == expected_pair, f"Wrong record for gap {gap_size}"
 
         # Verify gap sizes are sorted
         gap_sizes = gap_records["gap_sizes"]
@@ -614,9 +594,7 @@ class TestPrimeConjectures:
 
         # Verify record properties
         for gap_size, (p1, p2) in records.items():
-            assert p2 - p1 == gap_size, (
-                f"Record gap {gap_size} has wrong primes {p1}, {p2}"
-            )
+            assert p2 - p1 == gap_size, f"Record gap {gap_size} has wrong primes {p1}, {p2}"
 
     @pytest.mark.asyncio
     async def test_prime_gap_records_edge_cases(self):
@@ -629,9 +607,7 @@ class TestPrimeConjectures:
         # Limit with some primes (like just 2 and 3)
         gap_records_tiny = await prime_gap_records(3)
         # Should have at least the gap between 2 and 3
-        assert (
-            gap_records_tiny["total_records"] >= 0
-        )  # Could be 0 or 1 depending on implementation
+        assert gap_records_tiny["total_records"] >= 0  # Could be 0 or 1 depending on implementation
 
 
 # ============================================================================
@@ -853,9 +829,7 @@ class TestMathematicalProperties:
 
         # Generally, larger n should have more primes in (n, 2n)
         # This isn't strictly monotonic but should show general trend
-        assert counts[-1] > counts[0], (
-            "Larger intervals should generally have more primes"
-        )
+        assert counts[-1] > counts[0], "Larger intervals should generally have more primes"
 
     @pytest.mark.asyncio
     async def test_prime_counting_approximation_quality(self):
@@ -1163,9 +1137,7 @@ class TestParametrized:
             ([0, 6, 12], True),  # Only hits residue 0 mod 3, so admissible
         ],
     )
-    async def test_admissible_patterns_parametrized(
-        self, pattern, should_be_admissible
-    ):
+    async def test_admissible_patterns_parametrized(self, pattern, should_be_admissible):
         """Parametrized test for admissible patterns."""
         result = await is_admissible_pattern(pattern)
         assert result["admissible"] == should_be_admissible

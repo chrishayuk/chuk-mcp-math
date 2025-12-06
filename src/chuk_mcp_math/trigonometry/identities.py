@@ -559,11 +559,7 @@ async def half_angle_formulas(
         magnitude = math.sqrt((1 + cos_val) / 2)
 
         # cos is positive in Q1 and Q4 (0 to π/2 and 3π/2 to 2π)
-        sign = (
-            1
-            if (normalized_half <= math.pi / 2 or normalized_half >= 3 * math.pi / 2)
-            else -1
-        )
+        sign = 1 if (normalized_half <= math.pi / 2 or normalized_half >= 3 * math.pi / 2) else -1
         half_angle_value = sign * magnitude
         formula_used = "cos(θ/2) = ±√((1 + cos(θ))/2)"
 

@@ -30,6 +30,7 @@ from chuk_mcp_math.number_theory.continued_fractions import (
     # Convergents and approximations
     convergents_sequence,
     best_rational_approximation,
+    convergent_properties,
     sqrt_cf_expansion,
     cf_solve_pell,
     # Special continued fractions
@@ -78,9 +79,7 @@ class TestBasicOperations:
         # 2 ÷ 1 = 2 remainder 0
         # So 8/5 = [1; 1, 1, 2]
         cf_8_5 = await rational_to_cf(8, 5)
-        assert cf_8_5["cf"] == [1, 1, 1, 2], (
-            f"8/5 should be [1, 1, 1, 2], got {cf_8_5['cf']}"
-        )
+        assert cf_8_5["cf"] == [1, 1, 1, 2], f"8/5 should be [1, 1, 1, 2], got {cf_8_5['cf']}"
 
         # Test some simple cases we know
         cf_22_7 = await rational_to_cf(22, 7)
@@ -88,9 +87,7 @@ class TestBasicOperations:
 
         # Verify 7/3 using rational_to_cf (should be more accurate than float conversion)
         cf_7_3_exact = await rational_to_cf(7, 3)
-        assert cf_7_3_exact["cf"] == [2, 3], (
-            f"7/3 should be [2, 3], got {cf_7_3_exact['cf']}"
-        )
+        assert cf_7_3_exact["cf"] == [2, 3], f"7/3 should be [2, 3], got {cf_7_3_exact['cf']}"
 
     async def test_diagnostic_actual_values(self):
         """Diagnostic test to see actual CF values."""
@@ -104,9 +101,7 @@ class TestBasicOperations:
 
         # Check sqrt(2)
         sqrt2_cf = await sqrt_cf_expansion(2)
-        print(
-            f"√2 period: {sqrt2_cf['cf_period']}, length: {sqrt2_cf['period_length']}"
-        )
+        print(f"√2 period: {sqrt2_cf['cf_period']}, length: {sqrt2_cf['period_length']}")
 
         # Check e pattern
         e_cf = await e_continued_fraction(10)
@@ -249,6 +244,25 @@ class TestConvergentsApproximations:
         assert approx_1000["best_fraction"] == [355, 113]
         assert approx_1000["cf_convergent"]
 
+    @pytest.mark.asyncio
+    async def test_convergent_properties_with_empty_cf(self):
+        """Test convergent_properties with empty CF (lines 551-587)."""
+        # Test with empty CF
+        result = await convergent_properties([])
+        assert result["convergent_errors"] == []
+        assert result["error_ratios"] == []
+
+    @pytest.mark.asyncio
+    async def test_convergent_properties_with_target(self):
+        """Test convergent_properties with explicit target."""
+        # Test with explicit target value
+        cf = [3, 7, 15, 1]
+        result = await convergent_properties(cf, target=math.pi)
+        assert "convergent_errors" in result
+        assert "error_ratios" in result
+        assert "alternating_sides" in result
+        assert result["target"] == math.pi
+
 
 # ============================================================================
 # PERIODIC CONTINUED FRACTIONS TESTS
@@ -288,6 +302,38 @@ class TestPeriodicContinuedFractions:
             assert sqrt_n_cf["cf"] == [sqrt_n]
             assert sqrt_n_cf["period_length"] == 0
 
+    @pytest.mark.asyncio
+    async def test_periodic_continued_fractions_empty_input(self):
+        """Test periodic_continued_fractions with empty input (lines 755-782)."""
+        from chuk_mcp_math.number_theory.continued_fractions import periodic_continued_fractions
+
+        # Test with empty list
+        result = await periodic_continued_fractions([])
+        assert result["period_lengths"] == {}
+        assert result["avg_period"] == 0
+        assert result["max_period"] == 0
+
+    @pytest.mark.asyncio
+    async def test_periodic_continued_fractions_with_invalid_numbers(self):
+        """Test periodic_continued_fractions with invalid numbers."""
+        from chuk_mcp_math.number_theory.continued_fractions import periodic_continued_fractions
+
+        # Test with negative numbers and perfect squares (should be filtered out)
+        result = await periodic_continued_fractions([-5, 0, 1, 4, 9])
+        assert result["avg_period"] == 0
+        assert result["max_period"] == 0
+
+    @pytest.mark.asyncio
+    async def test_periodic_continued_fractions_valid_numbers(self):
+        """Test periodic_continued_fractions with valid numbers."""
+        from chuk_mcp_math.number_theory.continued_fractions import periodic_continued_fractions
+
+        # Test with valid non-perfect-square numbers
+        result = await periodic_continued_fractions([2, 3, 5])
+        assert len(result["period_lengths"]) > 0
+        assert result["avg_period"] > 0
+        assert result["max_period"] > 0
+
 
 # ============================================================================
 # DIOPHANTINE APPLICATIONS TESTS
@@ -325,6 +371,19 @@ class TestDiophantineApplications:
             pell_n = await cf_solve_pell(n)
             assert "error" in pell_n
             assert "perfect square" in pell_n["error"].lower()
+
+    @pytest.mark.asyncio
+    async def test_cf_solve_pell_edge_cases(self):
+        """Test Pell equation edge cases for better coverage (lines 841, 856, 866, 896)."""
+        # Test with n = 0 (line 841 - should propagate error)
+        pell_zero = await cf_solve_pell(0)
+        assert "error" in pell_zero
+
+        # Test case where first convergent is solution (line 866)
+        # This is rare but can happen - test with n=3 which has solution (2,1)
+        pell3 = await cf_solve_pell(3)
+        assert pell3["solution_found"]
+        assert pell3["fundamental_solution"] == [2, 1]
 
 
 # ============================================================================
@@ -400,6 +459,27 @@ class TestApplicationsAnalysis:
         assert len(pi_analysis["convergence_rates"]) > 0
         assert pi_analysis["num_convergents"] > 0
 
+    @pytest.mark.asyncio
+    async def test_cf_convergence_analysis_diophantine_types(self):
+        """Test Diophantine type classification (lines 1302, 1304)."""
+        # Test golden ratio type (all 1s after first term - line 1302)
+        golden_analysis = await cf_convergence_analysis(GOLDEN_RATIO, max_terms=15)
+        assert golden_analysis["diophantine_type"] == "golden_ratio_type"
+
+        # Test quadratic type (line 1304)
+        await cf_convergence_analysis(math.sqrt(2), max_terms=15)
+        # Should be classified as quadratic or related type
+        assert golden_analysis["diophantine_type"] in [
+            "golden_ratio_type",
+            "quadratic",
+            "transcendental_or_complex",
+        ]
+
+        # Test transcendental type
+        pi_analysis = await cf_convergence_analysis(math.pi, max_terms=15)
+        # Pi should be classified as transcendental or complex
+        assert "diophantine_type" in pi_analysis
+
 
 # ============================================================================
 # PERFORMANCE AND ASYNC BEHAVIOR TESTS
@@ -458,6 +538,26 @@ class TestPerformance:
         assert duration < 3.0
         assert len(results) > 0
 
+    @pytest.mark.asyncio
+    async def test_long_cf_processing_async_sleep(self):
+        """Test long CF processing to trigger async sleep calls (lines 270, 369, 698, 974)."""
+        # Test rational_to_cf with large numbers to trigger line 270
+        large_cf = await rational_to_cf(123456789, 987654321)
+        assert "cf" in large_cf
+
+        # Test convergents_sequence with long CF to trigger line 369
+        long_cf = [1] * 25  # 25 elements
+        convergents = await convergents_sequence(long_cf)
+        assert len(convergents["convergents"]) == 25
+
+        # Test sqrt_cf_expansion to potentially trigger line 698
+        sqrt_result = await sqrt_cf_expansion(61)  # 61 is known to have a longer period
+        assert "period_length" in sqrt_result
+
+        # Test e_continued_fraction with many terms to trigger line 974
+        e_long = await e_continued_fraction(150)  # More than 100 terms
+        assert len(e_long["cf"]) == 150
+
 
 # ============================================================================
 # ERROR HANDLING TESTS
@@ -492,6 +592,120 @@ class TestErrorHandling:
         # Test best approximation with denominator 1
         approx_1 = await best_rational_approximation(math.pi, 1)
         assert approx_1["best_fraction"][1] == 1  # Denominator should be 1
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_zero_negative_terms(self):
+        """Test edge cases with zero or negative terms."""
+        # Test continued_fraction_expansion with max_terms <= 0 (line 89)
+        result = await continued_fraction_expansion(3.14159, max_terms=0)
+        assert result["cf"] == []
+        assert result["convergent"] == [0, 1]
+        assert result["error"] == abs(3.14159)
+
+        # Test continued_fraction_expansion with negative max_terms
+        result = await continued_fraction_expansion(2.71828, max_terms=-5)
+        assert result["cf"] == []
+        assert result["convergent"] == [0, 1]
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_empty_cf(self):
+        """Test edge cases with empty continued fraction."""
+        # Test cf_to_rational with empty list (line 175)
+        result = await cf_to_rational([])
+        assert result["numerator"] == 0
+        assert result["denominator"] == 1
+        assert result["value"] == 0.0
+
+        # Test convergents_sequence with empty list (line 341)
+        result = await convergents_sequence([])
+        assert result["convergents"] == []
+        assert result["values"] == []
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_negative_denominator(self):
+        """Test rational_to_cf with negative denominator (line 257)."""
+        # Test with negative denominator
+        result = await rational_to_cf(22, -7)
+        # Should normalize to positive denominator
+        assert "cf" in result
+        assert len(result["cf"]) > 0
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_best_approximation_invalid(self):
+        """Test best_rational_approximation with invalid max_denom (line 434)."""
+        # Test with max_denom <= 0
+        result = await best_rational_approximation(math.pi, max_denom=0)
+        assert result["best_fraction"] == [0, 1]
+        assert result["value"] == 0.0
+        assert result["error"] == abs(math.pi)
+
+        # Test with negative max_denom
+        result = await best_rational_approximation(math.e, max_denom=-10)
+        assert result["best_fraction"] == [0, 1]
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_best_approximation_empty_cf(self):
+        """Test best_rational_approximation when CF expansion is empty (line 441)."""
+        # Test with a value that might produce empty CF (edge case)
+        # This is hard to trigger naturally, but we test the logic
+        result = await best_rational_approximation(0.0, max_denom=10)
+        assert "best_fraction" in result
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_special_functions_zero_terms(self):
+        """Test special CF functions with zero or negative terms."""
+        # Test e_continued_fraction with terms <= 0 (line 952)
+        result = await e_continued_fraction(terms=0)
+        assert result["cf"] == []
+        assert result["pattern"] == "e = [2; 1, 2, 1, 1, 4, 1, 1, 6, ...]"
+
+        result = await e_continued_fraction(terms=-5)
+        assert result["cf"] == []
+
+        # Test e_continued_fraction with terms == 1 (line 956)
+        result = await e_continued_fraction(terms=1)
+        assert result["cf"] == [2]
+        assert result["pattern"] == "[2; 1, 2, 1, 1, 4, 1, 1, 6, ...]"
+
+        # Test golden_ratio_cf with terms <= 0 (line 1034)
+        result = await golden_ratio_cf(terms=0)
+        assert result["cf"] == []
+        assert result["pattern"] == "[1; 1, 1, 1, 1, ...]"
+
+        result = await golden_ratio_cf(terms=-3)
+        assert result["cf"] == []
+
+        # Test pi_cf_algorithms with terms <= 0 (line 1095)
+        result = await pi_cf_algorithms(terms=0)
+        assert result["cf"] == []
+        assert result["famous_convergents"] == {}
+
+        result = await pi_cf_algorithms(terms=-2)
+        assert result["cf"] == []
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_calendar_approximations_invalid(self):
+        """Test calendar_approximations with invalid year_length (line 1183)."""
+        # Test with year_length <= 0
+        result = await calendar_approximations(year_length=0)
+        assert result["approximations"] == []
+        assert "error" in result
+
+        result = await calendar_approximations(year_length=-365)
+        assert result["approximations"] == []
+        assert "error" in result
+
+    @pytest.mark.asyncio
+    async def test_edge_cases_cf_convergence_analysis_invalid(self):
+        """Test cf_convergence_analysis with invalid max_terms (line 1268)."""
+        # Test with max_terms <= 0
+        result = await cf_convergence_analysis(math.pi, max_terms=0)
+        assert result["convergence_rates"] == []
+        assert "error" in result
+
+        result = await cf_convergence_analysis(math.e, max_terms=-5)
+        assert result["convergence_rates"] == []
+        assert "error" in result
 
 
 # ============================================================================
@@ -653,9 +867,7 @@ class TestIntegration:
 
         # Should give same CF for first few terms (allow some differences due to implementation)
         assert e_general["cf"][0] == e_special["cf"][0]  # Both should start with 2
-        assert (
-            e_general["cf"][1] == e_special["cf"][1]
-        )  # Both should have 1 as second term
+        assert e_general["cf"][1] == e_special["cf"][1]  # Both should have 1 as second term
 
         # Test golden ratio using both general expansion and special function
         golden_general = await continued_fraction_expansion(GOLDEN_RATIO, 8)

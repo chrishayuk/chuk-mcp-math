@@ -52,10 +52,10 @@ async def minimum(a: Number, b: Number) -> Number:
     Returns:
         The smaller of a and b
 
-    Examples:
-        await minimum(5, 3) → 3
-        await minimum(-2, 1) → -2
-        await minimum(7.5, 7.5) → 7.5
+    Example:
+        minimum(5, 3) = 3
+        minimum(-2, 1) = -2
+        minimum(7.5, 7.5) = 7.5
     """
     return min(a, b)
 
@@ -95,10 +95,10 @@ async def maximum(a: Number, b: Number) -> Number:
     Returns:
         The larger of a and b
 
-    Examples:
-        await maximum(5, 3) → 5
-        await maximum(-2, 1) → 1
-        await maximum(7.5, 7.5) → 7.5
+    Example:
+        maximum(5, 3) = 5
+        maximum(-2, 1) = 1
+        maximum(7.5, 7.5) = 7.5
     """
     return max(a, b)
 
@@ -146,10 +146,10 @@ async def clamp(value: Number, min_val: Number, max_val: Number) -> Number:
     Raises:
         ValueError: If min_val > max_val
 
-    Examples:
-        await clamp(5, 1, 10) → 5
-        await clamp(-2, 1, 10) → 1
-        await clamp(15, 1, 10) → 10
+    Example:
+        clamp(5, 1, 10) = 5
+        clamp(-2, 1, 10) = 1
+        clamp(15, 1, 10) = 10
     """
     if min_val > max_val:
         raise ValueError("Minimum value cannot be greater than maximum value")
@@ -196,9 +196,9 @@ async def sort_numbers(numbers: List[Number], descending: bool = False) -> List[
     Returns:
         New sorted list of numbers
 
-    Examples:
-        await sort_numbers([3, 1, 4, 1, 5]) → [1, 1, 3, 4, 5]
-        await sort_numbers([3, 1, 4, 1, 5], descending=True) → [5, 4, 3, 1, 1]
+    Example:
+        sort_numbers([3, 1, 4, 1, 5]) = [1, 1, 3, 4, 5]
+        sort_numbers([3, 1, 4, 1, 5], descending=True) = [5, 4, 3, 1, 1]
     """
     # For large lists, yield control during sorting
     if len(numbers) > 1000:
@@ -240,9 +240,9 @@ async def rank_numbers(numbers: List[Number]) -> List[int]:
     Returns:
         List of ranks corresponding to each input number
 
-    Examples:
-        await rank_numbers([3, 1, 4, 1, 5]) → [3, 1, 4, 1, 5]
-        await rank_numbers([10, 20, 30]) → [1, 2, 3]
+    Example:
+        rank_numbers([3, 1, 4, 1, 5]) = [3, 1, 4, 1, 5]
+        rank_numbers([10, 20, 30]) = [1, 2, 3]
     """
     # For large lists, yield control during processing
     if len(numbers) > 1000:
@@ -303,10 +303,10 @@ async def min_list(numbers: List[Number]) -> Number:
     Raises:
         ValueError: If list is empty
 
-    Examples:
-        await min_list([3, 1, 4, 1, 5]) → 1
-        await min_list([-2, 0, 1]) → -2
-        await min_list([2.5, 1.1, 3.7]) → 1.1
+    Example:
+        min_list([3, 1, 4, 1, 5]) = 1
+        min_list([-2, 0, 1]) = -2
+        min_list([2.5, 1.1, 3.7]) = 1.1
     """
     if not numbers:
         raise ValueError("Cannot find minimum of empty list")
@@ -355,10 +355,10 @@ async def max_list(numbers: List[Number]) -> Number:
     Raises:
         ValueError: If list is empty
 
-    Examples:
-        await max_list([3, 1, 4, 1, 5]) → 5
-        await max_list([-2, 0, 1]) → 1
-        await max_list([2.5, 1.1, 3.7]) → 3.7
+    Example:
+        max_list([3, 1, 4, 1, 5]) = 5
+        max_list([-2, 0, 1]) = 1
+        max_list([2.5, 1.1, 3.7]) = 3.7
     """
     if not numbers:
         raise ValueError("Cannot find maximum of empty list")

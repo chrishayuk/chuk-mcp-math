@@ -740,9 +740,7 @@ async def test_number_theory_functions():
     print(f"  ford_circles(4) = {ford_result['count']} circles")
 
     best_approx_farey = await best_approximation_farey(0.618, 10)
-    print(
-        f"  best_approximation_farey(0.618, 10) = {best_approx_farey['best_approximation']}"
-    )
+    print(f"  best_approximation_farey(0.618, 10) = {best_approx_farey['best_approximation']}")
 
     # Test Diophantine equations
     print("\nDiophantine Equations (NEW):")
@@ -806,16 +804,14 @@ async def demo_comprehensive_functionality():
         if await is_prime(mersenne):
             perfect = (2 ** (exp - 1)) * mersenne
             is_perfect = await is_perfect_number(perfect)
-            print(
-                f"    2^{exp}-1 = {mersenne} (prime) → Perfect: {perfect} ({is_perfect})"
-            )
+            print(f"    2^{exp}-1 = {mersenne} (prime) → Perfect: {perfect} ({is_perfect})")
 
     print("\n  Farey Sequences ↔ Continued Fractions:")
     for target in [0.618, 0.414, 0.707]:  # φ-1, √2-1, √2/2
         farey_approx = await best_approximation_farey(target, 20)
         cf_approx = await best_rational_approximation(target, 20)
         print(
-            f"    {target}: Farey = {farey_approx['best_approximation']}, CF = {cf_approx['best_approximation']}"
+            f"    {target}: Farey = {farey_approx['best_approximation']}, CF = {cf_approx['best_fraction']}"
         )
 
     print("\n  Continued Fractions ↔ Pell Equations:")
@@ -845,9 +841,7 @@ async def demo_comprehensive_functionality():
     start_time = time.time()
     large_fibonacci = await fibonacci(100)
     fib_time = time.time() - start_time
-    print(
-        f"    fibonacci(100) = {str(large_fibonacci)[:50]}... (computed in {fib_time:.4f}s)"
-    )
+    print(f"    fibonacci(100) = {str(large_fibonacci)[:50]}... (computed in {fib_time:.4f}s)")
 
     start_time = time.time()
     partitions = await partition_count(50)
@@ -922,9 +916,7 @@ async def demo_research_applications():
     ranges = [(100, 200), (1000, 1100), (10000, 10100)]
     for start, end in ranges:
         gaps = await prime_gaps_analysis(start, end)
-        print(
-            f"  Range [{start}, {end}]: avg gap = {gaps['avg_gap']}, max gap = {gaps['max_gap']}"
-        )
+        print(f"  Range [{start}, {end}]: avg gap = {gaps['avg_gap']}, max gap = {gaps['max_gap']}")
 
     print("\nFarey Sequence Research:")
 
@@ -952,9 +944,7 @@ async def demo_research_applications():
 
     for value, name in constants:
         cf_analysis = await cf_convergence_analysis(value, 8)
-        print(
-            f"  {name}: Hurwitz estimate = {cf_analysis.get('hurwitz_estimate', 'N/A')}"
-        )
+        print(f"  {name}: Hurwitz estimate = {cf_analysis.get('hurwitz_estimate', 'N/A')}")
         print(f"      Type: {cf_analysis.get('diophantine_type', 'unknown')}")
 
     print("\nAdditive Number Theory:")

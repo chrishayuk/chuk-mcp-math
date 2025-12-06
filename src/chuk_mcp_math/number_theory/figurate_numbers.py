@@ -55,19 +55,19 @@ async def polygonal_number(n: int, s: int) -> int:
     """
     Calculate the nth s-gonal number.
 
-    Formula: P(s,n) = n * ((s-2)*n - (s-4)) / 2
+    Formula (int): P(s,n) = n * ((s-2)*n - (s-4)) / 2
 
     Args:
-        n: Position in the sequence (≥ 0)
-        s: Number of sides of polygon (≥ 3)
+        n (int): Position in the sequence (≥ 0)
+        s (int or float): Number of sides of polygon (≥ 3)
 
     Returns:
         The nth s-gonal number
 
-    Examples:
-        await polygonal_number(5, 3) → 15   # 5th triangular
-        await polygonal_number(4, 4) → 16   # 4th square
-        await polygonal_number(3, 5) → 12   # 3rd pentagonal
+    Example:
+        polygonal_number(5, 3) = 15   # 5th triangular
+        polygonal_number(4, 4) = 16   # 4th square
+        polygonal_number(3, 5) = 12   # 3rd pentagonal
     """
     if n < 0:
         raise ValueError("Position must be non-negative")
@@ -110,16 +110,16 @@ async def is_polygonal_number(num: int, s: int) -> bool:
     Check if a number is an s-gonal number.
 
     Args:
-        num: Number to test
-        s: Number of sides of polygon (≥ 3)
+        num (int or float): Number to test
+        s (int or float): Number of sides of polygon (≥ 3)
 
     Returns:
         True if num is an s-gonal number
 
-    Examples:
-        await is_polygonal_number(15, 3) → True   # 15 is triangular
-        await is_polygonal_number(16, 4) → True   # 16 is square
-        await is_polygonal_number(13, 5) → False  # 13 not pentagonal
+    Example:
+        is_polygonal_number(15, 3) = True   # 15 is triangular
+        is_polygonal_number(16, 4) = True   # 16 is square
+        is_polygonal_number(13, 5) = False  # 13 not pentagonal
     """
     if num < 0 or s < 3:
         return False
@@ -181,15 +181,15 @@ async def polygonal_sequence(n: int, s: int) -> List[int]:
     Generate the first n s-gonal numbers.
 
     Args:
-        n: Number of terms to generate
-        s: Number of sides of polygon (≥ 3)
+        n (int or float): Number of terms to generate
+        s (int or float): Number of sides of polygon (≥ 3)
 
     Returns:
         List of first n s-gonal numbers
 
-    Examples:
-        await polygonal_sequence(8, 3) → [0, 1, 3, 6, 10, 15, 21, 28]
-        await polygonal_sequence(6, 5) → [0, 1, 5, 12, 22, 35]
+    Example:
+        polygonal_sequence(8, 3) = [0, 1, 3, 6, 10, 15, 21, 28]
+        polygonal_sequence(6, 5) = [0, 1, 5, 12, 22, 35]
     """
     if n <= 0:
         return []
@@ -242,18 +242,18 @@ async def centered_polygonal_number(n: int, s: int) -> int:
     """
     Calculate the nth centered s-gonal number.
 
-    Formula: C(s,n) = 1 + s*n*(n-1)/2 for n ≥ 1, C(s,0) = 1
+    Formula (int): C(s,n) = 1 + s*n*(n-1)/2 for n ≥ 1, C(s,0) = 1
 
     Args:
-        n: Position in the sequence (≥ 0)
-        s: Number of sides of polygon (≥ 3)
+        n (int): Position in the sequence (≥ 0)
+        s (int or float): Number of sides of polygon (≥ 3)
 
     Returns:
         The nth centered s-gonal number
 
-    Examples:
-        await centered_polygonal_number(3, 3) → 10  # 3rd centered triangular
-        await centered_polygonal_number(4, 4) → 25  # 4th centered square
+    Example:
+        centered_polygonal_number(3, 3) = 10  # 3rd centered triangular
+        centered_polygonal_number(4, 4) = 25  # 4th centered square
     """
     if n < 0:
         raise ValueError("Position must be non-negative")
@@ -283,18 +283,18 @@ async def centered_triangular_number(n: int) -> int:
     """
     Calculate the nth centered triangular number.
 
-    Formula: CT_n = (3*n² + 3*n + 2) / 2 = 1 + 3*T_{n-1} where T_k is kth triangular
+    Formula (int): CT_n = (3*n² + 3*n + 2) / 2 = 1 + 3*T_{n-1} where T_k is kth triangular
     Sequence: 1, 4, 10, 19, 31, 46, 64, 85, 109, 136, ...
 
     Args:
-        n: Non-negative integer index
+        n (int): Non-negative integer index
 
     Returns:
         The nth centered triangular number
 
-    Examples:
-        await centered_triangular_number(0) → 1   # Single center point
-        await centered_triangular_number(3) → 10  # Center + 3 triangular layers
+    Example:
+        centered_triangular_number(0) = 1   # Single center point
+        centered_triangular_number(3) = 10  # Center + 3 triangular layers
     """
     if n < 0:
         raise ValueError("Index must be non-negative")
@@ -319,18 +319,18 @@ async def centered_square_number(n: int) -> int:
     """
     Calculate the nth centered square number.
 
-    Formula: CS_n = 2*n² + 2*n + 1 = 2*n*(n+1) + 1
+    Formula (int): CS_n = 2*n² + 2*n + 1 = 2*n*(n+1) + 1
     Sequence: 1, 5, 13, 25, 41, 61, 85, 113, 145, 181, ...
 
     Args:
-        n: Non-negative integer index
+        n (int): Non-negative integer index
 
     Returns:
         The nth centered square number
 
-    Examples:
-        await centered_square_number(0) → 1   # Single center point
-        await centered_square_number(3) → 25  # Center + 3 square layers
+    Example:
+        centered_square_number(0) = 1   # Single center point
+        centered_square_number(3) = 25  # Center + 3 square layers
     """
     if n < 0:
         raise ValueError("Index must be non-negative")
@@ -355,18 +355,18 @@ async def centered_hexagonal_number(n: int) -> int:
     """
     Calculate the nth centered hexagonal number.
 
-    Formula: CH_n = 3*n² + 3*n + 1 = 3*n*(n+1) + 1
+    Formula (int): CH_n = 3*n² + 3*n + 1 = 3*n*(n+1) + 1
     Sequence: 1, 7, 19, 37, 61, 91, 127, 169, 217, 271, ...
 
     Args:
-        n: Non-negative integer index
+        n (int): Non-negative integer index
 
     Returns:
         The nth centered hexagonal number
 
-    Examples:
-        await centered_hexagonal_number(0) → 1   # Single center point
-        await centered_hexagonal_number(2) → 7   # Center + 2 hexagonal layers
+    Example:
+        centered_hexagonal_number(0) = 1   # Single center point
+        centered_hexagonal_number(2) = 7   # Center + 2 hexagonal layers
     """
     if n < 0:
         raise ValueError("Index must be non-negative")
@@ -396,20 +396,20 @@ async def pronic_number(n: int) -> int:
     """
     Calculate the nth pronic number (also called oblong number).
 
-    Formula: P_n = n * (n + 1)
+    Formula (int): P_n = n * (n + 1)
     Pronic numbers are the product of two consecutive integers.
     Sequence: 0, 2, 6, 12, 20, 30, 42, 56, 72, 90, 110, ...
 
     Args:
-        n: Non-negative integer index
+        n (int): Non-negative integer index
 
     Returns:
         The nth pronic number
 
-    Examples:
-        await pronic_number(0) → 0    # 0 * 1 = 0
-        await pronic_number(3) → 12   # 3 * 4 = 12
-        await pronic_number(10) → 110 # 10 * 11 = 110
+    Example:
+        pronic_number(0) = 0    # 0 * 1 = 0
+        pronic_number(3) = 12   # 3 * 4 = 12
+        pronic_number(10) = 110 # 10 * 11 = 110
     """
     if n < 0:
         raise ValueError("Index must be non-negative")
@@ -435,15 +435,15 @@ async def is_pronic_number(num: int) -> bool:
     Check if a number is a pronic number.
 
     Args:
-        num: Non-negative integer to test
+        num (int): Non-negative integer to test
 
     Returns:
         True if num is a pronic number
 
-    Examples:
-        await is_pronic_number(12) → True   # 12 = 3 * 4
-        await is_pronic_number(30) → True   # 30 = 5 * 6
-        await is_pronic_number(15) → False  # No consecutive integers multiply to 15
+    Example:
+        is_pronic_number(12) = True   # 12 = 3 * 4
+        is_pronic_number(30) = True   # 30 = 5 * 6
+        is_pronic_number(15) = False  # No consecutive integers multiply to 15
     """
     if num < 0:
         return False
@@ -490,14 +490,14 @@ async def pronic_sequence(n: int) -> List[int]:
     Generate the first n pronic numbers.
 
     Args:
-        n: Number of pronic numbers to generate
+        n (int or float): Number of pronic numbers to generate
 
     Returns:
         List of first n pronic numbers
 
-    Examples:
-        await pronic_sequence(10) → [0, 2, 6, 12, 20, 30, 42, 56, 72, 90]
-        await pronic_sequence(5) → [0, 2, 6, 12, 20]
+    Example:
+        pronic_sequence(10) = [0, 2, 6, 12, 20, 30, 42, 56, 72, 90]
+        pronic_sequence(5) = [0, 2, 6, 12, 20]
     """
     if n <= 0:
         return []
@@ -535,20 +535,20 @@ async def star_number(n: int) -> int:
     """
     Calculate the nth star number (6-pointed star).
 
-    Formula: S_n = 6*n*(n-1) + 1
+    Formula (int): S_n = 6*n*(n-1) + 1
     Star numbers represent centered hexagrams (6-pointed stars).
     Sequence: 1, 13, 37, 73, 121, 181, 253, 337, 433, 541, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth star number
 
-    Examples:
-        await star_number(1) → 1    # Single central point
-        await star_number(2) → 13   # Central point + first star layer
-        await star_number(3) → 37   # Central point + two star layers
+    Example:
+        star_number(1) = 1    # Single central point
+        star_number(2) = 13   # Central point + first star layer
+        star_number(3) = 37   # Central point + two star layers
     """
     if n < 1:
         raise ValueError("Star number index must be positive")
@@ -575,7 +575,7 @@ async def hexagram_number(n: int) -> int:
     Hexagram numbers count the dots in nested hexagrams (Stars of David).
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth hexagram number
@@ -605,20 +605,20 @@ async def octahedral_number(n: int) -> int:
     """
     Calculate the nth octahedral number.
 
-    Formula: O_n = (2*n³ + n) / 3 = n*(2*n² + 1) / 3
+    Formula (int): O_n = (2*n³ + n) / 3 = n*(2*n² + 1) / 3
     Octahedral numbers count spheres in octahedral arrangements.
     Sequence: 1, 6, 19, 44, 85, 146, 231, 344, 489, 670, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth octahedral number
 
-    Examples:
-        await octahedral_number(1) → 1    # Single sphere
-        await octahedral_number(2) → 6    # Central + 6 in octahedral shell
-        await octahedral_number(3) → 19   # Previous + second octahedral shell
+    Example:
+        octahedral_number(1) = 1    # Single sphere
+        octahedral_number(2) = 6    # Central + 6 in octahedral shell
+        octahedral_number(3) = 19   # Previous + second octahedral shell
     """
     if n < 1:
         raise ValueError("Octahedral number index must be positive")
@@ -643,20 +643,20 @@ async def dodecahedral_number(n: int) -> int:
     """
     Calculate the nth dodecahedral number.
 
-    Formula: D_n = n * (3*n - 1) * (3*n - 2) / 2
+    Formula (int): D_n = n * (3*n - 1) * (3*n - 2) / 2
     Dodecahedral numbers are 3D analogs of pentagonal numbers.
     Sequence: 1, 20, 84, 220, 455, 816, 1330, 2024, 2925, 4060, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth dodecahedral number
 
-    Examples:
-        await dodecahedral_number(1) → 1     # Single point
-        await dodecahedral_number(2) → 20    # Dodecahedral shell
-        await dodecahedral_number(3) → 84    # Two dodecahedral shells
+    Example:
+        dodecahedral_number(1) = 1     # Single point
+        dodecahedral_number(2) = 20    # Dodecahedral shell
+        dodecahedral_number(3) = 84    # Two dodecahedral shells
     """
     if n < 1:
         raise ValueError("Dodecahedral number index must be positive")
@@ -681,20 +681,20 @@ async def icosahedral_number(n: int) -> int:
     """
     Calculate the nth icosahedral number.
 
-    Formula: I_n = n * (5*n² - 5*n + 2) / 2
+    Formula (int): I_n = n * (5*n² - 5*n + 2) / 2
     Icosahedral numbers count spheres arranged in icosahedral patterns.
     Sequence: 1, 12, 48, 124, 255, 456, 742, 1128, 1629, 2260, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth icosahedral number
 
-    Examples:
-        await icosahedral_number(1) → 1     # Single sphere
-        await icosahedral_number(2) → 12    # Central + icosahedral shell
-        await icosahedral_number(3) → 48    # Previous + second shell
+    Example:
+        icosahedral_number(1) = 1     # Single sphere
+        icosahedral_number(2) = 12    # Central + icosahedral shell
+        icosahedral_number(3) = 48    # Previous + second shell
     """
     if n < 1:
         raise ValueError("Icosahedral number index must be positive")
@@ -724,20 +724,20 @@ async def triangular_pyramidal_number(n: int) -> int:
     """
     Calculate the nth triangular pyramidal (tetrahedral) number.
 
-    Formula: Tet_n = n * (n + 1) * (n + 2) / 6
+    Formula (int): Tet_n = n * (n + 1) * (n + 2) / 6
     Sum of first n triangular numbers.
     Sequence: 1, 4, 10, 20, 35, 56, 84, 120, 165, 220, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth tetrahedral number
 
-    Examples:
-        await triangular_pyramidal_number(1) → 1    # Single sphere
-        await triangular_pyramidal_number(4) → 20   # 4-layer triangular pyramid
-        await triangular_pyramidal_number(10) → 220 # 10-layer pyramid
+    Example:
+        triangular_pyramidal_number(1) = 1    # Single sphere
+        triangular_pyramidal_number(4) = 20   # 4-layer triangular pyramid
+        triangular_pyramidal_number(10) = 220 # 10-layer pyramid
     """
     if n < 1:
         raise ValueError("Tetrahedral number index must be positive")
@@ -762,20 +762,20 @@ async def square_pyramidal_number(n: int) -> int:
     """
     Calculate the nth square pyramidal number.
 
-    Formula: SP_n = n * (n + 1) * (2*n + 1) / 6
+    Formula (int): SP_n = n * (n + 1) * (2*n + 1) / 6
     Sum of first n square numbers.
     Sequence: 1, 5, 14, 30, 55, 91, 140, 204, 285, 385, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth square pyramidal number
 
-    Examples:
-        await square_pyramidal_number(1) → 1    # Single cube
-        await square_pyramidal_number(4) → 30   # 4-layer square pyramid
-        await square_pyramidal_number(10) → 385 # 10-layer pyramid
+    Example:
+        square_pyramidal_number(1) = 1    # Single cube
+        square_pyramidal_number(4) = 30   # 4-layer square pyramid
+        square_pyramidal_number(10) = 385 # 10-layer pyramid
     """
     if n < 1:
         raise ValueError("Square pyramidal number index must be positive")
@@ -800,20 +800,20 @@ async def pentagonal_pyramidal_number(n: int) -> int:
     """
     Calculate the nth pentagonal pyramidal number.
 
-    Formula: PP_n = n² * (n + 1) / 2
+    Formula (int): PP_n = n² * (n + 1) / 2
     Sum of first n pentagonal numbers.
     Sequence: 1, 6, 18, 40, 75, 126, 196, 288, 405, 550, ...
 
     Args:
-        n: Positive integer index (≥ 1)
+        n (int): Positive integer index (≥ 1)
 
     Returns:
         The nth pentagonal pyramidal number
 
-    Examples:
-        await pentagonal_pyramidal_number(1) → 1    # Single point
-        await pentagonal_pyramidal_number(3) → 18   # 3-layer pentagonal pyramid
-        await pentagonal_pyramidal_number(8) → 288  # 8-layer pyramid
+    Example:
+        pentagonal_pyramidal_number(1) = 1    # Single point
+        pentagonal_pyramidal_number(3) = 18   # 3-layer pentagonal pyramid
+        pentagonal_pyramidal_number(8) = 288  # 8-layer pyramid
     """
     if n < 1:
         raise ValueError("Pentagonal pyramidal number index must be positive")
@@ -846,18 +846,18 @@ async def gnomon_number(n: int, s: int) -> int:
     Calculate the nth gnomon for s-gonal numbers.
 
     A gnomon is the difference between consecutive figurate numbers.
-    For s-gonal numbers: Gnomon_n = P(s,n) - P(s,n-1)
+    For s-gonal numbers (int): Gnomon_n = P(s,n) - P(s,n-1)
 
     Args:
-        n: Positive integer index (≥ 1)
-        s: Number of sides (≥ 3)
+        n (int): Positive integer index (≥ 1)
+        s (int or float): Number of sides (≥ 3)
 
     Returns:
         The nth gnomon for s-gonal numbers
 
-    Examples:
-        await gnomon_number(3, 4) → 5   # 3rd square gnomon
-        await gnomon_number(4, 3) → 4   # 4th triangular gnomon
+    Example:
+        gnomon_number(3, 4) = 5   # 3rd square gnomon
+        gnomon_number(4, 3) = 4   # 4th triangular gnomon
     """
     if n < 1:
         raise ValueError("Gnomon index must be positive")

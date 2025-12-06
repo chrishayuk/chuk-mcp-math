@@ -729,9 +729,7 @@ class TestParametrized:
             (20, 6, 42),  # 20: divisors = [1,2,4,5,10,20]
         ],
     )
-    async def test_divisor_functions_parametrized(
-        self, n, expected_count, expected_sum
-    ):
+    async def test_divisor_functions_parametrized(self, n, expected_count, expected_sum):
         """Parametrized test for divisor counting and sum functions."""
         assert await divisor_count(n) == expected_count
         assert await divisor_sum(n) == expected_sum

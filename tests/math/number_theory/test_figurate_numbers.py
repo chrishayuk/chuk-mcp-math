@@ -152,9 +152,7 @@ class TestPolygonalNumbers:
             assert await is_polygonal_number(num, 3), f"{num} should be triangular"
 
         for num in non_triangular:
-            assert not await is_polygonal_number(num, 3), (
-                f"{num} should not be triangular"
-            )
+            assert not await is_polygonal_number(num, 3), f"{num} should not be triangular"
 
     @pytest.mark.asyncio
     async def test_is_polygonal_number_square(self):
@@ -317,21 +315,15 @@ class TestCenteredPolygonalNumbers:
         # Test at n=0 where all formulas agree
         general_ct_0 = await centered_polygonal_number(0, 3)
         specific_ct_0 = await centered_triangular_number(0)
-        assert general_ct_0 == specific_ct_0 == 1, (
-            "All centered polygonal should be 1 at n=0"
-        )
+        assert general_ct_0 == specific_ct_0 == 1, "All centered polygonal should be 1 at n=0"
 
         general_cs_0 = await centered_polygonal_number(0, 4)
         specific_cs_0 = await centered_square_number(0)
-        assert general_cs_0 == specific_cs_0 == 1, (
-            "All centered polygonal should be 1 at n=0"
-        )
+        assert general_cs_0 == specific_cs_0 == 1, "All centered polygonal should be 1 at n=0"
 
         general_ch_0 = await centered_polygonal_number(0, 6)
         specific_ch_0 = await centered_hexagonal_number(0)
-        assert general_ch_0 == specific_ch_0 == 1, (
-            "All centered polygonal should be 1 at n=0"
-        )
+        assert general_ch_0 == specific_ch_0 == 1, "All centered polygonal should be 1 at n=0"
 
         # Test that the general formula works consistently for different polygon types
         for s in [3, 4, 5, 6, 7, 8]:
@@ -471,9 +463,7 @@ class TestStarNumbers:
         for n in range(1, 11):
             star = await star_number(n)
             hexagram = await hexagram_number(n)
-            assert star == hexagram, (
-                f"Star and hexagram numbers should be equal at n={n}"
-            )
+            assert star == hexagram, f"Star and hexagram numbers should be equal at n={n}"
 
     @pytest.mark.asyncio
     async def test_star_number_properties(self):

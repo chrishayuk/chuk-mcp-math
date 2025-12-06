@@ -39,19 +39,18 @@ Number = Union[int, float]
     ],
 )
 async def add(a: Number, b: Number) -> Number:
-    """
-    Add two numbers together.
+    """Add two numbers together.
 
     Args:
-        a: First addend
-        b: Second addend
+        a: First number (int or float)
+        b: Second number (int or float)
 
     Returns:
-        Sum of a and b
+        Sum of a + b (same type as inputs)
 
-    Examples:
-        await add(5, 3) → 8
-        await add(-2.5, 4.7) → 2.2
+    Example:
+        add(5, 3) = 8
+        add(2.5, 1.3) = 3.8
     """
     return a + b
 
@@ -72,19 +71,18 @@ async def add(a: Number, b: Number) -> Number:
     ],
 )
 async def subtract(a: Number, b: Number) -> Number:
-    """
-    Subtract the second number from the first number.
+    """Subtract the second number from the first.
 
     Args:
-        a: Minuend (number to subtract from)
-        b: Subtrahend (number to subtract)
+        a: Number to subtract from (int or float)
+        b: Number to subtract (int or float)
 
     Returns:
-        Difference (a - b)
+        Difference a - b
 
-    Examples:
-        await subtract(10, 3) → 7
-        await subtract(3, 10) → -7
+    Example:
+        subtract(10, 3) = 7
+        subtract(5.5, 2.3) = 3.2
     """
     return a - b
 
@@ -114,19 +112,18 @@ async def subtract(a: Number, b: Number) -> Number:
     ],
 )
 async def multiply(a: Number, b: Number) -> Number:
-    """
-    Multiply two numbers together.
+    """Multiply two numbers together.
 
     Args:
-        a: First factor
-        b: Second factor
+        a: First factor (int or float)
+        b: Second factor (int or float)
 
     Returns:
-        Product of a and b
+        Product a * b
 
-    Examples:
-        await multiply(6, 7) → 42
-        await multiply(2.5, 4) → 10.0
+    Example:
+        multiply(6, 7) = 42
+        multiply(2.5, 4) = 10.0
     """
     return a * b
 
@@ -147,22 +144,21 @@ async def multiply(a: Number, b: Number) -> Number:
     ],
 )
 async def divide(a: Number, b: Number) -> float:
-    """
-    Divide the first number by the second number.
+    """Divide the first number by the second.
 
     Args:
-        a: Dividend (number to be divided)
-        b: Divisor (number to divide by)
+        a: Dividend (int or float)
+        b: Divisor (int or float, must be non-zero)
 
     Returns:
-        Quotient (a / b) as float
+        Quotient a / b as float
 
     Raises:
-        ValueError: If attempting to divide by zero
+        ValueError: If b is zero
 
-    Examples:
-        await divide(15, 3) → 5.0
-        await divide(7, 2) → 3.5
+    Example:
+        divide(15, 3) = 5.0
+        divide(7, 2) = 3.5
     """
     if b == 0:
         raise ValueError("Cannot divide by zero")
@@ -195,20 +191,21 @@ async def divide(a: Number, b: Number) -> float:
     ],
 )
 async def power(base: Number, exponent: Number) -> Number:
-    """
-    Raise a number to a power.
+    """Raise a number to a power.
+
+    Handles integer and fractional exponents including negative values.
 
     Args:
-        base: Base number
-        exponent: Power to raise base to
+        base: Base number (int or float)
+        exponent: Power to raise to (int or float)
 
     Returns:
-        base raised to the power of exponent
+        Result of base^exponent
 
-    Examples:
-        await power(2, 3) → 8
-        await power(4, 0.5) → 2.0
-        await power(2, -3) → 0.125
+    Example:
+        power(2, 3) = 8
+        power(4, 0.5) = 2.0  # square root
+        power(2, -3) = 0.125
     """
     # Yield control for very large exponents
     if isinstance(exponent, int) and abs(exponent) > 1000:
@@ -234,21 +231,20 @@ async def power(base: Number, exponent: Number) -> Number:
     ],
 )
 async def sqrt(x: Number) -> float:
-    """
-    Calculate the square root of a number.
+    """Calculate the square root of a number.
 
     Args:
-        x: Non-negative number
+        x: Non-negative number (int or float)
 
     Returns:
-        Square root of x
+        Square root √x as float
 
     Raises:
         ValueError: If x is negative
 
-    Examples:
-        await sqrt(9) → 3.0
-        await sqrt(2) → 1.4142135623730951
+    Example:
+        sqrt(9) = 3.0
+        sqrt(2) ≈ 1.414
     """
     if x < 0:
         raise ValueError("Cannot calculate square root of negative number")
@@ -267,19 +263,17 @@ async def sqrt(x: Number) -> float:
     ],
 )
 async def abs_value(x: Number) -> Number:
-    """
-    Calculate the absolute value of a number.
+    """Calculate the absolute value of a number.
 
     Args:
-        x: Any real number
+        x: Any number (int or float)
 
     Returns:
-        Absolute value of x (always non-negative)
+        Absolute value |x| (always non-negative)
 
-    Examples:
-        await abs_value(-5) → 5
-        await abs_value(3.7) → 3.7
-        await abs_value(0) → 0
+    Example:
+        abs_value(-5) = 5
+        abs_value(3.7) = 3.7
     """
     return abs(x)
 
@@ -296,19 +290,18 @@ async def abs_value(x: Number) -> Number:
     ],
 )
 async def sign(x: Number) -> int:
-    """
-    Determine the sign of a number.
+    """Determine the sign of a number.
 
     Args:
-        x: Any real number
+        x: Any number (int or float)
 
     Returns:
-        1 if x > 0, -1 if x < 0, 0 if x == 0
+        1 if x > 0, -1 if x < 0, 0 if x = 0
 
-    Examples:
-        await sign(5) → 1
-        await sign(-3.2) → -1
-        await sign(0) → 0
+    Example:
+        sign(5) = 1
+        sign(-3.2) = -1
+        sign(0) = 0
     """
     if x > 0:
         return 1
@@ -330,19 +323,18 @@ async def sign(x: Number) -> int:
     ],
 )
 async def negate(x: Number) -> Number:
-    """
-    Negate a number (return its additive inverse).
+    """Negate a number (return its additive inverse).
 
     Args:
-        x: Any real number
+        x: Any number (int or float)
 
     Returns:
-        The negation of x (-x)
+        Negated value -x
 
-    Examples:
-        await negate(5) → -5
-        await negate(-3.2) → 3.2
-        await negate(0) → 0
+    Example:
+        negate(5) = -5
+        negate(-3.2) = 3.2
+        negate(0) = 0
     """
     return -x
 

@@ -1193,9 +1193,7 @@ if __name__ == "__main__":
         print(f"multinomial([3, 2, 1]) = {await multinomial([3, 2, 1])}")
 
         # Test array operations
-        print(
-            f"sum_product([[1, 2, 3], [4, 5, 6]]) = {await sum_product([[1, 2, 3], [4, 5, 6]])}"
-        )
+        print(f"sum_product([[1, 2, 3], [4, 5, 6]]) = {await sum_product([[1, 2, 3], [4, 5, 6]])}")
         print(f"sum_squares([1, 2, 3, 4]) = {await sum_squares([1, 2, 3, 4])}")
         print(f"product([2, 3, 4]) = {await product([2, 3, 4])}")
 

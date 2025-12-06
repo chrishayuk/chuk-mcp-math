@@ -204,9 +204,7 @@ class TestIsPrime:
         mersenne_composites = [15, 63, 255, 511]  # 2^4-1, 2^6-1, 2^8-1, 2^9-1
 
         for mc in mersenne_composites:
-            assert not await is_prime(mc), (
-                f"Mersenne number {mc} should be composite"
-            )
+            assert not await is_prime(mc), f"Mersenne number {mc} should be composite"
 
 
 class TestNextPrime:
@@ -344,9 +342,7 @@ class TestNthPrime:
 
         for i, expected in enumerate(expected_primes, 1):
             result = await nth_prime(i)
-            assert result == expected, (
-                f"The {i}th prime should be {expected}, got {result}"
-            )
+            assert result == expected, f"The {i}th prime should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_nth_prime_larger_positions(self):
@@ -356,9 +352,7 @@ class TestNthPrime:
 
         for n, expected in known_nth_primes:
             result = await nth_prime(n)
-            assert result == expected, (
-                f"The {n}th prime should be {expected}, got {result}"
-            )
+            assert result == expected, f"The {n}th prime should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_nth_prime_invalid_input(self):
@@ -468,9 +462,7 @@ class TestPrimeFactors:
                 product = 1
                 for factor in factors:
                     product *= factor
-                assert product == n, (
-                    f"Product of factors {factors} should equal {n}, got {product}"
-                )
+                assert product == n, f"Product of factors {factors} should equal {n}, got {product}"
 
     @pytest.mark.asyncio
     async def test_prime_factors_all_prime(self):
@@ -497,9 +489,7 @@ class TestPrimeFactors:
         for n in test_numbers:
             factors = await prime_factors(n)
             for factor in factors:
-                assert await is_prime(factor), (
-                    f"Factor {factor} of {n} should be prime"
-                )
+                assert await is_prime(factor), f"Factor {factor} of {n} should be prime"
 
     @pytest.mark.asyncio
     async def test_prime_factors_sorted_order(self):
@@ -554,9 +544,7 @@ class TestPrimeCount:
 
         for n, expected_count in known_counts:
             result = await prime_count(n)
-            assert result == expected_count, (
-                f"π({n}) should be {expected_count}, got {result}"
-            )
+            assert result == expected_count, f"π({n}) should be {expected_count}, got {result}"
 
     @pytest.mark.asyncio
     async def test_prime_count_incremental(self):
@@ -577,9 +565,7 @@ class TestPrimeCount:
 
         for i, p in enumerate(primes, 1):
             count = await prime_count(p)
-            assert count >= i, (
-                f"π({p}) should be at least {i} since {p} is the {i}th prime"
-            )
+            assert count >= i, f"π({p}) should be at least {i} since {p} is the {i}th prime"
 
             # Check that count increases exactly by 1 when we hit a new prime
             if p > 2:
@@ -630,9 +616,7 @@ class TestIsCoprime:
 
         for i, p1 in enumerate(primes):
             for p2 in primes[i + 1 :]:  # Only test each pair once
-                assert await is_coprime(p1, p2), (
-                    f"Primes {p1} and {p2} should be coprime"
-                )
+                assert await is_coprime(p1, p2), f"Primes {p1} and {p2} should be coprime"
 
     @pytest.mark.asyncio
     async def test_is_coprime_same_number(self):
@@ -643,9 +627,7 @@ class TestIsCoprime:
         # All other numbers share all their factors with themselves
         test_numbers = [2, 3, 4, 5, 6, 10, 12, 15, 17, 20]
         for n in test_numbers:
-            assert not await is_coprime(n, n), (
-                f"{n} should not be coprime with itself"
-            )
+            assert not await is_coprime(n, n), f"{n} should not be coprime with itself"
 
     @pytest.mark.asyncio
     async def test_is_coprime_even_numbers(self):
@@ -654,9 +636,7 @@ class TestIsCoprime:
 
         for i, a in enumerate(even_numbers):
             for b in even_numbers[i + 1 :]:
-                assert not await is_coprime(a, b), (
-                    f"Even numbers {a} and {b} should not be coprime"
-                )
+                assert not await is_coprime(a, b), f"Even numbers {a} and {b} should not be coprime"
 
     @pytest.mark.asyncio
     async def test_is_coprime_consecutive_integers(self):
@@ -699,9 +679,7 @@ class TestIsCoprime:
         for a, b in test_pairs:
             result_ab = await is_coprime(a, b)
             result_ba = await is_coprime(b, a)
-            assert result_ab == result_ba, (
-                f"is_coprime({a}, {b}) should equal is_coprime({b}, {a})"
-            )
+            assert result_ab == result_ba, f"is_coprime({a}, {b}) should equal is_coprime({b}, {a})"
 
 
 class TestFirstNPrimes:
@@ -768,36 +746,28 @@ class TestFirstNPrimes:
         for n in [5, 10, 15, 20, 25]:
             primes = await first_n_primes(n)
             for p in primes:
-                assert await is_prime(p), (
-                    f"Generated number {p} should be prime"
-                )
+                assert await is_prime(p), f"Generated number {p} should be prime"
 
     @pytest.mark.asyncio
     async def test_first_n_primes_sorted_order(self):
         """Test that primes are returned in ascending order."""
         for n in [5, 10, 15, 20, 25, 30]:
             primes = await first_n_primes(n)
-            assert primes == sorted(primes), (
-                f"Primes {primes} should be in sorted order"
-            )
+            assert primes == sorted(primes), f"Primes {primes} should be in sorted order"
 
     @pytest.mark.asyncio
     async def test_first_n_primes_correct_count(self):
         """Test that exactly n primes are returned."""
         for n in range(0, 26):
             primes = await first_n_primes(n)
-            assert len(primes) == n, (
-                f"Should return exactly {n} primes, got {len(primes)}"
-            )
+            assert len(primes) == n, f"Should return exactly {n} primes, got {len(primes)}"
 
     @pytest.mark.asyncio
     async def test_first_n_primes_no_duplicates(self):
         """Test that no duplicate primes are returned."""
         for n in [5, 10, 15, 20, 25, 30]:
             primes = await first_n_primes(n)
-            assert len(primes) == len(set(primes)), (
-                f"Primes {primes} should have no duplicates"
-            )
+            assert len(primes) == len(set(primes)), f"Primes {primes} should have no duplicates"
 
     @pytest.mark.asyncio
     async def test_first_n_primes_consistency_with_nth_prime(self):
@@ -862,15 +832,11 @@ class TestIntegration:
             for factor in factors:
                 reconstructed *= factor
 
-            assert reconstructed == n, (
-                f"Reconstructed {reconstructed} should equal original {n}"
-            )
+            assert reconstructed == n, f"Reconstructed {reconstructed} should equal original {n}"
 
             # All factors should be prime
             for factor in factors:
-                assert await is_prime(factor), (
-                    f"Factor {factor} should be prime"
-                )
+                assert await is_prime(factor), f"Factor {factor} should be prime"
 
     @pytest.mark.asyncio
     async def test_coprimality_and_gcd_relationship(self):

@@ -115,9 +115,7 @@ async def demo_basic_trigonometry():
         csc_val = await csc(angle)
         sec_val = await sec(angle)
         cot_val = await cot(angle)
-        print(
-            f"  {description}: csc = {csc_val:.6f}, sec = {sec_val:.6f}, cot = {cot_val:.6f}"
-        )
+        print(f"  {description}: csc = {csc_val:.6f}, sec = {sec_val:.6f}, cot = {cot_val:.6f}")
 
     await print_subheader("Degree Variants")
 
@@ -156,9 +154,7 @@ async def demo_inverse_functions():
         acos_deg = await radians_to_degrees(acos_rad)
         atan_deg = await radians_to_degrees(atan_rad)
 
-        print(
-            f"  {description:6s} | {asin_deg:9.1f} | {acos_deg:9.1f} | {atan_deg:8.1f}"
-        )
+        print(f"  {description:6s} | {asin_deg:9.1f} | {acos_deg:9.1f} | {atan_deg:8.1f}")
 
     await print_subheader("atan2 - Full Quadrant Coverage")
 
@@ -219,9 +215,7 @@ async def demo_hyperbolic_functions():
         slope = sinh_val
         arc_length = a * sinh_val
 
-        print(
-            f"    a={a}, x={x}: y={y:.3f}, slope={slope:.3f}, arc_length={arc_length:.3f}"
-        )
+        print(f"    a={a}, x={x}: y={y:.3f}, slope={slope:.3f}, arc_length={arc_length:.3f}")
 
 
 async def demo_angle_conversions():
@@ -249,9 +243,7 @@ async def demo_angle_conversions():
     for angle in weird_angles:
         norm_pos = await normalize_angle(angle, "degrees", "positive")
         norm_sym = await normalize_angle(angle, "degrees", "symmetric")
-        print(
-            f"  {angle:4d}° → [0°, 360°): {norm_pos:6.1f}°, [-180°, 180°): {norm_sym:6.1f}°"
-        )
+        print(f"  {angle:4d}° → [0°, 360°): {norm_pos:6.1f}°, [-180°, 180°): {norm_sym:6.1f}°")
 
     await print_subheader("Angle Differences")
 
@@ -390,9 +382,7 @@ async def demo_navigation_applications():
             print(f"  {description}:")
             print(f"    Reference points: {point1}, {point2}")
             print(f"    Distances: {dist1} km, {dist2} km")
-            print(
-                f"    Solutions: {num_solutions} ({'unique' if unique else 'ambiguous'})"
-            )
+            print(f"    Solutions: {num_solutions} ({'unique' if unique else 'ambiguous'})")
 
             for i, solution in enumerate(tri_result["solutions"]):
                 print(f"      Position {i + 1}: ({solution[0]:.2f}, {solution[1]:.2f})")
@@ -514,9 +504,7 @@ async def demo_mathematical_identities():
             sec_squared = sec_val**2
             sec_tan_error = abs(sec_tan_identity - sec_squared)
             sec_tan_ok = sec_tan_error <= 1e-12
-            print(
-                f"    1 + tan²({angle_deg:3.0f}°) = sec²({angle_deg:3.0f}°): {sec_tan_ok}"
-            )
+            print(f"    1 + tan²({angle_deg:3.0f}°) = sec²({angle_deg:3.0f}°): {sec_tan_ok}")
 
     await print_subheader("Sum and Difference Formulas")
 

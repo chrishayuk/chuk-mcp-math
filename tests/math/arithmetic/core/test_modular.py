@@ -95,14 +95,10 @@ class TestModulo:
     @pytest.mark.asyncio
     async def test_modulo_zero_divisor_raises(self):
         """Test that modulo by zero raises ValueError."""
-        with pytest.raises(
-            ValueError, match="Cannot calculate modulo with zero divisor"
-        ):
+        with pytest.raises(ValueError, match="Cannot calculate modulo with zero divisor"):
             await modulo(17, 0)
 
-        with pytest.raises(
-            ValueError, match="Cannot calculate modulo with zero divisor"
-        ):
+        with pytest.raises(ValueError, match="Cannot calculate modulo with zero divisor"):
             await modulo(-5, 0)
 
 
@@ -376,9 +372,7 @@ class TestRemainder:
     @pytest.mark.asyncio
     async def test_remainder_zero_divisor_raises(self):
         """Test that remainder by zero raises ValueError."""
-        with pytest.raises(
-            ValueError, match="Cannot calculate remainder with zero divisor"
-        ):
+        with pytest.raises(ValueError, match="Cannot calculate remainder with zero divisor"):
             await remainder(7.5, 0.0)
 
 
@@ -480,9 +474,7 @@ class TestIntegration:
         x, y = 6.0, 3.0
         remainder_result = await remainder(x, y)
         fmod_result = await fmod(x, y)
-        assert pytest.approx(remainder_result) == pytest.approx(
-            fmod_result
-        )  # Both should be 0.0
+        assert pytest.approx(remainder_result) == pytest.approx(fmod_result)  # Both should be 0.0
 
         # But for other cases, they can differ significantly
         # IEEE remainder can return negative values when fmod returns positive

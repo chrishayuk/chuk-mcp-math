@@ -72,9 +72,7 @@ class TestCollatzConjecture:
 
         for n, expected in test_cases:
             result = await collatz_sequence(n)
-            assert result == expected, (
-                f"collatz_sequence({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"collatz_sequence({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_collatz_sequence_properties(self):
@@ -96,13 +94,9 @@ class TestCollatzConjecture:
                 next_val = sequence[i + 1]
 
                 if current % 2 == 0:
-                    assert next_val == current // 2, (
-                        f"Even rule failed: {current} -> {next_val}"
-                    )
+                    assert next_val == current // 2, f"Even rule failed: {current} -> {next_val}"
                 else:
-                    assert next_val == 3 * current + 1, (
-                        f"Odd rule failed: {current} -> {next_val}"
-                    )
+                    assert next_val == 3 * current + 1, f"Odd rule failed: {current} -> {next_val}"
 
     @pytest.mark.asyncio
     async def test_collatz_stopping_time_known_values(self):
@@ -134,9 +128,7 @@ class TestCollatzConjecture:
             stopping_time = await collatz_stopping_time(n)
 
             # Stopping time should equal sequence length - 1
-            assert stopping_time == len(sequence) - 1, (
-                f"Stopping time inconsistency for {n}"
-            )
+            assert stopping_time == len(sequence) - 1, f"Stopping time inconsistency for {n}"
 
     @pytest.mark.asyncio
     async def test_collatz_max_value_known_cases(self):
@@ -152,9 +144,7 @@ class TestCollatzConjecture:
 
         for n, expected in test_cases:
             result = await collatz_max_value(n)
-            assert result == expected, (
-                f"collatz_max_value({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"collatz_max_value({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_collatz_max_value_consistency(self):
@@ -227,9 +217,7 @@ class TestKaprekarSequences:
 
             # For 4-digit non-repdigits, should eventually reach 6174 or 0
             if not self._is_repdigit(n, 4):
-                assert 6174 in sequence or 0 in sequence, (
-                    "4-digit sequence should reach 6174 or 0"
-                )
+                assert 6174 in sequence or 0 in sequence, "4-digit sequence should reach 6174 or 0"
 
     def _is_repdigit(self, n: int, digits: int) -> bool:
         """Helper to check if number is a repdigit."""
@@ -246,9 +234,7 @@ class TestKaprekarSequences:
 
             # Should reach 495 (3-digit Kaprekar constant) or 0
             if not self._is_repdigit(n, 3):
-                assert 495 in sequence or 0 in sequence, (
-                    "3-digit sequence should reach 495 or 0"
-                )
+                assert 495 in sequence or 0 in sequence, "3-digit sequence should reach 495 or 0"
 
     @pytest.mark.asyncio
     async def test_kaprekar_sequence_repdigits(self):
@@ -263,9 +249,7 @@ class TestKaprekarSequences:
 
         for n, digits, expected_end in repdigit_cases:
             sequence = await kaprekar_sequence(n, digits)
-            assert expected_end in sequence, (
-                f"Repdigit {n} should lead to {expected_end}"
-            )
+            assert expected_end in sequence, f"Repdigit {n} should lead to {expected_end}"
 
     @pytest.mark.asyncio
     async def test_kaprekar_constant_known_values(self):
@@ -279,9 +263,7 @@ class TestKaprekarSequences:
 
         for digits, expected in known_constants.items():
             result = await kaprekar_constant(digits)
-            assert result == expected, (
-                f"Kaprekar constant for {digits} digits should be {expected}"
-            )
+            assert result == expected, f"Kaprekar constant for {digits} digits should be {expected}"
 
     @pytest.mark.asyncio
     async def test_kaprekar_constant_unknown_values(self):
@@ -403,16 +385,12 @@ class TestHappyNumbers:
         # Known happy numbers up to 50
         expected_50 = [1, 7, 10, 13, 19, 23, 28, 31, 32, 44, 49]
         result_50 = await happy_numbers(50)
-        assert result_50 == expected_50, (
-            f"Happy numbers up to 50 should be {expected_50}"
-        )
+        assert result_50 == expected_50, f"Happy numbers up to 50 should be {expected_50}"
 
         # Known happy numbers up to 20
         expected_20 = [1, 7, 10, 13, 19]
         result_20 = await happy_numbers(20)
-        assert result_20 == expected_20, (
-            f"Happy numbers up to 20 should be {expected_20}"
-        )
+        assert result_20 == expected_20, f"Happy numbers up to 20 should be {expected_20}"
 
     @pytest.mark.asyncio
     async def test_happy_numbers_edge_cases(self):
@@ -431,14 +409,10 @@ class TestHappyNumbers:
 
         # All numbers in the list should be happy
         for num in happy_list:
-            assert await is_happy_number(num), (
-                f"{num} in happy list should be happy"
-            )
+            assert await is_happy_number(num), f"{num} in happy list should be happy"
 
         # Should be in ascending order
-        assert happy_list == sorted(happy_list), (
-            "Happy numbers should be in ascending order"
-        )
+        assert happy_list == sorted(happy_list), "Happy numbers should be in ascending order"
 
         # Should contain 1
         assert 1 in happy_list, "Happy numbers should contain 1"
@@ -540,9 +514,7 @@ class TestNarcissisticNumbers:
 
         # All numbers in the list should be narcissistic
         for num in narcissistic_list:
-            assert await is_narcissistic_number(num), (
-                f"{num} should be narcissistic"
-            )
+            assert await is_narcissistic_number(num), f"{num} should be narcissistic"
 
         # Should be in ascending order
         assert narcissistic_list == sorted(narcissistic_list), (
@@ -574,27 +546,21 @@ class TestLookAndSaySequence:
         """Test look-and-say sequence starting from 1."""
         expected = ["1", "11", "21", "1211", "111221", "312211"]
         result = await look_and_say_sequence("1", 6)
-        assert result == expected, (
-            f"Look-and-say from '1' should be {expected}, got {result}"
-        )
+        assert result == expected, f"Look-and-say from '1' should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_look_and_say_sequence_from_3(self):
         """Test look-and-say sequence starting from 3."""
         expected = ["3", "13", "1113", "3113", "132113"]
         result = await look_and_say_sequence("3", 5)
-        assert result == expected, (
-            f"Look-and-say from '3' should be {expected}, got {result}"
-        )
+        assert result == expected, f"Look-and-say from '3' should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_look_and_say_sequence_from_11(self):
         """Test look-and-say sequence starting from 11."""
         expected = ["11", "21", "1211", "111221"]
         result = await look_and_say_sequence("11", 4)
-        assert result == expected, (
-            f"Look-and-say from '11' should be {expected}, got {result}"
-        )
+        assert result == expected, f"Look-and-say from '11' should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_look_and_say_sequence_properties(self):
@@ -659,16 +625,12 @@ class TestRecamanSequence:
         # First 15 terms of Recamán sequence
         expected_15 = [0, 1, 3, 6, 2, 7, 13, 20, 12, 21, 11, 22, 10, 23, 9]
         result_15 = await recaman_sequence(15)
-        assert result_15 == expected_15, (
-            f"First 15 Recamán numbers should be {expected_15}"
-        )
+        assert result_15 == expected_15, f"First 15 Recamán numbers should be {expected_15}"
 
         # First 10 terms
         expected_10 = [0, 1, 3, 6, 2, 7, 13, 20, 12, 21]
         result_10 = await recaman_sequence(10)
-        assert result_10 == expected_10, (
-            f"First 10 Recamán numbers should be {expected_10}"
-        )
+        assert result_10 == expected_10, f"First 10 Recamán numbers should be {expected_10}"
 
     @pytest.mark.asyncio
     async def test_recaman_sequence_properties(self):
@@ -679,14 +641,10 @@ class TestRecamanSequence:
         assert sequence[0] == 0, "Recamán sequence should start with 0"
 
         # All values should be non-negative
-        assert all(x >= 0 for x in sequence), (
-            "All Recamán numbers should be non-negative"
-        )
+        assert all(x >= 0 for x in sequence), "All Recamán numbers should be non-negative"
 
         # No duplicates in the sequence (by definition)
-        assert len(sequence) == len(set(sequence)), (
-            "Recamán sequence should have no duplicates"
-        )
+        assert len(sequence) == len(set(sequence)), "Recamán sequence should have no duplicates"
 
     @pytest.mark.asyncio
     async def test_recaman_sequence_recurrence_verification(self):
@@ -706,9 +664,7 @@ class TestRecamanSequence:
                 )
             else:
                 # Should add
-                assert current == prev + i, (
-                    f"Should add at step {i}: {prev} + {i} = {prev + i}"
-                )
+                assert current == prev + i, f"Should add at step {i}: {prev} + {i} = {prev + i}"
 
     @pytest.mark.asyncio
     async def test_recaman_sequence_edge_cases(self):
@@ -803,9 +759,7 @@ class TestKeithNumbers:
         """Test Keith number edge cases."""
         # Single digits are not Keith numbers
         for i in range(1, 10):
-            assert not await is_keith_number(i), (
-                f"Single digit {i} should not be Keith"
-            )
+            assert not await is_keith_number(i), f"Single digit {i} should not be Keith"
 
         # Zero and negative numbers
         assert not await is_keith_number(0)
@@ -817,16 +771,12 @@ class TestKeithNumbers:
         # Known Keith numbers up to 100
         expected_100 = [14, 19, 28, 47, 61, 75]
         result_100 = await keith_numbers(100)
-        assert result_100 == expected_100, (
-            f"Keith numbers up to 100 should be {expected_100}"
-        )
+        assert result_100 == expected_100, f"Keith numbers up to 100 should be {expected_100}"
 
         # Keith numbers up to 50
         expected_50 = [14, 19, 28, 47]
         result_50 = await keith_numbers(50)
-        assert result_50 == expected_50, (
-            f"Keith numbers up to 50 should be {expected_50}"
-        )
+        assert result_50 == expected_50, f"Keith numbers up to 50 should be {expected_50}"
 
     @pytest.mark.asyncio
     async def test_keith_numbers_properties(self):
@@ -838,9 +788,7 @@ class TestKeithNumbers:
             assert await is_keith_number(num), f"{num} should be a Keith number"
 
         # Should be in ascending order
-        assert keith_list == sorted(keith_list), (
-            "Keith numbers should be in ascending order"
-        )
+        assert keith_list == sorted(keith_list), "Keith numbers should be in ascending order"
 
         # All should be >= 10 (no single digits)
         assert all(num >= 10 for num in keith_list), "All Keith numbers should be >= 10"
@@ -890,9 +838,7 @@ class TestDigitalSequences:
             assert sequence[0] == n, f"Digital sum sequence should start with {n}"
 
             # Should end with single digit
-            assert sequence[-1] < 10, (
-                "Digital sum sequence should end with single digit"
-            )
+            assert sequence[-1] < 10, "Digital sum sequence should end with single digit"
 
             # Should be decreasing until single digit
             for i in range(len(sequence) - 1):
@@ -932,9 +878,7 @@ class TestDigitalSequences:
             assert sequence[0] == n, f"Digital product sequence should start with {n}"
 
             # Should end with single digit or 0
-            assert sequence[-1] < 10, (
-                "Digital product sequence should end with single digit or 0"
-            )
+            assert sequence[-1] < 10, "Digital product sequence should end with single digit or 0"
 
             # If no zeros in digits, should generally decrease
             if "0" not in str(n):
@@ -953,9 +897,7 @@ class TestDigitalSequences:
 
             # Should contain 0 and end with 0
             assert 0 in sequence, "Digital product sequence with zeros should contain 0"
-            assert sequence[-1] == 0, (
-                "Digital product sequence with zeros should end with 0"
-            )
+            assert sequence[-1] == 0, "Digital product sequence with zeros should end with 0"
 
     @pytest.mark.asyncio
     async def test_digital_sequences_edge_cases(self):
@@ -1061,9 +1003,7 @@ class TestIntegrationAndProperties:
 
         # Narcissistic numbers equal sum of powered digits
         for n in [153, 370, 371, 1634]:
-            assert await is_narcissistic_number(n), (
-                f"{n} should be narcissistic"
-            )
+            assert await is_narcissistic_number(n), f"{n} should be narcissistic"
 
     @pytest.mark.asyncio
     async def test_cross_sequence_relationships(self):
@@ -1085,9 +1025,7 @@ class TestIntegrationAndProperties:
         narcissistic_and_happy = set(narcissistic_list) & set(happy_list)
 
         for num in narcissistic_and_happy:
-            assert await is_narcissistic_number(num), (
-                f"{num} should be narcissistic"
-            )
+            assert await is_narcissistic_number(num), f"{num} should be narcissistic"
             assert await is_happy_number(num), f"{num} should be happy"
 
 
@@ -1210,9 +1148,7 @@ class TestPerformance:
             recaman_sequence(50),
         )
 
-        happy_200, narcissistic_1000, keith_200, look_say_8, recaman_50 = (
-            longer_sequences
-        )
+        happy_200, narcissistic_1000, keith_200, look_say_8, recaman_50 = longer_sequences
 
         # Verify reasonable results
         assert len(happy_200) > 20, "Should find many happy numbers"
@@ -1235,9 +1171,7 @@ class TestPerformance:
         assert len(sequences) == 19 + 14 + 9  # Total expected sequences
 
         # All should be lists
-        assert all(isinstance(seq, list) for seq in sequences), (
-            "All results should be lists"
-        )
+        assert all(isinstance(seq, list) for seq in sequences), "All results should be lists"
 
         # All Collatz sequences should end with 1
         collatz_sequences = sequences[:19]
@@ -1300,21 +1234,15 @@ class TestErrorHandling:
         # Narcissistic number functions with edge cases
         assert await is_narcissistic_number(1), "1 should be narcissistic"
         assert not await is_narcissistic_number(0), "0 should not be narcissistic"
-        assert await narcissistic_numbers(0) == [], (
-            "Empty range should return empty list"
-        )
+        assert await narcissistic_numbers(0) == [], "Empty range should return empty list"
 
         # Keith number functions with edge cases
         assert not await is_keith_number(9), "Single digits should not be Keith"
         assert await keith_numbers(9) == [], "No Keith numbers < 10"
 
         # Look-and-say with edge cases
-        assert await look_and_say_sequence("1", 0) == [], (
-            "Zero terms should return empty"
-        )
-        assert await look_and_say_sequence("1", 1) == ["1"], (
-            "One term should return input"
-        )
+        assert await look_and_say_sequence("1", 0) == [], "Zero terms should return empty"
+        assert await look_and_say_sequence("1", 1) == ["1"], "One term should return input"
 
         # Recamán with edge cases
         assert await recaman_sequence(0) == [], "Zero terms should return empty"
@@ -1366,9 +1294,7 @@ class TestParametrized:
         assert result
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "narcissistic_num", [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407]
-    )
+    @pytest.mark.parametrize("narcissistic_num", [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407])
     async def test_is_narcissistic_number_parametrized(self, narcissistic_num):
         """Parametrized test for narcissistic number identification."""
         result = await is_narcissistic_number(narcissistic_num)
@@ -1382,9 +1308,7 @@ class TestParametrized:
         assert result
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "digits,expected", [(3, 495), (4, 6174), (6, 549945), (7, 1194649)]
-    )
+    @pytest.mark.parametrize("digits,expected", [(3, 495), (4, 6174), (6, 549945), (7, 1194649)])
     async def test_kaprekar_constant_parametrized(self, digits, expected):
         """Parametrized test for Kaprekar constants."""
         result = await kaprekar_constant(digits)

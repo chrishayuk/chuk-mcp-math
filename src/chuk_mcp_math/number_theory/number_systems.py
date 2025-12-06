@@ -914,12 +914,8 @@ async def test_number_systems():
 
     # Test validation
     print("\n3. Validation:")
-    print(
-        f"   validate_number_in_base('1010', 2) = {await validate_number_in_base('1010', 2)}"
-    )
-    print(
-        f"   validate_number_in_base('129', 2) = {await validate_number_in_base('129', 2)}"
-    )
+    print(f"   validate_number_in_base('1010', 2) = {await validate_number_in_base('1010', 2)}")
+    print(f"   validate_number_in_base('129', 2) = {await validate_number_in_base('129', 2)}")
     print(f"   is_valid_base(10) = {await is_valid_base(10)}")
     print(f"   is_valid_base(37) = {await is_valid_base(37)}")
 
@@ -956,11 +952,7 @@ async def demo_base_conversions():
 
         # Verify conversions
         back_to_decimal = await binary_to_decimal(binary)
-        print(
-            f"    Verification: {back_to_decimal} ✓"
-            if back_to_decimal == num
-            else "    Error!"
-        )
+        print(f"    Verification: {back_to_decimal} ✓" if back_to_decimal == num else "    Error!")
 
 
 if __name__ == "__main__":

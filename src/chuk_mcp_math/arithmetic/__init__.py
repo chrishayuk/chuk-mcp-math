@@ -18,17 +18,17 @@ try:
     from . import core
 
     _core_available = True
-except ImportError as e:
-    print(f"Warning: Could not import core: {e}")
-    _core_available = False
+except ImportError as e:  # pragma: no cover
+    print(f"Warning: Could not import core: {e}")  # pragma: no cover
+    _core_available = False  # pragma: no cover
 
 try:
     from . import comparison
 
     _comparison_available = True
-except ImportError as e:
-    print(f"Warning: Could not import comparison: {e}")
-    _comparison_available = False
+except ImportError as e:  # pragma: no cover
+    print(f"Warning: Could not import comparison: {e}")  # pragma: no cover
+    _comparison_available = False  # pragma: no cover
 
 # REMOVED: number_theory import - it's not part of arithmetic, it's a separate math module
 # This was causing the circular import warning:
@@ -70,24 +70,22 @@ if _core_available:
                 "negate",
             ]
         )
-    except ImportError as e:
-        print(f"Warning: Could not import core.basic_operations: {e}")
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import core.basic_operations: {e}")  # pragma: no cover
 
     try:
         from .core.rounding import round_number, floor, ceil, truncate, mround
 
-        functions_imported.extend(
-            ["round_number", "floor", "ceil", "truncate", "mround"]
-        )
-    except ImportError as e:
-        print(f"Warning: Could not import core.rounding: {e}")
+        functions_imported.extend(["round_number", "floor", "ceil", "truncate", "mround"])
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import core.rounding: {e}")  # pragma: no cover
 
     try:
         from .core.modular import modulo, mod_power, quotient
 
         functions_imported.extend(["modulo", "mod_power", "quotient"])
-    except ImportError as e:
-        print(f"Warning: Could not import core.modular: {e}")
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import core.modular: {e}")  # pragma: no cover
 
 # Comparison functions
 if _comparison_available:
@@ -100,25 +98,23 @@ if _comparison_available:
             between,
         )
 
-        functions_imported.extend(
-            ["equal", "less_than", "greater_than", "in_range", "between"]
-        )
-    except ImportError as e:
-        print(f"Warning: Could not import comparison.relational: {e}")
+        functions_imported.extend(["equal", "less_than", "greater_than", "in_range", "between"])
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import comparison.relational: {e}")  # pragma: no cover
 
     try:
         from .comparison.extrema import minimum, maximum, clamp, sort_numbers
 
         functions_imported.extend(["minimum", "maximum", "clamp", "sort_numbers"])
-    except ImportError as e:
-        print(f"Warning: Could not import comparison.extrema: {e}")
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import comparison.extrema: {e}")  # pragma: no cover
 
     try:
         from .comparison.tolerance import approximately_equal, is_finite, is_nan
 
         functions_imported.extend(["approximately_equal", "is_finite", "is_nan"])
-    except ImportError as e:
-        print(f"Warning: Could not import comparison.tolerance: {e}")
+    except ImportError as e:  # pragma: no cover
+        print(f"Warning: Could not import comparison.tolerance: {e}")  # pragma: no cover
 
 # Build __all__ with only available modules and functions
 __all__ = []
@@ -139,9 +135,7 @@ def print_reorganized_status():
     print("=" * 50)
     print(f"📐 Core Operations: {_core_available}")
     print(f"🔍 Comparison Operations: {_comparison_available}")
-    print(
-        f"📊 Available modules: {len([m for m in ['core', 'comparison'] if m in __all__])}"
-    )
+    print(f"📊 Available modules: {len([m for m in ['core', 'comparison'] if m in __all__])}")
     print(f"📊 Available functions: {len(functions_imported)}")
     print()
 

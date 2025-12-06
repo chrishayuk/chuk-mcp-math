@@ -85,9 +85,7 @@ class TestChineseRemainderTheorem:
 
         for remainders, moduli, expected in test_cases:
             result = await crt_solve(remainders, moduli)
-            assert result is not None, (
-                f"CRT should have solution for {remainders}, {moduli}"
-            )
+            assert result is not None, f"CRT should have solution for {remainders}, {moduli}"
 
             x, m = result
             expected_x, expected_m = expected
@@ -330,9 +328,7 @@ class TestLegendreJacobiSymbols:
             if expected == p - 1:
                 expected = -1  # Convert to standard form
 
-            assert legendre_ab == expected, (
-                f"Multiplicativity should hold for ({a})({b})/{p}"
-            )
+            assert legendre_ab == expected, f"Multiplicativity should hold for ({a})({b})/{p}"
 
     @pytest.mark.asyncio
     async def test_jacobi_symbol_known_values(self):
@@ -377,9 +373,7 @@ class TestLegendreJacobiSymbols:
             elif expected == -2:
                 expected = 1
 
-            assert jacobi_ab == expected, (
-                f"Multiplicativity should hold for ({a})({b})/{n}"
-            )
+            assert jacobi_ab == expected, f"Multiplicativity should hold for ({a})({b})/{n}"
 
     @pytest.mark.asyncio
     async def test_symbol_edge_cases(self):
@@ -424,9 +418,7 @@ class TestPrimitiveRoots:
 
         for n, expected in known_primitive_roots:
             result = await primitive_root(n)
-            assert result == expected, (
-                f"Primitive root mod {n} should be {expected}, got {result}"
-            )
+            assert result == expected, f"Primitive root mod {n} should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_primitive_root_no_primitive_root(self):
@@ -443,9 +435,7 @@ class TestPrimitiveRoots:
         """Test finding all primitive roots for known cases."""
         # All primitive roots mod 7: {3, 5}
         roots_7 = await all_primitive_roots(7)
-        assert roots_7 == [3, 5], (
-            f"All primitive roots mod 7 should be [3, 5], got {roots_7}"
-        )
+        assert roots_7 == [3, 5], f"All primitive roots mod 7 should be [3, 5], got {roots_7}"
 
         # All primitive roots mod 11: {2, 6, 7, 8}
         roots_11 = await all_primitive_roots(11)
@@ -479,9 +469,7 @@ class TestPrimitiveRoots:
 
         for a, n, expected in test_cases:
             result = await order_modulo(a, n)
-            assert result == expected, (
-                f"ord_{n}({a}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"ord_{n}({a}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_order_modulo_properties(self):
@@ -496,9 +484,7 @@ class TestPrimitiveRoots:
 
                 # Test that this is the smallest such exponent
                 for k in range(1, order):
-                    assert pow(a, k, n) != 1, (
-                        f"{a}^{k} should not ≡ 1 (mod {n}) for k < {order}"
-                    )
+                    assert pow(a, k, n) != 1, f"{a}^{k} should not ≡ 1 (mod {n}) for k < {order}"
 
     @pytest.mark.asyncio
     async def test_primitive_root_verification(self):
@@ -549,9 +535,7 @@ class TestDiscreteLogarithms:
 
         for g, h, n, expected in test_cases:
             result = await discrete_log_naive(g, h, n)
-            assert result == expected, (
-                f"log_{g}({h}) mod {n} should be {expected}, got {result}"
-            )
+            assert result == expected, f"log_{g}({h}) mod {n} should be {expected}, got {result}"
 
             # Verify the solution
             assert pow(g, result, n) == h % n, f"{g}^{result} should ≡ {h} (mod {n})"
@@ -675,9 +659,7 @@ class TestIntegrationAndProperties:
 
             for root in all_roots:
                 order = await order_modulo(root, p)
-                assert order == p - 1, (
-                    f"Primitive root {root} mod {p} should have order {p - 1}"
-                )
+                assert order == p - 1, f"Primitive root {root} mod {p} should have order {p - 1}"
 
             # Test that elements of smaller order are not primitive roots
             for a in range(2, p):
@@ -699,16 +681,10 @@ class TestIntegrationAndProperties:
                 roots = await tonelli_shanks(a, p)
 
                 if legendre == 1:
-                    assert roots is not None, (
-                        f"Should find roots for {a} mod {p} (Legendre = 1)"
-                    )
-                    assert len(roots) == 2, (
-                        f"Should find exactly 2 roots for {a} mod {p}"
-                    )
+                    assert roots is not None, f"Should find roots for {a} mod {p} (Legendre = 1)"
+                    assert len(roots) == 2, f"Should find exactly 2 roots for {a} mod {p}"
                 elif legendre == -1:
-                    assert roots is None, (
-                        f"Should not find roots for {a} mod {p} (Legendre = -1)"
-                    )
+                    assert roots is None, f"Should not find roots for {a} mod {p} (Legendre = -1)"
 
     @pytest.mark.asyncio
     async def test_discrete_log_primitive_root_consistency(self):
@@ -721,9 +697,7 @@ class TestIntegrationAndProperties:
                 # Should be able to find discrete logs for all non-zero elements
                 for h in range(1, p):
                     log_val = await discrete_log_naive(prim_root, h, p, max_exp=p - 1)
-                    assert log_val is not None, (
-                        f"Should find log_{prim_root}({h}) mod {p}"
-                    )
+                    assert log_val is not None, f"Should find log_{prim_root}({h}) mod {p}"
                     assert 0 <= log_val < p, f"Discrete log should be in range [0, {p})"
 
 
@@ -852,9 +826,7 @@ class TestPerformance:
             bsgs_time = time.time() - start_time
 
             # Results should match
-            assert naive_result == bsgs_result, (
-                f"Algorithms should agree for log_{g}({h}) mod {n}"
-            )
+            assert naive_result == bsgs_result, f"Algorithms should agree for log_{g}({h}) mod {n}"
 
             # For small cases, times should be reasonable
             assert naive_time < 1.0, "Naive algorithm should be fast for small cases"
@@ -1012,9 +984,7 @@ class TestParametrized:
     async def test_crt_solve_parametrized(self, remainders, moduli, expected):
         """Parametrized test for CRT solving."""
         result = await crt_solve(remainders, moduli)
-        assert result is not None, (
-            f"CRT should have solution for {remainders}, {moduli}"
-        )
+        assert result is not None, f"CRT should have solution for {remainders}, {moduli}"
         assert result == expected, f"CRT solution should be {expected}, got {result}"
 
     @pytest.mark.asyncio
@@ -1074,9 +1044,7 @@ class TestParametrized:
         assert await jacobi_symbol(a, n) == expected
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "n,expected", [(5, 2), (7, 3), (11, 2), (13, 2), (17, 3), (19, 2)]
-    )
+    @pytest.mark.parametrize("n,expected", [(5, 2), (7, 3), (11, 2), (13, 2), (17, 3), (19, 2)])
     async def test_primitive_root_parametrized(self, n, expected):
         """Parametrized test for primitive root calculation."""
         assert await primitive_root(n) == expected
@@ -1124,9 +1092,7 @@ class TestSpecialProperties:
 
             actual_product = legendre_p_q * legendre_q_p
 
-            assert actual_product == expected_product, (
-                f"Quadratic reciprocity fails for ({p}, {q})"
-            )
+            assert actual_product == expected_product, f"Quadratic reciprocity fails for ({p}, {q})"
 
     @pytest.mark.asyncio
     async def test_euler_criterion_verification(self):
@@ -1142,9 +1108,7 @@ class TestSpecialProperties:
                 if euler_power == p - 1:
                     euler_power = -1
 
-                assert legendre == euler_power, (
-                    f"Euler criterion fails for a={a}, p={p}"
-                )
+                assert legendre == euler_power, f"Euler criterion fails for a={a}, p={p}"
 
     @pytest.mark.asyncio
     async def test_wilson_theorem_relation(self):
@@ -1168,9 +1132,7 @@ class TestSpecialProperties:
             for a in range(2, min(p, 8)):
                 if math.gcd(a, p) == 1:
                     result = pow(a, p - 1, p)
-                    assert result == 1, (
-                        f"Fermat's Little Theorem fails for a={a}, p={p}"
-                    )
+                    assert result == 1, f"Fermat's Little Theorem fails for a={a}, p={p}"
 
     @pytest.mark.asyncio
     async def test_primitive_root_count(self):

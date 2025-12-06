@@ -791,9 +791,7 @@ if __name__ == "__main__":
 
         for angle, unit, range_type in test_cases:
             normalized = await normalize_angle(angle, unit, range_type)
-            print(
-                f"  normalize_angle({angle}, {unit}, {range_type}) = {normalized:.6f}"
-            )
+            print(f"  normalize_angle({angle}, {unit}, {range_type}) = {normalized:.6f}")
 
         print("\nAngle Differences:")
         diff_cases = [
@@ -818,9 +816,7 @@ if __name__ == "__main__":
         print("\nAngular Velocity:")
         velocity_data = await angular_velocity_from_period_or_frequency(period=2.0)
         print("  Period = 2.0 s:")
-        print(
-            f"    Angular velocity: {velocity_data['angular_velocity_rad_per_sec']:.6f} rad/s"
-        )
+        print(f"    Angular velocity: {velocity_data['angular_velocity_rad_per_sec']:.6f} rad/s")
         print(f"    Frequency: {velocity_data['frequency_hz']:.6f} Hz")
 
         print("\n✅ All angle conversion functions working!")

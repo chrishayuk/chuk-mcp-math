@@ -53,10 +53,10 @@ async def digit_sum(n: int, base: int = 10) -> int:
     Returns:
         Sum of digits in the given base
 
-    Examples:
-        await digit_sum(12345) → 15      # 1+2+3+4+5
-        await digit_sum(999) → 27        # 9+9+9
-        await digit_sum(255, 2) → 8      # 11111111₂ has 8 ones
+    Example:
+        digit_sum(12345) = 15      # 1+2+3+4+5
+        digit_sum(999) = 27        # 9+9+9
+        digit_sum(255, 2) = 8      # 11111111₂ has 8 ones
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -96,10 +96,10 @@ async def digital_root(n: int, base: int = 10) -> int:
     Returns:
         Digital root (single digit in given base)
 
-    Examples:
-        await digital_root(12345) → 6    # 12345 → 15 → 6
-        await digital_root(999) → 9      # 999 → 27 → 9
-        await digital_root(9876) → 3     # 9876 → 30 → 3
+    Example:
+        digital_root(12345) = 6    # 12345 → 15 → 6
+        digital_root(999) = 9      # 999 → 27 → 9
+        digital_root(9876) = 3     # 9876 → 30 → 3
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -147,10 +147,10 @@ async def digit_product(n: int, base: int = 10) -> int:
     Returns:
         Product of all digits
 
-    Examples:
-        await digit_product(123) → 6      # 1×2×3
-        await digit_product(999) → 729    # 9×9×9
-        await digit_product(1023) → 0     # Contains 0
+    Example:
+        digit_product(123) = 6      # 1×2×3
+        digit_product(999) = 729    # 9×9×9
+        digit_product(1023) = 0     # Contains 0
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -194,10 +194,10 @@ async def persistent_digital_root(n: int, base: int = 10) -> int:
     Returns:
         Number of steps to reach single digit
 
-    Examples:
-        await persistent_digital_root(12345) → 2    # 12345 → 15 → 6
-        await persistent_digital_root(999) → 2      # 999 → 27 → 9
-        await persistent_digital_root(7) → 0        # Already single digit
+    Example:
+        persistent_digital_root(12345) = 2    # 12345 → 15 → 6
+        persistent_digital_root(999) = 2      # 999 → 27 → 9
+        persistent_digital_root(7) = 0        # Already single digit
     """
     if n < 0:
         n = -n
@@ -245,10 +245,10 @@ async def digit_reversal(n: int) -> int:
     Returns:
         Number with digits reversed (leading zeros dropped)
 
-    Examples:
-        await digit_reversal(12345) → 54321
-        await digit_reversal(1000) → 1        # Trailing zeros become leading zeros
-        await digit_reversal(7) → 7           # Single digit unchanged
+    Example:
+        digit_reversal(12345) = 54321
+        digit_reversal(1000) = 1        # Trailing zeros become leading zeros
+        digit_reversal(7) = 7           # Single digit unchanged
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -301,10 +301,10 @@ async def digit_sort(n: int, descending: bool = False) -> int:
     Returns:
         Number with digits sorted
 
-    Examples:
-        await digit_sort(54321, descending=False) → 12345
-        await digit_sort(54321, descending=True) → 54321
-        await digit_sort(1729, descending=False) → 1279
+    Example:
+        digit_sort(54321, descending=False) = 12345
+        digit_sort(54321, descending=True) = 54321
+        digit_sort(1729, descending=False) = 1279
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -372,10 +372,10 @@ async def is_palindromic_number(n: int, base: int = 10) -> bool:
     Returns:
         True if number is palindromic in given base
 
-    Examples:
-        await is_palindromic_number(12321) → True
-        await is_palindromic_number(12345) → False
-        await is_palindromic_number(9, 2) → True    # 9 = 1001₂
+    Example:
+        is_palindromic_number(12321) = True
+        is_palindromic_number(12345) = False
+        is_palindromic_number(9, 2) = True    # 9 = 1001₂
     """
     if n < 0:
         return False
@@ -526,9 +526,9 @@ async def palindromic_numbers(limit: int, base: int = 10) -> List[int]:
     Returns:
         List of palindromic numbers ≤ limit
 
-    Examples:
-        await palindromic_numbers(200) → [0, 1, 2, ..., 191]
-        await palindromic_numbers(50) → [0, 1, 2, ..., 44]
+    Example:
+        palindromic_numbers(200) = [0, 1, 2, ..., 191]
+        palindromic_numbers(50) = [0, 1, 2, ..., 44]
     """
     if limit < 0:
         return []
@@ -582,10 +582,10 @@ async def next_palindrome(n: int, base: int = 10) -> int:
     Returns:
         Smallest palindromic number > n
 
-    Examples:
-        await next_palindrome(123) → 131
-        await next_palindrome(999) → 1001
-        await next_palindrome(9) → 11
+    Example:
+        next_palindrome(123) = 131
+        next_palindrome(999) = 1001
+        next_palindrome(9) = 11
     """
     if base < 2:
         raise ValueError("Base must be at least 2")
@@ -647,10 +647,10 @@ async def is_harshad_number(n: int, base: int = 10) -> bool:
     Returns:
         True if n is a Harshad number in given base
 
-    Examples:
-        await is_harshad_number(12) → True     # 12 ÷ (1+2) = 12 ÷ 3 = 4
-        await is_harshad_number(18) → True     # 18 ÷ (1+8) = 18 ÷ 9 = 2
-        await is_harshad_number(19) → False    # 19 ÷ (1+9) = 19 ÷ 10 = 1.9
+    Example:
+        is_harshad_number(12) = True     # 12 ÷ (1+2) = 12 ÷ 3 = 4
+        is_harshad_number(18) = True     # 18 ÷ (1+8) = 18 ÷ 9 = 2
+        is_harshad_number(19) = False    # 19 ÷ (1+9) = 19 ÷ 10 = 1.9
     """
     if n <= 0:
         return False
@@ -751,9 +751,9 @@ async def harshad_numbers(limit: int, base: int = 10) -> List[int]:
     Returns:
         List of Harshad numbers ≤ limit
 
-    Examples:
-        await harshad_numbers(100) → [1, 2, 3, ..., 100]
-        await harshad_numbers(50) → [1, 2, 3, ..., 50]
+    Example:
+        harshad_numbers(100) = [1, 2, 3, ..., 100]
+        harshad_numbers(50) = [1, 2, 3, ..., 50]
     """
     if limit <= 0:
         return []
@@ -816,10 +816,10 @@ async def number_to_base(n: int, base: int) -> str:
     Returns:
         String representation in target base
 
-    Examples:
-        await number_to_base(255, 2) → "11111111"   # Binary
-        await number_to_base(255, 16) → "FF"        # Hexadecimal
-        await number_to_base(1729, 8) → "3301"      # Octal
+    Example:
+        number_to_base(255, 2) = "11111111"   # Binary
+        number_to_base(255, 16) = "FF"        # Hexadecimal
+        number_to_base(1729, 8) = "3301"      # Octal
     """
     if n < 0:
         raise ValueError("Number must be non-negative")
@@ -880,10 +880,10 @@ async def base_to_number(digits: str, base: int) -> int:
     Returns:
         Decimal integer value
 
-    Examples:
-        await base_to_number("11111111", 2) → 255   # Binary
-        await base_to_number("FF", 16) → 255        # Hexadecimal
-        await base_to_number("3301", 8) → 1729      # Octal
+    Example:
+        base_to_number("11111111", 2) = 255   # Binary
+        base_to_number("FF", 16) = 255        # Hexadecimal
+        base_to_number("3301", 8) = 1729      # Octal
     """
     if base < 2 or base > 36:
         raise ValueError("Base must be between 2 and 36")
@@ -945,10 +945,10 @@ async def digit_count(n: int, base: int = 10) -> int:
     Returns:
         Number of digits in given base
 
-    Examples:
-        await digit_count(12345) → 5        # 5 decimal digits
-        await digit_count(255, 2) → 8       # 8 binary digits
-        await digit_count(0) → 1            # 0 has 1 digit
+    Example:
+        digit_count(12345) = 5        # 5 decimal digits
+        digit_count(255, 2) = 8       # 8 binary digits
+        digit_count(0) = 1            # 0 has 1 digit
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -1002,9 +1002,9 @@ async def digit_frequency(n: int, base: int = 10) -> Dict[int, int]:
     Returns:
         Dictionary mapping digit to frequency count
 
-    Examples:
-        await digit_frequency(112233) → {1: 2, 2: 2, 3: 2}
-        await digit_frequency(1000) → {0: 3, 1: 1}
+    Example:
+        digit_frequency(112233) = {1: 2, 2: 2, 3: 2}
+        digit_frequency(1000) = {0: 3, 1: 1}
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -1057,10 +1057,10 @@ async def is_repdigit(n: int, base: int = 10) -> bool:
     Returns:
         True if all digits are the same
 
-    Examples:
-        await is_repdigit(1111) → True     # All 1s
-        await is_repdigit(777) → True      # All 7s
-        await is_repdigit(1234) → False    # Mixed digits
+    Example:
+        is_repdigit(1111) = True     # All 1s
+        is_repdigit(777) = True      # All 7s
+        is_repdigit(1234) = False    # Mixed digits
     """
     if n < 0:
         n = -n  # Work with absolute value
@@ -1114,10 +1114,10 @@ async def is_automorphic_number(n: int) -> bool:
     Returns:
         True if n² ends with n
 
-    Examples:
-        await is_automorphic_number(25) → True   # 25² = 625
-        await is_automorphic_number(76) → True   # 76² = 5776
-        await is_automorphic_number(10) → False  # 10² = 100
+    Example:
+        is_automorphic_number(25) = True   # 25² = 625
+        is_automorphic_number(76) = True   # 76² = 5776
+        is_automorphic_number(10) = False  # 10² = 100
     """
     if n < 0:
         return False
@@ -1164,9 +1164,9 @@ async def automorphic_numbers(limit: int) -> List[int]:
     Returns:
         List of automorphic numbers ≤ limit
 
-    Examples:
-        await automorphic_numbers(100) → [0, 1, 5, 6, 25, 76]
-        await automorphic_numbers(1000) → [0, 1, 5, 6, 25, 76, 376, 625]
+    Example:
+        automorphic_numbers(100) = [0, 1, 5, 6, 25, 76]
+        automorphic_numbers(1000) = [0, 1, 5, 6, 25, 76, 376, 625]
     """
     if limit < 0:
         return []
@@ -1226,9 +1226,7 @@ if __name__ == "__main__":
         print(f"  digit_sum(12345) = {await digit_sum(12345)}")
         print(f"  digital_root(12345) = {await digital_root(12345)}")
         print(f"  digit_product(123) = {await digit_product(123)}")
-        print(
-            f"  persistent_digital_root(12345) = {await persistent_digital_root(12345)}"
-        )
+        print(f"  persistent_digital_root(12345) = {await persistent_digital_root(12345)}")
 
         # Test transformations
         print("\nDigital Transformations:")

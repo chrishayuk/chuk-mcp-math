@@ -42,20 +42,18 @@ Number = Union[int, float]
     ],
 )
 async def round_number(x: Number, decimals: int = 0) -> Number:
-    """
-    Round a number to a specified number of decimal places.
+    """Round a number to specified decimal places.
 
     Args:
-        x: Number to round
-        decimals: Number of decimal places (default: 0)
+        x (int or float): Number to round
+        decimals (int): Number of decimal places (default 0)
 
     Returns:
         Number rounded to specified decimal places
 
-    Examples:
-        await round_number(3.14159, 2) → 3.14
-        await round_number(2.5) → 2
-        await round_number(-3.7, 0) → -4
+    Example:
+        round_number(3.14159, 2) = 3.14
+        round_number(2.5) = 2
     """
     return round(x, decimals)
 
@@ -72,19 +70,17 @@ async def round_number(x: Number, decimals: int = 0) -> Number:
     ],
 )
 async def floor(x: Number) -> int:
-    """
-    Return the floor of a number.
+    """Return the largest integer less than or equal to x.
 
     Args:
-        x: Number to floor
+        x (int or float): Number to floor
 
     Returns:
-        Largest integer less than or equal to x
+        Largest integer ≤ x
 
-    Examples:
-        await floor(3.7) → 3
-        await floor(-2.3) → -3
-        await floor(5) → 5
+    Example:
+        floor(3.7) = 3
+        floor(-2.3) = -3
     """
     return math.floor(x)
 
@@ -105,19 +101,17 @@ async def floor(x: Number) -> int:
     ],
 )
 async def ceil(x: Number) -> int:
-    """
-    Return the ceiling of a number.
+    """Return the smallest integer greater than or equal to x.
 
     Args:
-        x: Number to ceiling
+        x (int or float): Number to ceiling
 
     Returns:
-        Smallest integer greater than or equal to x
+        Smallest integer ≥ x
 
-    Examples:
-        await ceil(3.2) → 4
-        await ceil(-2.7) → -2
-        await ceil(5) → 5
+    Example:
+        ceil(3.2) = 4
+        ceil(-2.7) = -2
     """
     return math.ceil(x)
 
@@ -134,19 +128,17 @@ async def ceil(x: Number) -> int:
     ],
 )
 async def truncate(x: Number) -> int:
-    """
-    Truncate a number towards zero.
+    """Remove decimal part, rounding towards zero.
 
     Args:
-        x: Number to truncate
+        x (int or float): Number to truncate
 
     Returns:
-        Integer part of x (towards zero)
+        Integer part of x
 
-    Examples:
-        await truncate(3.9) → 3
-        await truncate(-2.9) → -2
-        await truncate(5) → 5
+    Example:
+        truncate(3.9) = 3
+        truncate(-2.9) = -2
     """
     return math.trunc(x)
 
@@ -180,23 +172,21 @@ async def truncate(x: Number) -> int:
     ],
 )
 async def ceiling_multiple(number: Number, significance: Number) -> Number:
-    """
-    Round a number up to the nearest multiple of significance.
+    """Round up to nearest multiple of significance (away from zero).
 
     Args:
-        number: Number to round
-        significance: Multiple to round to (must be positive and finite)
+        number (int or float): Number to round
+        significance (int or float): Multiple to round to (must be positive)
 
     Returns:
-        Number rounded up to nearest multiple of significance
+        Number rounded up to nearest multiple
 
     Raises:
-        ValueError: If significance is zero, negative, or infinite
+        ValueError: If significance ≤ 0 or infinite
 
-    Examples:
-        await ceiling_multiple(2.5, 1) → 3
-        await ceiling_multiple(6.7, 2) → 8
-        await ceiling_multiple(-2.1, 1) → -3
+    Example:
+        ceiling_multiple(6.7, 2) = 8
+        ceiling_multiple(-2.1, 1) = -3
     """
     if significance <= 0:
         raise ValueError("Significance must be positive")
@@ -239,23 +229,21 @@ async def ceiling_multiple(number: Number, significance: Number) -> Number:
     ],
 )
 async def floor_multiple(number: Number, significance: Number) -> Number:
-    """
-    Round a number down to the nearest multiple of significance.
+    """Round down to nearest multiple of significance (toward zero).
 
     Args:
-        number: Number to round
-        significance: Multiple to round to (must be positive and finite)
+        number (int or float): Number to round
+        significance (int or float): Multiple to round to (must be positive)
 
     Returns:
-        Number rounded down to nearest multiple of significance
+        Number rounded down to nearest multiple
 
     Raises:
-        ValueError: If significance is zero, negative, or infinite
+        ValueError: If significance ≤ 0 or infinite
 
-    Examples:
-        await floor_multiple(2.9, 1) → 2
-        await floor_multiple(7.8, 2) → 6
-        await floor_multiple(-2.9, 1) → -2
+    Example:
+        floor_multiple(7.8, 2) = 6
+        floor_multiple(-2.9, 1) = -2
     """
     if significance <= 0:
         raise ValueError("Significance must be positive")
@@ -298,23 +286,21 @@ async def floor_multiple(number: Number, significance: Number) -> Number:
     ],
 )
 async def mround(number: Number, significance: Number) -> Number:
-    """
-    Round a number to the nearest multiple of significance.
+    """Round to nearest multiple of significance (standard rounding).
 
     Args:
-        number: Number to round
-        significance: Multiple to round to (must be positive and finite)
+        number (int or float): Number to round
+        significance (int or float): Multiple to round to (must be positive)
 
     Returns:
-        Number rounded to nearest multiple of significance
+        Number rounded to nearest multiple
 
     Raises:
-        ValueError: If significance is zero, negative, or infinite
+        ValueError: If significance ≤ 0 or infinite
 
-    Examples:
-        await mround(2.4, 1) → 2
-        await mround(2.6, 1) → 3
-        await mround(7.3, 2) → 8
+    Example:
+        mround(2.6, 1) = 3
+        mround(7.3, 2) = 8
     """
     if significance <= 0:
         raise ValueError("Significance must be positive")

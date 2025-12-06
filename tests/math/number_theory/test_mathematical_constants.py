@@ -79,12 +79,8 @@ class TestPiApproximations:
         for terms, max_error in test_cases:
             result = await compute_pi_leibniz(terms)
             error = abs(result - PI)
-            assert error < max_error, (
-                f"Leibniz({terms}) error {error} should be < {max_error}"
-            )
-            assert 3.0 < result < 3.2, (
-                f"Leibniz result should be reasonable, got {result}"
-            )
+            assert error < max_error, f"Leibniz({terms}) error {error} should be < {max_error}"
+            assert 3.0 < result < 3.2, f"Leibniz result should be reasonable, got {result}"
 
     @pytest.mark.asyncio
     async def test_compute_pi_leibniz_properties(self):
@@ -115,12 +111,8 @@ class TestPiApproximations:
         for terms, max_error in test_cases:
             result = await compute_pi_nilakantha(terms)
             error = abs(result - PI)
-            assert error < max_error, (
-                f"Nilakantha({terms}) error {error} should be < {max_error}"
-            )
-            assert 3.1 < result < 3.15, (
-                f"Nilakantha result should be close to pi, got {result}"
-            )
+            assert error < max_error, f"Nilakantha({terms}) error {error} should be < {max_error}"
+            assert 3.1 < result < 3.15, f"Nilakantha result should be close to pi, got {result}"
 
     @pytest.mark.asyncio
     async def test_compute_pi_machin_accuracy(self):
@@ -135,12 +127,8 @@ class TestPiApproximations:
         for terms, max_error in test_cases:
             result = await compute_pi_machin(terms)
             error = abs(result - PI)
-            assert error < max_error, (
-                f"Machin({terms}) error {error} should be < {max_error}"
-            )
-            assert 3.14 < result < 3.15, (
-                f"Machin result should be very close to pi, got {result}"
-            )
+            assert error < max_error, f"Machin({terms}) error {error} should be < {max_error}"
+            assert 3.14 < result < 3.15, f"Machin result should be very close to pi, got {result}"
 
     @pytest.mark.asyncio
     async def test_compute_pi_chudnovsky_precision(self):
@@ -155,9 +143,7 @@ class TestPiApproximations:
         for terms, max_error in test_cases:
             result = await compute_pi_chudnovsky(terms)
             error = abs(result - PI)
-            assert error < max_error, (
-                f"Chudnovsky({terms}) error {error} should be < {max_error}"
-            )
+            assert error < max_error, f"Chudnovsky({terms}) error {error} should be < {max_error}"
             assert 3.141 < result < 3.142, (
                 f"Chudnovsky result should be very close to pi, got {result}"
             )
@@ -181,9 +167,7 @@ class TestPiApproximations:
 
         # Machin should be most accurate
         machin_error = abs(machin_result - PI)
-        assert machin_error < 1e-10, (
-            f"Machin should be very accurate, error: {machin_error}"
-        )
+        assert machin_error < 1e-10, f"Machin should be very accurate, error: {machin_error}"
 
     @pytest.mark.asyncio
     async def test_pi_approximations_edge_cases(self):
@@ -199,9 +183,7 @@ class TestPiApproximations:
         assert single_leibniz == 4.0, "Single Leibniz term should be 4"
 
         single_nilakantha = await compute_pi_nilakantha(1)
-        assert 3.1 < single_nilakantha < 3.2, (
-            "Single Nilakantha term should be close to pi"
-        )
+        assert 3.1 < single_nilakantha < 3.2, "Single Nilakantha term should be close to pi"
 
 
 # ============================================================================
@@ -226,12 +208,8 @@ class TestEApproximations:
         for terms, max_error in test_cases:
             result = await compute_e_series(terms)
             error = abs(result - E)
-            assert error < max_error, (
-                f"e_series({terms}) error {error} should be < {max_error}"
-            )
-            assert 2.7 < result < 2.73, (
-                f"e_series result should be close to e, got {result}"
-            )
+            assert error < max_error, f"e_series({terms}) error {error} should be < {max_error}"
+            assert 2.7 < result < 2.73, f"e_series result should be close to e, got {result}"
 
     @pytest.mark.asyncio
     async def test_compute_e_series_properties(self):
@@ -261,12 +239,8 @@ class TestEApproximations:
         for n, max_error in test_cases:
             result = await compute_e_limit(n)
             error = abs(result - E)
-            assert error < max_error, (
-                f"e_limit({n}) error {error} should be < {max_error}"
-            )
-            assert 2.7 < result < 2.72, (
-                f"e_limit result should be close to e, got {result}"
-            )
+            assert error < max_error, f"e_limit({n}) error {error} should be < {max_error}"
+            assert 2.7 < result < 2.72, f"e_limit result should be close to e, got {result}"
 
     @pytest.mark.asyncio
     async def test_e_approximation_comparison(self):
@@ -278,17 +252,11 @@ class TestEApproximations:
         series_error = abs(e_series_result - E)
         limit_error = abs(e_limit_result - E)
 
-        assert series_error < 1e-10, (
-            f"e_series should be very accurate, error: {series_error}"
-        )
-        assert limit_error < 1e-4, (
-            f"e_limit should be reasonably accurate, error: {limit_error}"
-        )
+        assert series_error < 1e-10, f"e_series should be very accurate, error: {series_error}"
+        assert limit_error < 1e-4, f"e_limit should be reasonably accurate, error: {limit_error}"
 
         # Series method should be more accurate for reasonable term counts
-        assert series_error < limit_error, (
-            "e_series should be more accurate than e_limit"
-        )
+        assert series_error < limit_error, "e_series should be more accurate than e_limit"
 
     @pytest.mark.asyncio
     async def test_e_approximations_edge_cases(self):
@@ -326,9 +294,7 @@ class TestGoldenRatio:
             assert error < max_error, (
                 f"fibonacci_golden_ratio({terms}) error {error} should be < {max_error}"
             )
-            assert 1.6 < result < 1.62, (
-                f"Golden ratio result should be reasonable, got {result}"
-            )
+            assert 1.6 < result < 1.62, f"Golden ratio result should be reasonable, got {result}"
 
     @pytest.mark.asyncio
     async def test_compute_golden_ratio_continued_fraction_convergence(self):
@@ -347,9 +313,7 @@ class TestGoldenRatio:
             assert error < max_error, (
                 f"continued_fraction_golden_ratio({depth}) error {error} should be < {max_error}"
             )
-            assert 1.59 < result < 1.62, (
-                f"Golden ratio result should be reasonable, got {result}"
-            )
+            assert 1.59 < result < 1.62, f"Golden ratio result should be reasonable, got {result}"
 
     @pytest.mark.asyncio
     async def test_golden_ratio_methods_consistency(self):
@@ -361,18 +325,14 @@ class TestGoldenRatio:
         fib_error = abs(fib_result - GOLDEN_RATIO)
         cf_error = abs(cf_result - GOLDEN_RATIO)
 
-        assert fib_error < 5e-10, (
-            f"Fibonacci method should be very accurate, error: {fib_error}"
-        )
+        assert fib_error < 5e-10, f"Fibonacci method should be very accurate, error: {fib_error}"
         assert cf_error < 1e-8, (
             f"Continued fraction method should be very accurate, error: {cf_error}"
         )
 
         # Results should be close to each other
         method_diff = abs(fib_result - cf_result)
-        assert method_diff < 1e-8, (
-            f"Both methods should give similar results, diff: {method_diff}"
-        )
+        assert method_diff < 1e-8, f"Both methods should give similar results, diff: {method_diff}"
 
     @pytest.mark.asyncio
     async def test_golden_ratio_mathematical_properties(self):
@@ -422,12 +382,8 @@ class TestEulerGamma:
         for terms, max_error in test_cases:
             result = await compute_euler_gamma_harmonic(terms)
             error = abs(result - EULER_GAMMA)
-            assert error < max_error, (
-                f"euler_gamma({terms}) error {error} should be < {max_error}"
-            )
-            assert 0.5 < result < 0.6, (
-                f"Euler gamma result should be reasonable, got {result}"
-            )
+            assert error < max_error, f"euler_gamma({terms}) error {error} should be < {max_error}"
+            assert 0.5 < result < 0.6, f"Euler gamma result should be reasonable, got {result}"
 
     @pytest.mark.asyncio
     async def test_euler_gamma_properties(self):
@@ -439,9 +395,7 @@ class TestEulerGamma:
         error_1000 = abs(gamma_1000 - EULER_GAMMA)
         error_10000 = abs(gamma_10000 - EULER_GAMMA)
 
-        assert error_10000 < error_1000, (
-            "More terms should give better Euler gamma approximation"
-        )
+        assert error_10000 < error_1000, "More terms should give better Euler gamma approximation"
 
     @pytest.mark.asyncio
     async def test_euler_gamma_edge_cases(self):
@@ -469,15 +423,11 @@ class TestContinuedFractions:
         expected_start = [3, 7, 15, 1, 292, 1, 1, 1, 2, 1]
 
         result = await continued_fraction_pi(10)
-        assert result == expected_start, (
-            f"Pi CF should start with {expected_start}, got {result}"
-        )
+        assert result == expected_start, f"Pi CF should start with {expected_start}, got {result}"
 
         # Test specific known values
         result_5 = await continued_fraction_pi(5)
-        assert result_5 == [3, 7, 15, 1, 292], (
-            "First 5 pi CF terms should be [3, 7, 15, 1, 292]"
-        )
+        assert result_5 == [3, 7, 15, 1, 292], "First 5 pi CF terms should be [3, 7, 15, 1, 292]"
 
     @pytest.mark.asyncio
     async def test_continued_fraction_e_pattern(self):
@@ -544,9 +494,7 @@ class TestHighPrecision:
         assert pi_20.startswith("3.141592653589793"), (
             f"Pi to 20 digits should start correctly, got {pi_20}"
         )
-        assert len(pi_20) >= 19, (
-            f"Pi to 20 digits should have reasonable length, got {len(pi_20)}"
-        )
+        assert len(pi_20) >= 19, f"Pi to 20 digits should have reasonable length, got {len(pi_20)}"
 
         # Check format
         assert "." in pi_10, "Pi digits should contain decimal point"
@@ -558,17 +506,13 @@ class TestHighPrecision:
 
         # Test various precisions
         e_10 = await e_digits(10)
-        assert e_10.startswith("2.718281828"), (
-            f"e to 10 digits should start correctly, got {e_10}"
-        )
+        assert e_10.startswith("2.718281828"), f"e to 10 digits should start correctly, got {e_10}"
 
         e_20 = await e_digits(20)
         assert e_20.startswith("2.71828182845904523"), (
             f"e to 20 digits should start correctly, got {e_20}"
         )
-        assert len(e_20) >= 19, (
-            f"e to 20 digits should have reasonable length, got {len(e_20)}"
-        )
+        assert len(e_20) >= 19, f"e to 20 digits should have reasonable length, got {len(e_20)}"
 
         # Check format
         assert "." in e_10, "e digits should contain decimal point"
@@ -602,20 +546,14 @@ class TestApproximationAnalysis:
         machin_error = await approximation_error("machin", 20)
 
         # Errors should be reasonable
-        assert 0 < leibniz_error < 0.1, (
-            f"Leibniz error should be reasonable, got {leibniz_error}"
-        )
+        assert 0 < leibniz_error < 0.1, f"Leibniz error should be reasonable, got {leibniz_error}"
         assert 0 < nilakantha_error < 1e-4, (
             f"Nilakantha error should be small, got {nilakantha_error}"
         )
-        assert 0 < machin_error < 1e-8, (
-            f"Machin error should be very small, got {machin_error}"
-        )
+        assert 0 < machin_error < 1e-8, f"Machin error should be very small, got {machin_error}"
 
         # Machin should be most accurate
-        assert machin_error < nilakantha_error < leibniz_error, (
-            "Machin should be most accurate"
-        )
+        assert machin_error < nilakantha_error < leibniz_error, "Machin should be most accurate"
 
     @pytest.mark.asyncio
     async def test_approximation_error_methods(self):
@@ -625,9 +563,7 @@ class TestApproximationAnalysis:
 
         for method in methods:
             error = await approximation_error(method, terms)
-            assert 0 <= error < 1, (
-                f"Error for {method} should be reasonable, got {error}"
-            )
+            assert 0 <= error < 1, f"Error for {method} should be reasonable, got {error}"
 
     @pytest.mark.asyncio
     async def test_approximation_error_edge_cases(self):
@@ -682,9 +618,7 @@ class TestConstantRelationships:
         """Test Euler's identity relationship."""
         # e^(iπ) + 1 = 0, so Re(e^(iπ)) = -1
         result = await constant_relationships("euler")
-        assert abs(result - (-1.0)) < 1e-10, (
-            f"Euler identity should give -1, got {result}"
-        )
+        assert abs(result - (-1.0)) < 1e-10, f"Euler identity should give -1, got {result}"
 
     @pytest.mark.asyncio
     async def test_golden_ratio_conjugate(self):
@@ -704,9 +638,7 @@ class TestConstantRelationships:
         """Test pi - e relationship."""
         result = await constant_relationships("pi_e_difference")
         expected = PI - E
-        assert abs(result - expected) < 1e-10, (
-            f"π - e should be {expected}, got {result}"
-        )
+        assert abs(result - expected) < 1e-10, f"π - e should be {expected}, got {result}"
         assert result > 0, "π should be larger than e"
 
     @pytest.mark.asyncio
@@ -760,12 +692,8 @@ class TestIntegrationAndProperties:
         series_error = abs(series_e - E)
         limit_error = abs(limit_e - E)
 
-        assert series_error < 1e-12, (
-            f"e_series should be very accurate, error: {series_error}"
-        )
-        assert limit_error < 1e-4, (
-            f"e_limit should be reasonably accurate, error: {limit_error}"
-        )
+        assert series_error < 1e-12, f"e_series should be very accurate, error: {series_error}"
+        assert limit_error < 1e-4, f"e_limit should be reasonably accurate, error: {limit_error}"
 
     @pytest.mark.asyncio
     async def test_continued_fraction_convergence(self):
@@ -831,9 +759,7 @@ class TestIntegrationAndProperties:
 
         # Errors should generally decrease
         for i in range(len(pi_errors) - 1):
-            assert pi_errors[i + 1] < pi_errors[i] * 2, (
-                "Error should improve with more terms"
-            )
+            assert pi_errors[i + 1] < pi_errors[i] * 2, "Error should improve with more terms"
 
         # e series should improve dramatically with more terms
         e_errors = []
@@ -938,9 +864,7 @@ class TestPerformance:
         # Check some patterns in results
         pi_leibniz_results = results[::5]  # Every 5th result
         for result in pi_leibniz_results:
-            assert 3.1 < result < 3.2, (
-                f"Pi Leibniz result should be reasonable: {result}"
-            )
+            assert 3.1 < result < 3.2, f"Pi Leibniz result should be reasonable: {result}"
 
     @pytest.mark.asyncio
     async def test_high_precision_performance(self):
@@ -964,12 +888,8 @@ class TestPerformance:
         # Results should be accurate
         pi_50, e_50, pi_chud, e_25 = results
 
-        assert pi_50.startswith("3.14159265358979323846"), (
-            "High precision pi should be accurate"
-        )
-        assert e_50.startswith("2.71828182845904523536"), (
-            "High precision e should be accurate"
-        )
+        assert pi_50.startswith("3.14159265358979323846"), "High precision pi should be accurate"
+        assert e_50.startswith("2.71828182845904523536"), "High precision e should be accurate"
         assert abs(pi_chud - PI) < 1e-14, "Chudnovsky should be very accurate"
         assert abs(e_25 - E) < 1e-15, "e_series with 25 terms should be very accurate"
 
@@ -1028,9 +948,7 @@ class TestParametrized:
     """Parametrized tests for comprehensive coverage."""
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "terms,max_error", [(100, 0.1), (1000, 0.01), (10000, 0.001)]
-    )
+    @pytest.mark.parametrize("terms,max_error", [(100, 0.1), (1000, 0.01), (10000, 0.001)])
     async def test_pi_leibniz_parametrized(self, terms, max_error):
         """Parametrized test for pi Leibniz convergence."""
         result = await compute_pi_leibniz(terms)
@@ -1038,9 +956,7 @@ class TestParametrized:
         assert error < max_error
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "terms,max_error", [(10, 5e-4), (100, 5e-7), (1000, 5e-10)]
-    )
+    @pytest.mark.parametrize("terms,max_error", [(10, 5e-4), (100, 5e-7), (1000, 5e-10)])
     async def test_pi_nilakantha_parametrized(self, terms, max_error):
         """Parametrized test for pi Nilakantha convergence."""
         result = await compute_pi_nilakantha(terms)
@@ -1056,18 +972,14 @@ class TestParametrized:
         assert error < max_error
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "method", ["leibniz", "nilakantha", "machin", "chudnovsky"]
-    )
+    @pytest.mark.parametrize("method", ["leibniz", "nilakantha", "machin", "chudnovsky"])
     async def test_approximation_error_parametrized(self, method):
         """Parametrized test for approximation error methods."""
         error = await approximation_error(method, 50)
         assert 0 <= error < 1
 
     @pytest.mark.asyncio
-    @pytest.mark.parametrize(
-        "identity", ["euler", "golden_conjugate", "pi_e_difference"]
-    )
+    @pytest.mark.parametrize("identity", ["euler", "golden_conjugate", "pi_e_difference"])
     async def test_constant_relationships_parametrized(self, identity):
         """Parametrized test for constant relationships."""
         result = await constant_relationships(identity)

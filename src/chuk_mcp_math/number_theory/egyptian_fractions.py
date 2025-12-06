@@ -54,9 +54,7 @@ from chuk_mcp_math.mcp_decorator import mcp_function
         },
     ],
 )
-async def egyptian_fraction_decomposition(
-    numerator: int, denominator: int
-) -> List[int]:
+async def egyptian_fraction_decomposition(numerator: int, denominator: int) -> List[int]:
     """
     Decompose a proper fraction into Egyptian fractions using greedy algorithm.
 
@@ -1178,9 +1176,7 @@ async def shortest_egyptian_fraction(
 
             from itertools import combinations_with_replacement
 
-            for denoms in combinations_with_replacement(
-                range(min_denom, max_denom + 1), length
-            ):
+            for denoms in combinations_with_replacement(range(min_denom, max_denom + 1), length):
                 # Check if this combination gives the target fraction
                 unit_sum = sum(Fraction(1, d) for d in denoms)
                 if unit_sum == target_fraction:
@@ -1250,9 +1246,7 @@ if __name__ == "__main__":
         print("\nUnit Fraction Operations:")
         print(f"  unit_fraction_sum([2, 3, 6]) = {await unit_fraction_sum([2, 3, 6])}")
         print(f"  is_unit_fraction(1, 5) = {await is_unit_fraction(1, 5)}")
-        print(
-            f"  egyptian_fraction_lcm([2, 3, 4]) = {await egyptian_fraction_lcm([2, 3, 4])}"
-        )
+        print(f"  egyptian_fraction_lcm([2, 3, 4]) = {await egyptian_fraction_lcm([2, 3, 4])}")
 
         # Test harmonic numbers
         print("\nHarmonic Numbers:")
@@ -1264,9 +1258,7 @@ if __name__ == "__main__":
         # Test Sylvester sequence
         print("\nSylvester Sequence:")
         print(f"  sylvester_sequence(5) = {await sylvester_sequence(5)}")
-        print(
-            f"  sylvester_expansion_of_one(4) = {await sylvester_expansion_of_one(4)}"
-        )
+        print(f"  sylvester_expansion_of_one(4) = {await sylvester_expansion_of_one(4)}")
 
         # Test Egyptian fraction properties
         print("\nEgyptian Fraction Properties:")
@@ -1284,9 +1276,7 @@ if __name__ == "__main__":
         print("\nFraction Utilities:")
         print(f"  is_proper_fraction(3, 4) = {await is_proper_fraction(3, 4)}")
         print(f"  improper_to_egyptian(7, 3) = {await improper_to_egyptian(7, 3)}")
-        print(
-            f"  egyptian_expansion_lengths(10) = {await egyptian_expansion_lengths(10)}"
-        )
+        print(f"  egyptian_expansion_lengths(10) = {await egyptian_expansion_lengths(10)}")
 
         print("\n✅ All Egyptian fractions and unit fraction functions working!")
 

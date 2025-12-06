@@ -74,9 +74,7 @@ class TestDigitalSumsAndRoots:
 
         for n, expected in test_cases:
             result = await digit_sum(n)
-            assert result == expected, (
-                f"digit_sum({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digit_sum({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digit_sum_different_bases(self):
@@ -126,9 +124,7 @@ class TestDigitalSumsAndRoots:
 
         for n, expected in test_cases:
             result = await digital_root(n)
-            assert result == expected, (
-                f"digital_root({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digital_root({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digital_root_formula_base_10(self):
@@ -175,9 +171,7 @@ class TestDigitalSumsAndRoots:
 
         for n, expected in test_cases:
             result = await digit_product(n)
-            assert result == expected, (
-                f"digit_product({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digit_product({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digit_product_with_zeros(self):
@@ -186,9 +180,7 @@ class TestDigitalSumsAndRoots:
 
         for n in numbers_with_zeros:
             result = await digit_product(n)
-            assert result == 0, (
-                f"digit_product({n}) should be 0 when number contains zero"
-            )
+            assert result == 0, f"digit_product({n}) should be 0 when number contains zero"
 
     @pytest.mark.asyncio
     async def test_digit_product_different_bases(self):
@@ -228,9 +220,7 @@ class TestDigitalSumsAndRoots:
         """Test persistent digital root for single digits."""
         for i in range(10):
             result = await persistent_digital_root(i)
-            assert result == 0, (
-                f"Single digit {i} should have persistent digital root 0"
-            )
+            assert result == 0, f"Single digit {i} should have persistent digital root 0"
 
     @pytest.mark.asyncio
     async def test_persistent_digital_root_consistency(self):
@@ -245,9 +235,7 @@ class TestDigitalSumsAndRoots:
                 temp = await digit_sum(temp)
                 steps += 1
 
-            assert steps == persistent_steps, (
-                f"Persistent digital root steps mismatch for {n}"
-            )
+            assert steps == persistent_steps, f"Persistent digital root steps mismatch for {n}"
 
             # Final result should match digital root
             final_root = await digital_root(n)
@@ -279,9 +267,7 @@ class TestDigitalTransformations:
 
         for n, expected in test_cases:
             result = await digit_reversal(n)
-            assert result == expected, (
-                f"digit_reversal({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digit_reversal({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digit_reversal_palindromes(self):
@@ -309,9 +295,7 @@ class TestDigitalTransformations:
         for n in test_numbers:
             reversed_once = await digit_reversal(n)
             reversed_twice = await digit_reversal(reversed_once)
-            assert reversed_twice == n, (
-                f"Double reversal of {n} should give original number"
-            )
+            assert reversed_twice == n, f"Double reversal of {n} should give original number"
 
     @pytest.mark.asyncio
     async def test_digit_sort_ascending(self):
@@ -432,9 +416,7 @@ class TestPalindromicNumbers:
         ]
 
         for palindrome in palindromes_base_10:
-            assert await is_palindromic_number(palindrome), (
-                f"{palindrome} should be palindromic"
-            )
+            assert await is_palindromic_number(palindrome), f"{palindrome} should be palindromic"
 
     @pytest.mark.asyncio
     async def test_is_palindromic_number_non_palindromes(self):
@@ -562,9 +544,7 @@ class TestPalindromicNumbers:
 
         for n, expected in test_cases:
             result = await next_palindrome(n)
-            assert result == expected, (
-                f"next_palindrome({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"next_palindrome({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_next_palindrome_invalid_base(self):
@@ -637,9 +617,7 @@ class TestHarshadNumbers:
         ]
 
         for harshad in known_harshad:
-            assert await is_harshad_number(harshad), (
-                f"{harshad} should be Harshad"
-            )
+            assert await is_harshad_number(harshad), f"{harshad} should be Harshad"
 
     @pytest.mark.asyncio
     async def test_is_harshad_number_non_harshad(self):
@@ -676,9 +654,7 @@ class TestHarshadNumbers:
         ]
 
         for non_harshad in non_harshad:
-            assert not await is_harshad_number(non_harshad), (
-                f"{non_harshad} should not be Harshad"
-            )
+            assert not await is_harshad_number(non_harshad), f"{non_harshad} should not be Harshad"
 
     @pytest.mark.asyncio
     async def test_is_harshad_number_edge_cases(self):
@@ -804,9 +780,7 @@ class TestBaseConversions:
 
         for n, expected in test_cases:
             result = await number_to_base(n, 2)
-            assert result == expected, (
-                f"number_to_base({n}, 2) should be {expected}, got {result}"
-            )
+            assert result == expected, f"number_to_base({n}, 2) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_number_to_base_octal(self):
@@ -824,9 +798,7 @@ class TestBaseConversions:
 
         for n, expected in test_cases:
             result = await number_to_base(n, 8)
-            assert result == expected, (
-                f"number_to_base({n}, 8) should be {expected}, got {result}"
-            )
+            assert result == expected, f"number_to_base({n}, 8) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_number_to_base_hexadecimal(self):
@@ -846,9 +818,7 @@ class TestBaseConversions:
 
         for n, expected in test_cases:
             result = await number_to_base(n, 16)
-            assert result == expected, (
-                f"number_to_base({n}, 16) should be {expected}, got {result}"
-            )
+            assert result == expected, f"number_to_base({n}, 16) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_number_to_base_other_bases(self):
@@ -991,9 +961,7 @@ class TestDigitProperties:
 
         for n, expected in test_cases:
             result = await digit_count(n)
-            assert result == expected, (
-                f"digit_count({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digit_count({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digit_count_different_bases(self):
@@ -1038,9 +1006,7 @@ class TestDigitProperties:
 
         for n, expected in test_cases:
             result = await digit_frequency(n)
-            assert result == expected, (
-                f"digit_frequency({n}) should be {expected}, got {result}"
-            )
+            assert result == expected, f"digit_frequency({n}) should be {expected}, got {result}"
 
     @pytest.mark.asyncio
     async def test_digit_frequency_different_bases(self):
@@ -1119,9 +1085,7 @@ class TestDigitProperties:
             1234,
         ]
         for non_repdigit in non_repdigits:
-            assert not await is_repdigit(non_repdigit), (
-                f"{non_repdigit} should not be repdigit"
-            )
+            assert not await is_repdigit(non_repdigit), f"{non_repdigit} should not be repdigit"
 
     @pytest.mark.asyncio
     async def test_is_repdigit_different_bases(self):
@@ -1160,9 +1124,7 @@ class TestSpecialNumbers:
         known_automorphic = [0, 1, 5, 6, 25, 76, 376, 625, 9376, 90625]
 
         for automorphic in known_automorphic:
-            assert await is_automorphic_number(automorphic), (
-                f"{automorphic} should be automorphic"
-            )
+            assert await is_automorphic_number(automorphic), f"{automorphic} should be automorphic"
 
     @pytest.mark.asyncio
     async def test_is_automorphic_number_manual_verification(self):
@@ -1262,9 +1224,7 @@ class TestIntegrationAndProperties:
             while temp >= 10:
                 temp = await digit_sum(temp)
 
-            assert temp == digital_root_val, (
-                f"Digital root calculation mismatch for {n}"
-            )
+            assert temp == digital_root_val, f"Digital root calculation mismatch for {n}"
 
     @pytest.mark.asyncio
     async def test_palindrome_and_reversal_relationship(self):
@@ -1272,14 +1232,10 @@ class TestIntegrationAndProperties:
         test_numbers = [121, 1221, 12321, 123321, 1234321]
 
         for palindrome in test_numbers:
-            assert await is_palindromic_number(palindrome), (
-                f"{palindrome} should be palindromic"
-            )
+            assert await is_palindromic_number(palindrome), f"{palindrome} should be palindromic"
 
             reversed_num = await digit_reversal(palindrome)
-            assert reversed_num == palindrome, (
-                f"Palindrome {palindrome} should equal its reversal"
-            )
+            assert reversed_num == palindrome, f"Palindrome {palindrome} should equal its reversal"
 
     @pytest.mark.asyncio
     async def test_digit_sort_and_frequency_consistency(self):
@@ -1296,9 +1252,7 @@ class TestIntegrationAndProperties:
             freq_desc = await digit_frequency(sorted_desc)
 
             # Frequencies should be preserved (except for leading zeros in ascending)
-            assert freq_desc == freq, (
-                f"Frequency mismatch after descending sort for {n}"
-            )
+            assert freq_desc == freq, f"Frequency mismatch after descending sort for {n}"
 
     @pytest.mark.asyncio
     async def test_base_conversion_properties(self):
@@ -1319,9 +1273,7 @@ class TestIntegrationAndProperties:
             # Binary digit sum equals number of 1 bits
             binary_repr = await number_to_base(n, 2)
             expected_binary_sum = binary_repr.count("1")
-            assert base_2_digit_sum == expected_binary_sum, (
-                f"Binary digit sum mismatch for {n}"
-            )
+            assert base_2_digit_sum == expected_binary_sum, f"Binary digit sum mismatch for {n}"
 
     @pytest.mark.asyncio
     async def test_automorphic_and_digit_properties(self):
@@ -1356,9 +1308,7 @@ class TestIntegrationAndProperties:
                 non_harshad_candidate = harshad + 1
                 if non_harshad_candidate <= 100:
                     candidate_digit_sum = await digit_sum(non_harshad_candidate)
-                    is_harshad_candidate = await is_harshad_number(
-                        non_harshad_candidate
-                    )
+                    is_harshad_candidate = await is_harshad_number(non_harshad_candidate)
 
                     if non_harshad_candidate % candidate_digit_sum != 0:
                         assert not is_harshad_candidate, (
@@ -1499,9 +1449,7 @@ class TestPerformance:
 
         assert len(palindromes) > 10
         assert len(harshads) > 20
-        assert (
-            len(automorphics) >= 8
-        )  # Should have at least [0, 1, 5, 6, 25, 76, 376, 625]
+        assert len(automorphics) >= 8  # Should have at least [0, 1, 5, 6, 25, 76, 376, 625]
         assert len(frequencies) == 20
         assert len(digit_sums) == 30
 
@@ -1977,18 +1925,10 @@ class TestComprehensiveIntegration:
 
             # All intermediate results should have same digit count
             original_count = await digit_count(n)
-            assert (
-                await digit_count(step1) <= original_count
-            )  # Reversal might remove leading zeros
-            assert (
-                await digit_count(step2) <= original_count
-            )  # Sorting might remove leading zeros
-            assert (
-                await digit_count(step3) <= original_count
-            )  # Reversal might remove leading zeros
-            assert (
-                await digit_count(step4) <= original_count
-            )  # Sorting might remove leading zeros
+            assert await digit_count(step1) <= original_count  # Reversal might remove leading zeros
+            assert await digit_count(step2) <= original_count  # Sorting might remove leading zeros
+            assert await digit_count(step3) <= original_count  # Reversal might remove leading zeros
+            assert await digit_count(step4) <= original_count  # Sorting might remove leading zeros
 
     @pytest.mark.asyncio
     async def test_mathematical_property_verification(self):
@@ -2026,9 +1966,7 @@ class TestComprehensiveIntegration:
             # Harshad properties
             is_harshad = await is_harshad_number(n)
             if is_harshad:
-                assert n % ds == 0, (
-                    f"Harshad number {n} should be divisible by digit sum {ds}"
-                )
+                assert n % ds == 0, f"Harshad number {n} should be divisible by digit sum {ds}"
 
     @pytest.mark.asyncio
     async def test_performance_stress_test(self):

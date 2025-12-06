@@ -115,9 +115,7 @@ async def arithmetic_sequence(
         },
     ],
 )
-async def arithmetic_sum(
-    first_term: Number, common_diff: Number, num_terms: int
-) -> Number:
+async def arithmetic_sum(first_term: Number, common_diff: Number, num_terms: int) -> Number:
     """
     Calculate the sum of an arithmetic sequence.
 
@@ -264,9 +262,7 @@ async def geometric_sum(
     if num_terms is None:
         # Infinite series
         if abs(common_ratio) >= 1:
-            raise ValueError(
-                "Infinite geometric series only converges when |ratio| < 1"
-            )
+            raise ValueError("Infinite geometric series only converges when |ratio| < 1")
         return first_term / (1 - common_ratio)
 
     if num_terms <= 0:

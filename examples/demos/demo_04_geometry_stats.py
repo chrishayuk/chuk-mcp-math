@@ -145,9 +145,7 @@ async def demo_statistics():
 
     # Quartiles
     result = await quartiles(data)
-    print(
-        f"✓ quartiles({data}) = Q1:{result[0]:.1f}, Q2:{result[1]:.1f}, Q3:{result[2]:.1f}"
-    )
+    print(f"✓ quartiles({data}) = Q1:{result[0]:.1f}, Q2:{result[1]:.1f}, Q3:{result[2]:.1f}")
 
 
 async def demo_vectors():
@@ -177,9 +175,7 @@ async def demo_vectors():
 
     # Normalize
     result = await vector_normalize(v1)
-    print(
-        f"✓ vector_normalize({v1}) = [{result[0]:.4f}, {result[1]:.4f}, {result[2]:.4f}]"
-    )
+    print(f"✓ vector_normalize({v1}) = [{result[0]:.4f}, {result[1]:.4f}, {result[2]:.4f}]")
 
     # Dot product
     result = await dot_product(v1, v2)
