@@ -1,4 +1,5 @@
 """CLI wrapper infrastructure for bash-executable math functions."""
+
 # ruff: noqa: F401
 
 import asyncio

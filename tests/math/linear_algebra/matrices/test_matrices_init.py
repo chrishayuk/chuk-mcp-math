@@ -14,12 +14,28 @@ class TestMatricesInit:
         assert hasattr(matrices_module, "__all__")
         assert isinstance(matrices_module.__all__, list)
 
-    def test_matrices_all_is_empty(self):
-        """Test that __all__ is empty (no functions implemented yet)."""
+    def test_matrices_all_has_functions(self):
+        """Test that __all__ contains the implemented functions."""
         from chuk_mcp_math.linear_algebra.matrices import __all__
 
-        # Should be empty as functions are not yet implemented
-        assert __all__ == []
+        # Should contain the matrix functions we implemented
+        expected_functions = [
+            "matrix_add",
+            "matrix_subtract",
+            "matrix_multiply",
+            "matrix_transpose",
+            "matrix_scalar_multiply",
+            "matrix_det_2x2",
+            "matrix_det_3x3",
+            "matrix_solve_2x2",
+            "matrix_solve_3x3",
+            "gaussian_elimination",
+        ]
+
+        assert len(__all__) > 0
+        # All expected functions should be in __all__
+        for func in expected_functions:
+            assert func in __all__
 
 
 if __name__ == "__main__":

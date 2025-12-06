@@ -829,9 +829,9 @@ async def prime_gaps_analysis(start: int, end: int) -> Dict:
         "avg_gap": round(avg_gap, 2),
         "gap_distribution": gap_distribution,
         "unique_gaps": len(gap_distribution),
-        "most_common_gap": max(gap_distribution.items(), key=lambda x: x[1])[0]
-        if gap_distribution
-        else 0,
+        "most_common_gap": (
+            max(gap_distribution.items(), key=lambda x: x[1])[0] if gap_distribution else 0
+        ),
     }
 
 

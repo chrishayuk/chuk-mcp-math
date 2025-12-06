@@ -1,25 +1,16 @@
 #!/usr/bin/env python3
 """Unified CLI entry point with subcommand routing."""
 
-import click
+import argparse
 import sys
 import importlib
 import inspect
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Dict, Any
 
 # Suppress info logs for cleaner CLI output
 import logging
 
 logging.getLogger("chuk_mcp_math").setLevel(logging.WARNING)
-
-
-@click.group()
-def cli():
-    """CHUK MCP Math - Command Line Interface
-
-    Mathematical functions accessible from the command line.
-    """
-    pass
 
 
 def discover_all_functions() -> Dict[str, Any]:
@@ -48,187 +39,221 @@ def discover_all_functions() -> Dict[str, Any]:
                             "category": spec.category,
                             "namespace": spec.namespace,
                         }
-                    elif hasattr(obj, "_mcp_metadata"):
-                        metadata = obj._mcp_metadata
 
-                    if metadata or hasattr(obj, "_mcp_function_spec"):
-                        func_key = f"{module_name.split('.')[-1]}.{name}"
-                        functions[func_key] = {
-                            "function": obj,
-                            "module": module_name,
-                            "metadata": metadata,
-                            "signature": str(inspect.signature(obj)),
-                        }
+                    if metadata or inspect.isfunction(obj):
+                        full_name = f"{module_name}.{name}"
+                        functions[full_name] = {"function": obj, "metadata": metadata}
         except ImportError:
-            # Debug: print import errors
-            # print(f"Failed to import {module_name}: {e}", file=sys.stderr)
             continue
 
     return functions
 
 
-@cli.command()
-@click.argument("function_name")
-@click.argument("args", nargs=-1)
-@click.option("--json-output", is_flag=True, help="Output as JSON")
-def call(function_name: str, args, json_output: bool):
-    """Call a math function by name.
+def cmd_version(args):
+    """Show version information."""
+    from .. import __version__
 
-    Examples:
-        chuk call primes.is_prime 17
-        chuk call basic_operations.add 5 3
-    """
+    print(f"chuk-mcp-math version {__version__}")
+    return 0
+
+
+def cmd_list(args):
+    """List all available functions."""
     functions = discover_all_functions()
 
-    # Try direct match first
-    func_info = functions.get(function_name)
-
-    # Try without module prefix
-    if not func_info:
-        for key, info in functions.items():
-            if key.endswith(f".{function_name}"):
-                func_info = info
-                break
-
-    if not func_info:
-        click.echo(f"Function '{function_name}' not found", err=True)
-        click.echo("Use 'chuk list' to see available functions", err=True)
-        sys.exit(1)
-
-    func = func_info["function"]
-    from chuk_mcp_math.cli import CLIWrapper
-
-    wrapper = CLIWrapper(func, function_name)
-    result_code = wrapper.run(list(args))
-    sys.exit(result_code)
-
-
-@cli.command()
-@click.option("--module", help="Filter by module")
-@click.option("--detailed", is_flag=True, help="Show detailed information")
-def list(module: Optional[str], detailed: bool):
-    """List available functions."""
-    functions = discover_all_functions()
+    if args.module:
+        # Filter by module
+        functions = {k: v for k, v in functions.items() if args.module in k}
 
     if not functions:
-        click.echo("No functions found. Make sure modules are properly installed.")
-        return
+        print("No functions found.")
+        return 1
 
-    # Group by module
-    by_module: Dict[str, List[Tuple[str, Dict[str, Any]]]] = {}
-    for func_name, info in functions.items():
-        module_name = info["module"].split(".")[-1]
-        if module and module != module_name:
-            continue
-        if module_name not in by_module:
-            by_module[module_name] = []
-        by_module[module_name].append((func_name, info))
+    print(f"\nFound {len(functions)} functions:\n")
 
-    for module_name in sorted(by_module.keys()):
-        click.echo(f"\n{module_name}:")
-        for func_name, info in sorted(by_module[module_name]):
-            short_name = func_name.split(".")[-1]
-            if detailed:
-                click.echo(f"  {short_name}{info['signature']}")
-                if info["metadata"].get("description"):
-                    click.echo(f"    {info['metadata']['description']}")
-            else:
-                desc = info["metadata"].get("description", "No description")
-                # Truncate long descriptions
-                if len(desc) > 60:
-                    desc = desc[:57] + "..."
-                click.echo(f"  {short_name}: {desc}")
+    for name, info in sorted(functions.items()):
+        if args.detailed and info["metadata"]:
+            desc = info["metadata"].get("description", "No description")
+            print(f"  • {name}")
+            print(f"    {desc}")
+            print()
+        else:
+            print(f"  • {name}")
+
+    return 0
 
 
-@cli.command()
-@click.argument("query")
-def search(query: str):
-    """Search functions by keyword."""
+def cmd_search(args):
+    """Search for functions by keyword."""
     functions = discover_all_functions()
-    query_lower = query.lower()
+    keyword = args.keyword.lower()
 
-    results = []
-    for func_name, info in functions.items():
-        score = 0
-        short_name = func_name.split(".")[-1]
+    matches = {}
+    for name, info in functions.items():
+        if keyword in name.lower():
+            matches[name] = info
+        elif info["metadata"]:
+            desc = info["metadata"].get("description", "").lower()
+            if keyword in desc:
+                matches[name] = info
 
-        # Check function name
-        if query_lower in short_name.lower():
-            score += 3
+    if not matches:
+        print(f"No functions found matching '{args.keyword}'")
+        return 1
 
-        # Check description
-        desc = info["metadata"].get("description", "").lower()
-        if query_lower in desc:
-            score += 2
+    print(f"\nFound {len(matches)} matches for '{args.keyword}':\n")
+    for name, info in sorted(matches.items()):
+        desc = (
+            info["metadata"].get("description", "No description")
+            if info["metadata"]
+            else "No description"
+        )
+        print(f"  • {name}")
+        print(f"    {desc}")
+        print()
 
-        # Check module name
-        if query_lower in info["module"].lower():
-            score += 1
-
-        if score > 0:
-            results.append((func_name, info, score))
-
-    if not results:
-        click.echo(f"No functions found matching '{query}'")
-        return
-
-    # Sort by score (descending) and name
-    results.sort(key=lambda x: (-x[2], x[0]))
-
-    click.echo(f"Functions matching '{query}':\n")
-    for func_name, info, score in results:
-        short_name = func_name.split(".")[-1]
-        desc = info["metadata"].get("description", "No description")
-        if len(desc) > 50:
-            desc = desc[:47] + "..."
-        click.echo(f"  {short_name}: {desc}")
+    return 0
 
 
-@cli.command()
-@click.argument("function_name")
-def describe(function_name: str):
-    """Show detailed information about a function."""
+def cmd_describe(args):
+    """Describe a specific function."""
     functions = discover_all_functions()
 
-    # Try direct match first
-    func_info = functions.get(function_name)
-
-    # Try without module prefix
-    if not func_info:
-        for key, info in functions.items():
-            if key.endswith(f".{function_name}"):
-                func_info = info
-                break
+    # Try to find the function
+    func_info = None
+    for name, info in functions.items():
+        if args.function in name or name.endswith(f".{args.function}"):
+            func_info = info
+            break
 
     if not func_info:
-        click.echo(f"Function '{function_name}' not found", err=True)
-        sys.exit(1)
+        print(f"Function '{args.function}' not found.")
+        return 1
 
-    short_name = function_name.split(".")[-1]
-    click.echo(f"Function: {short_name}")
-    click.echo(f"Module: {func_info['module']}")
-    click.echo(f"Signature: {short_name}{func_info['signature']}")
+    print(f"\nFunction: {args.function}")
+    print("=" * 60)
 
-    if func_info["metadata"].get("description"):
-        click.echo("\nDescription:")
-        click.echo(f"  {func_info['metadata']['description']}")
+    if func_info["metadata"]:
+        metadata = func_info["metadata"]
+        print(f"\nDescription: {metadata.get('description', 'N/A')}")
+        print(f"Category: {metadata.get('category', 'N/A')}")
+        print(f"Namespace: {metadata.get('namespace', 'N/A')}")
 
-    if func_info["metadata"].get("examples"):
-        click.echo("\nExamples:")
-        for example in func_info["metadata"]["examples"]:
-            args = " ".join(str(v) for v in example["input"].values())
-            click.echo(f"  $ chuk call {short_name} {args}")
-            click.echo(f"    → {example['output']}")
-            if example.get("description"):
-                click.echo(f"    # {example['description']}")
+        if metadata.get("examples"):
+            print("\nExamples:")
+            for ex in metadata["examples"]:
+                print(f"  Input: {ex.get('input', 'N/A')}")
+                print(f"  Output: {ex.get('output', 'N/A')}")
+                if ex.get("description"):
+                    print(f"  Description: {ex['description']}")
+                print()
+
+    # Show function signature
+    func = func_info["function"]
+    sig = inspect.signature(func)
+    print(f"\nSignature: {args.function}{sig}")
+
+    # Show docstring
+    if func.__doc__:
+        print("\nDocumentation:")
+        print(func.__doc__)
+
+    return 0
 
 
-@cli.command()
-def version():
-    """Show version information."""
-    click.echo("CHUK MCP Math CLI v1.0.0")
-    click.echo("Async-native mathematical functions library")
+def cmd_call(args):
+    """Call a function with arguments."""
+    functions = discover_all_functions()
+
+    # Try to find the function
+    func_info = None
+    for name, info in functions.items():
+        if args.function in name or name.endswith(f".{args.function}"):
+            func_info = info
+            break
+
+    if not func_info:
+        print(f"Function '{args.function}' not found.")
+        return 1
+
+    func = func_info["function"]
+
+    # Parse arguments
+    try:
+        # Simple argument parsing (could be improved)
+        import json
+
+        parsed_args = []
+        for arg in args.args:
+            try:
+                # Try to parse as JSON first
+                parsed_args.append(json.loads(arg))
+            except (json.JSONDecodeError, ValueError):
+                # Otherwise treat as string
+                parsed_args.append(arg)
+
+        # Call the function
+        result = func(*parsed_args)
+
+        # Handle async functions
+        if inspect.iscoroutine(result):
+            import asyncio
+
+            result = asyncio.run(result)
+
+        print(f"\nResult: {result}")
+        return 0
+
+    except Exception as e:
+        print(f"Error calling function: {e}")
+        return 1
+
+
+def main():
+    """Main CLI entry point."""
+    parser = argparse.ArgumentParser(
+        prog="chuk-mcp-math",
+        description="CHUK MCP Math - Mathematical functions from the command line",
+    )
+
+    parser.add_argument("--version", action="version", version="%(prog)s 0.1.3")
+
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
+    # List command
+    list_parser = subparsers.add_parser("list", help="List all available functions")
+    list_parser.add_argument("--module", "-m", help="Filter by module name")
+    list_parser.add_argument(
+        "--detailed", "-d", action="store_true", help="Show detailed information"
+    )
+    list_parser.set_defaults(func=cmd_list)
+
+    # Search command
+    search_parser = subparsers.add_parser("search", help="Search for functions")
+    search_parser.add_argument("keyword", help="Keyword to search for")
+    search_parser.set_defaults(func=cmd_search)
+
+    # Describe command
+    describe_parser = subparsers.add_parser("describe", help="Describe a function")
+    describe_parser.add_argument("function", help="Function name to describe")
+    describe_parser.set_defaults(func=cmd_describe)
+
+    # Call command
+    call_parser = subparsers.add_parser("call", help="Call a function")
+    call_parser.add_argument("function", help="Function name to call")
+    call_parser.add_argument("args", nargs="*", help="Arguments to pass to the function")
+    call_parser.set_defaults(func=cmd_call)
+
+    # Parse arguments
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        return 0
+
+    # Call the appropriate command handler
+    return args.func(args)
 
 
 if __name__ == "__main__":
-    cli()
+    sys.exit(main())

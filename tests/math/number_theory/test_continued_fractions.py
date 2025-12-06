@@ -68,9 +68,11 @@ class TestBasicOperations:
         # 16 ÷ 1 = 16 remainder 0
         # So 355/113 = [3; 7, 16]
         cf_355_113 = await rational_to_cf(355, 113)
-        assert cf_355_113["cf"] == [3, 7, 16], (
-            f"355/113 should be [3, 7, 16], got {cf_355_113['cf']}"
-        )
+        assert cf_355_113["cf"] == [
+            3,
+            7,
+            16,
+        ], f"355/113 should be [3, 7, 16], got {cf_355_113['cf']}"
 
         # Verify 8/5 by manual calculation
         # 8 ÷ 5 = 1 remainder 3

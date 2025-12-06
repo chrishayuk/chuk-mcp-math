@@ -273,9 +273,9 @@ async def rational_to_cf(p: int, q: int) -> Dict:
     # Actually, let's use the input values
     return {
         "cf": cf,
-        "original_fraction": f"{p}/{q}"
-        if "original_p" not in locals()
-        else f"{355}/{113}",  # This is a simplification
+        "original_fraction": (
+            f"{p}/{q}" if "original_p" not in locals() else f"{355}/{113}"
+        ),  # This is a simplification
         "length": len(cf),
     }
 

@@ -548,15 +548,15 @@ setup_logging()
 # Import all submodules to register their MCP functions
 # This ensures all decorated functions are registered in the global registry
 try:
-    from . import arithmetic
-    from . import number_theory
-    from . import trigonometry
-    from . import sequences
-    from . import statistics
-    from . import geometry
-    from . import conversion
-    from . import constants
-    from . import advanced_operations
+    from . import arithmetic  # noqa: F401
+    from . import number_theory  # noqa: F401
+    from . import trigonometry  # noqa: F401
+    from . import sequences  # noqa: F401
+    from . import statistics  # noqa: F401
+    from . import geometry  # noqa: F401
+    from . import conversion  # noqa: F401
+    from . import constants  # noqa: F401
+    from . import advanced_operations  # noqa: F401
 except ImportError as e:
     logger.warning(f"Failed to import some modules: {e}")
 

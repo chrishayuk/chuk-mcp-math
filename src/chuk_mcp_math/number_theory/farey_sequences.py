@@ -534,9 +534,11 @@ async def farey_mediant_path(
         "converges": False,
         "steps": len(mediants),
         "max_denom_used": max(med[1] for med in mediants) if mediants else 0,
-        "reason": "Max denominator exceeded"
-        if mediants and mediants[-1][1] >= max_denom
-        else "Max steps exceeded",
+        "reason": (
+            "Max denominator exceeded"
+            if mediants and mediants[-1][1] >= max_denom
+            else "Max steps exceeded"
+        ),
     }
 
 

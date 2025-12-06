@@ -363,9 +363,9 @@ class MCPFunctionSpec(McpPydanticBase):
             "concurrent_executions": metrics.concurrent_executions,
             "is_async_native": self.is_async_native,
             "yield_strategy": self.async_yield_strategy.value,
-            "last_execution": metrics.last_execution.isoformat()
-            if metrics.last_execution
-            else None,
+            "last_execution": (
+                metrics.last_execution.isoformat() if metrics.last_execution else None
+            ),
         }
 
     def supports_local_execution(self) -> bool:

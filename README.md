@@ -2,46 +2,61 @@
 
 🧮 **Comprehensive Mathematical Functions Library for AI Models (Async Native)**
 
-A cutting-edge collection of 572 mathematical functions organized by domain, designed specifically for AI model execution with async-native performance, MCP integration, and robust error handling.
+A cutting-edge collection of 572+ mathematical functions organized by domain, designed specifically for AI model execution with async-native performance, MCP integration, and robust error handling.
 
 ## ✨ Key Features
 
-- **🚀 Async Native**: All 572 functions built from the ground up for async/await patterns
-- **🔢 Comprehensive Coverage**: 572 functions across 25+ specialized mathematical domains
-- **✅ 95% Test Coverage**: 4,406 tests passing with 95% code coverage
+- **🚀 Async Native**: All 572+ functions built from the ground up for async/await patterns
+- **🔢 Comprehensive Coverage**: 572+ functions across 25+ specialized mathematical domains
+- **✅ 94% Test Coverage**: 4,429 tests passing with 94% code coverage
 - **🎯 MCP Integration**: Model Context Protocol compatible with smart caching and performance optimization
-- **📐 Mathematical Domains**: Number theory (340+ functions), trigonometry (120+ functions), arithmetic, statistics, geometry
+- **📐 Mathematical Domains**: Number theory (340+ functions), trigonometry (120+ functions), linear algebra, calculus, statistics, geometry, probability
 - **🌊 Streaming Support**: Real-time computation with backpressure handling
 - **💾 Smart Caching**: Async-optimized memory caching with TTL and LRU eviction
 - **⚡ Performance Optimized**: Built-in performance metrics and concurrency control
 - **🔒 Type Safe**: Complete type safety with mypy (0 errors)
 - **📚 Educational Ready**: Rich examples, comprehensive demos, and educational applications
+- **🛠️ Zero External Dependencies**: CLI uses stdlib argparse, no click required
 
 ## 🏗️ Architecture Overview
 
 ```
 chuk_mcp_math/
-│   ├── arithmetic/           # Core arithmetic operations
-│   │   ├── core/            # Basic operations, rounding, modular
-│   │   └── comparison/      # Relational, extrema, tolerance
-│   ├── number_theory/       # 18 specialized modules, 340+ functions
-│   │   ├── primes/          # Prime operations and testing
-│   │   ├── divisibility/    # GCD, LCM, divisors
-│   │   ├── sequences/       # Fibonacci, Lucas, Catalan
-│   │   ├── special_numbers/ # Perfect, abundant, amicable
-│   │   ├── diophantine_equations/ # Linear, Pell's equation
-│   │   ├── continued_fractions/   # CF expansions, convergents
-│   │   ├── farey_sequences/       # Farey sequences, Ford circles
-│   │   └── ...              # 11 more specialized modules
-│   └── trigonometry/        # 8 modules, 120+ functions
-│       ├── basic_functions/ # sin, cos, tan (radians & degrees)
-│       ├── inverse_functions/ # asin, acos, atan, atan2
-│       ├── hyperbolic/      # sinh, cosh, tanh
-│       ├── wave_analysis/   # Amplitude, frequency, harmonics
-│       ├── applications/    # Navigation, physics, GPS
-│       └── ...              # 3 more modules
-├── mcp_decorator.py         # Async-native MCP function decorator
-└── mcp_pydantic_base.py     # Enhanced Pydantic base with MCP optimizations
+├── arithmetic/           # Core arithmetic operations (100% coverage)
+│   ├── core/            # Basic operations, rounding, modular
+│   └── comparison/      # Relational, extrema, tolerance
+├── calculus/            # Numerical methods (100% coverage)
+│   ├── derivatives.py   # Central, forward, backward differences
+│   ├── integration.py   # Trapezoidal, Simpson's, midpoint rules
+│   └── root_finding.py  # Bisection, Newton-Raphson, secant methods
+├── linear_algebra/      # Matrix & vector operations (100% coverage)
+│   ├── matrices/        # Matrix ops, determinants, solvers
+│   └── vectors/         # Vector operations, norms, projections
+├── probability/         # Distributions & sampling (98-100% coverage)
+│   ├── distributions.py # Normal, uniform distributions
+│   └── additional_distributions.py # Exponential, binomial
+├── statistics/          # Statistical analysis (90% coverage)
+│   └── statistics.py    # Mean, variance, correlation, regression
+├── geometry/            # Geometric calculations (92-98% coverage)
+│   ├── distances.py     # Euclidean, Manhattan, great circle
+│   ├── intersections.py # Line, circle, polygon intersections
+│   └── shapes.py        # Area, perimeter, centroid calculations
+├── number_theory/       # 18 specialized modules, 340+ functions
+│   ├── primes/          # Prime operations and testing
+│   ├── divisibility/    # GCD, LCM, divisors
+│   ├── sequences/       # Fibonacci, Lucas, Catalan
+│   ├── special_numbers/ # Perfect, abundant, amicable
+│   ├── diophantine_equations/ # Linear, Pell's equation
+│   ├── continued_fractions/   # CF expansions, convergents
+│   ├── farey_sequences/       # Farey sequences, Ford circles
+│   └── ...              # 11 more specialized modules
+└── trigonometry/        # 8 modules, 120+ functions
+    ├── basic_functions/ # sin, cos, tan (radians & degrees)
+    ├── inverse_functions/ # asin, acos, atan, atan2
+    ├── hyperbolic/      # sinh, cosh, tanh
+    ├── wave_analysis/   # Amplitude, frequency, harmonics
+    ├── applications/    # Navigation, physics, GPS
+    └── ...              # 3 more modules
 ```
 
 ## 🚀 Quick Start
@@ -49,45 +64,78 @@ chuk_mcp_math/
 ### Installation
 
 ```bash
-# Basic installation
+# Basic installation (no external dependencies!)
 pip install chuk-mcp-math
 
 # With Pydantic validation support (recommended)
 pip install chuk-mcp-math[pydantic]
 
-# With CLI support
-pip install chuk-mcp-math[cli]
-
 # With development dependencies
 pip install chuk-mcp-math[dev]
 
 # Install all optional dependencies
-pip install chuk-mcp-math[pydantic,cli,dev]
+pip install chuk-mcp-math[pydantic,dev]
 ```
 
 ### Basic Usage
 
 ```python
 import asyncio
-from chuk_mcp_math import number_theory, trigonometry
+from chuk_mcp_math import number_theory, trigonometry, calculus, statistics
 
 async def main():
     # Number theory operations
     is_prime_result = await number_theory.is_prime(17)
     fibonacci_result = await number_theory.fibonacci(10)
     gcd_result = await number_theory.gcd(48, 18)
-    
+
     # Trigonometric operations
     sin_result = await trigonometry.sin(3.14159/4)
     distance = await trigonometry.distance_haversine(40.7128, -74.0060, 34.0522, -118.2437)
-    
+
+    # Calculus operations
+    f = lambda x: x**2
+    derivative = await calculus.derivative_central(f, 3.0)  # f'(3) = 6
+    integral = await calculus.integrate_simpson(f, 0.0, 1.0)  # ∫₀¹ x² dx = 1/3
+
+    # Statistics operations
+    data = [1, 2, 3, 4, 5]
+    mean = await statistics.mean(data)
+    variance = await statistics.variance(data)
+
     print(f"is_prime(17): {is_prime_result}")
     print(f"fibonacci(10): {fibonacci_result}")
     print(f"gcd(48, 18): {gcd_result}")
     print(f"sin(π/4): {sin_result:.6f}")
     print(f"NYC to LA distance: {distance['distance_km']:.0f} km")
+    print(f"derivative of x² at x=3: {derivative:.4f}")
+    print(f"integral of x² from 0 to 1: {integral:.6f}")
 
 asyncio.run(main())
+```
+
+### CLI Usage
+
+The library includes a powerful CLI with no external dependencies (uses stdlib argparse):
+
+```bash
+# List all available functions
+python -m chuk_mcp_math.cli.main list
+
+# Search for functions
+python -m chuk_mcp_math.cli.main search prime
+
+# Describe a function
+python -m chuk_mcp_math.cli.main describe is_prime
+
+# Call a function
+python -m chuk_mcp_math.cli.main call is_prime 17
+
+# Filter by module
+python -m chuk_mcp_math.cli.main list --module number_theory
+
+# Show detailed information
+python -m chuk_mcp_math.cli.main list --detailed
 ```
 
 ### MCP Function Decorator
@@ -107,419 +155,262 @@ async def compound_interest(principal: float, rate: float, time: float, compound
     return principal * math.pow(1 + rate/compounds_per_year, compounds_per_year * time)
 ```
 
-## 📐 Mathematical Domains
+## 📐 New Features - Phase 1 & 2 Complete!
 
-### Number Theory (340+ Functions)
+### Phase 1: Core Numerical Engine (100% Complete)
 
-The most comprehensive number theory library available, featuring:
-
-#### 🔢 Core Operations
-- **Primes**: `is_prime()`, `next_prime()`, `prime_factors()`, `twin_primes()`
-- **Divisibility**: `gcd()`, `lcm()`, `divisors()`, `euler_totient()`
-- **Sequences**: `fibonacci()`, `lucas_number()`, `catalan_number()`
-
-#### 🧮 Advanced Modules
-- **Diophantine Equations**: Linear, Pell's equation, Pythagorean triples
-- **Continued Fractions**: CF expansions, convergents, rational approximations
-- **Farey Sequences**: Ford circles, Stern-Brocot tree, mediants
-- **Special Numbers**: Amicable pairs, vampire numbers, Keith numbers
-- **Modular Arithmetic**: Chinese Remainder Theorem, quadratic residues
-
+#### Linear Algebra (100% Coverage)
 ```python
-# Advanced number theory examples
-import asyncio
-from chuk_mcp_math import number_theory
+from chuk_mcp_math.linear_algebra import matrices, vectors
 
-async def advanced_demo():
-    # Solve Pell's equation x² - 2y² = 1
-    pell_solution = await number_theory.solve_pell_equation(2)
-    print(f"Pell equation solution: {pell_solution}")
-    
-    # Find continued fraction expansion of π
-    pi_cf = await number_theory.continued_fraction_expansion(3.14159, 8)
-    print(f"π continued fraction: {pi_cf}")
-    
-    # Generate Farey sequence F₅
-    farey_5 = await number_theory.farey_sequence(5)
-    print(f"Farey sequence F₅: {farey_5}")
-    
-    # Find amicable pairs up to 10000
-    amicable = await number_theory.find_amicable_pairs(10000)
-    print(f"Amicable pairs: {amicable}")
+# Matrix operations
+A = [[1, 2], [3, 4]]
+B = [[5, 6], [7, 8]]
+product = await matrices.matrix_multiply(A, B)
+transpose = await matrices.matrix_transpose(A)
+det = await matrices.matrix_det_2x2(A)
 
-asyncio.run(advanced_demo())
+# Solve linear systems
+solution = await matrices.matrix_solve_2x2(A, [5, 6])  # Ax = b
+gaussian = await matrices.gaussian_elimination(A, [5, 6])
+
+# Vector operations
+v1 = [1, 2, 3]
+v2 = [4, 5, 6]
+dot = await vectors.dot_product(v1, v2)
+norm = await vectors.vector_norm(v1)
+normalized = await vectors.normalize_vector(v1)
 ```
 
-### Trigonometry (120+ Functions)
-
-Complete trigonometric capabilities for navigation, physics, and signal processing:
-
-#### 📐 Core Functions
-- **Basic**: `sin()`, `cos()`, `tan()` with radians/degrees variants
-- **Inverse**: `asin()`, `acos()`, `atan()`, `atan2()` with full quadrant support
-- **Hyperbolic**: `sinh()`, `cosh()`, `tanh()` and their inverses
-
-#### 🌊 Applications
-- **Navigation**: GPS distance calculation, bearing computation, triangulation
-- **Wave Analysis**: Amplitude extraction, harmonic analysis, Fourier basics
-- **Physics**: Pendulum motion, spring oscillations, damping analysis
-
+#### Calculus (100% Coverage)
 ```python
-# Navigation and wave analysis examples
-import asyncio
-from chuk_mcp_math import trigonometry
+from chuk_mcp_math.calculus import derivatives, integration, root_finding
 
-async def navigation_demo():
-    # Calculate great circle distance between cities
-    nyc_to_london = await trigonometry.distance_haversine(
-        40.7128, -74.0060,  # NYC coordinates
-        51.5074, -0.1278    # London coordinates
-    )
-    print(f"NYC to London: {nyc_to_london['distance_km']:.0f} km")
-    
-    # Calculate bearing
-    bearing = await trigonometry.bearing_calculation(
-        40.7128, -74.0060, 51.5074, -0.1278
-    )
-    print(f"Bearing: {bearing['bearing_degrees']:.1f}° ({bearing['compass_direction']})")
-    
-    # Analyze wave with amplitude and phase
-    wave_analysis = await trigonometry.amplitude_from_coefficients(3, 4)
-    print(f"Wave amplitude: {wave_analysis['amplitude']:.3f}")
-    print(f"Phase shift: {wave_analysis['phase_degrees']:.1f}°")
+# Derivatives
+f = lambda x: x**2
+central = await derivatives.derivative_central(f, 3.0)  # Most accurate
+forward = await derivatives.derivative_forward(f, 3.0)
+backward = await derivatives.derivative_backward(f, 3.0)
 
-asyncio.run(navigation_demo())
+# Integration
+integral_trap = await integration.integrate_trapezoid(f, 0.0, 1.0, 1000)
+integral_simp = await integration.integrate_simpson(f, 0.0, 1.0, 1000)  # More accurate
+integral_mid = await integration.integrate_midpoint(f, 0.0, 1.0, 1000)
+
+# Root finding
+f_root = lambda x: x**2 - 4  # Root at x = 2
+root_bisect = await root_finding.root_find_bisection(f_root, 0.0, 3.0)
+root_newton = await root_finding.root_find_newton(f_root, lambda x: 2*x, 1.0)
+root_secant = await root_finding.root_find_secant(f_root, 1.0, 3.0)
 ```
 
-### Arithmetic Operations
-
-Reorganized structure with logical categorization:
-
-#### 🔧 Core Operations
+#### Probability & Statistics (98-100% Coverage)
 ```python
-from chuk_mcp_math.arithmetic.core import add, multiply, power, sqrt
-from chuk_mcp_math.arithmetic.comparison import minimum, maximum, clamp
+from chuk_mcp_math.probability import distributions, additional_distributions
+from chuk_mcp_math import statistics
 
-# Basic operations with async support
-result = await add(5, 3)
-product = await multiply(4, 7)
-square_root = await sqrt(16)
+# Normal distribution
+pdf = await distributions.normal_pdf(0.0, 0.0, 1.0)
+cdf = await distributions.normal_cdf(0.0, 0.0, 1.0)
+samples = await distributions.normal_sample(100, 0.0, 1.0, seed=42)
 
-# Comparison operations
-min_val = await minimum(10, 20)
-max_val = await maximum(10, 20)
-clamped = await clamp(15, 5, 25)
+# Exponential & Binomial
+exp_pdf = await additional_distributions.exponential_pdf(1.0, 1.0)
+binom_pmf = await additional_distributions.binomial_pmf(3, 5, 0.5)
+
+# Statistics
+data_x = [1, 2, 3, 4, 5]
+data_y = [2, 4, 6, 8, 10]
+cov = await statistics.covariance(data_x, data_y)
+corr = await statistics.correlation(data_x, data_y)
+regression = await statistics.linear_regression(data_x, data_y)
+print(f"Slope: {regression['slope']}, R²: {regression['r_squared']}")
 ```
 
-## 🎯 Advanced Features
+### Phase 2: Scientific & Geometry Toolkit (100% Complete)
 
-### Async-Native Performance
-
-All functions built for async/await with:
-- **Concurrency Control**: Configurable semaphores prevent resource exhaustion
-- **Strategic Yielding**: Automatic yielding in long-running operations
-- **Performance Metrics**: Built-in timing and execution statistics
-
-### Smart Caching System
-
+#### Geometry (92-98% Coverage)
 ```python
-@mcp_function(
-    cache_strategy="memory",        # or "file", "hybrid", "async_lru"
-    cache_ttl_seconds=3600,        # 1 hour TTL
-    max_concurrent_executions=5     # Concurrency limit
+from chuk_mcp_math.geometry import distances, intersections, shapes
+
+# Distance calculations
+dist_2d = await distances.geom_distance((0, 0), (3, 4))  # Euclidean
+dist_3d = await distances.geom_distance_3d((0, 0, 0), (1, 1, 1))
+manhattan = await distances.geom_manhattan_distance((0, 0), (3, 4))
+
+# GPS distance (Haversine formula)
+nyc_to_la = await distances.geom_great_circle_distance(
+    40.7128, -74.0060,  # NYC
+    34.0522, -118.2437  # LA
 )
-async def expensive_calculation(n: int) -> int:
-    # Expensive computation here
-    await asyncio.sleep(1)  # Simulate work
-    return n ** 2
-```
+print(f"Distance: {nyc_to_la['km']:.0f} km")
 
-### Streaming Support
-
-```python
-@mcp_function(
-    supports_streaming=True,
-    streaming_mode="chunked"
+# Intersections
+line_int = await intersections.geom_line_intersection(
+    {"p1": (0, 0), "p2": (1, 1)},
+    {"p1": (0, 1), "p2": (1, 0)}
 )
-async def generate_primes(limit: int) -> AsyncIterator[int]:
-    """Stream prime numbers up to limit."""
-    for num in range(2, limit + 1):
-        if await is_prime(num):
-            yield num
+circle_int = await intersections.geom_circle_intersection(
+    {"x": 0, "y": 0, "r": 5},
+    {"x": 5, "y": 0, "r": 5}
+)
+
+# Shapes
+area = await shapes.geom_polygon_area([(0, 0), (4, 0), (4, 3), (0, 3)])
+circle_area = await shapes.geom_circle_area(5.0)
+triangle_area = await shapes.geom_triangle_area(3.0, 4.0, 5.0)
 ```
 
-### Educational Applications
-
+#### Advanced Statistics (90% Coverage)
 ```python
-async def educational_demo():
-    """Comprehensive number analysis for students."""
-    n = 60
-    
-    # Analyze number properties
-    factors = await number_theory.prime_factors(n)
-    divisors = await number_theory.divisors(n)
-    totient = await number_theory.euler_totient(n)
-    
-    print(f"Analysis of {n}:")
-    print(f"Prime factorization: {' × '.join(map(str, factors))}")
-    print(f"All divisors: {divisors}")
-    print(f"Euler's totient φ({n}) = {totient}")
-    
-    # Check special properties
-    is_abundant = await number_theory.is_abundant_number(n)
-    is_harshad = await number_theory.is_harshad_number(n)
-    print(f"Abundant: {is_abundant}, Harshad: {is_harshad}")
+from chuk_mcp_math import statistics
+
+# Moving average
+data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+ma = await statistics.moving_average(data, window=3)
+
+# Z-scores and outlier detection
+z_scores = await statistics.z_scores(data)
+outliers = await statistics.detect_outliers(data, method="zscore", threshold=2.0)
+print(f"Outliers found: {outliers['num_outliers']}")
 ```
 
-### Research Applications
+## 🎯 Production-Quality Demos
 
-```python
-async def research_demo():
-    """Research-level mathematical analysis."""
-    
-    # Prime distribution analysis
-    gaps = await number_theory.prime_gaps_analysis(1000, 1100)
-    print(f"Prime gaps 1000-1100: avg={gaps['avg_gap']}, max={gaps['max_gap']}")
-    
-    # Farey sequence density study
-    density = await number_theory.density_analysis(15)
-    print(f"Farey density constant: {density['estimated_constant']:.6f}")
-    
-    # Continued fraction convergence
-    cf_analysis = await number_theory.cf_convergence_analysis(math.pi, 10)
-    print(f"π convergence type: {cf_analysis['diophantine_type']}")
-    
-    # Cross-module relationships
-    # Perfect numbers ↔ Mersenne primes
-    for exp in [2, 3, 5, 7]:
-        mersenne = 2**exp - 1
-        if await number_theory.is_prime(mersenne):
-            perfect = (2**(exp-1)) * mersenne
-            print(f"Mersenne prime 2^{exp}-1 = {mersenne} → Perfect: {perfect}")
+### AI Analyst Demo (Phase 1)
+Comprehensive demonstration of numerical computing capabilities:
+
+```bash
+python examples/demos/ai_analyst_v0.py
 ```
 
-## 🔧 Performance & Optimization
+Features:
+- Linear algebra: Matrix operations, solving systems
+- Calculus: Derivatives, integration, root finding
+- Probability: Distribution analysis, sampling
+- Statistics: Regression, correlation analysis
+- Combined analysis: Business metrics prediction
 
-### Built-in Metrics
+### F1 Track Geometry Demo (Phase 2)
+Advanced motorsport analytics with real-world applications:
 
-```python
-# Get performance statistics
-stats = function.get_performance_stats()
-print(f"Executions: {stats['execution_count']}")
-print(f"Average duration: {stats['average_duration']:.4f}s")
-print(f"Cache hit rate: {stats['cache_hit_rate']:.2%}")
-print(f"Async yields: {stats['async_yields']}")
+```bash
+python examples/demos/f1_track_geometry.py
 ```
 
-### Benchmarking
+Features:
+- Track geometry analysis (Monaco GP circuit)
+- Lap time modeling with sector breakdown
+- Tire degradation and fuel strategy
+- Statistical outlier detection
+- GPS-based distance calculations
 
-```python
-async def benchmark_demo():
-    import time
-    
-    # Benchmark large computations
-    start = time.time()
-    large_fib = await number_theory.fibonacci(1000)
-    fib_time = time.time() - start
-    print(f"fibonacci(1000): {fib_time:.4f}s")
-    
-    # Benchmark with caching
-    await expensive_calculation.clear_cache()
-    
-    start = time.time()
-    result1 = await expensive_calculation(100)  # Cache miss
-    first_time = time.time() - start
-    
-    start = time.time()
-    result2 = await expensive_calculation(100)  # Cache hit
-    cached_time = time.time() - start
-    
-    print(f"First call: {first_time:.4f}s, Cached call: {cached_time:.6f}s")
-    print(f"Speedup: {first_time/cached_time:.1f}x")
-```
+## 📊 Test Coverage & Quality
 
-## 🛠️ Development & Testing
-
-### Test Results Summary
-
-The library maintains **95% test coverage** with comprehensive testing:
+### Coverage Highlights
 
 ```
 ╔══════════════════════════════════════════════════════════════════╗
-║  TEST COVERAGE: 95% (9,842 statements, 482 missed)              ║
-║  TESTS PASSING: 4,406 ✅                                        ║
-║  TESTS SKIPPED: 12                                              ║
+║  OVERALL COVERAGE: 94% (10,495 statements, 643 missed)         ║
+║  TESTS PASSING: 4,429 ✅                                        ║
+║  30 FILES WITH 100% COVERAGE ✅                                 ║
 ║  LINTING: PASSED ✅                                              ║
 ║  FORMATTING: PASSED ✅                                           ║
 ║  TYPE CHECKING: PASSED ✅                                        ║
-║  ALL MATH FUNCTIONS: 90%+ COVERAGE ✅                           ║
+║  SECURITY: PASSED ✅                                             ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-**Coverage Highlights:**
-- ✅ Number Theory: 90-100% coverage across all modules
-- ✅ Trigonometry: 90-100% coverage across all modules
-- ✅ Arithmetic: 100% coverage
-- ✅ Statistics: 100% coverage
-- ✅ Geometry: 100% coverage
+**Module-by-Module Coverage:**
+- ✅ Linear Algebra: **100%** (matrices, vectors, solvers)
+- ✅ Calculus: **100%** (derivatives, integration, root finding)
+- ✅ Probability: **98-100%** (all distributions)
+- ✅ Statistics: **90%** (descriptive, regression, outlier detection)
+- ✅ Geometry: **92-98%** (distances, intersections, shapes)
+- ✅ Number Theory: **90-100%** across all 18 modules
+- ✅ Trigonometry: **90-100%** across all 8 modules
+- ✅ Arithmetic: **100%**
 
-### Testing Documentation
+### Quality Metrics
 
-Comprehensive testing patterns and workflows are available in [`docs/testing/`](./docs/testing/):
-- [Testing Overview](./docs/testing/TESTING.md) - Complete testing guide
-- [Unit Testing](./docs/testing/UNIT_TESTING.md) - Test isolation patterns
-- [Math Testing](./docs/testing/MATH_PATTERNS.md) - Numerical precision patterns
-- [Test Templates](./docs/testing/templates/) - Ready-to-use templates
+- **4,429 tests passing** (0 failures)
+- **Zero external dependencies** for core functionality
+- **Type-safe** with mypy (0 errors)
+- **Security-audited** with bandit (0 issues)
+- **Formatted** with ruff (153 files)
+- **Comprehensive error handling** with edge case tests
+
+## 🛠️ Development & Testing
 
 ### Running Tests
 
 ```bash
-# Run all quality checks
+# Run all quality checks (lint, format, typecheck, security, tests)
 make check
 
 # Run unit tests
 make test
 
-# Run with coverage
+# Run with coverage report
 make test-cov
 
-# Run specific test types
-pytest tests/unit/ -v
-pytest tests/integration/ -v
-pytest -m math  # Math-specific tests
+# Run specific test suites
+pytest tests/test_phase1.py -v          # Phase 1 (linear algebra, calculus, probability, stats)
+pytest tests/test_phase2_geometry.py -v # Phase 2 (geometry, advanced stats)
+pytest tests/cli/ -v                    # CLI tests
 ```
 
-### Running the Examples
+### Running Examples
 
 ```bash
-# Run all demo scripts at once (tests 572 functions)
-python examples/demos/run_all_demos.py
+# Run Phase 1 demo (AI Analyst)
+python examples/demos/ai_analyst_v0.py
 
-# Individual demos (quick tests)
-python examples/demos/DEMO.py                              # Main library demo (32 functions)
-python examples/demos/comprehensive_demo_01_arithmetic.py  # Arithmetic demo (44 functions)
-python examples/demos/quick_comprehensive_demo.py          # Quick demo (all 572 functions)
-python examples/demos/truly_comprehensive_demo.py          # Complete demo (533/533 functions)
+# Run Phase 2 demo (F1 Track Geometry)
+python examples/demos/f1_track_geometry.py
 
-# Application examples - comprehensive demonstrations
-uv run python examples/applications/demo_number_theory.py   # Number theory (340+ functions)
-uv run python examples/applications/demo_trigonometry.py    # Trigonometry (120+ functions)
+# Run all demos
+make run-demos
 
-# Diagnostics - verify installation and structure
-python diagnostics/simple_diagnostic.py                     # Basic diagnostic
-python diagnostics/diagnose_reorganized_structure.py        # Detailed structure analysis
+# Run comprehensive number theory examples
+python examples/applications/demo_number_theory.py
+
+# Run comprehensive trigonometry examples
+python examples/applications/demo_trigonometry.py
 ```
 
-See [examples/README.md](./examples/README.md) for detailed documentation of all examples.
+## 📚 Documentation
 
-### Testing Individual Functions
+### Core Documentation
+- [Architecture](./ARCHITECTURE.md) - Module structure and organization
+- [Phase 1 Complete](./PHASE1_COMPLETE.md) - Linear algebra, calculus, probability, statistics
+- [Phase 2 Complete](./PHASE2_COMPLETE.md) - Geometry toolkit, advanced statistics
+- [Principles](./PRINCIPLES.md) - Design philosophy
+- [Patterns](./PATTERNS.md) - Implementation patterns
+- [Roadmap](./ROADMAP.md) - Development timeline
 
-```python
-import asyncio
-from chuk_mcp_math import number_theory
+### Testing Documentation
+- [Testing Guide](./docs/testing/TESTING.md) - Complete testing documentation
+- [Unit Testing](./docs/testing/UNIT_TESTING.md) - Isolation and mocking
+- [Math Testing](./docs/testing/MATH_PATTERNS.md) - Numerical testing patterns
 
-async def test_functions():
-    # Test prime operations
-    assert await number_theory.is_prime(17) == True
-    assert await number_theory.is_prime(4) == False
-    
-    # Test Fibonacci
-    assert await number_theory.fibonacci(10) == 55
-    
-    # Test GCD
-    assert await number_theory.gcd(48, 18) == 6
-    
-    print("✅ All tests passed!")
+## 🎓 Use Cases
 
-asyncio.run(test_functions())
-```
+### Educational
+- **Mathematics Curricula**: Complete coverage of undergraduate topics
+- **Research Projects**: Advanced algorithms for graduate-level research
+- **Competitive Programming**: High-performance algorithms
 
-## 🎨 Comprehensive Examples
+### Professional
+- **AI/ML Applications**: Mathematical functions optimized for AI execution
+- **Engineering Simulations**: Physics, signal processing, control systems
+- **Financial Modeling**: Statistical analysis, optimization, risk assessment
+- **Scientific Computing**: Numerical methods, data analysis
 
-The library includes two extensive example applications demonstrating real-world usage:
-
-### Number Theory Example (`examples/applications/demo_number_theory.py`)
-
-A comprehensive demonstration of 340+ number theory functions with 16 major sections:
-
-- **Prime Numbers & Applications**: Basic primality, factorization, Mersenne primes, twin primes
-- **Cryptographic Applications**: RSA operations, CRT, quadratic residues, discrete logarithms
-- **Diophantine Equations**: Linear, Pell's equation, Pythagorean triples, Frobenius numbers
-- **Special Number Categories**: Amicable pairs, vampire numbers, Keith numbers, taxi numbers
-- **Continued Fractions**: CF expansions, convergents, rational approximations
-- **Farey Sequences**: Ford circles, Stern-Brocot tree, geometric properties
-- **Mathematical Sequences**: Fibonacci, Lucas, Catalan, Bell, recursive sequences
-- **Figurate Numbers**: Polygonal, centered, 3D geometric patterns
-- **Advanced Prime Analysis**: Distribution, gaps, conjectures
-- **Cross-Module Relationships**: Perfect ↔ Mersenne, CF ↔ Pell, Farey ↔ CF
-
-Run with: `uv run python examples/applications/demo_number_theory.py`
-
-### Trigonometry Example (`examples/applications/demo_trigonometry.py`)
-
-A comprehensive demonstration of 120+ trigonometry functions with 10 major sections:
-
-- **Basic Trigonometric Functions**: sin, cos, tan with key angles
-- **Inverse Functions**: asin, acos, atan, atan2 with full quadrant coverage
-- **Hyperbolic Functions**: sinh, cosh, tanh with identity verification
-- **Angle Conversions**: Degrees, radians, normalization, differences
-- **Mathematical Identities**: Pythagorean, sum/difference, double angle formulas
-- **Wave Analysis**: Amplitude extraction, beat frequencies, harmonic analysis
-- **Navigation Applications**: GPS distance, bearing, triangulation
-- **Physics Simulations**: Pendulum motion, spring oscillations, damping
-- **Educational Examples**: Unit circle, problem solving
-- **Performance & Precision**: High-precision calculations, benchmarks
-
-Run with: `uv run python examples/applications/demo_trigonometry.py`
-
-Both examples include:
-- Real-world applications and use cases
-- Mathematical relationship demonstrations
-- Performance benchmarking
-- Educational value with clear explanations
-
-## 📊 Function Statistics
-
-- **Total Functions**: 572
-- **Async Native**: 100% (all 572 functions)
-- **Test Coverage**: 95% overall (4,406 tests passing)
-- **Math Functions**: 90%+ coverage for all math modules
-- **Type Safety**: 0 mypy errors
-- **Linting**: All checks passing
-- **Number Theory**: 340+ functions across 18 modules
-- **Trigonometry**: 120+ functions across 8 modules
-- **Arithmetic**: 44 functions in reorganized structure (100% coverage)
-- **Statistics**: 9 functions for data analysis (100% coverage)
-- **Geometry**: 12 functions for geometric calculations (100% coverage)
-- **Linear Algebra**: 23 vector operations
-- **Sequences**: 44 mathematical sequence functions
-- **Performance**: Built-in caching, concurrency control
-- **Documentation**: 4 demo scripts + 2 comprehensive example applications
-
-## 🎓 Educational Use Cases
-
-- **Mathematics Curricula**: Complete coverage of undergraduate number theory and trigonometry
-- **Research Projects**: Advanced algorithms for graduate-level mathematical research
-- **AI/ML Applications**: Mathematical functions optimized for AI model execution
-- **Competitive Programming**: High-performance algorithms for contests
-- **Professional Development**: Mathematical software for engineering applications
-
-## 🔬 Research Applications
-
-- **Number Theory Research**: Prime distribution, Diophantine equations, continued fractions
-- **Cryptographic Analysis**: Modular arithmetic, quadratic residues, discrete logarithms
-- **Mathematical Physics**: Trigonometric applications, oscillations, wave analysis
-- **Computational Mathematics**: High-precision constants, approximation theory
-- **Geometric Number Theory**: Farey sequences, Ford circles, lattice problems
-
-## 🚀 Performance Highlights
-
-- **Async-Native**: All functions built for async/await from the ground up
-- **Smart Caching**: Memory-optimized caching with TTL and LRU eviction
-- **Concurrency Control**: Configurable semaphores prevent resource exhaustion
-- **Strategic Yielding**: Long operations yield control automatically
-- **Batch Processing**: Optimized for processing large datasets
-- **Memory Efficient**: Minimal memory footprint with cleanup strategies
+### Research
+- **Number Theory**: Prime distribution, Diophantine equations
+- **Computational Mathematics**: High-precision calculations
+- **Data Science**: Statistical analysis, machine learning preprocessing
 
 ## 📝 License
 
@@ -529,35 +420,20 @@ MIT License - see LICENSE file for details.
 
 Contributions welcome! Please see CONTRIBUTING.md for guidelines.
 
-## 📚 Documentation
+## 📊 Function Statistics
 
-### Core Documentation
-- [Architecture](./ARCHITECTURE.md) - Module structure and organization
-- [Principles](./PRINCIPLES.md) - Design philosophy
-- [Patterns](./PATTERNS.md) - Implementation patterns
-- [Roadmap](./ROADMAP.md) - Development timeline
-
-### Testing Documentation
-- [Testing Guide](./docs/testing/TESTING.md) - Complete testing documentation
-- [Unit Testing](./docs/testing/UNIT_TESTING.md) - Isolation and mocking
-- [Math Testing](./docs/testing/MATH_PATTERNS.md) - Numerical testing patterns
-- [Performance Testing](./docs/testing/PERFORMANCE_TESTING.md) - Benchmarking
-
-### Additional Resources
-- Full API documentation in docstrings
-- Comprehensive examples in demo files
-- Educational materials for classroom use
-- Research applications and case studies
-
-## 🔗 Links
-
-- [GitHub Repository](https://github.com/yourusername/chuk-mcp-math)
-- [Documentation](https://docs.example.com)
-- [PyPI Package](https://pypi.org/project/chuk-mcp-math/)
-- [Examples & Tutorials](https://examples.example.com)
+- **Total Functions**: 572+
+- **Test Coverage**: 94% overall (4,429 tests)
+- **Zero Failures**: All tests passing
+- **Type Safety**: 0 mypy errors
+- **Phase 1 Complete**: Linear Algebra, Calculus, Probability, Statistics (100% coverage)
+- **Phase 2 Complete**: Geometry, Advanced Statistics (92-98% coverage)
+- **Number Theory**: 340+ functions (90-100% coverage)
+- **Trigonometry**: 120+ functions (90-100% coverage)
+- **30 Files**: 100% test coverage
 
 ---
 
 **Built with ❤️ for the mathematical computing community**
 
-*Async-native • MCP-optimized • Educational-ready • Research-grade*
+*Async-native • MCP-optimized • Educational-ready • Research-grade • Production-tested*

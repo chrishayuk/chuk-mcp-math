@@ -877,9 +877,9 @@ async def sieve_performance_analysis(limit: int) -> Dict:
             results[name] = {
                 "time": round(execution_time, 6),
                 "prime_count": prime_count,
-                "primes_per_second": round(prime_count / execution_time)
-                if execution_time > 0
-                else float("inf"),
+                "primes_per_second": (
+                    round(prime_count / execution_time) if execution_time > 0 else float("inf")
+                ),
             }
             prime_counts[name] = prime_count
 

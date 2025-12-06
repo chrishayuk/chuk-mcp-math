@@ -537,9 +537,11 @@ async def extended_gcd_bezout(a: int, b: int, find_alternatives: bool = True) ->
         # Applications hint
         if gcd_val == 1:
             result["applications"] = {
-                "modular_inverse": f"{x0} is the multiplicative inverse of {a} modulo {b}"
-                if b > 1 and x0 % b > 0
-                else None,
+                "modular_inverse": (
+                    f"{x0} is the multiplicative inverse of {a} modulo {b}"
+                    if b > 1 and x0 % b > 0
+                    else None
+                ),
                 "coprimality": f"{a} and {b} are coprime",
                 "linear_diophantine": "Any equation {a}x + {b}y = c has integer solutions for any integer c",
             }
@@ -666,16 +668,20 @@ async def bezout_applications(a: int, b: int, applications: List[str] = None) ->
                 "equation_form": f"{a}x + {b}y = c",
                 "solvability": "Has integer solutions for any c divisible by gcd",
                 "particular_solution": f"x = {x}(c/{gcd_val}), y = {y}(c/{gcd_val})",
-                "general_solution": f"x = {x}(c/{gcd_val}) + {b // gcd_val}t, y = {y}(c/{gcd_val}) - {a // gcd_val}t"
-                if gcd_val > 0
-                else "undefined",
-                "examples": {
-                    f"c = {gcd_val}": {"x": x, "y": y},
-                    f"c = {2 * gcd_val}": {"x": 2 * x, "y": 2 * y},
-                    f"c = {3 * gcd_val}": {"x": 3 * x, "y": 3 * y},
-                }
-                if gcd_val > 0
-                else {},
+                "general_solution": (
+                    f"x = {x}(c/{gcd_val}) + {b // gcd_val}t, y = {y}(c/{gcd_val}) - {a // gcd_val}t"
+                    if gcd_val > 0
+                    else "undefined"
+                ),
+                "examples": (
+                    {
+                        f"c = {gcd_val}": {"x": x, "y": y},
+                        f"c = {2 * gcd_val}": {"x": 2 * x, "y": 2 * y},
+                        f"c = {3 * gcd_val}": {"x": 3 * x, "y": 3 * y},
+                    }
+                    if gcd_val > 0
+                    else {}
+                ),
             }
 
         elif app == "chinese_remainder":
@@ -683,9 +689,11 @@ async def bezout_applications(a: int, b: int, applications: List[str] = None) ->
             results["chinese_remainder"] = {
                 "coprime": gcd_val == 1,
                 "crt_applicable": gcd_val == 1,
-                "explanation": "CRT applies when moduli are pairwise coprime"
-                if gcd_val == 1
-                else f"CRT not applicable (gcd = {gcd_val} ≠ 1)",
+                "explanation": (
+                    "CRT applies when moduli are pairwise coprime"
+                    if gcd_val == 1
+                    else f"CRT not applicable (gcd = {gcd_val} ≠ 1)"
+                ),
             }
 
         elif app == "gcd":

@@ -3,25 +3,28 @@ Matrix Operations Module
 
 Core matrix operations including arithmetic, properties, decompositions, and special matrices.
 All functions are async-native and MCP-decorated for AI model integration.
-
-NOTE: Matrix operations, properties, and special matrices are planned for future implementation.
 """
 
-# TODO: Implement matrix operations
-# from .operations import (
-#     matrix_add,
-#     matrix_subtract,
-#     matrix_multiply,
-#     matrix_scalar_multiply,
-#     matrix_transpose,
-#     matrix_power,
-#     element_wise_multiply,
-#     element_wise_divide,
-# )
+# Matrix operations
+from .operations import (
+    matrix_add,
+    matrix_subtract,
+    matrix_multiply,
+    matrix_scalar_multiply,
+    matrix_transpose,
+    matrix_det_2x2,
+    matrix_det_3x3,
+)
+
+# Matrix solvers
+from .solvers import (
+    matrix_solve_2x2,
+    matrix_solve_3x3,
+    gaussian_elimination,
+)
 
 # TODO: Implement matrix properties
 # from .properties import (
-#     matrix_determinant,
 #     matrix_trace,
 #     matrix_rank,
 #     matrix_inverse,
@@ -45,17 +48,19 @@ NOTE: Matrix operations, properties, and special matrices are planned for future
 # )
 
 __all__: list[str] = [
-    # Operations (planned)
-    # "matrix_add",
-    # "matrix_subtract",
-    # "matrix_multiply",
-    # "matrix_scalar_multiply",
-    # "matrix_transpose",
-    # "matrix_power",
-    # "element_wise_multiply",
-    # "element_wise_divide",
+    # Operations
+    "matrix_add",
+    "matrix_subtract",
+    "matrix_multiply",
+    "matrix_scalar_multiply",
+    "matrix_transpose",
+    "matrix_det_2x2",
+    "matrix_det_3x3",
+    # Solvers
+    "matrix_solve_2x2",
+    "matrix_solve_3x3",
+    "gaussian_elimination",
     # Properties (planned)
-    # "matrix_determinant",
     # "matrix_trace",
     # "matrix_rank",
     # "matrix_inverse",

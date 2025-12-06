@@ -1,6 +1,6 @@
 [project]
 name = "chuk-mcp-math"
-version = "0.1.3"
+version = "0.2"
 description = "Comprehensive MCP function library for AI models"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -123,6 +123,10 @@ exclude = [
     "diagnostics",  # Diagnostic scripts with intentional patterns
     "docs",          # Documentation and templates
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["E731"]  # Allow lambda expressions in tests
+"examples/**/*.py" = ["E731"]  # Allow lambda expressions in examples
 
 # Black code formatting
 [tool.black]
