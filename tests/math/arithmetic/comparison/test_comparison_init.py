@@ -382,13 +382,13 @@ class TestTestComparisonFunction:
     @pytest.mark.asyncio
     async def test_test_comparison_functions_exists(self):
         """Test that test_comparison_functions function exists."""
-        assert hasattr(comparison, "test_comparison_functions")
-        assert callable(comparison.test_comparison_functions)
+        assert hasattr(comparison, "_test_comparison_functions")
+        assert callable(comparison._test_comparison_functions)
 
     @pytest.mark.asyncio
     async def test_test_comparison_functions_executes(self, capsys):
         """Test that test_comparison_functions executes without error."""
-        await comparison.test_comparison_functions()
+        await comparison._test_comparison_functions()
         captured = capsys.readouterr()
 
         # Should produce output

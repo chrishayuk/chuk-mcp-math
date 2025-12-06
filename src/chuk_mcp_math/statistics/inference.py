@@ -9,8 +9,17 @@ Essential for A/B testing, scientific research, and data-driven decision making.
 import asyncio
 import math
 from typing import Dict, List, Any
+from chuk_mcp_math.mcp_decorator import mcp_function
 
 
+@mcp_function(
+    description="Perform one-sample t-test to test whether sample mean differs significantly from population mean",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def t_test_one_sample(
     data: List[float], population_mean: float, alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -76,6 +85,14 @@ async def t_test_one_sample(
     }
 
 
+@mcp_function(
+    description="Perform two-sample t-test (independent samples) to test whether two sample means differ significantly",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def t_test_two_sample(
     data1: List[float],
     data2: List[float],
@@ -144,6 +161,14 @@ async def t_test_two_sample(
     }
 
 
+@mcp_function(
+    description="Perform paired t-test (dependent samples) to test whether paired observations differ significantly",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def paired_t_test(
     before: List[float], after: List[float], alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -179,6 +204,14 @@ async def paired_t_test(
     return await t_test_one_sample(differences, 0.0, alpha)
 
 
+@mcp_function(
+    description="Perform z-test for known population standard deviation to test whether sample mean differs from population mean",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def z_test(
     data: List[float],
     population_mean: float,
@@ -229,6 +262,14 @@ async def z_test(
     }
 
 
+@mcp_function(
+    description="Perform chi-square goodness-of-fit test to test whether observed frequencies match expected frequencies",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def chi_square_test(
     observed: List[float], expected: List[float], alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -280,6 +321,14 @@ async def chi_square_test(
     }
 
 
+@mcp_function(
+    description="Calculate confidence interval for population mean from sample data",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def confidence_interval_mean(
     data: List[float], confidence_level: float = 0.95
 ) -> Dict[str, Any]:
@@ -330,6 +379,14 @@ async def confidence_interval_mean(
     }
 
 
+@mcp_function(
+    description="Calculate confidence interval for population proportion from sample proportion",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def confidence_interval_proportion(
     successes: int, n: int, confidence_level: float = 0.95
 ) -> Dict[str, Any]:
@@ -380,6 +437,14 @@ async def confidence_interval_proportion(
     }
 
 
+@mcp_function(
+    description="Calculate Cohen's d effect size for two samples (standardized difference between two means)",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def cohens_d(data1: List[float], data2: List[float]) -> float:
     """
     Cohen's d effect size for two samples.
@@ -419,6 +484,14 @@ async def cohens_d(data1: List[float], data2: List[float]) -> float:
     return d
 
 
+@mcp_function(
+    description="Convert t-statistic to effect size r (correlation coefficient)",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def effect_size_r(t_statistic: float, df: float) -> float:
     """
     Effect size r from t-statistic.
@@ -446,6 +519,14 @@ async def effect_size_r(t_statistic: float, df: float) -> float:
     return r
 
 
+@mcp_function(
+    description="Perform one-way ANOVA (Analysis of Variance) to test whether means of multiple groups differ significantly",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def anova_one_way(groups: List[List[float]], alpha: float = 0.05) -> Dict[str, Any]:
     """
     One-way ANOVA (Analysis of Variance).
@@ -513,6 +594,14 @@ async def anova_one_way(groups: List[List[float]], alpha: float = 0.05) -> Dict[
     }
 
 
+@mcp_function(
+    description="Perform two-proportion z-test to test whether two population proportions differ significantly",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def proportion_test(
     successes1: int, n1: int, successes2: int, n2: int, alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -570,6 +659,14 @@ async def proportion_test(
     }
 
 
+@mcp_function(
+    description="Calculate required sample size per group for comparing means (power analysis)",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def sample_size_mean(
     effect_size: float,
     alpha: float = 0.05,
@@ -618,6 +715,14 @@ async def sample_size_mean(
     return max(2, int(math.ceil(n)))
 
 
+@mcp_function(
+    description="Calculate statistical power (probability of detecting effect) for t-test given sample size and effect size",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def power_analysis(
     n: int, effect_size: float, alpha: float = 0.05, alternative: str = "two-sided"
 ) -> float:
@@ -664,6 +769,14 @@ async def power_analysis(
     return power
 
 
+@mcp_function(
+    description="Perform Mann-Whitney U test (non-parametric alternative to t-test) to test whether two independent samples come from same distribution",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def mann_whitney_u(
     data1: List[float], data2: List[float], alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -729,6 +842,14 @@ async def mann_whitney_u(
     }
 
 
+@mcp_function(
+    description="Perform Wilcoxon signed-rank test (non-parametric paired test) to test whether paired samples differ significantly",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def wilcoxon_signed_rank(
     before: List[float], after: List[float], alpha: float = 0.05
 ) -> Dict[str, Any]:
@@ -801,6 +922,14 @@ async def wilcoxon_signed_rank(
     }
 
 
+@mcp_function(
+    description="Perform Kruskal-Wallis test (non-parametric ANOVA) to test whether multiple independent samples come from same distribution",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def kruskal_wallis(groups: List[List[float]], alpha: float = 0.05) -> Dict[str, Any]:
     """
     Kruskal-Wallis test (non-parametric ANOVA).
@@ -868,6 +997,14 @@ async def kruskal_wallis(groups: List[List[float]], alpha: float = 0.05) -> Dict
     }
 
 
+@mcp_function(
+    description="Perform Fisher's exact test for 2x2 contingency tables to test association between two categorical variables",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def fishers_exact_test(a: int, b: int, c: int, d: int, alpha: float = 0.05) -> Dict[str, Any]:
     """
     Fisher's exact test for 2x2 contingency tables.
@@ -922,6 +1059,14 @@ async def fishers_exact_test(a: int, b: int, c: int, d: int, alpha: float = 0.05
     }
 
 
+@mcp_function(
+    description="Perform permutation test for difference in means (non-parametric test using random permutations)",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def permutation_test(
     data1: List[float],
     data2: List[float],
@@ -999,6 +1144,14 @@ async def permutation_test(
     }
 
 
+@mcp_function(
+    description="Calculate bootstrap confidence interval for a statistic (mean or median) using resampling",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def bootstrap_confidence_interval(
     data: List[float],
     statistic_func: str = "mean",
@@ -1088,6 +1241,14 @@ async def bootstrap_confidence_interval(
     }
 
 
+@mcp_function(
+    description="Perform Levene's test for equality of variances to test whether groups have equal variances",
+    namespace="statistics",
+    category="inference",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def levenes_test(groups: List[List[float]], alpha: float = 0.05) -> Dict[str, Any]:
     """
     Levene's test for equality of variances.

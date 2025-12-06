@@ -48,6 +48,11 @@ from . import egyptian_fractions
 from . import figurate_numbers
 from . import modular_arithmetic
 from . import recursive_sequences
+from . import sieve_algorithms
+from . import wilsons_theorem_bezout
+from . import mobius_inversion
+from . import number_systems
+from . import advanced_primality
 
 # Import new advanced modules
 from . import diophantine_equations
@@ -681,7 +686,7 @@ __all__ = [
 ]
 
 
-async def test_number_theory_functions():
+async def _test_number_theory_functions():
     """Test core number theory functions including new advanced modules."""
     print("🔢 Enhanced Number Theory Functions Test")
     print("=" * 45)
@@ -961,7 +966,7 @@ if __name__ == "__main__":
     import asyncio
 
     async def main():
-        await test_number_theory_functions()
+        await _test_number_theory_functions()
         await demo_comprehensive_functionality()
         await demo_educational_applications()
         await demo_research_applications()

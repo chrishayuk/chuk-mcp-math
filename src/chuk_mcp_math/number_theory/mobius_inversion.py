@@ -713,7 +713,7 @@ __all__ = [
 # ============================================================================
 
 
-async def test_mobius_inversion():
+async def _test_mobius_inversion():
     """Test all Möbius inversion functions."""
     print("🔬 Möbius Inversion Test Suite")
     print("=" * 35)
@@ -755,4 +755,4 @@ async def test_mobius_inversion():
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(test_mobius_inversion())
+    asyncio.run(_test_mobius_inversion())

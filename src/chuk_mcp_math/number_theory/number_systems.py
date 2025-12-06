@@ -893,7 +893,7 @@ __all__ = [
 # ============================================================================
 
 
-async def test_number_systems():
+async def _test_number_systems():
     """Comprehensive test of all number system functions."""
     print("🔢 Number Systems Test Suite")
     print("=" * 40)
@@ -959,7 +959,7 @@ if __name__ == "__main__":
     import asyncio
 
     async def main():
-        await test_number_systems()
+        await _test_number_systems()
         await demo_base_conversions()
 
     asyncio.run(main())

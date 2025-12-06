@@ -12,7 +12,7 @@ from .distributions import (
     uniform_sample,
 )
 
-from .additional_distributions import (
+from .discrete_distributions import (
     exponential_pdf,
     exponential_cdf,
     exponential_sample,

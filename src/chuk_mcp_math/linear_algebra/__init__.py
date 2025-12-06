@@ -25,25 +25,20 @@ from .vectors import (
     vectors_orthogonal,
 )
 
-# from .matrices import (
-#     # Basic operations
-#     matrix_add,
-#     matrix_subtract,
-#     matrix_multiply,
-#     matrix_scalar_multiply,
-#     matrix_transpose,
-#     # Properties
-#     matrix_determinant,
-#     matrix_trace,
-#     matrix_rank,
-#     matrix_inverse,
-#     # Special matrices
-#     identity_matrix,
-#     zero_matrix,
-#     diagonal_matrix,
-#     is_symmetric,
-#     is_orthogonal,
-# )
+from .matrices import (
+    # Basic operations
+    matrix_add,
+    matrix_subtract,
+    matrix_multiply,
+    matrix_scalar_multiply,
+    matrix_transpose,
+    matrix_det_2x2,
+    matrix_det_3x3,
+    # Solvers
+    matrix_solve_2x2,
+    matrix_solve_3x3,
+    gaussian_elimination,
+)
 
 __all__ = [
     # Vector operations
@@ -59,19 +54,16 @@ __all__ = [
     "vector_angle",
     "vectors_parallel",
     "vectors_orthogonal",
-    # Matrix operations - commented out until implemented
-    # "matrix_add",
-    # "matrix_subtract",
-    # "matrix_multiply",
-    # "matrix_scalar_multiply",
-    # "matrix_transpose",
-    # "matrix_determinant",
-    # "matrix_trace",
-    # "matrix_rank",
-    # "matrix_inverse",
-    # "identity_matrix",
-    # "zero_matrix",
-    # "diagonal_matrix",
-    # "is_symmetric",
-    # "is_orthogonal",
+    # Matrix operations
+    "matrix_add",
+    "matrix_subtract",
+    "matrix_multiply",
+    "matrix_scalar_multiply",
+    "matrix_transpose",
+    "matrix_det_2x2",
+    "matrix_det_3x3",
+    # Matrix solvers
+    "matrix_solve_2x2",
+    "matrix_solve_3x3",
+    "gaussian_elimination",
 ]

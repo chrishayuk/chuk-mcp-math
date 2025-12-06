@@ -614,10 +614,10 @@ class TestMainFunction:
     async def test_module_test_suite(self):
         """Test line 1037-1083 - the module's own test suite."""
         # Import and run the test_sieve_algorithms function from the module
-        from chuk_mcp_math.number_theory.sieve_algorithms import test_sieve_algorithms
+        from chuk_mcp_math.number_theory.sieve_algorithms import _test_sieve_algorithms
 
         # This should run without errors
-        await test_sieve_algorithms()
+        await _test_sieve_algorithms()
 
 
 if __name__ == "__main__":

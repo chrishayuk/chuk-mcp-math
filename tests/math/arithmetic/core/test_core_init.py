@@ -301,13 +301,13 @@ class TestTestCoreFunction:
     @pytest.mark.asyncio
     async def test_test_core_functions_exists(self):
         """Test that test_core_functions function exists."""
-        assert hasattr(core, "test_core_functions")
-        assert callable(core.test_core_functions)
+        assert hasattr(core, "_test_core_functions")
+        assert callable(core._test_core_functions)
 
     @pytest.mark.asyncio
     async def test_test_core_functions_executes(self, capsys):
         """Test that test_core_functions executes without error."""
-        await core.test_core_functions()
+        await core._test_core_functions()
         captured = capsys.readouterr()
 
         # Should produce output

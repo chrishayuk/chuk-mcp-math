@@ -752,7 +752,7 @@ __all__ = [
 # ============================================================================
 
 
-async def test_wilson_bezout():
+async def _test_wilson_bezout():
     """Test Wilson's theorem and Bézout identity functions."""
     print("🔬 Wilson's Theorem and Bézout's Identity Test")
     print("=" * 50)
@@ -881,7 +881,7 @@ if __name__ == "__main__":
     import asyncio
 
     async def main():
-        await test_wilson_bezout()
+        await _test_wilson_bezout()
         await demo_wilson_theorem()
         await demo_bezout_identity()
 

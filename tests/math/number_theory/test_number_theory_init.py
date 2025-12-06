@@ -342,13 +342,13 @@ class TestTestFunction:
     @pytest.mark.asyncio
     async def test_test_number_theory_functions_exists(self):
         """Test that test_number_theory_functions function exists."""
-        assert hasattr(number_theory, "test_number_theory_functions")
-        assert callable(number_theory.test_number_theory_functions)
+        assert hasattr(number_theory, "_test_number_theory_functions")
+        assert callable(number_theory._test_number_theory_functions)
 
     @pytest.mark.asyncio
     async def test_test_number_theory_functions_executes(self, capsys):
         """Test that test_number_theory_functions executes without error."""
-        await number_theory.test_number_theory_functions()
+        await number_theory._test_number_theory_functions()
         captured = capsys.readouterr()
 
         # Should produce output

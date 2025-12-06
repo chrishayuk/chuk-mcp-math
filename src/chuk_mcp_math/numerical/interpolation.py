@@ -7,9 +7,18 @@ estimation, and forecasting.
 """
 
 import asyncio
+from chuk_mcp_math.mcp_decorator import mcp_function
 from typing import List, Tuple
 
 
+@mcp_function(
+    description="Perform linear interpolation between two points",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def linear_interpolate(x: float, x0: float, y0: float, x1: float, y1: float) -> float:
     """
     Linear interpolation between two points.
@@ -47,6 +56,14 @@ async def linear_interpolate(x: float, x0: float, y0: float, x1: float, y1: floa
     return y
 
 
+@mcp_function(
+    description="Perform linear interpolation on a sequence of points",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def linear_interpolate_sequence(
     x_points: List[float], y_points: List[float], x: float
 ) -> float:
@@ -97,6 +114,14 @@ async def linear_interpolate_sequence(
     raise ValueError(f"Could not find interval containing x={x}")
 
 
+@mcp_function(
+    description="Perform Lagrange polynomial interpolation through given points",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def lagrange_interpolate(x_points: List[float], y_points: List[float], x: float) -> float:
     """
     Lagrange polynomial interpolation.
@@ -150,6 +175,14 @@ async def lagrange_interpolate(x_points: List[float], y_points: List[float], x: 
     return result
 
 
+@mcp_function(
+    description="Perform Newton polynomial interpolation using divided differences",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def newton_interpolate(x_points: List[float], y_points: List[float], x: float) -> float:
     """
     Newton polynomial interpolation using divided differences.
@@ -214,6 +247,14 @@ async def newton_interpolate(x_points: List[float], y_points: List[float], x: fl
     return result
 
 
+@mcp_function(
+    description="Compute cubic spline coefficients for smooth interpolation",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="high",
+)
 async def cubic_spline_coefficients(
     x_points: List[float], y_points: List[float]
 ) -> List[Tuple[float, float, float, float]]:
@@ -270,6 +311,14 @@ async def cubic_spline_coefficients(
     return coefficients
 
 
+@mcp_function(
+    description="Perform cubic spline interpolation for smooth curve fitting",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def cubic_spline_interpolate(x_points: List[float], y_points: List[float], x: float) -> float:
     """
     Cubic spline interpolation (natural spline).
@@ -318,6 +367,14 @@ async def cubic_spline_interpolate(x_points: List[float], y_points: List[float],
     raise ValueError(f"Could not find segment containing x={x}")
 
 
+@mcp_function(
+    description="Perform bilinear interpolation for 2D grid data",
+    namespace="numerical",
+    category="interpolation",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def bilinear_interpolate(
     x: float,
     y: float,

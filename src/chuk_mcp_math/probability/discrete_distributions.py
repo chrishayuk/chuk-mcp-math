@@ -1,7 +1,7 @@
 """
-Additional Probability Distributions
+Discrete and Exponential Probability Distributions
 
-Exponential and binomial distributions with PDF, CDF, and sampling functions.
+Discrete (binomial) and exponential distributions with PDF/PMF, CDF, and sampling.
 All functions are async-native with MCP decoration for AI model integration.
 """
 

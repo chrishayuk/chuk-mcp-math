@@ -1032,7 +1032,7 @@ __all__ = [
 # ============================================================================
 
 
-async def test_sieve_algorithms():
+async def _test_sieve_algorithms():
     """Test all sieve algorithms."""
     print("🧮 Sieve Algorithms Test Suite")
     print("=" * 35)
@@ -1086,4 +1086,4 @@ async def test_sieve_algorithms():
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(test_sieve_algorithms())
+    asyncio.run(_test_sieve_algorithms())

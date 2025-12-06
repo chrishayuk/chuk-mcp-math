@@ -466,10 +466,10 @@ class TestDemoFunctions:
     @pytest.mark.asyncio
     async def test_wilson_bezout_demo(self):
         """Test the test_wilson_bezout demo function."""
-        from chuk_mcp_math.number_theory.wilsons_theorem_bezout import test_wilson_bezout
+        from chuk_mcp_math.number_theory.wilsons_theorem_bezout import _test_wilson_bezout
 
         # Should run without errors
-        await test_wilson_bezout()
+        await _test_wilson_bezout()
 
     @pytest.mark.asyncio
     async def test_demo_wilson_theorem(self):

@@ -85,7 +85,7 @@ __all__ = [
 ]
 
 
-async def test_comparison_functions():
+async def _test_comparison_functions():
     """Test all comparison functions."""
     print("🔍 Comparison and Ordering Functions Test")
     print("=" * 40)
@@ -130,4 +130,4 @@ async def test_comparison_functions():
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(test_comparison_functions())
+    asyncio.run(_test_comparison_functions())

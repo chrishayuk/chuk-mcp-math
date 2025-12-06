@@ -7,10 +7,19 @@ and business applications.
 """
 
 import asyncio
+from chuk_mcp_math.mcp_decorator import mcp_function
 import math
 from typing import List, Callable, Dict, Any
 
 
+@mcp_function(
+    description="Perform gradient descent optimization to find minimum of a function",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def gradient_descent(
     f: Callable[[List[float]], float],
     grad_f: Callable[[List[float]], List[float]],
@@ -96,6 +105,14 @@ async def gradient_descent(
     }
 
 
+@mcp_function(
+    description="Perform gradient descent with momentum for faster convergence",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def gradient_descent_momentum(
     f: Callable[[List[float]], float],
     grad_f: Callable[[List[float]], List[float]],
@@ -179,6 +196,14 @@ async def gradient_descent_momentum(
     }
 
 
+@mcp_function(
+    description="Perform Adam optimization (adaptive moment estimation) for efficient training",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def adam_optimizer(
     f: Callable[[List[float]], float],
     grad_f: Callable[[List[float]], List[float]],
@@ -274,6 +299,14 @@ async def adam_optimizer(
     }
 
 
+@mcp_function(
+    description="Perform golden section search for univariate function optimization",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def golden_section_search(
     f: Callable[[float], float],
     a: float,
@@ -347,6 +380,14 @@ async def golden_section_search(
     return {"x": x_min, "f_x": f_x, "iterations": max_iterations, "converged": False}
 
 
+@mcp_function(
+    description="Perform Nelder-Mead simplex algorithm for derivative-free optimization",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def nelder_mead(
     f: Callable[[List[float]], float],
     x0: List[float],
@@ -483,6 +524,14 @@ async def nelder_mead(
     }
 
 
+@mcp_function(
+    description="Perform coordinate descent optimization by optimizing one variable at a time",
+    namespace="numerical",
+    category="optimization",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def coordinate_descent(
     f: Callable[[List[float]], float],
     x0: List[float],

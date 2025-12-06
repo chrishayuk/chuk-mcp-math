@@ -6,10 +6,19 @@ for approximating functions, essential for numerical analysis and signal process
 """
 
 import asyncio
+from chuk_mcp_math.mcp_decorator import mcp_function
 import math
 from typing import List, Callable
 
 
+@mcp_function(
+    description="Compute Taylor series expansion of a function around a point",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def taylor_series(
     f: Callable[[float], float],
     derivatives: List[Callable[[float], float]],
@@ -71,6 +80,14 @@ async def taylor_series(
     return result
 
 
+@mcp_function(
+    description="Evaluate power series with given coefficients",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def power_series(coefficients: List[float], x: float, x0: float = 0.0) -> float:
     """
     Evaluate power series at x.
@@ -109,6 +126,14 @@ async def power_series(coefficients: List[float], x: float, x0: float = 0.0) -> 
     return result
 
 
+@mcp_function(
+    description="Evaluate polynomial using Horner's method (efficient computation)",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def horner_method(coefficients: List[float], x: float) -> float:
     """
     Evaluate polynomial using Horner's method (numerically stable).
@@ -146,6 +171,14 @@ async def horner_method(coefficients: List[float], x: float) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute Fourier series approximation of periodic function",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def fourier_series_approximation(
     f: Callable[[float], float],
     period: float,
@@ -224,6 +257,14 @@ async def fourier_series_approximation(
     return result
 
 
+@mcp_function(
+    description="Compute Maclaurin series expansion (Taylor series around x=0)",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def maclaurin_series(derivatives: List[Callable[[float], float]], x: float, n: int) -> float:
     """
     Maclaurin series (Taylor series centered at 0).
@@ -247,6 +288,14 @@ async def maclaurin_series(derivatives: List[Callable[[float], float]], x: float
     return await taylor_series(lambda t: 0.0, derivatives, 0.0, x, n)
 
 
+@mcp_function(
+    description="Compute binomial series expansion (1+x)^n",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def binomial_series(x: float, alpha: float, n: int) -> float:
     """
     Binomial series expansion.
@@ -284,6 +333,14 @@ async def binomial_series(x: float, alpha: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute geometric series sum a + ar + ar^2 + ... + ar^(n-1)",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def geometric_series(a: float, r: float, n: int) -> float:
     """
     Geometric series sum.
@@ -318,6 +375,14 @@ async def geometric_series(a: float, r: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute arithmetic series sum of terms in arithmetic progression",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def arithmetic_series(a: float, d: float, n: int) -> float:
     """
     Arithmetic series sum.
@@ -348,6 +413,14 @@ async def arithmetic_series(a: float, d: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute exponential function e^x using Taylor series",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def exp_series(x: float, n: int) -> float:
     """
     Exponential function via Taylor series.
@@ -384,6 +457,14 @@ async def exp_series(x: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute sine function using Taylor series expansion",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def sin_series(x: float, n: int) -> float:
     """
     Sine function via Taylor series.
@@ -423,6 +504,14 @@ async def sin_series(x: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute cosine function using Taylor series expansion",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def cos_series(x: float, n: int) -> float:
     """
     Cosine function via Taylor series.
@@ -462,6 +551,14 @@ async def cos_series(x: float, n: int) -> float:
     return result
 
 
+@mcp_function(
+    description="Compute natural logarithm ln(1+x) using Taylor series",
+    namespace="numerical",
+    category="series",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def ln_series(x: float, n: int) -> float:
     """
     Natural logarithm via Taylor series (for 0 < x <= 2).

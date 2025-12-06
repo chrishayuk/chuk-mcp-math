@@ -9,8 +9,17 @@ and forecasting methods.
 import asyncio
 import math
 from typing import List, Dict, Any, Optional
+from chuk_mcp_math.mcp_decorator import mcp_function
 
 
+@mcp_function(
+    description="Compute Simple Moving Average (SMA) - average of last 'window' values at each point",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def simple_moving_average(data: List[float], window: int) -> List[float]:
     """
     Simple Moving Average (SMA).
@@ -49,6 +58,14 @@ async def simple_moving_average(data: List[float], window: int) -> List[float]:
     return result
 
 
+@mcp_function(
+    description="Compute Exponential Moving Average (EMA) - gives more weight to recent observations",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def exponential_moving_average(
     data: List[float], alpha: float, initial: Optional[float] = None
 ) -> List[float]:
@@ -92,6 +109,14 @@ async def exponential_moving_average(
     return result
 
 
+@mcp_function(
+    description="Compute Weighted Moving Average (WMA) - applies custom weights to recent observations",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def weighted_moving_average(data: List[float], weights: List[float]) -> List[float]:
     """
     Weighted Moving Average (WMA).
@@ -134,6 +159,14 @@ async def weighted_moving_average(data: List[float], weights: List[float]) -> Li
     return result
 
 
+@mcp_function(
+    description="Compute autocorrelation at a given lag - measures correlation between series and itself shifted by lag periods",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def autocorrelation(data: List[float], lag: int) -> float:
     """
     Compute autocorrelation at a given lag.
@@ -176,6 +209,14 @@ async def autocorrelation(data: List[float], lag: int) -> float:
     return numerator / denominator
 
 
+@mcp_function(
+    description="Compute partial autocorrelation at a given lag - correlation after removing effects of intermediate lags",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def partial_autocorrelation(data: List[float], lag: int) -> float:
     """
     Compute partial autocorrelation at a given lag.
@@ -217,6 +258,14 @@ async def partial_autocorrelation(data: List[float], lag: int) -> float:
     return acf_values[-1]
 
 
+@mcp_function(
+    description="Decompose time series into trend, seasonal, and residual components",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def seasonal_decompose(data: List[float], period: int) -> Dict[str, List[float]]:
     """
     Decompose time series into trend, seasonal, and residual components.
@@ -289,6 +338,14 @@ async def seasonal_decompose(data: List[float], period: int) -> Dict[str, List[f
     return {"trend": trend_clean, "seasonal": seasonal, "residual": residual}
 
 
+@mcp_function(
+    description="Detect and quantify trend in time series using linear regression",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def detect_trend(data: List[float]) -> Dict[str, Any]:
     """
     Detect trend in time series using linear regression.
@@ -338,6 +395,14 @@ async def detect_trend(data: List[float]) -> Dict[str, Any]:
     return {"slope": slope, "intercept": intercept, "strength": r_squared}
 
 
+@mcp_function(
+    description="Detect seasonal patterns in time series data",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def detect_seasonality(data: List[float], max_period: int = 12) -> Dict[str, Any]:
     """
     Detect seasonality by finding period with strongest autocorrelation.
@@ -374,6 +439,14 @@ async def detect_seasonality(data: List[float], max_period: int = 12) -> Dict[st
     return {"period": best_period, "strength": best_strength}
 
 
+@mcp_function(
+    description="Remove trend from time series to obtain stationary residuals",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def detrend(data: List[float]) -> List[float]:
     """
     Remove linear trend from time series.
@@ -399,6 +472,14 @@ async def detrend(data: List[float]) -> List[float]:
     return detrended
 
 
+@mcp_function(
+    description="Remove seasonal component from time series",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def deseasonalize(data: List[float], period: int) -> List[float]:
     """
     Remove seasonal component from time series.
@@ -423,6 +504,14 @@ async def deseasonalize(data: List[float], period: int) -> List[float]:
     return deseasonalized
 
 
+@mcp_function(
+    description="Apply differencing to make time series stationary",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def differencing(data: List[float], lag: int = 1) -> List[float]:
     """
     Apply differencing to make series stationary.
@@ -455,6 +544,14 @@ async def differencing(data: List[float], lag: int = 1) -> List[float]:
     return result
 
 
+@mcp_function(
+    description="Holt-Winters exponential smoothing forecast with trend and seasonality",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="high",
+)
 async def holt_winters_forecast(
     data: List[float],
     period: int,
@@ -531,6 +628,14 @@ async def holt_winters_forecast(
     }
 
 
+@mcp_function(
+    description="Simple exponential smoothing forecast for time series",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def exponential_smoothing(
     data: List[float], alpha: float = 0.3, forecast_periods: int = 1
 ) -> Dict[str, Any]:
@@ -563,6 +668,14 @@ async def exponential_smoothing(
     return {"forecast": forecast, "smoothed": smoothed}
 
 
+@mcp_function(
+    description="Moving average forecast - predict next value using average of recent observations",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def moving_average_forecast(
     data: List[float], window: int, forecast_periods: int = 1
 ) -> List[float]:
@@ -599,6 +712,14 @@ async def moving_average_forecast(
     return [forecast_value] * forecast_periods
 
 
+@mcp_function(
+    description="Create lagged version of time series - shift values by specified number of periods",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="low",
+)
 async def lagged_values(data: List[float], lags: List[int]) -> Dict[int, List[float]]:
     """
     Create lagged versions of time series.
@@ -626,6 +747,14 @@ async def lagged_values(data: List[float], lags: List[int]) -> Dict[int, List[fl
     return result
 
 
+@mcp_function(
+    description="Compute rolling standard deviation over a window",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def rolling_std(data: List[float], window: int) -> List[float]:
     """
     Rolling standard deviation.
@@ -661,6 +790,14 @@ async def rolling_std(data: List[float], window: int) -> List[float]:
     return result
 
 
+@mcp_function(
+    description="Compute rolling variance over a window",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+)
 async def rolling_variance(data: List[float], window: int) -> List[float]:
     """
     Rolling variance.
@@ -695,6 +832,14 @@ async def rolling_variance(data: List[float], window: int) -> List[float]:
     return result
 
 
+@mcp_function(
+    description="Measure strength of seasonal component in time series",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def seasonal_strength(data: List[float], period: int) -> float:
     """
     Measure strength of seasonality (0 to 1).
@@ -728,6 +873,14 @@ async def seasonal_strength(data: List[float], period: int) -> float:
     return seasonal_var / total_var
 
 
+@mcp_function(
+    description="Measure strength of trend component in time series",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    estimated_cpu_usage="medium",
+)
 async def trend_strength(data: List[float]) -> float:
     """
     Measure strength of trend (0 to 1).
@@ -749,6 +902,14 @@ async def trend_strength(data: List[float]) -> float:
     return trend_info["strength"]
 
 
+@mcp_function(
+    description="Test time series for stationarity using basic statistical measures",
+    namespace="timeseries",
+    category="analysis",
+    execution_modes=["local", "remote"],
+    cache_strategy="none",
+    estimated_cpu_usage="medium",
+)
 async def stationarity_test(data: List[float]) -> Dict[str, Any]:
     """
     Simple stationarity test.

@@ -804,8 +804,8 @@ __all__ = [
 # ============================================================================
 
 
-async def test_advanced_primality():
-    """Test all advanced primality functions."""
+async def _test_advanced_primality():
+    """Test all advanced primality functions (private demo function)."""
     print("🔬 Advanced Primality Tests")
     print("=" * 30)
 
@@ -863,4 +863,4 @@ async def test_advanced_primality():
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(test_advanced_primality())
+    asyncio.run(_test_advanced_primality())

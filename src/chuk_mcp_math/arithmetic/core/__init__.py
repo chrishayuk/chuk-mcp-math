@@ -78,7 +78,7 @@ __all__ = [
 ]
 
 
-async def test_core_functions():
+async def _test_core_functions():
     """Test all core arithmetic functions."""
     print("🔢 Core Arithmetic Functions Test")
     print("=" * 35)
@@ -112,4 +112,4 @@ async def test_core_functions():
 if __name__ == "__main__":
     import asyncio
 
-    asyncio.run(test_core_functions())
+    asyncio.run(_test_core_functions())

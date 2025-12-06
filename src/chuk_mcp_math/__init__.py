@@ -522,6 +522,9 @@ __all__ = [
     "conversion",  # Unit conversions - IMPLEMENTED ✅
     "numerical",  # Numerical methods (optimization, interpolation, series) - v0.3 ✅
     "timeseries",  # Time series analysis - v0.3 ✅
+    "calculus",  # Calculus operations - IMPLEMENTED ✅
+    "linear_algebra",  # Linear algebra operations - IMPLEMENTED ✅
+    "probability",  # Probability distributions - IMPLEMENTED ✅
     # Package info
     "__version__",
     "__author__",
@@ -565,6 +568,9 @@ try:
     from . import advanced_operations  # noqa: F401
     from . import numerical  # noqa: F401
     from . import timeseries  # noqa: F401
+    from . import calculus  # noqa: F401
+    from . import linear_algebra  # noqa: F401
+    from . import probability  # noqa: F401
 except ImportError as e:
     logger.warning(f"Failed to import some modules: {e}")
 

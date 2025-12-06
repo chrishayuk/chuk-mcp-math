@@ -1643,7 +1643,7 @@ __all__ = [
 # ============================================================================
 
 
-async def test_farey_sequences():
+async def _test_farey_sequences():
     """Comprehensive test of all Farey sequence functions."""
     print("🔢 Farey Sequences Test Suite")
     print("=" * 40)
@@ -1855,7 +1855,7 @@ if __name__ == "__main__":
     import asyncio
 
     async def main():
-        await test_farey_sequences()
+        await _test_farey_sequences()
         await demo_mathematical_properties()
         await demo_applications()
         await performance_benchmark()

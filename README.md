@@ -2,17 +2,17 @@
 
 🧮 **Comprehensive Mathematical Functions Library for AI Models (Async Native)**
 
-A cutting-edge collection of **657+ mathematical functions** organized by domain, designed specifically for AI model execution with async-native performance, MCP integration, and robust error handling.
+A cutting-edge collection of **642 mathematical functions** organized by domain, designed specifically for AI model execution with async-native performance, MCP integration, and robust error handling.
 
 ## ✨ Key Features
 
 - **🔬 Enhanced Numerical Engine**: Production-ready optimization, interpolation, series expansions, integration, and derivatives (100% coverage)
 - **📊 Business Analytics Suite**: Time series analysis (forecasting, seasonality) + inferential statistics (hypothesis testing, A/B testing)
-- **🚀 Async Native**: All 657+ functions built from the ground up for async/await patterns
-- **🔢 Comprehensive Coverage**: 657+ functions across 28+ specialized mathematical domains
+- **🚀 Async Native**: All 642 functions built from the ground up for async/await patterns
+- **🔢 Comprehensive Coverage**: 642 functions across 28+ specialized mathematical domains
 - **✅ 94% Test Coverage**: 4,578 tests passing with 94% code coverage
 - **🎯 MCP Integration**: Model Context Protocol compatible with smart caching and performance optimization
-- **📐 Mathematical Domains**: Number theory (340+ functions), trigonometry (120+ functions), linear algebra, calculus, statistics, geometry, probability, time series, numerical methods
+- **📐 Mathematical Domains**: Number theory (328 functions), trigonometry (71 functions), linear algebra (33 functions), arithmetic (44 functions), calculus (9 functions), statistics (15 functions), geometry (12 functions), probability (10 functions), and more
 - **🌊 Streaming Support**: Real-time computation with backpressure handling
 - **💾 Smart Caching**: Async-optimized memory caching with TTL and LRU eviction
 - **⚡ Performance Optimized**: Built-in performance metrics and concurrency control
@@ -45,12 +45,12 @@ chuk_mcp_math/
 │   └── inference.py     # T-tests, ANOVA, CI, hypothesis testing (20 functions)
 ├── probability/         # Distributions & sampling (98-100% coverage)
 │   ├── distributions.py # Normal, uniform distributions
-│   └── additional_distributions.py # Exponential, binomial
+│   └── discrete_distributions.py # Exponential, binomial
 ├── geometry/            # Geometric calculations (92-98% coverage)
 │   ├── distances.py     # Euclidean, Manhattan, great circle
 │   ├── intersections.py # Line, circle, polygon intersections
 │   └── shapes.py        # Area, perimeter, centroid calculations
-├── number_theory/       # 18 specialized modules, 340+ functions
+├── number_theory/       # 18 specialized modules, 328 functions
 │   ├── primes/          # Prime operations and testing
 │   ├── divisibility/    # GCD, LCM, divisors
 │   ├── sequences/       # Fibonacci, Lucas, Catalan
@@ -59,7 +59,7 @@ chuk_mcp_math/
 │   ├── continued_fractions/   # CF expansions, convergents
 │   ├── farey_sequences/       # Farey sequences, Ford circles
 │   └── ...              # 11 more specialized modules
-└── trigonometry/        # 8 modules, 120+ functions
+└── trigonometry/        # 8 modules, 71 functions
     ├── basic_functions/ # sin, cos, tan (radians & degrees)
     ├── inverse_functions/ # asin, acos, atan, atan2
     ├── hyperbolic/      # sinh, cosh, tanh
@@ -404,7 +404,7 @@ root_secant = await root_finding.root_find_secant(f_root, 1.0, 3.0)
 
 #### Probability & Statistics (98-100% Coverage)
 ```python
-from chuk_mcp_math.probability import distributions, additional_distributions
+from chuk_mcp_math.probability import distributions, discrete_distributions
 from chuk_mcp_math import statistics
 
 # Normal distribution
@@ -412,9 +412,9 @@ pdf = await distributions.normal_pdf(0.0, 0.0, 1.0)
 cdf = await distributions.normal_cdf(0.0, 0.0, 1.0)
 samples = await distributions.normal_sample(100, 0.0, 1.0, seed=42)
 
-# Exponential & Binomial
-exp_pdf = await additional_distributions.exponential_pdf(1.0, 1.0)
-binom_pmf = await additional_distributions.binomial_pmf(3, 5, 0.5)
+# Exponential & Binomial (discrete distributions)
+exp_pdf = await discrete_distributions.exponential_pdf(1.0, 1.0)
+binom_pmf = await discrete_distributions.binomial_pmf(3, 5, 0.5)
 
 # Statistics
 data_x = [1, 2, 3, 4, 5]
@@ -715,8 +715,8 @@ Contributions welcome! Please see CONTRIBUTING.md for guidelines.
 - **Type Safety**: 0 mypy errors
 - **Phase 1 Complete**: Linear Algebra, Calculus, Probability, Statistics (100% coverage)
 - **Phase 2 Complete**: Geometry, Advanced Statistics (92-98% coverage)
-- **Number Theory**: 340+ functions (90-100% coverage)
-- **Trigonometry**: 120+ functions (90-100% coverage)
+- **Number Theory**: 328 functions (90-100% coverage)
+- **Trigonometry**: 71 functions (90-100% coverage)
 - **30 Files**: 100% test coverage
 
 ---

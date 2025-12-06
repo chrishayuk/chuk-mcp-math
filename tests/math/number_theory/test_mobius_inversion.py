@@ -590,10 +590,10 @@ class TestSuiteFunction:
     @pytest.mark.asyncio
     async def test_mobius_inversion_test_suite(self):
         """Test the test_mobius_inversion function (lines 705-739)."""
-        from chuk_mcp_math.number_theory.mobius_inversion import test_mobius_inversion
+        from chuk_mcp_math.number_theory.mobius_inversion import _test_mobius_inversion
 
         # Run the test suite function - it should complete without errors
-        await test_mobius_inversion()
+        await _test_mobius_inversion()
         # If we get here, the function executed successfully
 
 

@@ -916,7 +916,7 @@ class TestDemoFunction:
     @pytest.mark.asyncio
     async def test_advanced_primality_demo(self):
         """Test the demo function to improve coverage."""
-        from chuk_mcp_math.number_theory.advanced_primality import test_advanced_primality
+        from chuk_mcp_math.number_theory.advanced_primality import _test_advanced_primality
         import sys
         from io import StringIO
 
@@ -926,7 +926,7 @@ class TestDemoFunction:
 
         try:
             # Run the demo function
-            await test_advanced_primality()
+            await _test_advanced_primality()
         finally:
             # Restore stdout
             sys.stdout = old_stdout
