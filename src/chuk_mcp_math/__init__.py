@@ -545,8 +545,22 @@ def setup_logging(level: str = "INFO"):
 # Auto-setup logging at import
 setup_logging()
 
-# DO NOT import specific functions here to avoid circular import issues
-# Users should import from the reorganized structure directly:
+# Import all submodules to register their MCP functions
+# This ensures all decorated functions are registered in the global registry
+try:
+    from . import arithmetic
+    from . import number_theory
+    from . import trigonometry
+    from . import sequences
+    from . import statistics
+    from . import geometry
+    from . import conversion
+    from . import constants
+    from . import advanced_operations
+except ImportError as e:
+    logger.warning(f"Failed to import some modules: {e}")
+
+# Users can still import from the reorganized structure directly:
 # from chuk_mcp_math.arithmetic.core.basic_operations import add
 # from chuk_mcp_math.number_theory.primes import is_prime
 # from chuk_mcp_math.number_theory.modular_arithmetic import crt_solve
