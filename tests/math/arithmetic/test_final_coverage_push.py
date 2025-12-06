@@ -9,6 +9,7 @@ where we can actually trigger the ImportError exceptions.
 import subprocess
 import sys
 import pytest
+from pathlib import Path
 
 
 def test_coverage_boost_via_subprocess():
@@ -41,11 +42,14 @@ finally:
     print("Coverage saved")
 """
 
+    # Get the project root directory (3 levels up from this test file)
+    project_root = Path(__file__).parent.parent.parent.parent
+
     result = subprocess.run(
         [sys.executable, "-c", script],
         capture_output=True,
         text=True,
-        cwd="/Users/christopherhay/chris-source/chuk-mcp-math",
+        cwd=str(project_root),
     )
 
     # Test passes if the subprocess ran successfully

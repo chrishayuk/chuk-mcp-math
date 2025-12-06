@@ -9,6 +9,11 @@ BEFORE the arithmetic module is imported.
 import sys
 import pytest
 import subprocess
+from pathlib import Path
+
+
+# Get the project root directory (3 levels up from this test file)
+PROJECT_ROOT = Path(__file__).parent.parent.parent.parent
 
 
 def test_force_comparison_import_failure():
@@ -35,7 +40,7 @@ print("IMPORT_SUCCEEDED")
         [sys.executable, "-c", test_code],
         capture_output=True,
         text=True,
-        cwd="/Users/christopherhay/chris-source/chuk-mcp-math",
+        cwd=str(PROJECT_ROOT),
     )
 
     # Check that import succeeded and comparison was marked as unavailable
@@ -71,7 +76,7 @@ print("IMPORT_SUCCEEDED")
         [sys.executable, "-c", test_code],
         capture_output=True,
         text=True,
-        cwd="/Users/christopherhay/chris-source/chuk-mcp-math",
+        cwd=str(PROJECT_ROOT),
     )
 
     assert "IMPORT_SUCCEEDED" in result.stdout or result.returncode == 0
@@ -99,7 +104,7 @@ print("IMPORT_SUCCEEDED")
         [sys.executable, "-c", test_code],
         capture_output=True,
         text=True,
-        cwd="/Users/christopherhay/chris-source/chuk-mcp-math",
+        cwd=str(PROJECT_ROOT),
     )
 
     assert "IMPORT_SUCCEEDED" in result.stdout or result.returncode == 0
@@ -127,7 +132,7 @@ print("IMPORT_SUCCEEDED")
         [sys.executable, "-c", test_code],
         capture_output=True,
         text=True,
-        cwd="/Users/christopherhay/chris-source/chuk-mcp-math",
+        cwd=str(PROJECT_ROOT),
     )
 
     assert "IMPORT_SUCCEEDED" in result.stdout or result.returncode == 0
