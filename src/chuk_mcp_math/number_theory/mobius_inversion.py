@@ -234,8 +234,21 @@ async def apply_mobius_inversion(formula: str, n: int, description: str = "") ->
         await apply_mobius_inversion("lambda d: 1", 5) → Möbius function values
     """
     try:
-        # Parse the formula
-        f_func = eval(formula)
+        # Parse the formula safely using compile with restricted globals
+        # Only allow lambda functions with basic math operations
+        code = compile(formula, "<string>", "eval")
+        # Restricted namespace - only allow safe built-ins and math functions
+        safe_globals = {
+            "__builtins__": {
+                "abs": abs,
+                "min": min,
+                "max": max,
+                "pow": pow,
+                "round": round,
+            },
+            "math": math,
+        }
+        f_func = eval(code, safe_globals, {})  # nosec B307 - safe eval with restricted globals
     except Exception:
         return {"error": f"Invalid formula: {formula}"}
 
