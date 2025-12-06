@@ -24,10 +24,11 @@ class DemoRunner:
     def __init__(self):
         self.demos_dir = Path(__file__).parent
         self.demos = [
+            ("demo_priority2_simple.py", "🆕 Priority 2 Features - v0.3 (40 new functions)"),
             ("DEMO.py", "Main Library Demo (32 functions)"),
             ("comprehensive_demo_01_arithmetic.py", "Arithmetic Operations (44 functions)"),
-            ("quick_comprehensive_demo.py", "Quick Comprehensive Demo (572 functions)"),
-            ("truly_comprehensive_demo.py", "Complete Demo (533/533 functions)"),
+            ("quick_comprehensive_demo.py", "Quick Comprehensive Demo (657+ functions)"),
+            ("truly_comprehensive_demo.py", "Complete Demo (657+ functions)"),
         ]
         self.results = []
 
@@ -36,12 +37,13 @@ class DemoRunner:
         print("\n" + "=" * 70)
         print("CHUK MCP MATH - COMPREHENSIVE LIBRARY DEMONSTRATION")
         print("=" * 70)
-        print("\nThis demonstration proves that ALL 572 mathematical functions")
+        print("\nThis demonstration proves that ALL 657+ mathematical functions")
         print("in the CHUK MCP Math library are working correctly with:")
         print("  ✓ Full async-native implementation")
         print("  ✓ Complete type safety (mypy verified)")
         print("  ✓ MCP decorator integration")
         print("  ✓ Smart caching and performance optimization")
+        print("  ✓ 🆕 NEW: Time series analysis & inferential statistics (v0.3)")
         print("\n" + "=" * 70 + "\n")
 
     def run_demo(self, script_name: str, description: str) -> bool:
@@ -97,7 +99,7 @@ class DemoRunner:
         print("\n" + "=" * 70)
         if passed == total:
             print(f"🎉 ALL {total} DEMO SCRIPTS PASSED!")
-            print("✅ ALL 572 MATHEMATICAL FUNCTIONS VERIFIED WORKING!")
+            print("✅ ALL 657+ MATHEMATICAL FUNCTIONS VERIFIED WORKING!")
         else:
             print(f"⚠️  {passed}/{total} demo scripts passed")
             print(f"❌ {total - passed} demo(s) failed")

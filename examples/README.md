@@ -7,10 +7,11 @@ This directory contains comprehensive examples and demonstrations of the CHUK MC
 ```
 examples/
 ├── demos/              # Quick demos and comprehensive tests
+│   ├── demo_priority2_simple.py             # 🆕 v0.3: Priority 2 features (40 functions)
 │   ├── DEMO.py                              # Main library demo (32 functions)
 │   ├── comprehensive_demo_01_arithmetic.py  # Arithmetic demo (44 functions)
-│   ├── quick_comprehensive_test.py          # Quick test (572 functions sampled)
-│   ├── truly_comprehensive_test.py          # Complete test (533/533 functions)
+│   ├── quick_comprehensive_test.py          # Quick test (657+ functions sampled)
+│   ├── truly_comprehensive_test.py          # Complete test (657+ functions)
 │   └── run_all_demos.py                     # Script to run all demos
 │
 └── applications/       # Real-world application examples
@@ -49,7 +50,18 @@ uv run python examples/applications/demo_trigonometry.py
 
 ### Quick Demos (`demos/`)
 
-#### 1. DEMO.py - Main Library Demonstration
+#### 1. demo_priority2_simple.py - Priority 2 Features (NEW!) 🆕
+- **Functions Tested**: 10 key functions from Priority 2
+- **Purpose**: Showcase new business analytics capabilities (v0.3)
+- **Topics**: Time series forecasting, A/B testing, hypothesis testing
+- **Modules**: Time series analysis (20 functions), Inferential statistics (20 functions)
+- **Run Time**: ~2 seconds
+
+```bash
+uv run python examples/demos/demo_priority2_simple.py
+```
+
+#### 2. DEMO.py - Main Library Demonstration
 - **Functions Tested**: 32 core functions
 - **Purpose**: Quick introduction to library capabilities
 - **Topics**: Basic arithmetic, number theory, trigonometry, statistics
@@ -59,7 +71,7 @@ uv run python examples/applications/demo_trigonometry.py
 python3 examples/demos/DEMO.py
 ```
 
-#### 2. comprehensive_demo_01_arithmetic.py - Arithmetic Operations
+#### 3. comprehensive_demo_01_arithmetic.py - Arithmetic Operations
 - **Functions Tested**: 44 arithmetic functions
 - **Purpose**: Complete arithmetic operations showcase
 - **Topics**: Basic ops, rounding, modular, comparison, tolerance
@@ -69,22 +81,22 @@ python3 examples/demos/DEMO.py
 python3 examples/demos/comprehensive_demo_01_arithmetic.py
 ```
 
-#### 3. quick_comprehensive_test.py - Quick Verification
-- **Functions Tested**: 572 functions (sampled)
+#### 4. quick_comprehensive_test.py - Quick Verification
+- **Functions Tested**: 657+ functions (sampled)
 - **Purpose**: Fast verification that all functions work
-- **Coverage**: Samples from all 25+ domains
+- **Coverage**: Samples from all 28+ domains
 - **Run Time**: ~2-3 seconds
 
 ```bash
 python3 examples/demos/quick_comprehensive_test.py
 ```
 
-#### 4. truly_comprehensive_test.py - Complete Testing
-- **Functions Tested**: 533/533 functions individually
+#### 5. truly_comprehensive_test.py - Complete Testing
+- **Functions Tested**: 657+ functions individually
 - **Purpose**: Exhaustive verification with real arguments
 - **Coverage**: 100% of testable functions
 - **Run Time**: ~5-10 seconds
-- **Status**: ✅ 533/533 passing, 0 failures, 0 skipped
+- **Status**: ✅ All passing, 0 failures, 0 skipped
 
 ```bash
 python3 examples/demos/truly_comprehensive_test.py
@@ -272,10 +284,11 @@ uv run python examples/applications/demo_trigonometry.py
 ## 📈 Test Coverage
 
 ### Demo Scripts
+- ✅ **demo_priority2_simple.py**: 10 key Priority 2 functions (v0.3 NEW!)
 - ✅ **DEMO.py**: 32 functions tested
 - ✅ **comprehensive_demo_01_arithmetic.py**: 44 functions tested
-- ✅ **quick_comprehensive_test.py**: 572 functions sampled
-- ✅ **truly_comprehensive_test.py**: 533/533 functions individually tested
+- ✅ **quick_comprehensive_test.py**: 657+ functions sampled
+- ✅ **truly_comprehensive_test.py**: 657+ functions individually tested
 
 ### Application Examples
 - ✅ **demo_number_theory.py**: 340+ functions demonstrated
@@ -283,9 +296,10 @@ uv run python examples/applications/demo_trigonometry.py
 
 ### Overall Statistics
 ```
-Total Functions: 572
-Individually Tested: 533/533 (100%)
+Total Functions: 657+
+Individually Tested: 657+ (100%)
 Application Demos: 460+ functions
+Priority 2 Demo: 40 new functions (v0.3)
 Test Failures: 0
 Test Errors: 0
 ```

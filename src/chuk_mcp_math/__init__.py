@@ -513,9 +513,15 @@ __all__ = [
     # Math modules (async native)
     "arithmetic",  # Reorganized structure with core, comparison
     "number_theory",  # Comprehensive number theory functions
-    # Future math modules (commented out until implemented)
-    # 'trigonometry', 'logarithmic', 'statistical',
-    # 'algebraic', 'financial', 'geometric', 'combinatorial', 'constants',
+    "trigonometry",  # Trigonometric functions - IMPLEMENTED ✅
+    "statistics",  # Descriptive & inferential statistics - IMPLEMENTED ✅
+    "geometry",  # Geometric calculations - IMPLEMENTED ✅
+    "sequences",  # Mathematical sequences - IMPLEMENTED ✅
+    "constants",  # Mathematical constants - IMPLEMENTED ✅
+    "advanced_operations",  # Advanced mathematical operations - IMPLEMENTED ✅
+    "conversion",  # Unit conversions - IMPLEMENTED ✅
+    "numerical",  # Numerical methods (optimization, interpolation, series) - v0.3 ✅
+    "timeseries",  # Time series analysis - v0.3 ✅
     # Package info
     "__version__",
     "__author__",
@@ -557,6 +563,8 @@ try:
     from . import conversion  # noqa: F401
     from . import constants  # noqa: F401
     from . import advanced_operations  # noqa: F401
+    from . import numerical  # noqa: F401
+    from . import timeseries  # noqa: F401
 except ImportError as e:
     logger.warning(f"Failed to import some modules: {e}")
 
