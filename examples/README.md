@@ -9,8 +9,9 @@ examples/
 ├── demos/              # Quick demos and comprehensive tests
 │   ├── DEMO.py                              # Main library demo (32 functions)
 │   ├── comprehensive_demo_01_arithmetic.py  # Arithmetic demo (44 functions)
-│   ├── quick_comprehensive_test.py          # Quick test (all 572 functions)
-│   └── truly_comprehensive_test.py          # Complete test (533/533 functions)
+│   ├── quick_comprehensive_test.py          # Quick test (572 functions sampled)
+│   ├── truly_comprehensive_test.py          # Complete test (533/533 functions)
+│   └── run_all_demos.py                     # Script to run all demos
 │
 └── applications/       # Real-world application examples
     ├── demo_number_theory.py                # Number theory (340+ functions)
@@ -22,19 +23,18 @@ examples/
 ### Run All Tests
 
 ```bash
-# From project root
-./RUN_ALL_DEMOS.sh        # Run all demo scripts
-./RUN_ALL_EXAMPLES.sh     # Run all application examples
+# From project root - run all demo scripts at once
+python examples/demos/run_all_demos.py
 ```
 
 ### Run Individual Demos
 
 ```bash
 # Quick demos (no dependencies)
-python3 examples/demos/DEMO.py
-python3 examples/demos/comprehensive_demo_01_arithmetic.py
-python3 examples/demos/quick_comprehensive_test.py
-python3 examples/demos/truly_comprehensive_test.py
+python examples/demos/DEMO.py
+python examples/demos/comprehensive_demo_01_arithmetic.py
+python examples/demos/quick_comprehensive_test.py
+python examples/demos/truly_comprehensive_test.py
 ```
 
 ### Run Application Examples
@@ -336,4 +336,4 @@ All examples showcase:
 
 ---
 
-**Run all examples**: `./RUN_ALL_DEMOS.sh && ./RUN_ALL_EXAMPLES.sh`
+**Run all demos**: `python examples/demos/run_all_demos.py`

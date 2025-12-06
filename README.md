@@ -392,21 +392,22 @@ pytest -m math  # Math-specific tests
 ### Running the Examples
 
 ```bash
-# Run all demo scripts (tests 572 functions)
-./RUN_ALL_DEMOS.sh
-
-# Run all application examples (real-world demonstrations)
-./RUN_ALL_EXAMPLES.sh
+# Run all demo scripts at once (tests 572 functions)
+python examples/demos/run_all_demos.py
 
 # Individual demos (quick tests)
-python3 examples/demos/DEMO.py                              # Main library demo (32 functions)
-python3 examples/demos/comprehensive_demo_01_arithmetic.py  # Arithmetic demo (44 functions)
-python3 examples/demos/quick_comprehensive_test.py          # Quick test (all 572 functions)
-python3 examples/demos/truly_comprehensive_test.py          # Complete test (533/533 functions)
+python examples/demos/DEMO.py                              # Main library demo (32 functions)
+python examples/demos/comprehensive_demo_01_arithmetic.py  # Arithmetic demo (44 functions)
+python examples/demos/quick_comprehensive_demo.py          # Quick demo (all 572 functions)
+python examples/demos/truly_comprehensive_demo.py          # Complete demo (533/533 functions)
 
-# Individual application examples (require uv run)
+# Application examples - comprehensive demonstrations
 uv run python examples/applications/demo_number_theory.py   # Number theory (340+ functions)
 uv run python examples/applications/demo_trigonometry.py    # Trigonometry (120+ functions)
+
+# Diagnostics - verify installation and structure
+python diagnostics/simple_diagnostic.py                     # Basic diagnostic
+python diagnostics/diagnose_reorganized_structure.py        # Detailed structure analysis
 ```
 
 See [examples/README.md](./examples/README.md) for detailed documentation of all examples.
