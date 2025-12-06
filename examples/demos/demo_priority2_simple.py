@@ -25,8 +25,28 @@ async def demo_time_series():
     )
 
     # Monthly sales data with seasonal pattern
-    sales = [100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155,
-             200, 210, 220, 230, 110, 115, 120, 125]
+    sales = [
+        100,
+        105,
+        110,
+        115,
+        120,
+        125,
+        130,
+        135,
+        140,
+        145,
+        150,
+        155,
+        200,
+        210,
+        220,
+        230,
+        110,
+        115,
+        120,
+        125,
+    ]
 
     print("\n📊 Moving Averages")
     sma = await simple_moving_average(sales, window=3)

@@ -11,7 +11,6 @@ Total: 65 new functions showcased
 
 import asyncio
 import math
-from typing import List
 
 
 async def demo_optimization():
@@ -26,7 +25,6 @@ async def demo_optimization():
         adam_optimizer,
         golden_section_search,
         nelder_mead,
-        coordinate_descent,
     )
 
     # Example: Optimize portfolio allocation
@@ -50,9 +48,7 @@ async def demo_optimization():
     result = await gradient_descent(objective, gradient, initial, lr, iterations)
     print(f"Gradient Descent:      x={result['x'][0]:.4f}, f(x)={result['f_x']:.4f}")
 
-    result = await gradient_descent_momentum(
-        objective, gradient, initial, lr, 0.9, iterations
-    )
+    result = await gradient_descent_momentum(objective, gradient, initial, lr, 0.9, iterations)
     print(
         f"GD with Momentum:      x={result['x'][0]:.4f}, f(x)={result['f_x']:.4f}, iterations={result['iterations']}"
     )
@@ -84,9 +80,9 @@ async def demo_optimization():
     print(
         f"Rosenbrock function:   x={result['x'][0]:.4f}, y={result['x'][1]:.4f}, f={result['f_x']:.6f}"
     )
-    print(f"                       (optimal: x=1, y=1, f=0)")
+    print("                       (optimal: x=1, y=1, f=0)")
 
-    print(f"\n✅ Tested 6 optimization functions")
+    print("\n✅ Tested 6 optimization functions")
 
 
 async def demo_interpolation():
@@ -132,9 +128,7 @@ async def demo_interpolation():
 
     x_test = 1.5
     spline_val = await cubic_spline_interpolate(x_points, y_points, x_test)
-    print(
-        f"Cubic spline at x={x_test}: y={spline_val:.4f} (actual: {x_test**2:.4f})"
-    )
+    print(f"Cubic spline at x={x_test}: y={spline_val:.4f} (actual: {x_test**2:.4f})")
 
     # Bilinear interpolation for 2D data (e.g., image resizing, heatmaps)
     print("\n🗺️  2D Data Interpolation (Bilinear)")
@@ -144,17 +138,20 @@ async def demo_interpolation():
     #  f11=20  f12=22
     #  f21=24  f22=26
     temp_at_center = await bilinear_interpolate(
-        x=0.5, y=0.5,  # Point to interpolate
-        x1=0.0, x2=1.0,  # X bounds
-        y1=0.0, y2=1.0,  # Y bounds
-        f11=20.0, f12=22.0,  # Top row
-        f21=24.0, f22=26.0   # Bottom row
+        x=0.5,
+        y=0.5,  # Point to interpolate
+        x1=0.0,
+        x2=1.0,  # X bounds
+        y1=0.0,
+        y2=1.0,  # Y bounds
+        f11=20.0,
+        f12=22.0,  # Top row
+        f21=24.0,
+        f22=26.0,  # Bottom row
     )
-    print(
-        f"Temperature at grid center: {temp_at_center:.2f}°C (expected: ~23°C average)"
-    )
+    print(f"Temperature at grid center: {temp_at_center:.2f}°C (expected: ~23°C average)")
 
-    print(f"\n✅ Tested 5 interpolation functions")
+    print("\n✅ Tested 5 interpolation functions")
 
 
 async def demo_series_expansions():
@@ -164,10 +161,6 @@ async def demo_series_expansions():
     print("=" * 70)
 
     from chuk_mcp_math.numerical.series import (
-        taylor_series,
-        maclaurin_series,
-        fourier_series_approximation,
-        power_series,
         binomial_series,
         geometric_series,
         arithmetic_series,
@@ -201,9 +194,7 @@ async def demo_series_expansions():
     # Logarithm series (for x near 0)
     x_log = 0.5
     log_approx = await ln_series(x_log, n)
-    print(
-        f"ln(1+{x_log}) ≈ {log_approx:.8f} (actual: {math.log(1 + x_log):.8f})"
-    )
+    print(f"ln(1+{x_log}) ≈ {log_approx:.8f} (actual: {math.log(1 + x_log):.8f})")
 
     # Geometric series
     print("\n💰 Financial Applications (Geometric Series)")
@@ -227,18 +218,16 @@ async def demo_series_expansions():
     d = 1.0  # common difference
     n_terms = 10
     arith_sum = await arithmetic_series(a, d, n_terms)
-    print(f"Sum 1+2+3+...+{n_terms}: {arith_sum:.0f} (expected: {n_terms*(n_terms+1)/2:.0f})")
+    print(f"Sum 1+2+3+...+{n_terms}: {arith_sum:.0f} (expected: {n_terms * (n_terms + 1) / 2:.0f})")
 
     # Binomial series
     print("\n🔢 Binomial Expansion")
     print("-" * 70)
 
     binomial_result = await binomial_series(0.5, 0.1, 5)
-    print(
-        f"(1 + 0.1)^0.5 ≈ {binomial_result:.8f} (actual: {(1 + 0.1)**0.5:.8f})"
-    )
+    print(f"(1 + 0.1)^0.5 ≈ {binomial_result:.8f} (actual: {(1 + 0.1) ** 0.5:.8f})")
 
-    print(f"\n✅ Tested 12 series expansion functions")
+    print("\n✅ Tested 12 series expansion functions")
 
 
 async def demo_time_series():
@@ -256,7 +245,6 @@ async def demo_time_series():
         seasonal_decompose,
         detect_trend,
         detect_seasonality,
-        detrend,
         holt_winters_forecast,
         exponential_smoothing,
         moving_average_forecast,
@@ -272,11 +260,26 @@ async def demo_time_series():
 
     # Monthly sales with seasonal pattern (Q4 peak)
     sales = [
-        100, 105, 110, 115,  # Q1
-        120, 125, 130, 135,  # Q2
-        140, 145, 150, 155,  # Q3
-        200, 210, 220, 230,  # Q4 (holiday season)
-        110, 115, 120, 125,  # Q1 next year
+        100,
+        105,
+        110,
+        115,  # Q1
+        120,
+        125,
+        130,
+        135,  # Q2
+        140,
+        145,
+        150,
+        155,  # Q3
+        200,
+        210,
+        220,
+        230,  # Q4 (holiday season)
+        110,
+        115,
+        120,
+        125,  # Q1 next year
     ]
 
     # Moving averages
@@ -339,7 +342,9 @@ async def demo_time_series():
 
     # Simple exponential smoothing
     es_forecast = await exponential_smoothing(sales, alpha=0.3, forecast_periods=3)
-    print(f"Exponential smoothing (next 3):         {[f'{x:.2f}' for x in es_forecast['forecast']]}")
+    print(
+        f"Exponential smoothing (next 3):         {[f'{x:.2f}' for x in es_forecast['forecast']]}"
+    )
 
     # Moving average forecast
     ma_forecast = await moving_average_forecast(sales, window=3, forecast_periods=2)
@@ -354,7 +359,7 @@ async def demo_time_series():
         f"Rolling standard deviation (4-month):  Last 3 values: {[f'{x:.2f}' for x in rolling_volatility[-3:]]}"
     )
 
-    print(f"\n✅ Tested 16 time series functions")
+    print("\n✅ Tested 16 time series functions")
 
 
 async def demo_inferential_statistics():
@@ -367,23 +372,14 @@ async def demo_inferential_statistics():
         t_test_one_sample,
         t_test_two_sample,
         paired_t_test,
-        z_test,
         chi_square_test,
         anova_one_way,
         confidence_interval_mean,
-        confidence_interval_proportion,
         cohens_d,
-        effect_size_r,
-        proportion_test,
         sample_size_mean,
         power_analysis,
         mann_whitney_u,
-        wilcoxon_signed_rank,
-        kruskal_wallis,
-        fishers_exact_test,
-        permutation_test,
         bootstrap_confidence_interval,
-        levenes_test,
     )
 
     # A/B Testing Example
@@ -400,7 +396,7 @@ async def demo_inferential_statistics():
     treatment_sample = treatment_conversions[:100]
 
     result = await t_test_two_sample(control_sample, treatment_sample)
-    print(f"Two-Sample t-test:")
+    print("Two-Sample t-test:")
     print(f"  t-statistic: {result['t_statistic']:.4f}")
     print(f"  p-value:     {result['p_value']:.4f}")
     print(f"  Reject null: {result['reject_null']} (α=0.05)")
@@ -410,27 +406,21 @@ async def demo_inferential_statistics():
 
     # Effect size
     effect = await cohens_d(control_sample, treatment_sample)
-    print(f"  Cohen's d:   {effect:.4f} ({'small' if abs(effect) < 0.5 else 'medium' if abs(effect) < 0.8 else 'large'} effect)")
+    print(
+        f"  Cohen's d:   {effect:.4f} ({'small' if abs(effect) < 0.5 else 'medium' if abs(effect) < 0.8 else 'large'} effect)"
+    )
 
     # Confidence intervals
     print("\n📊 Confidence Intervals")
     print("-" * 70)
 
     ci_control = await confidence_interval_mean(control_sample, confidence=0.95)
-    print(
-        f"Control mean:     {ci_control['mean']:.4f} ± {ci_control['margin_of_error']:.4f}"
-    )
-    print(
-        f"  95% CI:         [{ci_control['lower']:.4f}, {ci_control['upper']:.4f}]"
-    )
+    print(f"Control mean:     {ci_control['mean']:.4f} ± {ci_control['margin_of_error']:.4f}")
+    print(f"  95% CI:         [{ci_control['lower']:.4f}, {ci_control['upper']:.4f}]")
 
     ci_treatment = await confidence_interval_mean(treatment_sample, confidence=0.95)
-    print(
-        f"Treatment mean:   {ci_treatment['mean']:.4f} ± {ci_treatment['margin_of_error']:.4f}"
-    )
-    print(
-        f"  95% CI:         [{ci_treatment['lower']:.4f}, {ci_treatment['upper']:.4f}]"
-    )
+    print(f"Treatment mean:   {ci_treatment['mean']:.4f} ± {ci_treatment['margin_of_error']:.4f}")
+    print(f"  95% CI:         [{ci_treatment['lower']:.4f}, {ci_treatment['upper']:.4f}]")
 
     # One-sample t-test
     print("\n📈 Quality Control: Product Weight Testing")
@@ -457,7 +447,7 @@ async def demo_inferential_statistics():
     after = [130, 135, 138, 130, 142, 140, 128, 145]  # Blood pressure after
 
     paired = await paired_t_test(before, after)
-    print(f"Paired t-test:")
+    print("Paired t-test:")
     print(f"  t-statistic: {paired['t_statistic']:.4f}")
     print(f"  p-value:     {paired['p_value']:.4f}")
     print(
@@ -473,7 +463,7 @@ async def demo_inferential_statistics():
     factory_c = [97, 99, 98, 100, 97]
 
     anova = await anova_one_way([factory_a, factory_b, factory_c])
-    print(f"One-Way ANOVA:")
+    print("One-Way ANOVA:")
     print(f"  F-statistic: {anova['f_statistic']:.4f}")
     print(f"  p-value:     {anova['p_value']:.4f}")
     print(
@@ -489,7 +479,7 @@ async def demo_inferential_statistics():
     expected = [50, 40, 10]  # Expected distribution
 
     chi_sq = await chi_square_test(observed, expected)
-    print(f"Chi-Square test:")
+    print("Chi-Square test:")
     print(f"  χ² statistic: {chi_sq['chi_square']:.4f}")
     print(f"  p-value:      {chi_sq['p_value']:.4f}")
     print(
@@ -504,7 +494,9 @@ async def demo_inferential_statistics():
     group2 = [20, 22, 24, 26, 28]
 
     mann_whitney = await mann_whitney_u(group1, group2)
-    print(f"Mann-Whitney U test:    U={mann_whitney['u_statistic']:.2f}, p={mann_whitney['p_value']:.4f}")
+    print(
+        f"Mann-Whitney U test:    U={mann_whitney['u_statistic']:.2f}, p={mann_whitney['p_value']:.4f}"
+    )
 
     # Power analysis for experiment design
     print("\n🔬 Experiment Design: Sample Size Calculation")
@@ -514,20 +506,18 @@ async def demo_inferential_statistics():
     print(f"Required sample size per group: {required_n} (for d=0.5, α=0.05, power=0.8)")
 
     power = await power_analysis(n=30, effect_size=0.5, alpha=0.05)
-    print(f"Statistical power with n=30:    {power:.4f} ({power*100:.1f}%)")
+    print(f"Statistical power with n=30:    {power:.4f} ({power * 100:.1f}%)")
 
     # Bootstrap confidence interval
     print("\n🔄 Bootstrap Resampling")
     print("-" * 70)
 
     data = [10, 12, 15, 18, 20, 22, 25, 28, 30]
-    bootstrap_ci = await bootstrap_confidence_interval(
-        data, confidence=0.95, n_bootstrap=1000
-    )
+    bootstrap_ci = await bootstrap_confidence_interval(data, confidence=0.95, n_bootstrap=1000)
     print(f"Bootstrap 95% CI for mean: [{bootstrap_ci['lower']:.2f}, {bootstrap_ci['upper']:.2f}]")
     print(f"Point estimate:                {bootstrap_ci['statistic']:.2f}")
 
-    print(f"\n✅ Tested 16 inferential statistics functions")
+    print("\n✅ Tested 16 inferential statistics functions")
 
 
 async def demo_summary():
@@ -574,10 +564,7 @@ async def demo_summary():
     print("  ✅ Production-Ready Documentation")
     print("  ✅ Zero Linting/Type Errors")
 
-    print(
-        "\n"
-        + "=" * 70
-    )
+    print("\n" + "=" * 70)
     print("🎉 Priority 1 & 2 Complete - 65 Functions Demonstrated!")
     print("=" * 70)
 
