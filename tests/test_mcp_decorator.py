@@ -787,7 +787,8 @@ class TestUtilityFunctions:
         assert "y" in params
         assert params["x"]["required"] is True
         assert params["y"]["required"] is False
-        assert returns["type"]["type"] == "integer"
+        # After flattening, the type is now directly under returns
+        assert returns["type"] == "integer"
 
     def test_extract_function_info_async(self):
         """Test async function information extraction."""

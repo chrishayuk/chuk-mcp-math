@@ -1,6 +1,6 @@
 [project]
 name = "chuk-mcp-math"
-version = "0.2.2"
+version = "0.2.3"
 description = "Comprehensive MCP function library for AI models"
 readme = "README.md"
 requires-python = ">=3.11"

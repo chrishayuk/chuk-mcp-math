@@ -498,8 +498,12 @@ def _type_to_json_schema(type_hint) -> Dict[str, Any]:
     elif origin is Union:
         non_none_args = [arg for arg in args if arg is not type(None)]
         if len(non_none_args) == 1:
+            # Optional type (e.g., Optional[int])
             schema = _type_to_json_schema(non_none_args[0])
             return {"anyOf": [schema, {"type": "null"}]}
+        elif set(non_none_args) == {int, float}:
+            # Union[int, float] should just be "number" in JSON Schema
+            return {"type": "number"}
         else:
             return {"anyOf": [_type_to_json_schema(arg) for arg in args]}
 
@@ -525,17 +529,25 @@ def _extract_function_info(func: Callable) -> tuple:
 
     for param_name, param in sig.parameters.items():
         param_type = type_hints.get(param_name, Any)
+        type_schema = _type_to_json_schema(param_type)
+
+        # Build parameter spec - merge type schema directly instead of nesting
         param_spec = {
-            "type": _type_to_json_schema(param_type),
+            **type_schema,  # Spread the type schema fields directly
             "required": param.default == param.empty,
             "description": f"Parameter: {param_name}",
-            "default": param.default if param.default != param.empty else None,
         }
+
+        # Only add default if parameter has one
+        if param.default != param.empty:
+            param_spec["default"] = param.default
+
         parameters[param_name] = param_spec
 
     return_type = type_hints.get("return", Any)
+    return_schema = _type_to_json_schema(return_type)
     returns = {
-        "type": _type_to_json_schema(return_type),
+        **return_schema,  # Spread the type schema fields directly
         "description": f"Return value of {func_name}",
     }
 
