@@ -20,6 +20,7 @@ from .descriptive import (
     correlation,
     linear_regression,
     moving_average,
+    z_score,
     z_scores,
     detect_outliers,
 )
@@ -63,6 +64,7 @@ __all__ = [
     "correlation",
     "linear_regression",
     "moving_average",
+    "z_score",
     "z_scores",
     "detect_outliers",
     # Inferential statistics

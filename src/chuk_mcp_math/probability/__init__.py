@@ -10,6 +10,7 @@ from .distributions import (
     normal_cdf,
     normal_sample,
     uniform_sample,
+    stockout_probability,
 )
 
 from .discrete_distributions import (
@@ -28,6 +29,8 @@ __all__ = [
     "normal_sample",
     # Uniform distribution
     "uniform_sample",
+    # Inventory/operations research
+    "stockout_probability",
     # Exponential distribution
     "exponential_pdf",
     "exponential_cdf",

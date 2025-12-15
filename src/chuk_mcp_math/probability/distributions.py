@@ -241,3 +241,91 @@ async def uniform_sample(
             await asyncio.sleep(0)
 
     return samples
+
+
+@mcp_function(
+    description="Calculate stockout probability for inventory under lead time demand uncertainty. Returns mu_LT, sigma_LT, Z-score, and P(stockout).",
+    namespace="probability",
+    cache_strategy="memory",
+    estimated_cpu_usage="low",
+    examples=[
+        {
+            "input": {
+                "inventory": 900,
+                "daily_demand": 37,
+                "lead_time_days": 18,
+                "daily_demand_std": 15,
+            },
+            "output": {
+                "mu_LT": 666,
+                "sigma_LT": 63.64,
+                "z_score": 3.68,
+                "p_stockout": 0.00012,
+                "service_level": 0.99988,
+            },
+            "description": "Stockout probability with 900 units, 37/day demand, 18 day lead time",
+        }
+    ],
+)
+async def stockout_probability(
+    inventory: float,
+    daily_demand: float,
+    lead_time_days: float,
+    daily_demand_std: float,
+) -> dict:
+    """
+    Calculate the probability of stockout during lead time.
+
+    This function computes all intermediate values for inventory risk analysis:
+    - mu_LT = daily_demand * lead_time_days (mean demand during lead time)
+    - sigma_LT = daily_demand_std * sqrt(lead_time_days) (std dev during lead time)
+    - Z = (inventory - mu_LT) / sigma_LT (safety factor)
+    - P(stockout) = 1 - Phi(Z) (probability demand exceeds inventory)
+
+    Args:
+        inventory: Current inventory level (I)
+        daily_demand: Average daily demand rate (d)
+        lead_time_days: Lead time in days (L)
+        daily_demand_std: Standard deviation of daily demand (sigma_d)
+
+    Returns:
+        Dictionary with:
+        - mu_LT: Mean lead time demand
+        - sigma_LT: Std dev of lead time demand
+        - z_score: Number of std devs inventory is above mean demand
+        - p_stockout: Probability of stockout (demand > inventory)
+        - service_level: 1 - p_stockout (probability of meeting demand)
+
+    Raises:
+        ValueError: If daily_demand_std <= 0 or lead_time_days <= 0
+
+    Examples:
+        >>> result = await stockout_probability(900, 37, 18, 15)
+        >>> result['p_stockout']
+        0.00012  # Very low stockout risk
+    """
+    if daily_demand_std <= 0:
+        raise ValueError(f"Daily demand std must be positive, got {daily_demand_std}")
+    if lead_time_days <= 0:
+        raise ValueError(f"Lead time must be positive, got {lead_time_days}")
+
+    await asyncio.sleep(0)
+
+    # Calculate lead time demand distribution parameters
+    mu_LT = daily_demand * lead_time_days
+    sigma_LT = daily_demand_std * math.sqrt(lead_time_days)
+
+    # Calculate Z-score (safety factor)
+    z = (inventory - mu_LT) / sigma_LT
+
+    # Calculate P(stockout) = P(demand > inventory) = 1 - Phi(Z)
+    phi_z = 0.5 * (1 + math.erf(z / math.sqrt(2)))
+    p_stockout = 1.0 - phi_z
+
+    return {
+        "mu_LT": float(mu_LT),
+        "sigma_LT": float(sigma_LT),
+        "z_score": float(z),
+        "p_stockout": float(p_stockout),
+        "service_level": float(phi_z),
+    }

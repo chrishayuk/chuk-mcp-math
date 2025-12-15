@@ -725,6 +725,63 @@ async def moving_average(numbers: List[Union[int, float]], window: int) -> List[
 
 
 @mcp_function(
+    description="Calculate a single z-score (standard score) for a value given mean and standard deviation. Z = (x - mu) / sigma",
+    namespace="statistics",
+    execution_modes=["local", "remote"],
+    cache_strategy="memory",
+    examples=[
+        {
+            "input": {"x": 900, "mu": 666, "sigma": 50},
+            "output": 4.68,
+            "description": "Z-score for inventory level vs lead time demand",
+        },
+        {
+            "input": {"x": 100, "mu": 100, "sigma": 15},
+            "output": 0.0,
+            "description": "Z-score when x equals the mean",
+        },
+        {
+            "input": {"x": 85, "mu": 100, "sigma": 15},
+            "output": -1.0,
+            "description": "Z-score one std below mean",
+        },
+    ],
+)
+async def z_score(x: Union[int, float], mu: Union[int, float], sigma: Union[int, float]) -> float:
+    """
+    Calculate a single z-score (standard score) for a value.
+
+    Z-score = (x - μ) / σ
+
+    This is the fundamental standardization formula used in hypothesis testing,
+    confidence intervals, and probability calculations like stockout risk.
+
+    Args:
+        x: The observed value
+        mu: The mean (μ) of the distribution
+        sigma: The standard deviation (σ) of the distribution
+
+    Returns:
+        The z-score (number of standard deviations from the mean)
+
+    Raises:
+        ValueError: If sigma <= 0
+
+    Examples:
+        >>> await z_score(900, 666, 50)
+        4.68  # 900 is 4.68 std devs above mean of 666
+        >>> await z_score(100, 100, 15)
+        0.0   # Value equals mean
+    """
+    if sigma <= 0:
+        raise ValueError(f"Standard deviation must be positive, got {sigma}")
+
+    await asyncio.sleep(0)
+
+    return float((x - mu) / sigma)
+
+
+@mcp_function(
     description="Calculate z-scores for a dataset (standardized values)",
     namespace="statistics",
     execution_modes=["local", "remote"],
@@ -880,6 +937,7 @@ __all__ = [
     "correlation",
     "linear_regression",
     "moving_average",
+    "z_score",
     "z_scores",
     "detect_outliers",
 ]
